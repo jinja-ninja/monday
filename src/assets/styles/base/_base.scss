@@ -31,7 +31,7 @@ a.active {
 }
 
 button {
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--font-family),'Roboto', sans-serif;
     text-transform: uppercase;
     border-radius: .5em;
 
