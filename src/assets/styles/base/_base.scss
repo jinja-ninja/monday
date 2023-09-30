@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: var(--font-family);
+    background-color: var(--primary-background-color);
+    color: var(--primary-text-color)
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+}
+
+/* Dont stretch my Media */
+img,
+embed,
+video,
+object {
+    max-width: 100%
+}
+
+h1 {
+    font-family: var(--title-font-family);
+    @include vibe-heading('h1', 'bold');
+}
+
+a.active {
+    text-decoration: underline;
+}
+
+button {
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    border-radius: .5em;
+
+    padding: .5em 1em;
+
+    white-space: nowrap;
+}
+
+/* Simple and useful CSS Debugging Technique */
+.debug * {
+    outline: 1px solid gold
+}
