@@ -1,0 +1,36 @@
+.home-header-container {
+    height: 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+        cursor: pointer;
+        font-size: .875rem;
+    }
+}
+
+.home-header-logo {
+    height: 42px;
+    width: 160px;
+}
+
+.btn-header-login {
+    border-radius: 8px;
+    font-family: var(--title-font-family);
+
+    &:hover {
+        background-color: #f0f3ff;
+        color: #5034ff;
+    }
+}
+
+
+
+.btn-get-started {
+    @include getStartedBtn($padding : 10px 20px 10px 16px, $font-size :0.8125rem)
+}
