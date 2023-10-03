@@ -6,6 +6,7 @@ import './assets/styles/main.scss'
 
 
 import { HomePage } from './pages/HomePage'
+import { LoginSignUp } from './pages/LoginSingup';
 // import { store } from './store/store'
 
 export function App() {
@@ -13,14 +14,14 @@ export function App() {
   return (
     // <Provider store={store}>
     <Router>
-        <Routes>
-          <Route element={<HomePage />} path="/" />
+      <Routes>
+        <Route element={<HomePage />} path="/" />
 
-          {/* <Route element={<AboutUs />} path="/about" /> */}
-          {/* <Route element={<CarIndex />} path="/car" />
-              <Route element={<CarDetails />} path="/car/:carId" /> */}
-        </Routes>
-        {/* <AppFooter /> */}
+        <Route path="/auth">
+          <Route path="login" element={<LoginSignUp />} />
+          <Route path="sign-up" element={<LoginSignUp />} />
+        </Route>
+      </Routes>
     </Router>
     // </Provider>
   )
