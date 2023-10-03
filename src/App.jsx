@@ -12,6 +12,7 @@ import { BoardDetails } from './pages/BoardDetails';
 import { TaskDetails } from './cmps/TaskDetails';
 import { PageNotFound } from './pages/PageNotFound';
 import { BoardMainHeader } from './cmps/BoardMainHeader';
+import { SideBar } from './cmps/SideBar';
 // import { store } from './store/store'
 
 export function App() {
@@ -26,6 +27,11 @@ export function App() {
         <Route path="board/:boardId" element={<BoardDetails />}>
           {/* <Route path='/task/:taskId' element={<TaskDetails />} /> */}
         </Route>
+        <Route element={<BoardIndex />} path="/board" />
+        {/* //DELETE THIS ROUTE AFTER ITS ONLY FOR DEV PURPOSES! */}
+        <Route element={<SideBar />} path="/sidebar" /> 
+        
+
         <Route path="/auth">
           <Route path="login" element={<LoginSignUp />} />
           <Route path="sign-up" element={<LoginSignUp />} />
