@@ -67,6 +67,12 @@
 
     .side-bar-lower-container {
         display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: left;
+        gap: 1em;
+        margin-top: rem(22px);
+        padding-left: rem(20px);
 
         .search-and-add-container {
             display: flex;
@@ -156,11 +162,7 @@
 
 
 
-    &.open //When hovered position should be fixed
-
-    // ,
-    // &:hover
-        {
+    &.open {
         width: 256px;
 
         .open-close-arrow {
@@ -173,14 +175,29 @@
         }
 
         .side-bar-lower-container {
-            width: 100%;
             display: flex;
-            flex-direction: column;
-            align-items: left;
-            gap: 1em;
-            margin-top: rem(22px);
-            padding-left: rem(20px);
         }
 
     }
+
+    // &:hover {
+    //     position: absolute;
+    //     z-index: 100;
+    //     top: rem(48px);
+    //     width: 256px;
+
+    //     .open-close-arrow {
+    //         transform: rotate(180deg);
+    //     }
+
+    //     .side-bar-upper-container {
+    //         display: flex;
+    //         border-bottom: 1px solid var(--layout-border-color);
+    //     }
+
+    //     .side-bar-lower-container {
+    //         display: flex;
+    //     }
+
+    // }
 }
