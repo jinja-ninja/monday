@@ -10,6 +10,7 @@ import { HomePage } from './pages/HomePage'
 import { LoginSignUp } from './pages/LoginSingup';
 import { BoardDetails } from './pages/BoardDetails';
 import { TaskDetails } from './pages/TaskDetails';
+import { PageNotFound } from './pages/PageNotFound';
 // import { store } from './store/store'
 
 export function App() {
@@ -28,7 +29,7 @@ export function App() {
             <Route path="login" element={<LoginSignUp />} />
             <Route path="sign-up" element={<LoginSignUp />} />
           </Route>
-          {/* <Route path="*" element={<PageNotFound />} /> //TODO: add 404 page  */}
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
     </Provider>
