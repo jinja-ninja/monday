@@ -1,0 +1,104 @@
+.board-index {
+    background-color: var(--primary-background-color);
+
+    .desktop-component-body {
+        display: flex;
+        padding-left: var(--spacing-large);
+        padding-right: var(--spacing-large);
+    }
+
+
+    .main-panel-container {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        margin-right: var(--spacing-large);
+        width: calc(100% - 300px - var(--spacing-large));
+
+        .collapsible-header-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+
+    .collapsible-content {
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-gap: var(--spacing-large);
+        padding: var(--spacing-medium) var(--spacing-medium) var(--spacing-large) var(--spacing-medium);
+    }
+
+    .card {
+        // max-width: 30vw;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: var(--box-shadow-medium);
+        }
+    }
+
+    img {
+        border-radius: var(--border-radius-small);
+    }
+
+    .right-panel-container {
+        width: 300px;
+
+        .explore-templates-container {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            background-color: var(--secondary-background-color);
+            border-radius: var(--border-radius-medium);
+            --box-shadow-color: var(--application-border-color);
+            box-shadow: 0px 3px 12px var(--box-shadow-color);
+
+            img {
+                width: 100%;
+            }
+
+            .banner-content-wrapper {
+                margin-block-start: var(--spacing-medium);
+
+                .banner-text {
+                    margin-block-end: var(--spacing-small);
+                }
+
+                .banner-button {
+                    width: 100%;
+                }
+            }
+        }
+
+        .get-inspired-content-wrapper {
+
+            .get-inspired-text {
+                margin-block-end: var(--spacing-medium);
+            }
+
+            .navigation-card-component {
+                display: flex;
+                align-items: center;
+                padding: var(--spacing-medium);
+                border-radius: var(--border-radius-medium);
+                box-shadow: var(--box-shadow-small);
+
+                &:hover {
+                    box-shadow: var(--box-shadow-medium);
+                }
+
+                img {
+                    width: 48px;
+                    height: 48px;
+                    border-radius: var(--border-radius-medium);
+                }
+
+                .card-content {
+                    margin-left: var(--spacing-medium);
+                }
+            }
+        }
+    }
+}

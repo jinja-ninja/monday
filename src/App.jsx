@@ -8,6 +8,7 @@ import './assets/styles/main.scss'
 
 
 import { HomePage } from './pages/HomePage'
+import { BoardIndex } from './pages/BoardIndex'
 // import { store } from './store/store'
 
 export function App() {
@@ -19,6 +20,7 @@ export function App() {
         {/* <AppHeader /> */}
         <Routes>
           <Route element={<HomePage />} path="/" />
+          <Route element={<BoardIndex />} path="/board" />
           {/* <Route element={<AboutUs />} path="/about" /> */}
           {/* <Route element={<CarIndex />} path="/car" />
               <Route element={<CarDetails />} path="/car/:carId" /> */}
