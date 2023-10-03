@@ -9,8 +9,9 @@ import { HomePage } from './pages/HomePage'
 // import { BoardIndex } from './pages/BoardIndex'
 import { LoginSignUp } from './pages/LoginSingup';
 import { BoardDetails } from './pages/BoardDetails';
-import { TaskDetails } from './pages/TaskDetails';
+import { TaskDetails } from './cmps/TaskDetails';
 import { PageNotFound } from './pages/PageNotFound';
+import { BoardMainHeader } from './cmps/BoardMainHeader';
 // import { store } from './store/store'
 
 export function App() {

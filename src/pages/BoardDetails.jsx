@@ -2,6 +2,7 @@ import { Button, IconButton, MenuItem, SplitButton, SplitButtonMenu } from "mond
 import { Add, Announcement, Check, Filter, Hide, Menu, Person, Search, Sort } from "monday-ui-react-core/icons";
 import { BoardDetailsHeader } from "../cmps/BoardDetailsHeader";
 import { GroupList } from "../cmps/GroupList";
+import { BoardMainHeader } from "../cmps/BoardMainHeader";
 
 export function BoardDetails() {
 
@@ -160,6 +161,7 @@ export function BoardDetails() {
 
 
     return <main className="board-details-layout">
+        <BoardMainHeader />
         {/* <SideBar /> */}
 
         <section className="board-details-container">

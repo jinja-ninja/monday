@@ -3,7 +3,11 @@
     grid-template-columns: 1fr 9fr;
     grid-template-rows: 1fr 9fr;
 
-    background-color: var(--secondary-background-color);
+    background-color: var(--grey-background-color);
+
+    .board-main-header {
+        grid-column: 1/-1;
+    }
 
     .board-details-container {
         grid-row: 2;
