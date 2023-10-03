@@ -2,6 +2,10 @@ import imgLogo from "../assets/img/mondayLogo.png"
 import { DoubleCheck, Notifications, Inbox, Invite, Search, Help, LogIn, Hide } from "monday-ui-react-core/icons";
 import { Icon } from "monday-ui-react-core"
 import { Tooltip, } from "monday-ui-react-core"
+import { IconButton, } from "monday-ui-react-core"
+
+
+
 
 
 
@@ -15,37 +19,38 @@ export function BoardMainHeader({ board, onRemoveBoard, onEditBoard }) {
                 <img src={imgLogo} alt="monday-logo" />
             </div>
             <div className="header-bar">
-                <Tooltip content="Notifications">
-                    <div className="icon monday-storybook-tooltip_icon-wrapper">
-                        <Icon iconType={Icon.type.SVG} icon={Notifications} iconSize={20} />
-                    </div>
-                </Tooltip>
-                <Tooltip content="Inbox">
-                    <div className="icon monday-storybook-tooltip_icon-wrapper">
-                        <Icon iconType={Icon.type.SVG} icon={Inbox} iconSize={20} />
-                    </div>
-                </Tooltip>
-                <Tooltip content="Invite">
-                    <div className="icon monday-storybook-tooltip_icon-wrapper">
-                        <Icon iconType={Icon.type.SVG} icon={Invite} iconSize={20} />
-                    </div>
-                </Tooltip>
+                <IconButton
+                    ariaLabel="Notifications"
+                    icon={Notifications}
+                    onClick={function noRefCheck() { }}
+                />
+                <IconButton
+                    ariaLabel="Inbox"
+                    icon={Inbox}
+                    onClick={function noRefCheck() { }}
+                />
+                <IconButton
+                    ariaLabel="Invite"
+                    icon={Invite}
+                    onClick={function noRefCheck() { }}
+                />
+
                 <div className="seperate-line"> | </div>
-                <Tooltip content="Search">
-                    <div className="icon monday-storybook-tooltip_icon-wrapper">
-                        <Icon iconType={Icon.type.SVG} icon={Search} iconSize={20} />
-                    </div>
-                </Tooltip>
-                <Tooltip content="Help">
-                    <div className="icon monday-storybook-tooltip_icon-wrapper">
-                        <Icon iconType={Icon.type.SVG} icon={Help} iconSize={20} />
-                    </div>
-                </Tooltip>
-                <Tooltip content="Login">
-                    <div className="icon monday-storybook-tooltip_icon-wrapper">
-                        <Icon iconType={Icon.type.SVG} icon={LogIn} iconSize={20} />
-                    </div>
-                </Tooltip>
+                <IconButton
+                    ariaLabel="Search"
+                    icon={Search}
+                    onClick={function noRefCheck() { }}
+                />
+                <IconButton
+                    ariaLabel="Help"
+                    icon={Help}
+                    onClick={function noRefCheck() { }}
+                />
+                <IconButton
+                    ariaLabel="Login"
+                    icon={LogIn}
+                    onClick={function noRefCheck() { }}
+                />
             </div>
         </div>
 
