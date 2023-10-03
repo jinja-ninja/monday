@@ -1,7 +1,7 @@
 .board-index {
     background-color: var(--primary-background-color);
 
-    .desktop-component-body {
+    &-body {
         display: flex;
         padding-left: var(--spacing-large);
         padding-right: var(--spacing-large);
@@ -22,7 +22,7 @@
         }
     }
 
-    .collapsible-content {
+    .index-board-list {
         display: grid;
         grid-template-rows: auto;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -30,12 +30,14 @@
         padding: var(--spacing-medium) var(--spacing-medium) var(--spacing-large) var(--spacing-medium);
     }
 
-    .card {
+    .board-preview {
         // max-width: 30vw;
         cursor: pointer;
+        border: 1px solid var(--layout-border-color);
 
         &:hover {
             box-shadow: var(--box-shadow-medium);
+            border: 1px solid var(--primary-background-color);
         }
     }
 

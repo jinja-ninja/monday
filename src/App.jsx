@@ -8,6 +8,7 @@ import './assets/styles/main.scss'
 import { HomePage } from './pages/HomePage'
 import { BoardIndex } from './pages/BoardIndex'
 import { LoginSignUp } from './pages/LoginSingup';
+import { BoardDetails } from './pages/BoardDetails';
 // import { store } from './store/store'
 
 export function App() {
@@ -18,6 +19,7 @@ export function App() {
       <Routes>
         <Route element={<HomePage />} path="/" />
         <Route element={<BoardIndex />} path="/board" />
+        <Route element={<BoardDetails />} path="/b" />
 
         <Route path="/auth">
           <Route path="login" element={<LoginSignUp />} />
