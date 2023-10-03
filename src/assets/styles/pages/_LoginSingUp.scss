@@ -61,6 +61,11 @@
             &::placeholder {
                 color: #ccc;
             }
+
+            &:focus {
+                border-color: #66afe9;
+
+            }
         }
 
 
