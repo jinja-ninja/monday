@@ -17,12 +17,13 @@ export function App() {
     <Router>
       <Routes>
         <Route element={<HomePage />} path="/" />
+        <Route element={<BoardIndex />} path="/board" />
 
         <Route path="/auth">
           <Route path="login" element={<LoginSignUp />} />
           <Route path="sign-up" element={<LoginSignUp />} />
         </Route>
-        <Route element={<BoardIndex />} path="/board" />
+
       </Routes>
     </Router>
     // </Provider>
