@@ -5,7 +5,8 @@
 html {
     font-family: var(--font-family);
     background-color: var(--primary-background-color);
-    color: var(--primary-text-color)
+    color: var(--primary-text-color);
+    line-height: 1.15;
 }
 
 a {
@@ -23,7 +24,6 @@ object {
 
 h1 {
     font-family: var(--title-font-family);
-    @include vibe-heading('h1', 'bold');
 }
 
 a.active {

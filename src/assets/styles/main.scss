@@ -8,16 +8,19 @@
 // // SETUP
 // @import 'setup/_typography';
 @import 'setup/_variables';
-// @import 'setup/_mixins';
-// @import 'setup/_functions';
+@import 'setup/_mixins';
+@import 'setup/_functions';
 
 // // BASICS
-// @import 'base/_helpers';
+@import 'base/_helpers';
 @import 'base/_base';
-// @import 'base/_layout';
+@import 'base/_layout';
 
 // // COMPONENTS
+@import 'cmps/HomeAppHeader';
 
-// //VIEWS
-// @import 'pages/_home-page';
-@import 'pages/_board-index';
+
+// //PAGES
+@import 'pages/_HomePage';
+@import 'pages/_LoginSingUp';
+@import 'pages/_BoardIndex';
