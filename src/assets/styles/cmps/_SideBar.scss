@@ -1,0 +1,186 @@
+// DELETE LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// DELETE LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+body {
+    // background-color: black;
+}
+
+// DELETE LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// DELETE LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+.side-bar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    height: 100vh;
+    // DEV PUPROSE CHANGE LATER^^
+    // height: 100%;
+    width: 30px;
+    border-top-right-radius: 8px;
+    background-color: var(--color-snow_white);
+    transition: width 0.2s;
+
+    .btn-open-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 30px;
+        border-radius: 0;
+        border-top-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+        border: none;
+        padding: 12px 8px 12px 8px;
+        background-color: var(--allgrey-background-color);
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--primary-background-hover-color);
+        }
+
+        .open-close-arrow {
+            padding-left: 4px;
+            transition: all .4s;
+        }
+    }
+
+    .side-bar-upper-container {
+        display: none;
+        border: none;
+        width: 100%;
+        padding-left: 12px;
+        padding-block: 12px;
+        // flex-direction: column;
+    }
+
+
+    .home-btn {
+        width: 203px;
+        height: 32px;
+        margin-top: 38px;
+        text-transform: none;
+        justify-content: left;
+        padding-left: 0.5em;
+    }
+
+    .side-bar-lower-container {
+        display: none;
+
+        .search-and-add-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .7em;
+
+            .search-input {
+                padding-left: .3rem;
+                // padding-left: 1.5rem;
+            }
+
+            // .textField_fb4a8e869d .inputWrapper_990afbf73b .iconContainer_23ffbaa11c {
+            //     left: 0.1rem;
+            // }
+
+            .btn-add {
+                margin-right: 1rem;
+
+                svg {
+                    width: 1em;
+                }
+            }
+
+        }
+
+        .boards-btns-container {
+            button {
+                height: 32px;
+                text-transform: none;
+                justify-content: left;
+                padding-left: 0.1em;
+                width: 222px;
+                position: relative;
+
+                .btn-board-menu {
+                    display: none;
+                }
+
+                &:hover {
+                    .btn-board-menu {
+                        display: block;
+                        position: absolute;
+                        right: .5rem;
+
+                        &:hover {
+                            background-color: var(--primary-background-hover-color);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        .main-workspace-txt {
+            display: flex;
+            align-items: center;
+
+            span {
+
+                align-items: center;
+                background-color: var(--color-done-green);
+                border-radius: 6px;
+                color: var(--color-snow_white);
+                display: flex;
+                font-size: .875rem;
+                height: 20px;
+                justify-content: center;
+                position: relative;
+                width: 20px;
+
+                svg {
+                    bottom: -4px;
+                    position: absolute;
+                    right: -7px;
+                }
+            }
+
+            h4 {
+                margin-left: 7px;
+                font-size: 1rem;
+                font-weight: 600;
+                line-height: 22px;
+            }
+        }
+    }
+
+
+
+    &.open //When hovered position should be fixed
+
+    // ,
+    // &:hover
+        {
+        width: 256px;
+
+        .open-close-arrow {
+            transform: rotate(180deg);
+        }
+
+        .side-bar-upper-container {
+            display: flex;
+            border-bottom: 1px solid var(--layout-border-color);
+        }
+
+        .side-bar-lower-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            gap: 1em;
+            margin-top: rem(22px);
+            padding-left: rem(20px);
+        }
+
+    }
+}
