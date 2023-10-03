@@ -1,13 +1,16 @@
 
 import { ListItem } from 'monday-ui-react-core'
 import mondayLogo from '../assets/imgs/mondayLogo.png'
+import { useNavigate } from 'react-router-dom'
 
 export function HomeAppHeader() {
+    const navigate = useNavigate()
+
     return (
         <div className="home-header-container">
             <img src={mondayLogo} className='home-header-logo' alt="" />
             <div>
-                <ListItem component="div" className='btn-header-login'>
+                <ListItem component="div" className='btn-header-login' onClick={() => navigate('/auth/login')}>
                     Log in
                 </ListItem>
                 <button className='btn-get-started'><span className='get-started-txt'>Get Started</span>
