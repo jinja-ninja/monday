@@ -1,0 +1,47 @@
+.board-main-header {
+  background-color: $grey-background-color;
+  height: 48px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--spacing-medium);
+
+  .header-logo {
+    width: 152px;
+    height: 44px;
+    padding-left: var(--spacing-small);
+    align-self: center;
+    margin-top: var(--spacing-small);
+
+    img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    .icon {
+      transition: background-color 0.2s;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      &:hover {
+        background-color: $icon-color-hover;
+      }
+      * {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    .seperate-line {
+      margin: 2px;
+    }
+  }
+}

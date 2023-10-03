@@ -1,5 +1,5 @@
 // // RESET
-@import 'setup/_reset';
+@import "setup/_reset";
 
 // LIBRARIES
 @import "node_modules/monday-ui-style/dist/mixins";
@@ -7,20 +7,20 @@
 
 // // SETUP
 // @import 'setup/_typography';
-@import 'setup/_variables';
-@import 'setup/_mixins';
-@import 'setup/_functions';
+@import "setup/_variables";
+@import "setup/_mixins";
+@import "setup/_functions";
 
 // // BASICS
-@import 'base/_helpers';
-@import 'base/_base';
-@import 'base/_layout';
+@import "base/_helpers";
+@import "base/_base";
+@import "base/_layout";
 
 // // COMPONENTS
-@import 'cmps/HomeAppHeader';
-
+@import "cmps/HomeAppHeader";
+@import "cmps/BoardMainHeader";
 
 // //PAGES
-@import 'pages/_HomePage';
-@import 'pages/_LoginSingUp';
-@import 'pages/_BoardIndex';
+@import "pages/_HomePage";
+@import "pages/_LoginSingUp";
+@import "pages/_BoardIndex";
