@@ -1,6 +1,6 @@
 
-import mondayLogo from '../assets/imgs/mondayLogo.png'
-import LoginSignUpImg from '../assets/imgs/LoginSignUpImg.avif'
+import mondayLogo from '../assets/img/mondayLogo.png'
+import LoginSignUpImg from '../assets/img/LoginSignUpImg.avif'
 
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
@@ -8,8 +8,9 @@ import { useNavigate, Link } from 'react-router-dom'
 export function LoginSignUp() {
     const [isSignUp, setIsSignUp] = useState(false)
     const navigate = useNavigate()
-    const dynLoginSingupText = isSignUp ? 'Log in to your account' : 'Welcome to monday.com'
 
+    const dynLoginSingupText = isSignUp ? 'Welcome to monday.com' : 'Log in to your account'
+    console.log('isSignUp:', isSignUp)
     return (
         <section className="login-singup-main-container">
 
@@ -56,10 +57,12 @@ export function LoginSignUp() {
                         placeholder="Enter at least 8 characters"
                     />
                 </div>
+
                 <button>
                     <span>Next</span>
-                    {/* <span className="btn-arrow">{BTN_ARROW}</span> */}
+                    <svg viewBox="0 0 20 20" fillRule="currentColor" width="20" height="20" aria-hidden="true" className="icon_bff579c0cd rightIcon_333ca74326 noFocusStyle_d1e810e473" data-testid="icon"><path d="M2.24999 10.071C2.24999 9.65683 2.58578 9.32104 2.99999 9.32104L15.3315 9.32105L10.7031 4.69273C10.4103 4.39983 10.4103 3.92496 10.7031 3.63207C10.996 3.33917 11.4709 3.33917 11.7638 3.63207L17.6725 9.54071C17.9653 9.83361 17.9653 10.3085 17.6725 10.6014L11.7638 16.51C11.4709 16.8029 10.996 16.8029 10.7031 16.51C10.4103 16.2171 10.4103 15.7423 10.7031 15.4494L15.3315 10.821L2.99999 10.821C2.58578 10.821 2.24999 10.4853 2.24999 10.071Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg>
                 </button>
+
             </form>
 
             <div className="separator-container">
@@ -68,7 +71,7 @@ export function LoginSignUp() {
                 <div className="separator"></div>
             </div>
 
-            {isSignUp ? (
+            {!isSignUp ? (
                 <div className="suggest-signup">
                     <span>Don't have an account yet?</span>
                     <Link onClick={() => setIsSignUp(prevSignUp => !prevSignUp)} to="/auth/sign-up"> Sign up</Link>
