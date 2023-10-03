@@ -6,26 +6,31 @@ import './assets/styles/main.scss'
 
 
 import { HomePage } from './pages/HomePage'
-import { BoardIndex } from './pages/BoardIndex'
+// import { BoardIndex } from './pages/BoardIndex'
 import { LoginSignUp } from './pages/LoginSingup';
+import { BoardDetails } from './pages/BoardDetails';
+import { TaskDetails } from './pages/TaskDetails';
 // import { store } from './store/store'
 
 export function App() {
 
   return (
-    // <Provider store={store}>
-    <Router>
-      <Routes>
-        <Route element={<HomePage />} path="/" />
-        <Route element={<BoardIndex />} path="/board" />
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route element={<HomePage />} path="/" />
+          {/* <Route element={<BoardIndex />} path="/board" /> //TODO: add board index page */}
+          <Route path="/board/:boardId" element={<BoardDetails />}>
+            <Route path='/task/:taskId' element={<TaskDetails />} />
+          </Route>
 
-        <Route path="/auth">
-          <Route path="login" element={<LoginSignUp />} />
-          <Route path="sign-up" element={<LoginSignUp />} />
-        </Route>
-
-      </Routes>
-    </Router>
-    // </Provider>
+          <Route path="/auth">
+            <Route path="login" element={<LoginSignUp />} />
+            <Route path="sign-up" element={<LoginSignUp />} />
+          </Route>
+          {/* <Route path="*" element={<PageNotFound />} /> //TODO: add 404 page  */}
+        </Routes>
+      </Router>
+    </Provider>
   )
 }
