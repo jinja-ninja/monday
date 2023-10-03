@@ -126,16 +126,17 @@ export function SideBar() {
                         >
                             <MenuItem
                                 icon={Erase}
-                                // iconType="SVG"
+                                iconType="SVG"
                                 // onClick={function noRefCheck() { }}
                                 title="Delete"
+                                text="Delete"
                             />
-                            <MenuItem
+                            {/* <MenuItem
                                 icon={function noRefCheck() { }}
                                 iconType="SVG"
                                 onClick={function noRefCheck() { }}
                                 title="The moon"
-                            />
+                            /> */}
                         </Menu>
                     </MenuButton>
 
