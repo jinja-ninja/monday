@@ -23,7 +23,6 @@ export function BoardDetails() {
 
     async function loadBoard() {
         await getBoardById(params.boardId)
-        await updateBoard('board', 'b101', null, null, { key: 'title', value: `Robot dev proj${Date.now()}` })
     }
 
 

@@ -4,16 +4,25 @@ import { useState } from "react"
 
 export function BoardNavLink({ text, boardId, showBoard, onDeleteBoard, onRenameBoard }) {
     const [isEditibleMode, setIsEditibleMode] = useState(false)
-    
+    const [editableText, setEditableText] = useState(text);
+
+
     const EditibleOrText = !isEditibleMode ? text : <EditableHeading
         className="editableHeading"
         type="h6"
         value={text}
-        shouldFocusOnMount={true}
-        onBlur={() => setIsEditibleMode((prevIsEditable) => !prevIsEditable)}
+        // shouldFocusOnMount={true}
+        onBlur={() => {
+            onRenameBoard(boardId, editableText);
+            setIsEditibleMode((prevIsEditable) => !prevIsEditable);
+        }}
+        onChange={(newText) => setEditableText(newText)}
+
+        onClick={(e) => { e.stopPropagation() }}
 
     />
-    console.log('EditibleOrText:', EditibleOrText)
+
+    // console.log('EditibleOrText:', EditibleOrText)
     return (
 
         <div className="btn-board-container">
@@ -38,7 +47,6 @@ export function BoardNavLink({ text, boardId, showBoard, onDeleteBoard, onRename
                     <MenuItem
                         onClick={() => {
                             setIsEditibleMode((prevIsEditable) => !prevIsEditable)
-                            onRenameBoard(boardId)
                         }} icon={Edit} iconType={MenuItem.iconType.SVG} title="Rename Board" />
                 </Menu>
             </MenuButton>

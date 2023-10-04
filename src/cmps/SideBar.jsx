@@ -3,7 +3,7 @@ import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu, Editab
 import { Add, Board, Delete, Home, Edit } from "monday-ui-react-core/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { BoardNavLink } from "./BoardNavLink";
-import { addBoard, loadBoards, removeBoard } from "../store/actions/board.action";
+import { addBoard, loadBoards, removeBoard, updateBoard } from "../store/actions/board.action";
 import { useNavigate } from "react-router";
 
 
@@ -29,11 +29,10 @@ export function SideBar() {
         console.log('Delete Board', boardId)
     }
 
-    function onRenameBoard(boardId) {
+    function onRenameBoard(boardId, newText) {
         console.log('Rename Board', boardId)
-        // onClick={() => setIsEditibleMode(prevIsEditable => !prevIsEditable)}
-        // setIsEditibleMode(prevIsEditable => !prevIsEditable)
-        // console.log('isEditibleMode:', isEditibleMode)
+        console.log('newText:', newText)
+        updateBoard('board', boardId, null, null, { key: 'title', value: newText })
     }
 
     function onAddBoard() {

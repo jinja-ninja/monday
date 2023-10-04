@@ -1,6 +1,6 @@
 import { boardService } from '../../services/board.service.local'
 import { utilService } from '../../services/util.service'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, UPDATE_BOARD, SET_BOARD } from '../reducers/board.reducer'
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, UPDATE_BOARDS, SET_BOARD } from '../reducers/board.reducer'
 import { store } from '../store'
 
 export async function loadBoards() {
@@ -34,60 +34,131 @@ export async function addBoard() {
     // const owner = loggedInUser
     //CHANGE LATER TO A STARTER BOARD - MAKE DEMO DATA FOR IT!
     const board = {
-        title: 'New Board',
+        title: "New Board",
         isStarred: false,
-        description: '',
-        archivedAt: null,
-        createdBy: { _id: '', fullname: '', imgUrl: '' },
-        members: [],
-        groups: [],
-        cmpsOrder: [
-            { id: utilService.makeId(), cmpName: 'ownerPicker', defaultWidth: '85px', minWidth: '85px', isShown: true },
+        archivedAt: 1589983468418,
+        createdBy: {
+            _id: "u101",
+            fullname: "Abi Abambi",
+            imgUrl: "http://some-img"
+        },
+        style: {
+            backgroundImage: ""
+        },
+        labels: [
             {
-                id: utilService.makeId(),
-                cmpName: 'statusPicker',
-                defaultWidth: '150px',
-                minWidth: '50px',
-                isShown: true,
+                id: "l101",
+                title: "Done",
+                color: "#61bd4f"
             },
             {
-                id: utilService.makeId(),
-                cmpName: 'priorityPicker',
-                defaultWidth: '150px',
-                minWidth: '50px',
-                isShown: true,
-            },
-            {
-                id: utilService.makeId(),
-                cmpName: 'timelinePicker',
-                defaultWidth: '150px',
-                minWidth: '70px',
-                isShown: true,
-            },
-            {
-                id: utilService.makeId(),
-                cmpName: 'collaboratorPicker',
-                defaultWidth: '150px',
-                minWidth: '100px',
-                isShown: true,
-            },
-            { id: utilService.makeId(), cmpName: 'datePicker', defaultWidth: '100px', minWidth: '50px', isShown: true },
+                id: "l102",
+                title: "Progress",
+                color: "#61bd33"
+            }
         ],
-        statusLabels: [
-            { id: 'sl100', title: 'Done', color: '#00C875' },
-            { id: 'sl101', title: 'Working on it', color: '#FDAB3D' },
-            { id: 'sl102', title: 'Stuck', color: '#E2445C' },
-            { id: 'sl103', title: 'Almost done', color: '#0086C0' },
-            { id: 'sl104', title: '', color: '#C4C4C4' },
+        members: [
+            {
+                _id: "u101",
+                fullname: "Tal Tarablus",
+                imgUrl: "https://www.google.com"
+            }
         ],
-        priorityLabels: [
-            { id: 'pl100', title: 'Critical', color: '#333333' },
-            { id: 'pl101', title: 'High', color: '#401694' },
-            { id: 'pl102', title: 'Medium', color: '#5559DF' },
-            { id: 'pl103', title: 'Low', color: '#579BFC' },
-            { id: 'pl104', title: '', color: '#C4C4C4' },
+        groups: [
+            {
+                id: "g101",
+                title: "Group 1",
+                archivedAt: 1589983468418,
+                tasks: [
+                    {
+                        id: "c101",
+                        title: "Replace logo"
+                    },
+                    {
+                        id: "c102",
+                        title: "Add Samples"
+                    }
+                ],
+                style: {}
+            },
+            {
+                id: "g102",
+                title: "Group 2",
+                tasks: [
+                    {
+                        id: "c103",
+                        title: "Do that",
+                        archivedAt: 1589983468418
+                    },
+                    {
+                        id: "c104",
+                        title: "Help me",
+                        status: "in-progress",
+                        priority: "high",
+                        description: "description",
+                        comments: [
+                            {
+                                id: "ZdPnm",
+                                txt: "also @yaronb please CR this",
+                                createdAt: 1590999817436,
+                                byMember: {
+                                    _id: "u101",
+                                    fullname: "Tal Tarablus",
+                                    imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                                }
+                            }
+                        ],
+                        checklists: [
+                            {
+                                id: "YEhmF",
+                                title: "Checklist",
+                                todos: [
+                                    {
+                                        id: "212jX",
+                                        title: "To Do 1",
+                                        isDone: false
+                                    }
+                                ]
+                            }
+                        ],
+                        memberIds: ["u101"],
+                        labelIds: ["l101", "l102"],
+                        dueDate: 16156215211,
+                        byMember: {
+                            _id: "u101",
+                            username: "Tal",
+                            fullname: "Tal Tarablus",
+                            imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                        },
+                        style: {
+                            backgroundColor: "#26de81"
+                        }
+                    }
+                ],
+                style: {}
+            }
         ],
-        activities: [],
+        activities: [
+            {
+                id: "a101",
+                txt: "Changed Color",
+                createdAt: 154514,
+                byMember: {
+                    _id: "u101",
+                    fullname: "Abi Abambi",
+                    imgUrl: "http://some-img"
+                },
+                group: {
+                    id: "g101",
+                    title: "Urgent Stuff"
+                },
+                task: {
+                    id: "c101",
+                    title: "Replace Logo"
+                }
+            }
+        ],
+        cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
     }
 
     try {
@@ -99,10 +170,15 @@ export async function addBoard() {
 }
 
 export async function updateBoard(type, boardId, groupId = null, taskId = null, { key, value }) {
+
     try {
+        const currBoard = store.getState().boardModule.board
         const newBoard = await boardService.update(type, boardId, groupId = null, taskId = null, { key, value })
         console.log('newBorad:', newBoard)
+        console.log(currBoard)
+        if (boardId === currBoard._id) {
         store.dispatch({ type: SET_BOARD, board: newBoard })
+        }
         store.dispatch({ type: UPDATE_BOARDS, board: newBoard })
     } catch (err) {
         throw err
