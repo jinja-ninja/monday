@@ -15,6 +15,7 @@ export const boardService = {
     removeGroup,
     getEmptyGroup,
     _createBoards,
+    duplicatedGroup,
 
 }
 
@@ -23,7 +24,7 @@ _createBoards()
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
         const board = await getBoardById(boardId)
-
+        console.log('boardfromUpdate Function:', board)
         let groupIdx, taskIdx
 
         switch (type) {
@@ -32,6 +33,7 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 board[key] = value
                 break
             case 'group':
+                console.log('groupId:', groupId)
                 if (!groupId) throw new Error('Error updating')
                 groupIdx = board.groups.findIndex(group => group.id === groupId)
                 board.groups[groupIdx][key] = value
@@ -49,7 +51,7 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
         return await storageService.put(STORAGE_KEY, board)
     }
     catch {
-        console.log('error')
+        // console.log('error')
         throw new Error('Error updating')
     }
 
@@ -120,6 +122,22 @@ async function removeGroup(board, groupId) {
     }
 }
 
+async function duplicatedGroup(board, groupId) {
+    try {
+        const updatedBoard = { ...board }
+        const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
+        const groupToDuplicate = updatedBoard.groups[groupIdx]
+        const duplicatedGroup = JSON.parse(JSON.stringify(groupToDuplicate))
+        duplicatedGroup.id = utilService.makeId()
+        duplicatedGroup.title = duplicatedGroup.title + ' copy'
+        updatedBoard.groups.splice(groupIdx + 1, 0, duplicatedGroup)
+        return await storageService.put(STORAGE_KEY, updatedBoard)
+    }
+    catch {
+        console.log('error')
+        throw new Error('Error updating')
+    }
+}
 
 function _createBoards() {
     let boards = utilService.loadFromStorage(STORAGE_KEY)

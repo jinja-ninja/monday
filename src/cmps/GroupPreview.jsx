@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { Icon, Text } from "monday-ui-react-core";
-import { DropdownChevronDown, DropdownChevronRight } from "monday-ui-react-core/icons";
+import { EditableHeading, Icon, Text } from "monday-ui-react-core";
+import { DropdownChevronDown, DropdownChevronRight, Edit } from "monday-ui-react-core/icons";
 
 
 
@@ -14,21 +14,28 @@ import { Priority } from "./dynamicCmps/Priority";
 import { TaskListHeader } from "./TaskListHeader";
 import { TaskList } from "./TaskList";
 
-export function GroupPreview({ group, label, cmpOrder, progress }) {
+
+export function GroupPreview({ group, label, cmpOrder, progress, boardId, onRenameGroup, initiateEdit }) {
 
     const [showGroup, setShowGroup] = useState(true)
+    const [editableText, setEditableText] = useState(group.title);
 
     return <div className="group-preview-container">
         <div className="collapsible-header-wrapper">
             <Icon iconType={Icon.type.SVG} icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
                 onClick={() => setShowGroup((prevShowGroup => !prevShowGroup))} />
-            <Text
-                weight="bold"
-                align="start"
-                element="span"
-            >
-                {group.title}
-            </Text>
+
+            <EditableHeading
+                className="editable-heading-target"
+                type="h4"
+                value={editableText}
+                onBlur={() => {
+                    onRenameGroup(group.id, editableText);
+                }}
+                onChange={(newText) => setEditableText(newText)}
+            />
+
+
 
         </div>
         {/* <TaskListHeader cmpOrder={cmpOrder} /> */}
