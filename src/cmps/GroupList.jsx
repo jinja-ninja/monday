@@ -6,6 +6,14 @@ import { useState } from "react"
 
 export function GroupList({ groups, labels, cmpOrder, progress }) {
 
+    const [toggleGroupList, setToggleGroupList] = useState(true)
+
+    const addNewGroup = () => {
+        console.log('add new group')
+
+    }
+
+
     const uid = () => Math.random().toString(36).slice(2)
 
     return <div className="group-list-container">
@@ -25,9 +33,11 @@ export function GroupList({ groups, labels, cmpOrder, progress }) {
         </ul>
 
         <Button
+            onClick={() => { addNewGroup() }}
             kind="secondary"
             size="small"
             leftIcon={Add}>
+
             Add new Group
         </Button>
     </div>

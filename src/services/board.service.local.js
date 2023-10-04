@@ -10,6 +10,7 @@ export const boardService = {
     save,
     remove,
     getEmptyBoard,
+    addGroup,
     _createBoards
 }
 
@@ -49,6 +50,12 @@ function getEmptyBoard() {
             _id: 'u101'
         }
     }
+}
+
+async function addGroup(board, group) {
+    const newBoard = { ...board }
+    newBoard.groups.push(group)
+    return await save(newBoard)
 }
 
 

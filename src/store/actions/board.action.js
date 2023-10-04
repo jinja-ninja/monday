@@ -49,3 +49,12 @@ export async function updateBoard(board) {
         throw err
     }
 }
+
+export async function addGroup(board, group) {
+    try {
+        const newBoard = await boardService.addGroup(board, group)
+        store.dispatch({ type: UPDATE_BOARD, board: newBoard })
+    } catch (err) {
+        throw err
+    }
+}
