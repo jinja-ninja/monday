@@ -3,13 +3,13 @@ import { Favorite, Home, Info } from "monday-ui-react-core/icons";
 import { Link } from "react-router-dom";
 
 
-export function BoardDetailsHeader() {
+export function BoardDetailsHeader({ title }) {
 
     return <div className="header-wrapper best-taem">
         <div className="header-info">
             <div className="board-header">
                 <div className="board-title">
-                    <EditableHeading type={EditableHeading.types.h2} value="H2 Header" />
+                    <EditableHeading type={EditableHeading.types.h2} value={title} />
                     <IconButton
                         ariaLabel="Show board description"
                         icon={Info}
