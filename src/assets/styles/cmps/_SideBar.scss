@@ -13,12 +13,10 @@
     align-items: center;
     position: relative;
     height: 100vh;
-    // DEV PUPROSE CHANGE LATER^^
-    // height: 100%;
     width: 30px;
     border-top-right-radius: 8px;
     background-color: var(--color-snow_white);
-    transition: width 0.2s;
+    transition: all 0.2s;
 
     .btn-open-close {
         display: flex;

@@ -29,10 +29,7 @@ export function App() {
           {/* <Route path='/task/:taskId' element={<TaskDetails />} /> */}
         </Route>
         <Route element={<BoardIndex/>} path="/board" />
-        {/* //DELETE THIS ROUTE AFTER ITS ONLY FOR DEV PURPOSES! */}
-        <Route element={<SideBar />} path="/sidebar" /> 
         
-
         <Route path="/auth">
           <Route path="login" element={<LoginSignUp />} />
           <Route path="sign-up" element={<LoginSignUp />} />

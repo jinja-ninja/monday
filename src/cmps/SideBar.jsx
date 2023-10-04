@@ -140,7 +140,12 @@ export function SideBar() {
                         </Menu>
                     </MenuButton>
 
-
+                    {/* <MenuButton size={MenuButton.sizes.XXS}>
+                        <Menu id="menu" size={Menu.sizes.MEDIUM}>
+                            <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} />
+                            <MenuItem icon={Sun} iconType={MenuItem.iconType.SVG} title="The sun" />
+                        </Menu>
+                    </MenuButton> */}
                 </div>
 
             </div>
