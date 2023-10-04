@@ -1,12 +1,11 @@
-import { combineReducers, compose, legacy_createStore as createStore } from "redux"
+import { combineReducers, compose, legacy_createStore as createStore  } from "redux"
 
-
-import { userReducer } from "./reducers/userReducer"
-import { boardReducer } from "./reducers/boardReducer"
+import { userReducer } from "./reducers/user.reducer"
+import { boardReducer } from "./reducers/board.reducer"
 
 const rootReducer = combineReducers({
     boardModule: boardReducer,
-    userModule: userReducer,
+    // userModule: userReducer,
 })
 
 
