@@ -7,6 +7,7 @@ const STORAGE_KEY = 'boardDB'
 export const boardService = {
     query,
     getBoardById,
+    update,
     save,
     remove,
     getEmptyBoard,
@@ -14,8 +15,6 @@ export const boardService = {
 }
 
 _createBoards()
-
-update('board', 'b101', '', '', { key: 'title', value: 'Robot dev proj' })
 
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
