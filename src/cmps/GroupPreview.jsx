@@ -18,7 +18,7 @@ export function GroupPreview({ group, label, cmpOrder, progress }) {
 
     const [showGroup, setShowGroup] = useState(true)
 
-    return <div className="preview-container">
+    return <div className="group-preview-container">
         <div className="collapsible-header-wrapper">
             <Icon iconType={Icon.type.SVG} icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
                 onClick={() => setShowGroup((prevShowGroup => !prevShowGroup))} />
@@ -33,7 +33,6 @@ export function GroupPreview({ group, label, cmpOrder, progress }) {
         </div>
         {/* <TaskListHeader cmpOrder={cmpOrder} /> */}
         {showGroup && <TaskList group={group} cmpOrder={cmpOrder} />}
-
     </div>
 }
 
@@ -66,3 +65,5 @@ export function GroupPreview({ group, label, cmpOrder, progress }) {
 //     </section>
 // );
 // };
+
+
