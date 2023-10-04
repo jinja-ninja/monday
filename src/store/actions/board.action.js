@@ -173,9 +173,7 @@ export async function updateBoard(type, boardId, groupId = null, taskId = null, 
 
     try {
         const currBoard = store.getState().boardModule.board
-        const newBoard = await boardService.update(type, boardId, groupId = null, taskId = null, { key, value })
-        console.log('newBorad:', newBoard)
-        console.log(currBoard)
+        const newBoard = await boardService.update(type, boardId, groupId, taskId, { key, value })
         if (boardId === currBoard._id) {
             store.dispatch({ type: SET_BOARD, board: newBoard })
         }
@@ -201,6 +199,17 @@ export async function removeGroup(boardId, groupId) {
     try {
         let board = await boardService.getBoardById(boardId)
         board = await boardService.removeGroup(board, groupId)
+        store.dispatch({ type: SET_BOARD, board })
+        store.dispatch({ type: UPDATE_BOARDS, board })
+    } catch (err) {
+        throw err
+    }
+}
+
+export async function duplicatedGroup(boardId, groupId) {
+    try {
+        let board = await boardService.getBoardById(boardId)
+        board = await boardService.duplicatedGroup(board, groupId)
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {
