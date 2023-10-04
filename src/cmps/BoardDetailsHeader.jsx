@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export function BoardDetailsHeader() {
 
-    return <div className="header-wrapper">
+    return <div className="header-wrapper best-taem">
         <div className="header-info">
             <div className="board-header">
                 <div className="board-title">

@@ -1,6 +1,7 @@
 .board-main-header {
   // background-color: var(--grey-background-color);
-  background-color: #ECEFF8;
+  background-color: var(--board-main-header-background);
+  //ADD TO THEMES IN INDEX.CSS!!!
   height: 48px;
   justify-content: space-between;
   align-items: center;

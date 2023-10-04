@@ -17,6 +17,7 @@
     border-top-right-radius: 8px;
     background-color: var(--color-snow_white);
     transition: all 0.2s;
+    box-shadow: var(--box-shadow-xs);
 
     .btn-open-close {
         display: flex;
@@ -39,7 +40,6 @@
         }
 
         .open-close-arrow {
-            padding-left: 4px;
             transition: all .4s;
         }
     }

@@ -22,9 +22,8 @@ export function App() {
     // <Provider store={store}>
     <Router>
       <Routes>
-        <Route path="/header" element={<BoardMainHeader />} />
         <Route element={<HomePage />} path="/" />
-        {/* <Route element={<BoardIndex />} path="/board" /> //TODO: add board index page */}
+        <Route element={<BoardIndex />} path="/board" /> {/* TODO: add board index page */}
         <Route path="board/:boardId" element={<BoardDetails />}>
           {/* <Route path='/task/:taskId' element={<TaskDetails />} /> */}
         </Route>
