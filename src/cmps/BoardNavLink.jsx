@@ -2,7 +2,7 @@ import { Button, EditableHeading, Menu, MenuButton, MenuItem } from "monday-ui-r
 import { Board, Delete, Edit } from "monday-ui-react-core/icons"
 import { useState } from "react"
 
-export function BoardNavLink({ text, boardId, showBoard, onDeleteBoard, onRenameBoard }) {
+export function BoardNavLink({ text, boardId, onSelectBoard, onDeleteBoard, onRenameBoard }) {
     const [isEditibleMode, setIsEditibleMode] = useState(false)
     const [editableText, setEditableText] = useState(text);
 
@@ -30,7 +30,7 @@ export function BoardNavLink({ text, boardId, showBoard, onDeleteBoard, onRename
                 className="btn-board"
                 kind="tertiary"
                 leftIcon={Board}
-                onClick={() => showBoard(boardId)
+                onClick={() => onSelectBoard(boardId)
 
                 }
             >

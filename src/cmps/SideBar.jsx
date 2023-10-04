@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { BoardNavLink } from "./BoardNavLink";
 import { addBoard, loadBoards, removeBoard, updateBoard } from "../store/actions/board.action";
 import { useNavigate } from "react-router";
+import { SET_BOARD } from "../store/reducers/board.reducer";
+import { boardService } from "../services/board.service.local";
 
 
 
@@ -20,7 +22,8 @@ export function SideBar() {
 
     console.log('boards:', boards)
 
-    function showBoard(boardId) {
+    function onSelectBoard(boardId) {
+        navigate(`/board/${boardId}`)
         console.log('board clicked - display board in BoardDetails', boardId)
     }
 
@@ -97,7 +100,7 @@ export function SideBar() {
                     {boards && boards.map((board, idx) => {
                         return (
                             <BoardNavLink
-                                text={board.title} boardId={board._id} showBoard={showBoard}
+                                text={board.title} boardId={board._id} onSelectBoard={onSelectBoard}
                                 onDeleteBoard={onDeleteBoard} onRenameBoard={onRenameBoard}
                                 // isEditibleMode={isEditibleMode}
                                 key={idx} />
