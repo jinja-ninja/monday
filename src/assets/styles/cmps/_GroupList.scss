@@ -1,11 +1,21 @@
 .group-list-container {
-    padding-left: var(--spacing-xl);
-    padding-block-end: var(--spacing-xl);
-    margin-block-start: var(--spacing-medium);
+  padding-left: var(--spacing-xl);
+  padding-block-end: var(--spacing-xl);
+  margin-block-start: var(--spacing-medium);
 
-    .collapsible-header-wrapper {
-        display: flex;
-        align-items: center;
+  .collapsible-header-wrapper {
+    display: flex;
+    align-items: center;
+  }
 
+  .group-list-item {
+    position: relative;
+    .group-menu-btn {
+      position: absolute;
+      left: -30px;
+      top: -3px;
+      // margin-inline-start: auto;
+      margin-inline-end: var(--spacing-medium);
     }
+  }
 }

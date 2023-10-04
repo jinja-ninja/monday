@@ -18,7 +18,7 @@ export function SideBar() {
         loadBoards()
     }, [])
 
-    console.log('boards:', boards)
+    // console.log('boards:', boards)
 
     function showBoard(boardId) {
         console.log('board clicked - display board in BoardDetails', boardId)
