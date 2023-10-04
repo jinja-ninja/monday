@@ -29,9 +29,9 @@ export async function addBoard(board) {
     }
 }
 
-export async function updateBoard(board) {
+export async function updateBoard(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
-        const newBoard = await boardService.save(board)
+        const newBoard = await boardService.update(type, boardId, groupId = null, taskId = null, { key, value })
         store.dispatch({ type: UPDATE_BOARD, board: newBoard })
     } catch (err) {
         throw err

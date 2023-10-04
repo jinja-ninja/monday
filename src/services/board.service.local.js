@@ -13,14 +13,48 @@ export const boardService = {
     _createBoards
 }
 
-
 _createBoards()
+
+update('board', 'b101', '', '', { key: 'title', value: 'Robot dev proj' })
+
+async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
+    try {
+        const board = await getBoardById(boardId)
+
+        let groupIdx, taskIdx
+
+        switch (type) {
+            case 'board':
+                if (!boardId) throw new Error('Error updating')
+                board[key] = value
+                break
+            case 'group':
+                if (!groupId) throw new Error('Error updating')
+                groupIdx = board.groups.findIndex(group => group.id === groupId)
+                board.groups[groupIdx][key] = value
+                break
+            case 'task':
+                if (!taskId) throw new Error('Error updating')
+                groupIdx = board.groups.findIndex(group => group.tasks.find(task => task.id === taskId))
+                taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+                board.groups[groupIdx].tasks[taskIdx][key] = value
+                break
+            default:
+                break;
+        }
+
+        return await storageService.put(STORAGE_KEY, board)
+    }
+    catch {
+        console.log('error')
+        throw new Error('Error updating')
+    }
+
+}
 
 
 async function query() {
-    const res = await storageService.query(STORAGE_KEY)
-    console.log('res:', res)
-    return res
+    return await storageService.query(STORAGE_KEY)
 }
 
 async function getBoardById(boardId) {
@@ -28,13 +62,7 @@ async function getBoardById(boardId) {
 }
 
 async function save(board) {
-    var savedBoard
-    if (board._id) {
-        savedBoard = await storageService.put(STORAGE_KEY, board)
-    } else {
-        savedBoard = await storageService.post(STORAGE_KEY, board)
-    }
-    return savedBoard
+    return await storageService.post(STORAGE_KEY, board)
 }
 
 async function remove(boardId) {
@@ -51,13 +79,8 @@ function getEmptyBoard() {
     }
 }
 
-
-
-
-
 function _createBoards() {
     let boards = utilService.loadFromStorage(STORAGE_KEY)
-    console.log('boards:', boards)
     if (!boards || !boards.length) {
         boards =
             [
