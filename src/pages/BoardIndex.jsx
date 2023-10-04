@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { Box, Counter, Text, Icon } from "monday-ui-react-core"
 import { BoardIndexAside } from "../cmps/BoardIndexAside"
@@ -6,21 +6,25 @@ import { BoardList } from "../cmps/BoardList"
 import { DropdownChevronRight, DropdownChevronDown } from "/node_modules/monday-ui-react-core/src/components/Icon/Icons"
 import { BoardMainHeader } from "../cmps/BoardMainHeader"
 import { SideBar } from "../cmps/SideBar"
+import { loadBoards } from "../store/actions/board.action"
+import { useSelector } from "react-redux"
 
 export function BoardIndex() {
 
     const [toggleBoardList, setToggleBoardList] = useState(true)
     const [toggleInbox, setToggleInbox] = useState(true)
+    const boards = useSelector(state => state.boardModule.boards)
 
-    const boards = [
-        { title: `Long Text Test Board for you buddy and if you want I can send you another poem or something so you'll have more text here!`, _id: 1 },
-        { title: `Test Board`, _id: 2 }
-    ]
+    useEffect(() => {
+        loadBoards()
+    }, [])
 
+
+    // console.log('boards from index', boards)
     return <main className="board-index">
 
         <BoardMainHeader />
-        <SideBar />
+        {/* <SideBar /> */}
 
         <section className="board-index-body">
             <Box

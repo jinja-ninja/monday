@@ -1,154 +1,27 @@
+import { useEffect, useState } from "react";
 import { Button, IconButton, MenuItem, SplitButton, SplitButtonMenu } from "monday-ui-react-core";
 import { Add, Announcement, Check, Filter, Hide, Menu, PersonRound, Search, Sort } from "monday-ui-react-core/icons";
 import { BoardDetailsHeader } from "../cmps/BoardDetailsHeader";
 import { GroupList } from "../cmps/GroupList";
 import { BoardMainHeader } from "../cmps/BoardMainHeader";
 import { SideBar } from "../cmps/SideBar";
+import { useParams } from "react-router-dom";
+import { getBoardById } from "../store/actions/board.action";
+import { useSelector } from "react-redux";
 
 export function BoardDetails() {
+    const params = useParams()
+    // const board = useSelector(state => state.boardModule.board)
 
-    // const groups = [{ title: `test`, tasks: [1, 2, 3], _id: 1 }, { title: `test2`, tasks: [11, 22, 33], _id: 2 }]
+    const [board, setBoard] = useState(null)
 
-    const groups = [
-        {
-            _id: Math.random().toString(36).slice(2),
-            color: "red",
-            title: 'Dev',
-            tasks: [
-                {
-                    _id: "t101",
-                    side: "null",
-                    taskTitle: "learn CSS",
-                    members: [
-                        { name: "tal", color: "red" },
-                        { name: "bal", color: "black" },
-                        { name: "shal", color: "green" }
-                    ],
-                    date: "27-02-2022",
-                    status: "IN WORK",
-                    priority: "LOW"
-                },
-                {
-                    _id: "t102",
-                    side: "null",
-                    taskTitle: "learn vue",
-                    members: [
-                        { name: "tal", color: "red" },
-                        { name: "bal", color: "black" },
-                        { name: "shal", color: "green" }
-                    ],
-                    date: "27-02-2022",
-                    status: "STUCK",
-                    priority: "LOW"
-                },
-                {
-                    _id: "t103",
-                    side: "null",
-                    taskTitle: "learn js",
-                    members: [
-                        { name: "tal", color: "red" },
-                        { name: "bal", color: "black" },
-                        { name: "shal", color: "green" }
-                    ],
-                    date: "27-02-2022",
-                    status: "DONE",
-                    priority: "LOW"
-                }
-            ]
-        },
-        {
-            _id: Math.random().toString(36).slice(2),
-            color: "blue",
-            title: 'Design',
-            tasks: [
-                {
-                    _id: "t101",
-                    side: "null",
-                    taskTitle: "learn CSS",
-                    members: [
-                        { name: "tal", color: "red" },
-                        { name: "bal", color: "black" },
-                        { name: "shal", color: "green" }
-                    ],
-                    date: "27-02-2022",
-                    status: "IN WORK",
-                    priority: "LOW"
-                },
-                {
-                    _id: "t102",
-                    side: "null",
-                    taskTitle: "learn vue",
-                    members: [
-                        { name: "tal", color: "red" },
-                        { name: "bal", color: "black" },
-                        { name: "shal", color: "green" }
-                    ],
-                    date: "27-02-2022",
-                    status: "STUCK",
-                    priority: "LOW"
-                },
-                {
-                    _id: "t103",
-                    side: "null",
-                    taskTitle: "learn js",
-                    members: [
-                        { name: "tal", color: "red" },
-                        { name: "bal", color: "black" },
-                        { name: "shal", color: "green" }
-                    ],
-                    date: "27-02-2022",
-                    status: "DONE",
-                    priority: "LOW"
-                }
-            ]
-        },
-        {
-            _id: Math.random().toString(36).slice(2),
-            color: "green",
-            title: 'Doink',
-            tasks: [
-                {
-                    _id: "t101",
-                    side: "null",
-                    taskTitle: "learn CSS",
-                    members: [
-                        { name: "tal", color: "red" },
-                        { name: "bal", color: "black" },
-                        { name: "shal", color: "green" }
-                    ],
-                    date: "27-02-2022",
-                    status: "IN WORK",
-                    priority: "LOW"
-                },
-                {
-                    _id: "t102",
-                    side: "null",
-                    taskTitle: "learn vue",
-                    members: [
-                        { name: "tal", color: "red" },
-                        { name: "bal", color: "black" },
-                        { name: "shal", color: "green" }
-                    ],
-                    date: "27-02-2022",
-                    status: "STUCK",
-                    priority: "LOW"
-                },
-                {
-                    _id: "t103",
-                    side: "null",
-                    taskTitle: "learn js",
-                    members: [
-                        { name: "tal", color: "red" },
-                        { name: "bal", color: "black" },
-                        { name: "shal", color: "green" }
-                    ],
-                    date: "27-02-2022",
-                    status: "DONE",
-                    priority: "LOW"
-                }
-            ]
-        }
-    ];
+    useEffect(() => {
+        getBoardById(params.boardId)
+            .then(board => setBoard(board))
+            .catch(err => console.log('err from board details:', err))
+        // setBoard(getBoardById(params.boardId))
+    }, [params.boardId])
+    // console.log('board from details after useeffect:', board)
 
     const cmpOrder = [
         "side",
@@ -159,9 +32,9 @@ export function BoardDetails() {
         "date"
     ];
 
-    const labels = ["groupName", null, "status", "members", "priority", "date"] // ?????????????????
-    const progress = [null, null, "status", null, "priority", null] // ???????????????????????
+    const progress = [null, null, "status", null, "priority", null]
 
+    if (!board) return (<div>Loading...</div>)
 
     return <main className="board-details-layout">
         <BoardMainHeader />
@@ -169,7 +42,7 @@ export function BoardDetails() {
 
         <section className="board-details-container">
 
-            <BoardDetailsHeader />
+            <BoardDetailsHeader title={board.title} />
 
             <div className="board-details-actions">
 
@@ -197,8 +70,8 @@ export function BoardDetails() {
                 <IconButton icon={Menu} size="small" />
             </div>
 
-            <GroupList groups={groups}
-                labels={labels}
+            <GroupList groups={board.groups}
+                labels={board.labels}
                 cmpOrder={cmpOrder}
                 progress={progress}
             />
