@@ -1,9 +1,11 @@
 .board-details-layout {
     display: grid;
-    grid-template-columns: 1fr 9fr;
-    grid-template-rows: 1fr 9fr;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    column-gap: 12px;
 
-    background-color: var(--grey-background-color);
+    // background-color: var(--grey-background-color);
+    background-color: #ECEFF8;
 
     .board-main-header {
         grid-column: 1/-1;

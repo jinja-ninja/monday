@@ -3,6 +3,7 @@ import { Add, Announcement, Check, Filter, Hide, Menu, PersonRound, Search, Sort
 import { BoardDetailsHeader } from "../cmps/BoardDetailsHeader";
 import { GroupList } from "../cmps/GroupList";
 import { BoardMainHeader } from "../cmps/BoardMainHeader";
+import { SideBar } from "../cmps/SideBar";
 
 export function BoardDetails() {
 
@@ -164,7 +165,7 @@ export function BoardDetails() {
 
     return <main className="board-details-layout">
         <BoardMainHeader />
-        {/* <SideBar /> */}
+        <SideBar />
 
         <section className="board-details-container">
 
