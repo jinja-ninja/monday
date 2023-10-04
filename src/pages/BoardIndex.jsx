@@ -4,6 +4,8 @@ import { Box, Counter, Text, Icon } from "monday-ui-react-core"
 import { BoardIndexAside } from "../cmps/BoardIndexAside"
 import { BoardList } from "../cmps/BoardList"
 import { DropdownChevronRight, DropdownChevronDown } from "/node_modules/monday-ui-react-core/src/components/Icon/Icons"
+import { BoardMainHeader } from "../cmps/BoardMainHeader"
+import { SideBar } from "../cmps/SideBar"
 
 export function BoardIndex() {
 
@@ -16,6 +18,10 @@ export function BoardIndex() {
     ]
 
     return <main className="board-index">
+
+        <BoardMainHeader />
+        <SideBar />
+
         <section className="board-index-body">
             <Box
                 rounded={Box.roundeds.MEDIUM}

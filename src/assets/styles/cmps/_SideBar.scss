@@ -17,8 +17,9 @@
     // height: 100%;
     width: 30px;
     border-top-right-radius: 8px;
-    background-color: var(--color-snow_white);
+    background-color: var(--primary-background-color);
     transition: width 0.2s;
+    box-shadow: var(--box-shadow-xs);
 
     .btn-open-close {
         display: flex;
@@ -33,7 +34,7 @@
         border-bottom-left-radius: 8px;
         border: none;
         padding: 12px 8px 12px 8px;
-        background-color: var(--allgrey-background-color);
+        background-color: var(--primary-background-color);
         cursor: pointer;
 
         &:hover {
