@@ -12,7 +12,7 @@ export function SideBar() {
     // const boards = useSelector(storeState => storeState.boardModule.boards)
     let boards = [{ _id: 121, title: 'Hello' }, { _id: 131, title: 'Test Board' }]
 
-    console.log('boards:', boards)
+    // console.log('boards:', boards)
 
     function showBoard() {
         console.log('board clicked - display board in BoardDetails')

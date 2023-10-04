@@ -41,7 +41,7 @@ export async function addBoard(board) {
 export async function updateBoard(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
         const newBoard = await boardService.update(type, boardId, groupId = null, taskId = null, { key, value })
-        console.log('newBorad:', newBoard)
+        // console.log('newBorad:', newBoard)
         store.dispatch({ type: SET_BOARD, board: newBoard })
         store.dispatch({ type: UPDATE_BOARDS, board: newBoard })
     } catch (err) {
@@ -49,10 +49,24 @@ export async function updateBoard(type, boardId, groupId = null, taskId = null, 
     }
 }
 
-export async function addGroup(board, group) {
+export async function addGroup(boardId) {
     try {
-        const newBoard = await boardService.addGroup(board, group)
-        store.dispatch({ type: UPDATE_BOARD, board: newBoard })
+        let board = await boardService.getBoardById(boardId)
+        board = await boardService.addNewGroup(board)
+        console.log('board from add group function:', board)
+        store.dispatch({ type: SET_BOARD, board })
+        store.dispatch({ type: UPDATE_BOARDS, board })
+    } catch (err) {
+        throw err
+    }
+}
+
+export async function removeGroup(boardId, groupId) {
+    try {
+        let board = await boardService.getBoardById(boardId)
+        board = await boardService.removeGroup(board, groupId)
+        store.dispatch({ type: SET_BOARD, board })
+        store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {
         throw err
     }

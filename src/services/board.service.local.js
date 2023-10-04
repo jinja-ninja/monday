@@ -11,8 +11,11 @@ export const boardService = {
     save,
     remove,
     getEmptyBoard,
-    addGroup,
-    _createBoards
+    addNewGroup,
+    removeGroup,
+    getEmptyGroup,
+    _createBoards,
+
 }
 
 _createBoards()
@@ -80,11 +83,43 @@ function getEmptyBoard() {
     }
 }
 
-async function addGroup(board, group) {
-    const newBoard = { ...board }
-    newBoard.groups.push(group)
-    return await save(newBoard)
+function getEmptyGroup() {
+    return {
+        id: utilService.makeId(),
+        title: '',
+        tasks: [],
+        style: {},
+        archivedAt: null,
+    }
 }
+
+async function addNewGroup(board) {
+    try {
+        const newGroup = getEmptyGroup()
+        const updatedBoard = { ...board }
+        updatedBoard.groups.push(newGroup)
+        console.log('updatedBoard:', updatedBoard)
+        return await storageService.put(STORAGE_KEY, updatedBoard)
+    }
+    catch {
+        console.log('error')
+        throw new Error('Error updating')
+    }
+}
+
+async function removeGroup(board, groupId) {
+    try {
+        const updatedBoard = { ...board }
+        const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
+        updatedBoard.groups.splice(groupIdx, 1)
+        return await storageService.put(STORAGE_KEY, updatedBoard)
+    }
+    catch {
+        console.log('error')
+        throw new Error('Error updating')
+    }
+}
+
 
 function _createBoards() {
     let boards = utilService.loadFromStorage(STORAGE_KEY)
