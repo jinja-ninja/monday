@@ -16,6 +16,7 @@ export function SideBar() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const boards = useSelector(storeState => storeState.boardModule.boards)
+
     useEffect(() => {
         loadBoards()
     }, [])
