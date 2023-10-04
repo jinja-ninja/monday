@@ -21,7 +21,7 @@ export function GroupList({ groups, labels, cmpOrder, progress }) {
             {groups &&
                 groups.map((group, idx) => {
                     return (
-                        <li key={group._id}>
+                        <li key={group.id}>
                             <GroupPreview group={group}
                                 labels={labels}
                                 cmpOrder={cmpOrder}
