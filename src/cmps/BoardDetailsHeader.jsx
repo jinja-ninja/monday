@@ -29,7 +29,7 @@ export function BoardDetailsHeader({ title }) {
             </div>
 
             <div className="header-navbar">
-                {/* <TabList>
+                <TabList>
                     <Tab 
                         icon={Home}
                         iconSide="left">
@@ -38,7 +38,7 @@ export function BoardDetailsHeader({ title }) {
                     <Tab >
                         Kanban
                     </Tab>
-                </TabList> */}
+                </TabList>
             </div>
         </div>
     </div>
