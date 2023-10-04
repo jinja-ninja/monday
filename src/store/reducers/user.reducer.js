@@ -6,7 +6,7 @@ export const SET_WATCHED_USER = 'SET_WATCHED_USER'
 
 const initialState = {
     count: 101,
-    loggedinUser: userService.getLoggedinUser(),
+    // loggedinUser: userService.getLoggedinUser(),
     users: [],
     watchedUser: null
 }
