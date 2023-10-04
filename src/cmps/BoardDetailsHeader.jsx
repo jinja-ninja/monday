@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export function BoardDetailsHeader({ title }) {
 
-    return <div className="header-wrapper best-taem">
+    return <div className="header-wrapper">
         <div className="header-info">
             <div className="board-header">
                 <div className="board-title">
@@ -29,16 +29,16 @@ export function BoardDetailsHeader({ title }) {
             </div>
 
             <div className="header-navbar">
-                <TabList>
-                    <Tab
+                {/* <TabList>
+                    <Tab 
                         icon={Home}
                         iconSide="left">
                         Main Table
                     </Tab>
-                    <Tab>
+                    <Tab >
                         Kanban
                     </Tab>
-                </TabList>
+                </TabList> */}
             </div>
         </div>
     </div>

@@ -19,7 +19,7 @@ export function TaskList({ group, cmpOrder }) {
         </section>
 
         {group.tasks.map(task => (
-            <section className="task-list group-grid" key={task._id}>
+            <section className="task-list group-grid" key={task.id}>
                 {cmpOrder.map((cmp, idx) => (
                     <section className="task-item" key={idx}>
                         <DynamicCmp cmpType={cmp} info={task[cmp]} />
@@ -29,8 +29,16 @@ export function TaskList({ group, cmpOrder }) {
         ))}
         <section className="task-list-add group-grid">
             {/* <DynamicCmp cmpType={'side'} info={''} /> */}
-            <Checkbox disabled />
+            <div className="task-list-add-side">
+                <Checkbox disabled />
+            </div>
             <EditableHeading className="task-add-btn" type={EditableHeading.types.h5} value="+ Add Item" />
+        </section>
+
+        <section className="task-list-summary-wrapper group-grid">
+            <div className="task-list-summary-emptycell-left"></div>
+            <div className="task-list-summary">Sum?</div>
+            {/* <div className="task-list-summary-emptycell-right"></div> */}
         </section>
 
     </div>

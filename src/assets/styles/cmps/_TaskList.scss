@@ -1,13 +1,8 @@
 .task-list-container {
-    // outline: var(--border-width) var(--border-style) var(--ui-border-color);
-    // border-left: 10px var(--border-style) green;
-    // border-radius: var(--border-radius-small);
-
-
 
     .group-grid {
         display: grid;
-        grid-template-columns: 40px 240px 140px 140px 140px 140px;
+        grid-template-columns: 40px 350px 140px 140px 140px 140px;
         justify-content: start;
         align-content: center;
         border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
@@ -23,6 +18,7 @@
 
         .header-title {
             @include groupCell;
+            padding: var(--spacing-small);
         }
     }
 
@@ -44,14 +40,41 @@
 
         border-left: 7px var(--border-style) rgb(183, 207, 183);
         border-radius: 0 0 0 var(--border-radius-small);
+        box-shadow: var(--box-shadow-xs);
 
         &:hover {
             border-left: 7px var(--border-style) green;
         }
 
-        .task-add-btn {
+        &*> {
+            @include groupCell;
+        }
+
+        .task-list-add-side {
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
             border-right: var(--border-width) var(--border-style) var(--ui-border-color);
-            // @include groupCell;
+        }
+    }
+
+    .task-list-summary-wrapper {
+        border-bottom: unset;
+
+        .task-list-summary-emptycell-left {
+            grid-column: 3;
+            border-radius: 0 0 0 var(--border-radius-small);
+            border-left: var(--border-width) var(--border-style) var(--ui-border-color);
+            border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+            border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+            box-shadow: var(--box-shadow-xs);
+        }
+
+        .task-list-summary {
+            @include groupCell;
+            border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+            box-shadow: var(--box-shadow-xs);
         }
     }
 
