@@ -1,34 +1,46 @@
-import { useState } from "react";
-import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu } from "monday-ui-react-core";
+import { useEffect, useState } from "react";
+import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu, EditableHeading } from "monday-ui-react-core";
 import { Add, Board, Delete, Home, Edit } from "monday-ui-react-core/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { BoardNavLink } from "./BoardNavLink";
+import { addBoard, loadBoards, removeBoard } from "../store/actions/board.action";
+import { useNavigate } from "react-router";
 
 
 
 export function SideBar() {
     const [isOpen, setIsOpen] = useState(false)
+    // const [isEditibleMode, setIsEditibleMode] = useState(false)
     const dispatch = useDispatch()
-    // const boards = useSelector(storeState => storeState.boardModule.boards)
-    let boards = [{ _id: 121, title: 'Hello' }, { _id: 131, title: 'Test Board' }]
+    const navigate = useNavigate()
+    const boards = useSelector(storeState => storeState.boardModule.boards)
+    useEffect(() => {
+        loadBoards()
+    }, [])
 
     console.log('boards:', boards)
 
-    function showBoard() {
-        console.log('board clicked - display board in BoardDetails')
+    function showBoard(boardId) {
+        console.log('board clicked - display board in BoardDetails', boardId)
     }
 
     function onDeleteBoard(boardId) {
-        console.log('Delete Board')
+        removeBoard(boardId)
+        console.log('Delete Board', boardId)
     }
 
     function onRenameBoard(boardId) {
-        console.log('Delete Board')
+        console.log('Rename Board', boardId)
+        // onClick={() => setIsEditibleMode(prevIsEditable => !prevIsEditable)}
+        // setIsEditibleMode(prevIsEditable => !prevIsEditable)
+        // console.log('isEditibleMode:', isEditibleMode)
     }
 
     function onAddBoard() {
+        addBoard()
         console.log('Add new empty Board')
     }
+
     const dynOpenCloseClass = isOpen ? 'open' : ''
 
     return (
@@ -48,6 +60,7 @@ export function SideBar() {
                     className="home-btn"
                     kind="tertiary"
                     leftIcon={Home}
+                    onClick={(() => navigate('/'))}
                 >
                     Home
                 </Button>
@@ -87,10 +100,10 @@ export function SideBar() {
                             <BoardNavLink
                                 text={board.title} boardId={board._id} showBoard={showBoard}
                                 onDeleteBoard={onDeleteBoard} onRenameBoard={onRenameBoard}
+                                // isEditibleMode={isEditibleMode}
                                 key={idx} />
                         );
                     })}
-
                     {/* <Button
                         className="btn-board"
                         kind="tertiary"
