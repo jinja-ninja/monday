@@ -29,11 +29,15 @@ export function BoardDetailsHeader({ title }) {
             </div>
 
             <div className="header-navbar">
-                <TabList>
-                    <Tab 
+                <TabList
+                    size="sm">
+                    <Tab
                         icon={Home}
                         iconSide="left">
                         Main Table
+                    </Tab>
+                    <Tab >
+                        Dashboard
                     </Tab>
                     <Tab >
                         Kanban

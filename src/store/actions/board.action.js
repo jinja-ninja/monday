@@ -216,3 +216,35 @@ export async function duplicatedGroup(boardId, groupId) {
         throw err
     }
 }
+
+// Task Actions
+export async function removeTask(boardId, groupId, taskId) {
+    try {
+        const board = await boardService.removeTask(boardId, groupId, taskId)
+        store.dispatch({ type: SET_BOARD, board })
+        store.dispatch({ type: UPDATE_BOARDS, board })
+    } catch (err) {
+        console.log('BoardActions: err in removeTask', err)
+        throw err
+    }
+}
+export async function addTask(boardId, groupId, task) {
+    try {
+        const board = await boardService.addTask(boardId, groupId, task)
+        store.dispatch({ type: SET_BOARD, board })
+        store.dispatch({ type: UPDATE_BOARDS, board })
+    } catch (err) {
+        console.log('BoardActions: err in addTask', err)
+        throw err
+    }
+}
+export async function updateTask(boardId, groupId, taskId, data) {
+    try {
+        const board = await boardService.update('task', boardId, groupId, taskId, data)
+        store.dispatch({ type: SET_BOARD, board })
+        store.dispatch({ type: UPDATE_BOARDS, board })
+    } catch (err) {
+        console.log('BoardActions: err in updateTask', err)
+        throw err
+    }
+}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { EditableHeading, Icon, Text } from "monday-ui-react-core";
+import { EditableHeading, Icon, Text, Tooltip } from "monday-ui-react-core";
 import { DropdownChevronDown, DropdownChevronRight, Edit } from "monday-ui-react-core/icons";
 
 
@@ -22,8 +22,12 @@ export function GroupPreview({ group, label, cmpOrder, progress, boardId, onRena
 
     return <div className="group-preview-container">
         <div className="collapsible-header-wrapper">
-            <Icon iconType={Icon.type.SVG} icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
-                onClick={() => setShowGroup((prevShowGroup => !prevShowGroup))} />
+            <Tooltip
+                content="Collapse/Expand Group"
+                animationType="expand">
+                <Icon iconType={Icon.type.SVG} iconSize={20} icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
+                    onClick={() => setShowGroup((prevShowGroup => !prevShowGroup))} />
+            </Tooltip>
 
             <EditableHeading
                 className="editable-heading-target"

@@ -39,7 +39,8 @@
           justify-content: flex-start;
           align-items: center;
           margin-bottom: .7rem;
-          h2{
+
+          h2 {
             padding-left: 0;
           }
         }
@@ -58,8 +59,10 @@
 
     .board-details-actions {
       display: flex;
+      column-gap: var(--spacing-medium);
       padding-left: var(--spacing-xl);
       padding-right: var(--spacing-xl);
+      margin-block-end: var(--spacing-xl);
     }
   }
 }

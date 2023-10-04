@@ -47,9 +47,6 @@ export function GroupList({ groups, labels, cmpOrder, progress, boardId }) {
         updateBoard('group', boardId, groupId, null, { key: 'title', value: newText })
     }
 
-
-
-
     const uid = () => Math.random().toString(36).slice(2)
 
     return <div className="group-list-container">
@@ -61,8 +58,6 @@ export function GroupList({ groups, labels, cmpOrder, progress, boardId }) {
                             <MenuButton
                                 size={MenuButton.sizes.XS}
                                 className="group-menu-btn"
-                                onMenuHide={function noRefCheck() { }}
-                                onMenuShow={function noRefCheck() { }}
                             >
                                 <Menu
                                     id="menu"

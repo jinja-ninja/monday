@@ -17,8 +17,8 @@ export const boardService = {
     addNewGroup,
     removeGroup,
     getEmptyGroup,
-    _createBoards,
     duplicatedGroup,
+    _createBoards,
 
 }
 
@@ -85,6 +85,110 @@ function getEmptyBoard() {
         createdBy: {
             _id: 'u101'
         }
+    }
+}
+
+function getEmptyTask(title = '') {
+    return {
+        id: "t" + utilService.getRandomIntInclusive(201, 999),
+        title,
+        status: ``,
+        priority: ``,
+        description: ``,
+        comments: [],
+        checklists: [],
+        memberIds: [],
+        labelIds: [],
+        dueDate: null,
+        byMember: {
+            _id: ``,
+            username: ``,
+            fullname: ``,
+            imgUrl: ``
+        },
+        style: {
+            backgroundColor: "var(--primary-background-color)"
+        }
+    }
+}
+//Task functions
+async function getTasks(filterBy = { title: '' }) {
+    // Placeholder - this function implementation may differ based on need
+}
+async function removeTask(boardId, groupId, taskId) {
+    try {
+        const board = await getBoardById(boardId)
+        const groupIdx = board.groups.findIndex(group => group.id === groupId)
+        const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+        board.groups[groupIdx].tasks.splice(taskIdx, 1)
+        return await storageService.put(STORAGE_KEY, board)
+    } catch (err) {
+        console.log('Coult not remove task:', err)
+        throw new Error('Coult not remove task')
+    }
+}
+async function addTask(boardId, groupId, task) {
+    try {
+        const board = await getBoardById(boardId)
+        const groupIdx = board.groups.findIndex(group => group.id === groupId)
+        board.groups[groupIdx].tasks.push(task)
+        return await storageService.put(STORAGE_KEY, board)
+    } catch (err) {
+        console.log('Coult not remove task:', err)
+        throw new Error('Coult not remove task')
+    }
+}
+
+//Group functions
+
+function getEmptyGroup() {
+    return {
+        id: utilService.makeId(),
+        title: 'New Group',
+        tasks: [],
+        style: {},
+        archivedAt: null,
+    }
+}
+async function addNewGroup(board) {
+    try {
+        const newGroup = getEmptyGroup()
+        const updatedBoard = { ...board }
+        updatedBoard.groups.push(newGroup)
+        console.log('updatedBoard:', updatedBoard)
+        return await storageService.put(STORAGE_KEY, updatedBoard)
+    }
+    catch {
+        console.log('error')
+        throw new Error('Error updating')
+    }
+}
+async function removeGroup(board, groupId) {
+    try {
+        const updatedBoard = { ...board }
+        const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
+        updatedBoard.groups.splice(groupIdx, 1)
+        return await storageService.put(STORAGE_KEY, updatedBoard)
+    }
+    catch {
+        console.log('error')
+        throw new Error('Error updating')
+    }
+}
+async function duplicatedGroup(board, groupId) {
+    try {
+        const updatedBoard = { ...board }
+        const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
+        const groupToDuplicate = updatedBoard.groups[groupIdx]
+        const duplicatedGroup = JSON.parse(JSON.stringify(groupToDuplicate))
+        duplicatedGroup.id = utilService.makeId()
+        duplicatedGroup.title = duplicatedGroup.title + ' copy'
+        updatedBoard.groups.splice(groupIdx + 1, 0, duplicatedGroup)
+        return await storageService.put(STORAGE_KEY, updatedBoard)
+    }
+    catch {
+        console.log('error')
+        throw new Error('Error updating')
     }
 }
 

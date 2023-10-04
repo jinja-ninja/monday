@@ -63,6 +63,7 @@
         border-bottom: unset;
         margin-left: 6px;
 
+
         .task-list-summary-emptycell-left {
             grid-column: 3;
             border-radius: 0 0 0 var(--border-radius-small);
@@ -70,12 +71,14 @@
             border-right: var(--border-width) var(--border-style) var(--ui-border-color);
             border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
             box-shadow: var(--box-shadow-xs);
+
         }
 
         .task-list-summary {
             @include groupCell;
             border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
             box-shadow: var(--box-shadow-xs);
+            padding: var(--spacing-small);
         }
     }
 

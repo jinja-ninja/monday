@@ -10,10 +10,11 @@
 
   .group-list-item {
     position: relative;
+
     .group-menu-btn {
       position: absolute;
       left: -30px;
-      top: -3px;
+      top: 0px;
       // margin-inline-start: auto;
       margin-inline-end: var(--spacing-medium);
     }
