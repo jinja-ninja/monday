@@ -16,12 +16,15 @@ export function boardReducer(state = initialState, action) {
     switch (action.type) {
         case SET_BOARDS:
             return { ...state, boards: action.boards }
+
         case REMOVE_BOARD:
             newBoards = state.boards.filter(board => board._id !== action.boardId)
             return { ...state, boards: newBoards }
+
         case ADD_BOARD:
             newBoards = [...state.boards, action.board]
             return { ...state, boards: newBoards }
+
         case UPDATE_BOARD:
             newBoards = state.boards.map(board => (board._id === action.board._id ? action.board : board))
             return { ...state, boards: newBoards }

@@ -1,4 +1,4 @@
-//TODO - import boardService after creating it
+import { boardService } from '../../services/board.local.service'
 import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, UPDATE_BOARD } from './board.reducer'
 import { store } from './store'
 
@@ -22,7 +22,7 @@ export async function removeBoard(boardId) {
 
 export async function addBoard(board) {
     try {
-        const newBoard = await boardService.addBoard(board)
+        const newBoard = await boardService.save(board)
         store.dispatch({ type: ADD_BOARD, board: newBoard })
     } catch (err) {
         throw err

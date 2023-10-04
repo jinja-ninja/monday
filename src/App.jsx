@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import "monday-ui-style/dist/index.min.css";
 import "monday-ui-react-core/tokens";
 import './assets/styles/main.scss'
+import { boardService } from './services/board.service.local';
 
 
 import { HomePage } from './pages/HomePage'
@@ -14,6 +15,7 @@ import { PageNotFound } from './pages/PageNotFound';
 import { BoardMainHeader } from './cmps/BoardMainHeader';
 import { SideBar } from './cmps/SideBar';
 import { BoardIndex } from './pages/BoardIndex';
+import { useEffect } from 'react';
 // import { store } from './store/store'
 
 export function App() {
@@ -24,11 +26,11 @@ export function App() {
       <Routes>
         <Route element={<HomePage />} path="/" />
         <Route element={<BoardIndex />} path="/board" /> {/* TODO: add board index page */}
-        <Route path="board/:boardId" element={<BoardDetails />}>
+        <Route element={<BoardDetails />} path="board/:boardId">
           {/* <Route path='/task/:taskId' element={<TaskDetails />} /> */}
         </Route>
-        <Route element={<BoardIndex/>} path="/board" />
-        
+        <Route element={<BoardIndex />} path="/board" />
+
         <Route path="/auth">
           <Route path="login" element={<LoginSignUp />} />
           <Route path="sign-up" element={<LoginSignUp />} />

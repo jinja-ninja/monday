@@ -1,20 +1,160 @@
 import { useState } from "react";
-import { Button, Icon, IconButton, MenuButton, MenuItem, MenuTitle, SearchComponent, Menu } from "monday-ui-react-core";
-import { Add, Board, Delete, Erase, Home, Sun } from "monday-ui-react-core/icons";
+import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu } from "monday-ui-react-core";
+import { Add, Board, Delete, Home, Edit } from "monday-ui-react-core/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { BoardNavLink } from "./BoardNavLink";
 
-
+const boards = [{
+    _id: "b101",
+    title: "Robot dev proj",
+    isStarred: false,
+    archivedAt: 1589983468418,
+    createdBy: {
+      _id: "u101",
+      fullname: "Abi Abambi",
+      imgUrl: "http://some-img"
+    },
+    style: {
+      backgroundImage: ""
+    },
+    labels: [
+      {
+        id: "l101",
+        title: "Done",
+        color: "#61BD4F"
+      },
+      {
+        id: "l102",
+        title: "Progress",
+        color: "#61BD33"
+      }
+    ],
+    members: [
+      {
+        _id: "u101",
+        fullname: "Tal Tarablus",
+        imgUrl: "https://www.google.com"
+      }
+    ],
+    groups: [
+      {
+        id: "g101",
+        title: "Group 1",
+        archivedAt: 1589983468418,
+        tasks: [
+          {
+            id: "c101",
+            title: "Replace logo"
+          },
+          {
+            id: "c102",
+            title: "Add Samples"
+          }
+        ],
+        style: {}
+      },
+      {
+        id: "g102",
+        title: "Group 2",
+        tasks: [
+          {
+            id: "c103",
+            title: "Do that",
+            archivedAt: 1589983468418
+          },
+          {
+            id: "c104",
+            title: "Help me",
+            status: "in-progress",
+            priority: "high",
+            description: "description",
+            comments: [
+              {
+                id: "ZdPnm",
+                txt: "also @yaronb please CR this",
+                createdAt: 1590999817436,
+                byMember: {
+                  _id: "u101",
+                  fullname: "Tal Tarablus",
+                  imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                }
+              }
+            ],
+            checklists: [
+              {
+                id: "YEhmF",
+                title: "Checklist",
+                todos: [
+                  {
+                    id: "212jX",
+                    title: "To Do 1",
+                    isDone: false
+                  }
+                ]
+              }
+            ],
+            memberIds: ["u101"],
+            labelIds: ["l101", "l102"],
+            dueDate: 16156215211,
+            byMember: {
+              _id: "u101",
+              username: "Tal",
+              fullname: "Tal Tarablus",
+              imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+            },
+            style: {
+              backgroundColor: "#26DE81"
+            }
+          }
+        ],
+        style: {}
+      }
+    ],
+    activities: [
+      {
+        id: "a101",
+        txt: "Changed Color",
+        createdAt: 154514,
+        byMember: {
+          _id: "u101",
+          fullname: "Abi Abambi",
+          imgUrl: "http://some-img"
+        },
+        group: {
+          id: "g101",
+          title: "Urgent Stuff"
+        },
+        task: {
+          id: "c101",
+          title: "Replace Logo"
+        }
+      }
+    ],
+    cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+  }]
 
 export function SideBar() {
     const [isOpen, setIsOpen] = useState(false)
+    // const dispatch = useDispatch()
+    // const boards = useSelector(storeState => storeState.boardModule.boards)
 
-    function openMenu() {
-        console.log('menu clicked:')
-    }
+
 
     function showBoard() {
         console.log('board clicked:')
     }
 
+    function onDeleteBoard(boardId) {
+        console.log('Delete Board:')
+    }
+
+    function onRenameBoard(boardId) {
+        console.log('Delete Board:')
+    }
+
+    function onAddBoard() {
+
+    }
     const dynOpenCloseClass = isOpen ? 'open' : ''
 
     return (
@@ -66,77 +206,60 @@ export function SideBar() {
                     />
 
                 </div>
+
+
+                {/* render BoardNavLink */}
                 <div className="boards-btns-container">
-                    <Button
-                        kind="tertiary"
-                        leftIcon={Board}
-                        onClick={() => showBoard()}
-                    >
-                        Project Name
-                        {/* <Icon
-                            className="btn-board-menu"
-                            icon={Menu}
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                openMenu()
-                            }}
 
-                        /> */}
-                    </Button>
+                    {/* {boards && boards.map((board, idx) => {
+                        return (
+                            <BoardNavLink text={board.title} key={idx} />
+                        )
+                    })} */}
 
                     <Button
+                        className="btn-board"
                         kind="tertiary"
                         leftIcon={Board}
-                    // onClick={function noRefCheck() { }}
+                        onClick={() => showBoard()
+
+                        }
                     >
                         Monday Funday
-                        {/* <Icon
-                            className="btn-board-menu"
-                            icon={Menu}
-                            onClick={(e) => {
-                                e.stopPropagation()
-                            }}
-
-                        /> */}
-                    </Button>
-
-                    <Button
-                        kind="tertiary"
-                        leftIcon={Board}
-                    // onClick={function noRefCheck() { }}
-                    >
-                        Gal Surf Trip
-                        {/* <Icon
-                            className="btn-board-menu"
-                            icon={Menu}
-                            onClick={(e) => {
-                                e.stopPropagation()
-                            }}
-
-                        /> */}
-
-                        <MenuButton className="btn-board-menu" size={MenuButton.sizes.XXS} onClick={(e) => {
+                        <MenuButton closeDialogOnContentClick className="btn-board-menu" size={MenuButton.sizes.XS} onClick={(e) => {
                             e.stopPropagation()
+                            console.log('MENU CLICKED:')
                         }}>
                             <Menu id="menu" size={Menu.sizes.MEDIUM}>
-                                <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} />
-                                <MenuItem icon={Sun} iconType={MenuItem.iconType.SVG} title="The sun" />
+                                {/* <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} /> */}
+                                <MenuItem onClick={() => onDeleteBoard(boardId)} icon={Delete} iconType={MenuItem.iconType.SVG} title="Delete" />
+                                <MenuItem onClick={() => onRenameBoard(boardId)} icon={Edit} iconType={MenuItem.iconType.SVG} title="Rename Board" />
                             </Menu>
                         </MenuButton>
                     </Button>
 
+                    <Button
+                        className="btn-board"
+                        kind="tertiary"
+                        leftIcon={Board}
+                        onClick={() => showBoard()}
+                    >
+                        Gal Surf Trip
 
-
-                    {/* <MenuButton size={MenuButton.sizes.XXS}>
-                        <Menu id="menu" size={Menu.sizes.MEDIUM}>
-                            <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} />
-                            <MenuItem icon={Sun} iconType={MenuItem.iconType.SVG} title="The sun" />
-                        </Menu>
-                    </MenuButton> */}
+                        <MenuButton closeDialogOnContentClick className="btn-board-menu" size={MenuButton.sizes.XS} onClick={(e) => {
+                            e.stopPropagation()
+                        }}>
+                            <Menu id="menu" size={Menu.sizes.MEDIUM}>
+                                {/* <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} /> */}
+                                <MenuItem onClick={() => onDeleteBoard(boardId)} icon={Delete} iconType={MenuItem.iconType.SVG} title="Delete" />
+                                <MenuItem onClick={() => onRenameBoard(boardId)} icon={Edit} iconType={MenuItem.iconType.SVG} title="Rename Board" />
+                            </Menu>
+                        </MenuButton>
+                    </Button>
                 </div>
 
             </div>
 
-        </div>
+        </div >
     )
 }
