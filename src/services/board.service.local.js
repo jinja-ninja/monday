@@ -58,7 +58,8 @@ async function query() {
 }
 
 async function getBoardById(boardId) {
-    return await storageService.get(STORAGE_KEY, boardId)
+    const board = await storageService.get(STORAGE_KEY, boardId)
+    return board
 }
 
 async function save(board) {

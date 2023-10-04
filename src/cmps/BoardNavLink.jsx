@@ -1,22 +1,24 @@
 import { Button, Menu, MenuButton, MenuItem } from "monday-ui-react-core"
 import { Board, Delete, Edit } from "monday-ui-react-core/icons"
 
-export function BoardNavLink(text) {
-
+export function BoardNavLink({ text, boardId, showBoard, onDeleteBoard, onRenameBoard }) {
 
     return (
 
-        <Button
-            className="btn-board"
-            kind="tertiary"
-            leftIcon={Board}
-            onClick={() => showBoard()
+        <div className="btn-board-container">
+            <Button
+                className="btn-board"
+                kind="tertiary"
+                leftIcon={Board}
+                onClick={() => showBoard()
 
-            }
-        >
-            {text}
-            {/* Monday Funday */}
-            <MenuButton closeDialogOnContentClick className="btn-board-menu" size={MenuButton.sizes.XS} onClick={(e) => {
+                }
+            >
+                {text}
+                {/* Monday Funday */}
+            </Button>
+
+            <MenuButton closeDialogOnContentClick className="btn-board-menu" size={MenuButton.sizes.S} onClick={(e) => {
                 e.stopPropagation()
                 console.log('MENU CLICKED:')
             }}>
@@ -26,7 +28,10 @@ export function BoardNavLink(text) {
                     <MenuItem onClick={() => onRenameBoard(boardId)} icon={Edit} iconType={MenuItem.iconType.SVG} title="Rename Board" />
                 </Menu>
             </MenuButton>
-        </Button>
+        </div>
+
+
+
     )
 }
 

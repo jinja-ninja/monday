@@ -12,8 +12,8 @@ export function TaskList({ group, cmpOrder }) {
 
 
         <section className="header-title-container group-grid">
-            {cmpOrder.map(title => (
-                <div className="header-title" key={title}>{title}</div>
+            {cmpOrder.map((title, idx) => (
+                <div className="header-title" key={idx}>{title}</div>
             ))
             }
         </section>
