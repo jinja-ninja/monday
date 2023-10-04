@@ -1,11 +1,23 @@
-import { boardService } from '../../services/board.local.service'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, UPDATE_BOARD } from './board.reducer'
-import { store } from './store'
+import { boardService } from '../../services/board.service.local'
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, UPDATE_BOARD, SET_BOARD } from '../reducers/board.reducer'
+import { store } from '../store'
 
 export async function loadBoards() {
     try {
         const boards = await boardService.query()
         store.dispatch({ type: SET_BOARDS, boards })
+    } catch (err) {
+        throw err
+    }
+}
+
+export async function getBoardById(boardId) {
+    try {
+        // console.log('boardId:', boardId)
+        const board = await boardService.getBoardById(boardId)
+        // console.log('board:', board)
+        return board
+        // store.dispatch({ type: SET_BOARD, board })
     } catch (err) {
         throw err
     }

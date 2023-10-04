@@ -18,13 +18,13 @@ _createBoards()
 
 
 async function query() {
-    const res = await storageService.query(STORAGE_KEY)
-    console.log('res:', res)
-    return res
+    const boards = await storageService.query(STORAGE_KEY)
+    return boards
 }
 
 async function getBoardById(boardId) {
-    return await storageService.get(STORAGE_KEY, boardId)
+    const board = await storageService.get(STORAGE_KEY, boardId)
+    return board
 }
 
 async function save(board) {
