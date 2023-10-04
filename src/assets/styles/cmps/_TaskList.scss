@@ -1,12 +1,29 @@
 .task-list-container {
-    display: grid;
+    // outline: var(--border-width) var(--border-style) var(--ui-border-color);
+    // border-left: 10px var(--border-style) green;
+    // border-radius: var(--border-radius-small);
+
+
+
+    .group-grid {
+        display: grid;
+        grid-template-columns: 40px 240px 140px 140px 140px 140px;
+        justify-content: start;
+        align-content: center;
+        border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+    }
 
     .header-title-container {
+        border-top: var(--border-width) var(--border-style) var(--ui-border-color);
+        border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+        border-left: 7px var(--border-style) green;
+        border-radius: var(--border-radius-small) 0 0 0;
         display: grid;
         grid-auto-flow: column;
 
-        font-weight: 500;
-        text-decoration: underline;
+        .header-title {
+            @include groupCell;
+        }
     }
 
     .task-list {
@@ -14,6 +31,22 @@
         grid-auto-flow: column;
         align-items: center;
         justify-items: start;
+
+        border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+        border-left: 7px var(--border-style) green;
+
+        &:last-of-type {
+            border-left: 7px var(--border-style) rgb(183, 207, 183);
+            border-radius: 0 0 0 var(--border-radius-small);
+
+            &:hover {
+                border-left: 7px var(--border-style) green;
+            }
+        }
+
+        .task-item {
+            @include groupCell;
+        }
     }
 
 }

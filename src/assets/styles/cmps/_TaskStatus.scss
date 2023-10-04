@@ -1,0 +1,56 @@
+.task-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    text-align: center;
+    cursor: pointer;
+
+    // &:hover {
+    //     background-color: var(--ui-hover-background-color);
+    //     color: var(--ui-hover-text-color);
+    // }
+
+    // &.done {
+    //     background-color: var(--ui-done-background-color);
+    //     color: var(--ui-done-text-color);
+
+    //     &:hover {
+    //         background-color: var(--ui-done-hover-background-color);
+    //         color: var(--ui-done-hover-text-color);
+    //     }
+    // }
+
+    // &.in-progress {
+    //     background-color: var(--ui-in-progress-background-color);
+    //     color: var(--ui-in-progress-text-color);
+
+    //     &:hover {
+    //         background-color: var(--ui-in-progress-hover-background-color);
+    //         color: var(--ui-in-progress-hover-text-color);
+    //     }
+    // }
+
+    // &.pending {
+    //     background-color: var(--ui-pending-background-color);
+    //     color: var(--ui-pending-text-color);
+
+    //     &:hover {
+    //         background-color: var(--ui-pending-hover-background-color);
+    //         color: var(--ui-pending-hover-text-color);
+    //     }
+    // }
+
+    // &.late {
+    //     background-color: var(--ui-late-background-color);
+    //     color: var(--ui-late-text-color);
+
+    //     &:hover {
+    //         background-color: var(--ui-late-hover-background-color);
+    //         color: var(--ui-late-hover-text-color);
+    //     }
+    // }
+}

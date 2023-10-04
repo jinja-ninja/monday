@@ -1,5 +1,19 @@
 /* Media queries Breakpoint mixins */
 
+@mixin groupCell {
+    width: 100%;
+    height: 100%;
+    display: grid;
+
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+
+    padding: var(--spacing-small);
+    border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+    @content;
+}
+
 @mixin for-mobile-layout {
     @media (max-width: $break-narrow) {
         @content;

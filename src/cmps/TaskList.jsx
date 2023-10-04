@@ -10,7 +10,7 @@ export function TaskList({ group, cmpOrder }) {
     return <div className="task-list-container">
 
 
-        <section className="header-title-container">
+        <section className="header-title-container group-grid">
             {cmpOrder.map(title => (
                 <div className="header-title">{title}</div>
             ))
@@ -18,7 +18,7 @@ export function TaskList({ group, cmpOrder }) {
         </section>
 
         {group.tasks.map(task => (
-            <section className="task-list" key={task._id}>
+            <section className="task-list group-grid" key={task._id}>
                 {cmpOrder.map((cmp, idx) => (
                     <section className="task-item" key={idx}>
                         <DynamicCmp cmpType={cmp} info={task[cmp]} />
@@ -39,7 +39,6 @@ const DynamicCmp = ({ cmpType, info }) => {
         case "priority":
             return <Priority info={info} />;
         case "taskTitle":
-            console.log('info:', info)
             return <TaskTitle info={info} />;
         case "status":
             return <Status info={info} />;
