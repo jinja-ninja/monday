@@ -1,0 +1,19 @@
+.task-list-container {
+    display: grid;
+
+    .header-title-container {
+        display: grid;
+        grid-auto-flow: column;
+
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    .task-list {
+        display: grid;
+        grid-auto-flow: column;
+        align-items: center;
+        justify-items: start;
+    }
+
+}

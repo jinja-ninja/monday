@@ -1,5 +1,7 @@
 
-export function Priority() {
+export function Priority({ info }) {
 
-    return <span>Priority</span>
+    return <div className="task-priority">
+        {info}
+    </div>
 }

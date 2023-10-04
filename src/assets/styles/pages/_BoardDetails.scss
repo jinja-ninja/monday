@@ -13,6 +13,7 @@
         grid-row: 2;
         grid-column: 2;
         background-color: var(--primary-background-color);
+        border-radius: var(--border-radius-medium) 0 0 var(--border-radius-medium);
 
         .header-wrapper {
             display: grid;
@@ -48,20 +49,6 @@
             display: flex;
             padding-left: var(--spacing-xl);
             padding-right: var(--spacing-xl);
-        }
-
-        .group-list-container {
-            padding-left: var(--spacing-xl);
-            padding-block-end: var(--spacing-xl);
-            margin-block-start: var(--spacing-medium);
-
-            .collapsible-header-wrapper {
-                display: flex;
-                align-items: center;
-
-            }
-
-
         }
     }
 }

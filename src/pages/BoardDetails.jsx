@@ -1,5 +1,5 @@
 import { Button, IconButton, MenuItem, SplitButton, SplitButtonMenu } from "monday-ui-react-core";
-import { Add, Announcement, Check, Filter, Hide, Menu, Person, Search, Sort } from "monday-ui-react-core/icons";
+import { Add, Announcement, Check, Filter, Hide, Menu, PersonRound, Search, Sort } from "monday-ui-react-core/icons";
 import { BoardDetailsHeader } from "../cmps/BoardDetailsHeader";
 import { GroupList } from "../cmps/GroupList";
 import { BoardMainHeader } from "../cmps/BoardMainHeader";
@@ -12,11 +12,12 @@ export function BoardDetails() {
         {
             _id: Math.random().toString(36).slice(2),
             color: "red",
+            title: 'Dev',
             tasks: [
                 {
                     _id: "t101",
                     side: "null",
-                    tasktTitle: "learn CSS",
+                    taskTitle: "learn CSS",
                     members: [
                         { name: "tal", color: "red" },
                         { name: "bal", color: "black" },
@@ -29,7 +30,7 @@ export function BoardDetails() {
                 {
                     _id: "t102",
                     side: "null",
-                    tasktTitle: "learn vue",
+                    taskTitle: "learn vue",
                     members: [
                         { name: "tal", color: "red" },
                         { name: "bal", color: "black" },
@@ -42,7 +43,7 @@ export function BoardDetails() {
                 {
                     _id: "t103",
                     side: "null",
-                    tasktTitle: "learn js",
+                    taskTitle: "learn js",
                     members: [
                         { name: "tal", color: "red" },
                         { name: "bal", color: "black" },
@@ -57,11 +58,12 @@ export function BoardDetails() {
         {
             _id: Math.random().toString(36).slice(2),
             color: "blue",
+            title: 'Design',
             tasks: [
                 {
                     _id: "t101",
                     side: "null",
-                    tasktTitle: "learn CSS",
+                    taskTitle: "learn CSS",
                     members: [
                         { name: "tal", color: "red" },
                         { name: "bal", color: "black" },
@@ -74,7 +76,7 @@ export function BoardDetails() {
                 {
                     _id: "t102",
                     side: "null",
-                    tasktTitle: "learn vue",
+                    taskTitle: "learn vue",
                     members: [
                         { name: "tal", color: "red" },
                         { name: "bal", color: "black" },
@@ -87,7 +89,7 @@ export function BoardDetails() {
                 {
                     _id: "t103",
                     side: "null",
-                    tasktTitle: "learn js",
+                    taskTitle: "learn js",
                     members: [
                         { name: "tal", color: "red" },
                         { name: "bal", color: "black" },
@@ -102,11 +104,12 @@ export function BoardDetails() {
         {
             _id: Math.random().toString(36).slice(2),
             color: "green",
+            title: 'Doink',
             tasks: [
                 {
                     _id: "t101",
                     side: "null",
-                    tasktTitle: "learn CSS",
+                    taskTitle: "learn CSS",
                     members: [
                         { name: "tal", color: "red" },
                         { name: "bal", color: "black" },
@@ -119,7 +122,7 @@ export function BoardDetails() {
                 {
                     _id: "t102",
                     side: "null",
-                    tasktTitle: "learn vue",
+                    taskTitle: "learn vue",
                     members: [
                         { name: "tal", color: "red" },
                         { name: "bal", color: "black" },
@@ -132,7 +135,7 @@ export function BoardDetails() {
                 {
                     _id: "t103",
                     side: "null",
-                    tasktTitle: "learn js",
+                    taskTitle: "learn js",
                     members: [
                         { name: "tal", color: "red" },
                         { name: "bal", color: "black" },
@@ -148,16 +151,15 @@ export function BoardDetails() {
 
     const cmpOrder = [
         "side",
-        "tasktTitle",
+        "taskTitle",
         "status",
         "priority",
         "members",
         "date"
     ];
 
-    const uid = () => Math.random().toString(36).slice(2)
-    const labels = ["groupName", null, "status", "members", "priority", "date"]
-    const progress = [null, null, "status", null, "priority", null]
+    const labels = ["groupName", null, "status", "members", "priority", "date"] // ?????????????????
+    const progress = [null, null, "status", null, "priority", null] // ???????????????????????
 
 
     return <main className="board-details-layout">
@@ -170,17 +172,17 @@ export function BoardDetails() {
 
             <div className="board-details-actions">
 
-                <SplitButton secondaryDialogContent={<SplitButtonMenu _id="split-menu">
+                <SplitButton size="small" secondaryDialogContent={<SplitButtonMenu _id="split-menu">
                     <MenuItem icon={Check} title="Hey" />
                     <MenuItem icon={Announcement} title="There" />
                 </SplitButtonMenu>}>
                     New Task
                 </SplitButton>
 
-                <Button leftIcon={Search} kind="tertiary">Search</Button>
-                <Button leftIcon={Person} kind="tertiary">Person</Button>
+                <Button leftIcon={Search} kind="tertiary" size="small">Search</Button>
+                <Button leftIcon={PersonRound} kind="tertiary" size="small">Person</Button>
 
-                <SplitButton kind="tertiary" secondaryDialogContent={
+                <SplitButton kind="tertiary" leftIcon={Filter} size="small" secondaryDialogContent={
                     <SplitButtonMenu _id="split-menu">
                         <MenuItem icon={Check} title="Hey" />
                         <MenuItem icon={Announcement} title="There" />
@@ -188,10 +190,10 @@ export function BoardDetails() {
                     Filter
                 </SplitButton>
 
-                <Button leftIcon={Sort} kind="tertiary">Sort</Button>
-                <Button leftIcon={Hide} kind="tertiary">Hide</Button>
+                <Button leftIcon={Sort} kind="tertiary" size="small">Sort</Button>
+                <Button leftIcon={Hide} kind="tertiary" size="small">Hide</Button>
 
-                <IconButton icon={Menu} />
+                <IconButton icon={Menu} size="small" />
             </div>
 
             <GroupList groups={groups}

@@ -17,8 +17,13 @@
 @import "base/_layout";
 
 // // COMPONENTS
-@import "cmps/HomeAppHeader";
-@import "cmps/BoardMainHeader";
+@import "cmps/_HomeAppHeader";
+@import "cmps/_BoardMainHeader";
+@import "cmps/_GroupList";
+@import "cmps/_TaskListHeader";
+@import "cmps/_TaskList";
+@import "cmps/_TaskTitle";
+@import "cmps/_TaskSide";
 
 // //PAGES
 @import "pages/_HomePage";

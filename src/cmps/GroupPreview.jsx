@@ -11,17 +11,29 @@ import { Side } from "./dynamicCmps/Side";
 import { Status } from "./dynamicCmps/Status";
 import { TaskTitle } from "./dynamicCmps/TaskTitle";
 import { Priority } from "./dynamicCmps/Priority";
+import { TaskListHeader } from "./TaskListHeader";
+import { TaskList } from "./TaskList";
 
 export function GroupPreview({ group, label, cmpOrder, progress }) {
 
-    // const [showGroup, setShowGroup] = useState(true)
+    const [showGroup, setShowGroup] = useState(true)
 
     return <div className="preview-container">
+        <div className="collapsible-header-wrapper">
+            <Icon iconType={Icon.type.SVG} icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
+                onClick={() => setShowGroup((prevShowGroup => !prevShowGroup))} />
+            <Text
+                weight="bold"
+                align="start"
+                element="span"
+            >
+                {group.title}
+            </Text>
 
-        {label}
-        {/* {showGroup && <div className="group-table-container">
+        </div>
+        {/* <TaskListHeader cmpOrder={cmpOrder} /> */}
+        {showGroup && <TaskList group={group} cmpOrder={cmpOrder} />}
 
-        </div>} */}
     </div>
 }
 
@@ -45,34 +57,12 @@ export function GroupPreview({ group, label, cmpOrder, progress }) {
 //             </section>
 //         ))}
 
-//         {/* Render progress by progress array */}
-//         <section className="progress-grid">
-//             {progress.map((item, idx) => (
-//                 <div key={idx}>{item}</div>
-//             ))}
-//         </section>
+// {/* Render progress by progress array */}
+// <section className="progress-grid">
+//     {progress.map((item, idx) => (
+//         <div key={idx}>{item}</div>
+//     ))}
+// </section>
 //     </section>
 // );
 // };
-
-const DynamicCmp = ({ cmpType, info }) => {
-    console.log(cmpType, info);
-
-    switch (cmpType) {
-        case "side":
-            return <Side {...info} />;
-        case "priority":
-            return <Priority {...info} />;
-        case "taskTitle":
-            return <TaskTitle {...info} />;
-        case "status":
-            return <Status {...info} />;
-        case "members":
-            return <Member {...info} />;
-        case "date":
-            return <Date {...info} />;
-
-        default:
-            break;
-    }
-};

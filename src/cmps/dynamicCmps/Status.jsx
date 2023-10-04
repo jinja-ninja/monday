@@ -1,5 +1,7 @@
 
-export function Status() {
+export function Status({ info }) {
 
-    return <span>Status</span>
+    return <div className="task-status">
+        {info}
+    </div>
 }

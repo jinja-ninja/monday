@@ -1,0 +1,13 @@
+.task-side {
+
+    display: flex;
+
+    .task-color {
+        content: "";
+        width: 7px;
+        height: 16px;
+        border-radius: var(--border-radius-small) 0 0 var(--border-radius-small);
+        background-color: red;
+        margin-right: 1px;
+    }
+}

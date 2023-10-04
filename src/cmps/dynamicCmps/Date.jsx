@@ -1,4 +1,6 @@
 
-export function Date() {
-    return <span>date</span>
+export function Date({ info }) {
+    return <div className="task-date">
+        {info}
+    </div>
 }
