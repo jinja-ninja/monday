@@ -24,14 +24,14 @@ export function App() {
       <Routes>
         <Route path="/header" element={<BoardMainHeader />} />
         <Route element={<HomePage />} path="/" />
-        {/* <Route element={<BoardIndex />} path="/board" /> //TODO: add board index page */}
+        <Route element={<BoardIndex />} path="/board" /> {/* TODO: add board index page */}
         <Route path="board/:boardId" element={<BoardDetails />}>
           {/* <Route path='/task/:taskId' element={<TaskDetails />} /> */}
         </Route>
-        <Route element={<BoardIndex/>} path="/board" />
+        <Route element={<BoardIndex />} path="/board" />
         {/* //DELETE THIS ROUTE AFTER ITS ONLY FOR DEV PURPOSES! */}
-        <Route element={<SideBar />} path="/sidebar" /> 
-        
+        <Route element={<SideBar />} path="/sidebar" />
+
 
         <Route path="/auth">
           <Route path="login" element={<LoginSignUp />} />

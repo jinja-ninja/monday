@@ -16,6 +16,7 @@
         grid-column: 2;
         background-color: var(--primary-background-color);
         border-radius: var(--border-radius-medium) 0 0 var(--border-radius-medium);
+        box-shadow: var(--box-shadow-xs);
 
         .header-wrapper {
             display: grid;

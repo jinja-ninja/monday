@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button, Icon, IconButton, MenuButton, MenuItem, MenuTitle, SearchComponent } from "monday-ui-react-core";
-import { Add, Board, Delete, Erase, Home, Menu } from "monday-ui-react-core/icons";
+import { Button, Icon, IconButton, MenuButton, MenuItem, MenuTitle, SearchComponent, Menu } from "monday-ui-react-core";
+import { Add, Board, Delete, Erase, Home, Sun } from "monday-ui-react-core/icons";
 
 
 
@@ -73,7 +73,7 @@ export function SideBar() {
                         onClick={() => showBoard()}
                     >
                         Project Name
-                        <Icon
+                        {/* <Icon
                             className="btn-board-menu"
                             icon={Menu}
                             onClick={(e) => {
@@ -81,7 +81,7 @@ export function SideBar() {
                                 openMenu()
                             }}
 
-                        />
+                        /> */}
                     </Button>
 
                     <Button
@@ -90,14 +90,14 @@ export function SideBar() {
                     // onClick={function noRefCheck() { }}
                     >
                         Monday Funday
-                        <Icon
+                        {/* <Icon
                             className="btn-board-menu"
                             icon={Menu}
                             onClick={(e) => {
                                 e.stopPropagation()
                             }}
 
-                        />
+                        /> */}
                     </Button>
 
                     <Button
@@ -106,39 +106,26 @@ export function SideBar() {
                     // onClick={function noRefCheck() { }}
                     >
                         Gal Surf Trip
-                        <Icon
+                        {/* <Icon
                             className="btn-board-menu"
                             icon={Menu}
                             onClick={(e) => {
                                 e.stopPropagation()
                             }}
 
-                        />
+                        /> */}
+
+                        <MenuButton className="btn-board-menu" size={MenuButton.sizes.XXS} onClick={(e) => {
+                            e.stopPropagation()
+                        }}>
+                            <Menu id="menu" size={Menu.sizes.MEDIUM}>
+                                <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} />
+                                <MenuItem icon={Sun} iconType={MenuItem.iconType.SVG} title="The sun" />
+                            </Menu>
+                        </MenuButton>
                     </Button>
 
-                    <MenuButton
-                    // onMenuHide={function noRefCheck() { }}
-                    // onMenuShow={function noRefCheck() { }}
-                    >
-                        <Menu
-                            id="menu"
-                            size="medium"
-                        >
-                            <MenuItem
-                                icon={Erase}
-                                iconType="SVG"
-                                // onClick={function noRefCheck() { }}
-                                title="Delete"
-                                text="Delete"
-                            />
-                            {/* <MenuItem
-                                icon={function noRefCheck() { }}
-                                iconType="SVG"
-                                onClick={function noRefCheck() { }}
-                                title="The moon"
-                            /> */}
-                        </Menu>
-                    </MenuButton>
+
 
 
                 </div>

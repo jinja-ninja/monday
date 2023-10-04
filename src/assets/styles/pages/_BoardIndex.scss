@@ -1,10 +1,21 @@
 .board-index {
-    background-color: var(--primary-background-color);
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    column-gap: 12px;
+    background-color: var(--grey-background-color);
+
 
     &-body {
         display: flex;
         padding-left: var(--spacing-large);
         padding-right: var(--spacing-large);
+    }
+
+
+    .board-main-header {
+        grid-column: 1/-1;
     }
 
 
@@ -14,6 +25,7 @@
         flex-direction: column;
         margin-right: var(--spacing-large);
         width: calc(100% - 300px - var(--spacing-large));
+        background-color: var(--primary-background-color);
 
         .collapsible-header-wrapper {
             display: flex;
@@ -52,7 +64,7 @@
             position: relative;
             display: inline-block;
             width: 100%;
-            background-color: var(--secondary-background-color);
+            background-color: var(--primary-background-color);
             border-radius: var(--border-radius-medium);
             --box-shadow-color: var(--application-border-color);
             box-shadow: 0px 3px 12px var(--box-shadow-color);
@@ -86,6 +98,7 @@
                 padding: var(--spacing-medium);
                 border-radius: var(--border-radius-medium);
                 box-shadow: var(--box-shadow-small);
+                background-color: var(--primary-background-color);
 
                 &:hover {
                     box-shadow: var(--box-shadow-medium);
