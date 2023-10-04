@@ -34,18 +34,24 @@
 
         border-right: var(--border-width) var(--border-style) var(--ui-border-color);
         border-left: 7px var(--border-style) green;
+    }
 
-        &:last-of-type {
-            border-left: 7px var(--border-style) rgb(183, 207, 183);
-            border-radius: 0 0 0 var(--border-radius-small);
+    .task-item {
+        @include groupCell;
+    }
 
-            &:hover {
-                border-left: 7px var(--border-style) green;
-            }
+    .task-list-add {
+
+        border-left: 7px var(--border-style) rgb(183, 207, 183);
+        border-radius: 0 0 0 var(--border-radius-small);
+
+        &:hover {
+            border-left: 7px var(--border-style) green;
         }
 
-        .task-item {
-            @include groupCell;
+        .task-add-btn {
+            border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+            // @include groupCell;
         }
     }
 

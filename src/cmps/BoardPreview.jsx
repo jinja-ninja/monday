@@ -15,7 +15,7 @@ export function BoardPreview({ board }) {
             className="board-preview"
 
         >
-            <Clickable className="board-preview-clickable-element" onClick={() => navigate('/board/random-id-for-now')} ariaLabel="clickable box">
+            <Clickable className="board-preview-clickable-element" onClick={() => navigate(`/board/${board._id}`)} ariaLabel="clickable box">
                 <Flex direction="Column" align="Stretch"
                     justify="Stretch" >
                     <img src="../src/assets/img/quick_search_recent_board.svg" alt="" />

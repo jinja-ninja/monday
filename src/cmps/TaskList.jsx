@@ -1,3 +1,4 @@
+import { Checkbox, EditableHeading } from "monday-ui-react-core";
 import { Date } from "./dynamicCmps/Date";
 import { Member } from "./dynamicCmps/Member";
 import { Priority } from "./dynamicCmps/Priority";
@@ -12,7 +13,7 @@ export function TaskList({ group, cmpOrder }) {
 
         <section className="header-title-container group-grid">
             {cmpOrder.map(title => (
-                <div className="header-title">{title}</div>
+                <div className="header-title" key={title}>{title}</div>
             ))
             }
         </section>
@@ -26,12 +27,16 @@ export function TaskList({ group, cmpOrder }) {
                 ))}
             </section>
         ))}
+        <section className="task-list-add group-grid">
+            {/* <DynamicCmp cmpType={'side'} info={''} /> */}
+            <Checkbox disabled />
+            <EditableHeading className="task-add-btn" type={EditableHeading.types.h5} value="+ Add Item" />
+        </section>
+
     </div>
 }
 
 const DynamicCmp = ({ cmpType, info }) => {
-    console.log('cmpType:', cmpType);
-    console.log('info:', info);
 
     switch (cmpType) {
         case "side":
