@@ -6,12 +6,14 @@ import { GroupList } from "../cmps/GroupList";
 import { BoardMainHeader } from "../cmps/BoardMainHeader";
 import { SideBar } from "../cmps/SideBar";
 import { useParams } from "react-router-dom";
-import { getBoardById } from "../store/actions/board.action";
+import { getBoardById, updateBoard } from "../store/actions/board.action";
 import { useSelector } from "react-redux";
 
 export function BoardDetails() {
     const params = useParams()
-    // const board = useSelector(state => state.boardModule.board)
+    const boards = useSelector(state => state.boardModule.board)
+
+    console.log('boards:', boards)
 
     const [board, setBoard] = useState(null)
 
@@ -35,6 +37,8 @@ export function BoardDetails() {
     const progress = [null, null, "status", null, "priority", null]
 
     if (!board) return (<div>Loading...</div>)
+
+    updateBoard('board', 'b101', null, null, { key: 'title', value: 'Robot dev proj' })
 
     return <main className="board-details-layout">
         <BoardMainHeader />
