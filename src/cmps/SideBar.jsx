@@ -20,7 +20,7 @@ export function SideBar() {
         loadBoards()
     }, [])
 
-    console.log('boards:', boards)
+    // console.log('boards:', boards)
 
     function onSelectBoard(boardId) {
         navigate(`/board/${boardId}`)

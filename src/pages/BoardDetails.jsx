@@ -72,7 +72,9 @@ export function BoardDetails() {
                 <IconButton icon={Menu} size="small" />
             </div>
 
-            <GroupList groups={currBoard.groups}
+            <GroupList
+                boardId={params.boardId}
+                groups={currBoard.groups}
                 labels={currBoard.labels}
                 cmpOrder={cmpOrder}
                 progress={progress}
