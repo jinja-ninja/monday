@@ -141,6 +141,11 @@
         
             }
 
+            .selected-board{
+                background-color: var(--primary-selected-color);
+                border-radius: var(--border-radius-small);
+            }
+
         }
 
         .main-workspace-txt {
