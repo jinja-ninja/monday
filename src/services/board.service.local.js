@@ -11,11 +11,15 @@ export const boardService = {
     save,
     remove,
     getEmptyBoard,
+    getEmptyTask,
+    removeTask,
+    addTask,
     _createBoards
 }
 
 _createBoards()
 
+// General Update function
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
         const board = await getBoardById(boardId)
@@ -34,7 +38,7 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 break
             case 'task':
                 if (!taskId) throw new Error('Error updating')
-                groupIdx = board.groups.findIndex(group => group.tasks.find(task => task.id === taskId))
+                groupIdx = board.groups.findIndex(group => group.id === groupId)
                 taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
                 board.groups[groupIdx].tasks[taskIdx][key] = value
                 break
@@ -50,8 +54,7 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
     }
 
 }
-
-
+// Board functions
 async function query() {
     return await storageService.query(STORAGE_KEY)
 }
@@ -76,6 +79,63 @@ function getEmptyBoard() {
         createdBy: {
             _id: 'u101'
         }
+    }
+}
+
+function getEmptyTask(title = '') {
+    return {
+        id: "t" + utilService.getRandomIntInclusive(201, 999),
+        title,
+        status: ``,
+        priority: ``,
+        description: ``,
+        comments: [],
+        checklists: [],
+        memberIds: [],
+        labelIds: [],
+        dueDate: null,
+        byMember: {
+            _id: ``,
+            username: ``,
+            fullname: ``,
+            imgUrl: ``
+        },
+        style: {
+            backgroundColor: "var(--primary-background-color)"
+        }
+    }
+}
+
+//Task functions
+async function getTasks(filterBy = { title: '' }) {
+    // Placeholder - this function implementation may differ based on need
+}
+
+async function removeTask(boardId, groupId, taskId) {
+    try {
+        const board = await getBoardById(boardId)
+        const groupIdx = board.groups.findIndex(group => group.id === groupId)
+        const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+        board.groups[groupIdx].tasks.splice(taskIdx, 1)
+
+        return await storageService.put(STORAGE_KEY, board)
+
+    } catch (err) {
+        console.log('Coult not remove task:', err)
+        throw new Error('Coult not remove task')
+    }
+}
+
+async function addTask(boardId, groupId, task) {
+    try {
+        const board = await getBoardById(boardId)
+        const groupIdx = board.groups.findIndex(group => group.id === groupId)
+        board.groups[groupIdx].tasks.push(task)
+        return await storageService.put(STORAGE_KEY, board)
+
+    } catch (err) {
+        console.log('Coult not remove task:', err)
+        throw new Error('Coult not remove task')
     }
 }
 
@@ -623,7 +683,6 @@ function _createBoards() {
                     cmpsOrder: ["MemberPicker", "DatePicker", "StatusPicker"]
                 }
             ]
-
 
         utilService.saveToStorage(STORAGE_KEY, boards)
     }

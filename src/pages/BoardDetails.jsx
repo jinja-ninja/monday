@@ -14,7 +14,6 @@ export function BoardDetails() {
     const currBoard = useSelector(state => state.boardModule.board)
 
     useEffect(() => {
-        console.log('currBoard:', currBoard)
     }, [currBoard])
 
     useEffect(() => {
@@ -23,17 +22,17 @@ export function BoardDetails() {
 
     async function loadBoard() {
         await getBoardById(params.boardId)
-        await updateBoard('board', 'b101', null, null, { key: 'title', value: `Robot dev proj${Date.now()}` })
+        // await updateBoard('board', 'b101', null, null, { key: 'title', value: `Robot dev proj` })
     }
 
 
     const cmpOrder = [
         "side",
-        "taskTitle",
+        "title",
         "status",
         "priority",
-        "members",
-        "date"
+        "memberIds",
+        "dueDate"
     ];
 
     const progress = [null, null, "status", null, "priority", null]
