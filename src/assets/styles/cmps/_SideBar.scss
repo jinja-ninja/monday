@@ -98,29 +98,41 @@
         }
 
         .boards-btns-container {
-            .btn-board {
-                height: 32px;
-                text-transform: none;
-                justify-content: left;
-                padding-left: 0.1em;
-                width: 222px;
-                position: relative;
 
-                .btn-board-menu {
-                    display: none;
-                }
+            .btn-board-container {
+                display: flex;
+                align-items: center;
+                position: relative;
+                margin-right: 0.5rem;
 
                 &:hover {
+                    background: var(--primary-background-hover-color);
+                    border-radius: var(--border-radius-small);
+
                     .btn-board-menu {
                         display: flex;
-                        position: absolute;
-                        right: .5rem;
 
                         &:hover {
                             background-color: var(--primary-background-hover-color);
                         }
                     }
                 }
+
+                .btn-board-menu {
+                    display: none;
+                    position: relative;
+                    right: 1.7rem;
+                }
+
+                .btn-board {
+                    height: 32px;
+                    text-transform: none;
+                    justify-content: left;
+                    padding-left: 0.1em;
+                    width: 222px;
+
+                }
+
             }
 
         }
