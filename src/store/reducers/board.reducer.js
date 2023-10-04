@@ -33,6 +33,7 @@ export function boardReducer(state = initialState, action) {
         case UPDATE_BOARDS:
             newBoards = state.boards.map(board => (board._id === action.board._id ? action.board : board))
             return { ...state, boards: newBoards }
+
         case ADD_TASK: {
             const { board, groupIdx, task } = action
             const newBoard = { ...board }

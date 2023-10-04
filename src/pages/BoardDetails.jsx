@@ -22,7 +22,6 @@ export function BoardDetails() {
 
     async function loadBoard() {
         await getBoardById(params.boardId)
-        // await updateBoard('board', 'b101', null, null, { key: 'title', value: `Robot dev proj` })
     }
 
 
@@ -72,7 +71,9 @@ export function BoardDetails() {
                 <IconButton icon={Menu} size="small" />
             </div>
 
-            <GroupList groups={currBoard.groups}
+            <GroupList
+                boardId={params.boardId}
+                groups={currBoard.groups}
                 labels={currBoard.labels}
                 cmpOrder={cmpOrder}
                 progress={progress}

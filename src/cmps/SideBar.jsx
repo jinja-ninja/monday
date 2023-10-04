@@ -1,34 +1,43 @@
-import { useState } from "react";
-import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu } from "monday-ui-react-core";
+import { useEffect, useState } from "react";
+import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu, EditableHeading } from "monday-ui-react-core";
 import { Add, Board, Delete, Home, Edit } from "monday-ui-react-core/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { BoardNavLink } from "./BoardNavLink";
-
-
+import { addBoard, loadBoards, removeBoard, updateBoard } from "../store/actions/board.action";
+import { useNavigate } from "react-router";
 
 export function SideBar() {
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
-    // const boards = useSelector(storeState => storeState.boardModule.boards)
-    let boards = [{ _id: 121, title: 'Hello' }, { _id: 131, title: 'Test Board' }]
+    const navigate = useNavigate()
+    const boards = useSelector(storeState => storeState.boardModule.boards)
 
-    console.log('boards:', boards)
+    useEffect(() => {
+        loadBoards()
+    }, [])
 
-    function showBoard() {
-        console.log('board clicked - display board in BoardDetails')
+
+    function onSelectBoard(boardId) {
+        navigate(`/board/${boardId}`)
+        console.log('board clicked - display board in BoardDetails', boardId)
     }
 
     function onDeleteBoard(boardId) {
-        console.log('Delete Board')
+        removeBoard(boardId)
+        console.log('Delete Board', boardId)
     }
 
-    function onRenameBoard(boardId) {
-        console.log('Delete Board')
+    function onRenameBoard(boardId, newText) {
+        console.log('Rename Board', boardId)
+        console.log('newText:', newText)
+        updateBoard('board', boardId, null, null, { key: 'title', value: newText })
     }
 
     function onAddBoard() {
+        addBoard()
         console.log('Add new empty Board')
     }
+
     const dynOpenCloseClass = isOpen ? 'open' : ''
 
     return (
@@ -42,12 +51,12 @@ export function SideBar() {
 
             </button>
 
-
             <div className="side-bar-upper-container">
                 <Button
                     className="home-btn"
                     kind="tertiary"
                     leftIcon={Home}
+                    onClick={(() => navigate('/'))}
                 >
                     Home
                 </Button>
@@ -85,49 +94,11 @@ export function SideBar() {
                     {boards && boards.map((board, idx) => {
                         return (
                             <BoardNavLink
-                                text={board.title} boardId={board._id} showBoard={showBoard}
+                                text={board.title} boardId={board._id} onSelectBoard={onSelectBoard}
                                 onDeleteBoard={onDeleteBoard} onRenameBoard={onRenameBoard}
                                 key={idx} />
                         );
                     })}
-
-                    {/* <Button
-                        className="btn-board"
-                        kind="tertiary"
-                        leftIcon={Board}
-                        onClick={() => showBoard()
-                        }
-                    >
-                        Monday Funday
-                        <MenuButton closeDialogOnContentClick className="btn-board-menu" size={MenuButton.sizes.XS} onClick={(e) => {
-                            e.stopPropagation()
-                            console.log('MENU CLICKED:')
-                        }}>
-                            <Menu id="menu" size={Menu.sizes.MEDIUM}>
-                                <MenuItem onClick={() => onDeleteBoard(boardId)} icon={Delete} iconType={MenuItem.iconType.SVG} title="Delete" />
-                                <MenuItem onClick={() => onRenameBoard(boardId)} icon={Edit} iconType={MenuItem.iconType.SVG} title="Rename Board" />
-                            </Menu>
-                        </MenuButton>
-                    </Button> */}
-
-                    {/* <Button
-                        className="btn-board"
-                        kind="tertiary"
-                        leftIcon={Board}
-                        onClick={() => showBoard()}
-                    >
-                        Gal Surf Trip
-
-                        <MenuButton closeDialogOnContentClick className="btn-board-menu" size={MenuButton.sizes.XS} onClick={(e) => {
-                            e.stopPropagation()
-                        }}>
-                            <Menu id="menu" size={Menu.sizes.MEDIUM}>
-                                <MenuItem onClick={() => onDeleteBoard(boardId)} icon={Delete} iconType={MenuItem.iconType.SVG} title="Delete" />
-                                <MenuItem onClick={() => onRenameBoard(boardId)} icon={Edit} iconType={MenuItem.iconType.SVG} title="Rename Board" />
-                            </Menu>
-                        </MenuButton>
-                    </Button> */}
-
                 </div>
 
             </div>

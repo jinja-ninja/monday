@@ -14,7 +14,12 @@ export const boardService = {
     getEmptyTask,
     removeTask,
     addTask,
-    _createBoards
+    addNewGroup,
+    removeGroup,
+    getEmptyGroup,
+    _createBoards,
+    duplicatedGroup,
+
 }
 
 _createBoards()
@@ -23,7 +28,7 @@ _createBoards()
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
         const board = await getBoardById(boardId)
-
+        console.log('boardfromUpdate Function:', board)
         let groupIdx, taskIdx
 
         switch (type) {
@@ -32,6 +37,7 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 board[key] = value
                 break
             case 'group':
+                console.log('groupId:', groupId)
                 if (!groupId) throw new Error('Error updating')
                 groupIdx = board.groups.findIndex(group => group.id === groupId)
                 board.groups[groupIdx][key] = value
@@ -49,7 +55,7 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
         return await storageService.put(STORAGE_KEY, board)
     }
     catch {
-        console.log('error')
+        // console.log('error')
         throw new Error('Error updating')
     }
 
@@ -79,63 +85,6 @@ function getEmptyBoard() {
         createdBy: {
             _id: 'u101'
         }
-    }
-}
-
-function getEmptyTask(title = '') {
-    return {
-        id: "t" + utilService.getRandomIntInclusive(201, 999),
-        title,
-        status: ``,
-        priority: ``,
-        description: ``,
-        comments: [],
-        checklists: [],
-        memberIds: [],
-        labelIds: [],
-        dueDate: null,
-        byMember: {
-            _id: ``,
-            username: ``,
-            fullname: ``,
-            imgUrl: ``
-        },
-        style: {
-            backgroundColor: "var(--primary-background-color)"
-        }
-    }
-}
-
-//Task functions
-async function getTasks(filterBy = { title: '' }) {
-    // Placeholder - this function implementation may differ based on need
-}
-
-async function removeTask(boardId, groupId, taskId) {
-    try {
-        const board = await getBoardById(boardId)
-        const groupIdx = board.groups.findIndex(group => group.id === groupId)
-        const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-        board.groups[groupIdx].tasks.splice(taskIdx, 1)
-
-        return await storageService.put(STORAGE_KEY, board)
-
-    } catch (err) {
-        console.log('Coult not remove task:', err)
-        throw new Error('Coult not remove task')
-    }
-}
-
-async function addTask(boardId, groupId, task) {
-    try {
-        const board = await getBoardById(boardId)
-        const groupIdx = board.groups.findIndex(group => group.id === groupId)
-        board.groups[groupIdx].tasks.push(task)
-        return await storageService.put(STORAGE_KEY, board)
-
-    } catch (err) {
-        console.log('Coult not remove task:', err)
-        throw new Error('Coult not remove task')
     }
 }
 
