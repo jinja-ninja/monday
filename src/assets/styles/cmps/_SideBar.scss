@@ -15,7 +15,7 @@
     height: 100vh;
     width: 30px;
     border-top-right-radius: 8px;
-    background-color: var(--color-snow_white);
+    background-color: var(--primary-background-color);
     transition: all 0.2s;
     box-shadow: var(--box-shadow-xs);
 
@@ -98,7 +98,7 @@
         }
 
         .boards-btns-container {
-            button {
+            .btn-board {
                 height: 32px;
                 text-transform: none;
                 justify-content: left;
@@ -112,7 +112,7 @@
 
                 &:hover {
                     .btn-board-menu {
-                        display: block;
+                        display: flex;
                         position: absolute;
                         right: .5rem;
 

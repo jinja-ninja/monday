@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button, Icon, IconButton, MenuButton, MenuItem, MenuTitle, SearchComponent, Menu } from "monday-ui-react-core";
-import { Add, Board, Delete, Erase, Home, Sun } from "monday-ui-react-core/icons";
+import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu } from "monday-ui-react-core";
+import { Add, Board, Delete, Home, Edit } from "monday-ui-react-core/icons";
 
 
 
@@ -15,6 +15,17 @@ export function SideBar() {
         console.log('board clicked:')
     }
 
+    function onDeleteBoard(boardId) {
+        console.log('Delete Board:')
+    }
+
+    function onRenameBoard(boardId) {
+        console.log('Delete Board:')
+    }
+
+    function onAddBoard() {
+
+    }
     const dynOpenCloseClass = isOpen ? 'open' : ''
 
     return (
@@ -67,72 +78,43 @@ export function SideBar() {
 
                 </div>
                 <div className="boards-btns-container">
+                   
                     <Button
-                        kind="tertiary"
-                        leftIcon={Board}
-                        onClick={() => showBoard()}
-                    >
-                        Project Name
-                        {/* <Icon
-                            className="btn-board-menu"
-                            icon={Menu}
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                openMenu()
-                            }}
-
-                        /> */}
-                    </Button>
-
-                    <Button
+                        className="btn-board"
                         kind="tertiary"
                         leftIcon={Board}
                     // onClick={function noRefCheck() { }}
                     >
                         Monday Funday
-                        {/* <Icon
-                            className="btn-board-menu"
-                            icon={Menu}
-                            onClick={(e) => {
-                                e.stopPropagation()
-                            }}
-
-                        /> */}
+                        <MenuButton closeDialogOnContentClick className="btn-board-menu" size={MenuButton.sizes.XS} onClick={(e) => {
+                            e.stopPropagation()
+                        }}>
+                            <Menu id="menu" size={Menu.sizes.MEDIUM}>
+                                {/* <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} /> */}
+                                <MenuItem onClick={() => onDeleteBoard(boardId)} icon={Delete} iconType={MenuItem.iconType.SVG} title="Delete" />
+                                <MenuItem onClick={() => onRenameBoard(boardId)} icon={Edit} iconType={MenuItem.iconType.SVG} title="Rename Board" />
+                            </Menu>
+                        </MenuButton>
                     </Button>
 
                     <Button
+                        className="btn-board"
                         kind="tertiary"
                         leftIcon={Board}
                     // onClick={function noRefCheck() { }}
                     >
                         Gal Surf Trip
-                        {/* <Icon
-                            className="btn-board-menu"
-                            icon={Menu}
-                            onClick={(e) => {
-                                e.stopPropagation()
-                            }}
 
-                        /> */}
-
-                        <MenuButton className="btn-board-menu" size={MenuButton.sizes.XXS} onClick={(e) => {
+                        <MenuButton closeDialogOnContentClick className="btn-board-menu" size={MenuButton.sizes.XS} onClick={(e) => {
                             e.stopPropagation()
                         }}>
                             <Menu id="menu" size={Menu.sizes.MEDIUM}>
-                                <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} />
-                                <MenuItem icon={Sun} iconType={MenuItem.iconType.SVG} title="The sun" />
+                                {/* <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} /> */}
+                                <MenuItem onClick={() => onDeleteBoard(boardId)} icon={Delete} iconType={MenuItem.iconType.SVG} title="Delete" />
+                                <MenuItem onClick={() => onRenameBoard(boardId)} icon={Edit} iconType={MenuItem.iconType.SVG} title="Rename Board" />
                             </Menu>
                         </MenuButton>
                     </Button>
-
-
-
-                    {/* <MenuButton size={MenuButton.sizes.XXS}>
-                        <Menu id="menu" size={Menu.sizes.MEDIUM}>
-                            <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} />
-                            <MenuItem icon={Sun} iconType={MenuItem.iconType.SVG} title="The sun" />
-                        </Menu>
-                    </MenuButton> */}
                 </div>
 
             </div>

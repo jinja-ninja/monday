@@ -5,7 +5,10 @@
     column-gap: 12px;
 
     // background-color: var(--grey-background-color);
+    // background-color: var(--board-main-header-background);
     background-color: #ECEFF8;
+    // --board-main-header-background: #ECEFF8;
+    // ^^^
 
     .board-main-header {
         grid-column: 1/-1;

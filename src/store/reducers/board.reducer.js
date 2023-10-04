@@ -16,15 +16,19 @@ export function boardReducer(state = initialState, action) {
     switch (action.type) {
         case SET_BOARDS:
             return { ...state, boards: action.boards }
+
         case REMOVE_BOARD:
             newBoards = state.boards.filter(board => board._id !== action.boardId)
             return { ...state, boards: newBoards }
+
         case ADD_BOARD:
             newBoards = [...state.boards, action.board]
             return { ...state, boards: newBoards }
+
         case UPDATE_BOARD:
             newBoards = state.boards.map(board => (board._id === action.board._id ? action.board : board))
             return { ...state, boards: newBoards }
+
         case ADD_TASK: {
             const { board, groupIdx, task } = action
             const newBoard = { ...board }
@@ -32,6 +36,7 @@ export function boardReducer(state = initialState, action) {
             newBoards = state.boards.map(currBoard => (currBoard._id === newBoard._id ? newBoard : currBoard))
             return { ...state, boards: newBoards }
         }
+
         case REMOVE_TASK: {
             const { board, groupIdx, taskIdx } = action
             const newBoard = { ...board }
@@ -39,6 +44,7 @@ export function boardReducer(state = initialState, action) {
             newBoards = state.boards.map(currBoard => (currBoard._id === newBoard._id ? newBoard : currBoard))
             return { ...state, boards: newBoards }
         }
+        
         case UPDATE_TASK: {
             const { board, groupIdx, taskIdx, task } = action
             const newBoard = { ...board }
