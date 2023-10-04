@@ -7,7 +7,7 @@ const STORAGE_KEY = 'board'
 
 export const boardService = {
     query,
-    get,
+    getBoardById,
     save,
     remove,
     getEmptyBoard
@@ -17,7 +17,7 @@ async function query() {
     return await storageService.query(STORAGE_KEY)
 }
 
-async function get(boardId) {
+async function getBoardById(boardId) {
     return await storageService.get(STORAGE_KEY, boardId)
 }
 
