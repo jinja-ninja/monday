@@ -11,19 +11,21 @@ import { useSelector } from "react-redux";
 
 export function BoardDetails() {
     const params = useParams()
-    const boards = useSelector(state => state.boardModule.board)
-
-    console.log('boards:', boards)
-
-    const [board, setBoard] = useState(null)
+    const currBoard = useSelector(state => state.boardModule.board)
 
     useEffect(() => {
-        getBoardById(params.boardId)
-            .then(board => setBoard(board))
-            .catch(err => console.log('err from board details:', err))
-        // setBoard(getBoardById(params.boardId))
+        console.log('currBoard:', currBoard)
+    }, [currBoard])
+
+    useEffect(() => {
+        loadBoard()
     }, [params.boardId])
-    // console.log('board from details after useeffect:', board)
+
+    async function loadBoard() {
+        await getBoardById(params.boardId)
+        await updateBoard('board', 'b101', null, null, { key: 'title', value: `Robot dev proj${Date.now()}` })
+    }
+
 
     const cmpOrder = [
         "side",
@@ -36,17 +38,14 @@ export function BoardDetails() {
 
     const progress = [null, null, "status", null, "priority", null]
 
-    if (!board) return (<div>Loading...</div>)
-
-    updateBoard('board', 'b101', null, null, { key: 'title', value: 'Robot dev proj' })
-
+    if (!currBoard) return (<div>Loading...</div>)
     return <main className="board-details-layout">
         <BoardMainHeader />
         <SideBar />
 
         <section className="board-details-container">
 
-            <BoardDetailsHeader title={board.title} />
+            <BoardDetailsHeader title={currBoard.title} />
 
             <div className="board-details-actions">
 
@@ -74,8 +73,8 @@ export function BoardDetails() {
                 <IconButton icon={Menu} size="small" />
             </div>
 
-            <GroupList groups={board.groups}
-                labels={board.labels}
+            <GroupList groups={currBoard.groups}
+                labels={currBoard.labels}
                 cmpOrder={cmpOrder}
                 progress={progress}
             />

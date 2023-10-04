@@ -1,5 +1,5 @@
 export const SET_BOARDS = 'SET_BOARDS'
-export const UPDATE_BOARD = 'UPDATE_BOARD'
+export const UPDATE_BOARDS = 'UPDATE_BOARDS'
 export const REMOVE_BOARD = 'REMOVE_BOARD'
 export const ADD_BOARD = 'ADD_BOARD'
 export const ADD_TASK = 'ADD_TASK'
@@ -24,14 +24,13 @@ export function boardReducer(state = initialState, action) {
             return { ...state, boards: newBoards }
 
         case SET_BOARD:
-            console.log('action.board:', action.board)
             return { ...state, board: action.board }
 
         case ADD_BOARD:
             newBoards = [...state.boards, action.board]
             return { ...state, boards: newBoards }
 
-        case UPDATE_BOARD:
+        case UPDATE_BOARDS:
             newBoards = state.boards.map(board => (board._id === action.board._id ? action.board : board))
             return { ...state, boards: newBoards }
         case ADD_TASK: {

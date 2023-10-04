@@ -19,7 +19,7 @@ export function TaskList({ group, cmpOrder }) {
         </section>
 
         {group.tasks.map(task => (
-            <section className="task-list group-grid" key={task._id}>
+            <section className="task-list group-grid" key={task.id}>
                 {cmpOrder.map((cmp, idx) => (
                     <section className="task-item" key={idx}>
                         <DynamicCmp cmpType={cmp} info={task[cmp]} />
