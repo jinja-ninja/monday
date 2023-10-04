@@ -9,24 +9,25 @@ import { BoardNavLink } from "./BoardNavLink";
 export function SideBar() {
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
-    const boards = useSelector(storeState => storeState.boardModule.boards)
+    // const boards = useSelector(storeState => storeState.boardModule.boards)
+    let boards = [{ _id: 121, title: 'Hello' }, { _id: 131, title: 'Test Board' }]
 
-
+    console.log('boards:', boards)
 
     function showBoard() {
-        console.log('board clicked:')
+        console.log('board clicked - display board in BoardDetails')
     }
 
     function onDeleteBoard(boardId) {
-        console.log('Delete Board:')
+        console.log('Delete Board')
     }
 
     function onRenameBoard(boardId) {
-        console.log('Delete Board:')
+        console.log('Delete Board')
     }
 
     function onAddBoard() {
-
+        console.log('Add new empty Board')
     }
     const dynOpenCloseClass = isOpen ? 'open' : ''
 
@@ -73,29 +74,28 @@ export function SideBar() {
                         ariaLabel="Add item to workspace"
                         icon={Add}
                         kind="primary"
-                        //   onClick={function noRefCheck(){}}
+                        onClick={() => onAddBoard()}
                         size="small"
                         className="btn-add"
                     />
 
                 </div>
 
-
-                {/* render BoardNavLink */}
                 <div className="boards-btns-container">
                     {boards && boards.map((board, idx) => {
-                        console.log('boards:', boards)
                         return (
-                            <BoardNavLink text={board.title} key={idx} />
-                        )
+                            <BoardNavLink
+                                text={board.title} boardId={board._id} showBoard={showBoard}
+                                onDeleteBoard={onDeleteBoard} onRenameBoard={onRenameBoard}
+                                key={idx} />
+                        );
                     })}
 
-                    <Button
+                    {/* <Button
                         className="btn-board"
                         kind="tertiary"
                         leftIcon={Board}
                         onClick={() => showBoard()
-
                         }
                     >
                         Monday Funday
@@ -104,14 +104,13 @@ export function SideBar() {
                             console.log('MENU CLICKED:')
                         }}>
                             <Menu id="menu" size={Menu.sizes.MEDIUM}>
-                                {/* <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} /> */}
                                 <MenuItem onClick={() => onDeleteBoard(boardId)} icon={Delete} iconType={MenuItem.iconType.SVG} title="Delete" />
                                 <MenuItem onClick={() => onRenameBoard(boardId)} icon={Edit} iconType={MenuItem.iconType.SVG} title="Rename Board" />
                             </Menu>
                         </MenuButton>
-                    </Button>
+                    </Button> */}
 
-                    <Button
+                    {/* <Button
                         className="btn-board"
                         kind="tertiary"
                         leftIcon={Board}
@@ -123,12 +122,12 @@ export function SideBar() {
                             e.stopPropagation()
                         }}>
                             <Menu id="menu" size={Menu.sizes.MEDIUM}>
-                                {/* <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} /> */}
                                 <MenuItem onClick={() => onDeleteBoard(boardId)} icon={Delete} iconType={MenuItem.iconType.SVG} title="Delete" />
                                 <MenuItem onClick={() => onRenameBoard(boardId)} icon={Edit} iconType={MenuItem.iconType.SVG} title="Rename Board" />
                             </Menu>
                         </MenuButton>
-                    </Button>
+                    </Button> */}
+
                 </div>
 
             </div>
