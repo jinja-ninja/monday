@@ -19,7 +19,7 @@ export const boardService = {
     getEmptyGroup,
     duplicatedGroup,
     _createBoards,
-
+    duplicatedTask,
 }
 
 _createBoards()
@@ -28,7 +28,7 @@ _createBoards()
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
         const board = await getBoardById(boardId)
-        console.log('boardfromUpdate Function:', board)
+        // console.log('boardfromUpdate Function:', board)
         let groupIdx, taskIdx
 
         switch (type) {
@@ -37,7 +37,7 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 board[key] = value
                 break
             case 'group':
-                console.log('groupId:', groupId)
+                // console.log('groupId:', groupId)
                 if (!groupId) throw new Error('Error updating')
                 groupIdx = board.groups.findIndex(group => group.id === groupId)
                 board.groups[groupIdx][key] = value
@@ -80,6 +80,7 @@ async function remove(boardId) {
 
 function getEmptyBoard() {
     return {
+        _id: utilService.makeBoardId(),
         title: '',
         createdAt: Date.now(),
         createdBy: {
@@ -90,7 +91,7 @@ function getEmptyBoard() {
 
 function getEmptyTask(title = '') {
     return {
-        id: "t" + utilService.getRandomIntInclusive(201, 999),
+        id: makeTaskId(),
         title,
         status: ``,
         priority: ``,
@@ -112,9 +113,7 @@ function getEmptyTask(title = '') {
     }
 }
 //Task functions
-async function getTasks(filterBy = { title: '' }) {
-    // Placeholder - this function implementation may differ based on need
-}
+
 async function removeTask(boardId, groupId, taskId) {
     const board = await getBoardById(boardId)
     const groupIdx = board.groups.findIndex(group => group.id === groupId)
@@ -131,11 +130,34 @@ async function addTask(boardId, groupId, task) {
 
 }
 
+
+
+async function duplicatedTask(board, groupId, taskId) {
+    const updatedBoard = { ...board }
+
+    const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
+
+
+
+    const taskIdx = updatedBoard.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+
+
+    const taskToDuplicate = updatedBoard.groups[groupIdx].tasks[taskIdx]
+
+
+    const duplicatedTask = JSON.parse(JSON.stringify(taskToDuplicate))
+    duplicatedTask.id = utilService.makeId()
+    duplicatedTask.title = duplicatedTask.title + ' copy'
+    updatedBoard.groups[groupIdx].tasks.splice(taskIdx + 1, 0, duplicatedTask)
+    return await storageService.put(STORAGE_KEY, updatedBoard)
+}
+
 //Group functions
 
 function getEmptyGroup() {
+
     return {
-        id: utilService.makeId(),
+        id: utilService.makeGroupId(),
         title: 'New Group',
         tasks: [],
         style: {},

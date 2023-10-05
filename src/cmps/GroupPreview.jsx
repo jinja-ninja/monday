@@ -2,9 +2,6 @@ import { useState } from "react"
 
 import { EditableHeading, Icon, Text, Tooltip } from "monday-ui-react-core"
 import { DropdownChevronDown, DropdownChevronRight, Edit } from "monday-ui-react-core/icons"
-
-
-
 import { Date } from "./dynamicCmps/Date"
 import { Member } from "./dynamicCmps/Member"
 import { Side } from "./dynamicCmps/Side"
@@ -19,6 +16,9 @@ export function GroupPreview({ group, label, cmpOrder, progress, boardId, onRena
 
     const [showGroup, setShowGroup] = useState(true)
     const [editableText, setEditableText] = useState(group.title)
+    const [numOfTasks, setNumOfTasks] = useState(group.tasks.length)
+
+
 
     return <div className="group-preview-container">
         <div className="collapsible-header-wrapper">
@@ -28,17 +28,19 @@ export function GroupPreview({ group, label, cmpOrder, progress, boardId, onRena
                 <Icon iconType={Icon.type.SVG} iconSize={20} icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
                     onClick={() => setShowGroup((prevShowGroup => !prevShowGroup))} />
             </Tooltip>
-
-            <EditableHeading
-                className="editable-heading-target"
-                type="h4"
-                value={editableText}
-                onBlur={() => {
-                    onRenameGroup(group.id, editableText)
-                }}
-                onChange={(newText) => setEditableText(newText)}
-            />
-
+            <Tooltip content="Click to Edit"
+                animationType="expand">
+                <EditableHeading
+                    className="editable-heading-target"
+                    type="h4"
+                    value={editableText}
+                    onBlur={() => {
+                        onRenameGroup(group.id, editableText)
+                    }}
+                    onChange={(newText) => setEditableText(newText)}
+                />
+            </Tooltip>
+            <h1>{numOfTasks} Items</h1>
 
 
         </div>

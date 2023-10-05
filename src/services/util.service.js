@@ -15,6 +15,9 @@ export const utilService = {
     makeImage,
     getEmptyMsg,
     getEmptyReview,
+    makeGroupId,
+    makeBoardId,
+    makeTaskId
 
 }
 
@@ -27,6 +30,33 @@ function makeId(length = 6) {
     }
 
     return txt
+}
+
+function makeBoardId(length = 6) {
+    var txt = 'b'
+    var possible = '0123456789'
+
+    for (var i = 1; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length))
+    }
+}
+
+function makeGroupId(length = 6) {
+    var txt = 'g'
+    var possible = '0123456789'
+
+    for (var i = 1; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length))
+    }
+}
+
+function makeTaskId(length = 6) {
+    var txt = 't'
+    var possible = '0123456789'
+
+    for (var i = 1; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length))
+    }
 }
 
 // function readJsonFile(path) {
