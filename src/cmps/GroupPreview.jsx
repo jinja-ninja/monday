@@ -10,13 +10,15 @@ import { TaskTitle } from "./dynamicCmps/TaskTitle"
 import { Priority } from "./dynamicCmps/Priority"
 import { TaskListHeader } from "./TaskListHeader"
 import { TaskList } from "./TaskList"
+import { useSelector } from "react-redux"
 
 
 export function GroupPreview({ group, label, cmpOrder, progress, boardId, onRenameGroup, initiateEdit }) {
 
     const [showGroup, setShowGroup] = useState(true)
     const [editableText, setEditableText] = useState(group.title)
-    const [numOfTasks, setNumOfTasks] = useState(group.tasks.length)
+    const board = useSelector(state => state.boardModule.board)
+    const numOfTasks = group.tasks.length
 
 
 
@@ -40,9 +42,7 @@ export function GroupPreview({ group, label, cmpOrder, progress, boardId, onRena
                     onChange={(newText) => setEditableText(newText)}
                 />
             </Tooltip>
-            <h1>{numOfTasks} Items</h1>
-
-
+            <p className="num-of-tasks">{numOfTasks} {numOfTasks === 1 ? 'Item' : 'Items'}</p>
         </div>
         {/* <TaskListHeader cmpOrder={cmpOrder} /> */}
         {showGroup && <TaskList group={group} cmpOrder={cmpOrder} />}
