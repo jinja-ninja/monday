@@ -34,7 +34,7 @@ export function HomePage() {
                 <div className='main-titles-container'>
                     <h1 className='home-main-title'>A platform built for a
                         new way of working</h1>
-                    <p>What would you like to manage with monday.com Work OS?</p>
+                    <p>What would you like to manage with funday.com Work OS?</p>
                 </div>
 
                 <div className='home-cards-options'>
@@ -129,7 +129,7 @@ export function HomePage() {
             </section>
 
             <section className='footer-section full'>
-                <h2>Deliver your best work <span>with monday.com</span></h2>
+                <h2>Deliver your best work <span>with funday.com</span></h2>
                 <p>No credit card needed   <span>✦</span>   Unlimited time on Free plan</p>
                 <button onClick={() => navigate('/board')} className='btn-footer-get-started'><span className='get-started-txt'>Get Started</span>
                     <svg className='arrow-icon' width="16" height="12" viewBox="0 0 9 7" xmlns="http://www.w3.org/2000/svg">

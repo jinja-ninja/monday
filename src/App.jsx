@@ -26,9 +26,9 @@ export function App() {
           <Route element={<HomePage />} path="/" />
           <Route element={<BoardIndex />} path="/board" /> {/* TODO: add board index page */}
           <Route element={<BoardDetails />} path="board/:boardId">
-            {/* <Route path='/task/:taskId' element={<TaskDetails />} /> */}
           </Route>
           <Route element={<BoardIndex />} path="/board" />
+          <Route element={<TaskDetails />} path='/task/:taskId' />
 
           <Route path="/auth">
             <Route path="login" element={<LoginSignUp />} />
