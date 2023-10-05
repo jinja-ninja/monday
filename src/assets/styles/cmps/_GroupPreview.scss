@@ -1,1 +1,9 @@
-.group-preview-container {}
+.group-preview-container {
+  .num-of-tasks {
+    opacity: 0;
+    transition: opacity 0.3s;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

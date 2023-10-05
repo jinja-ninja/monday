@@ -5,15 +5,11 @@ import { useEffect, useState, useRef } from "react"
 import { useSelector } from "react-redux"
 import { addGroup, duplicatedGroup, getBoardById, removeGroup, updateBoard } from "../store/actions/board.action"
 import { IconButton, MenuButton, Menu, MenuTitle, MenuItem } from "monday-ui-react-core"
-import { showSuccessMsg, showUserMsg } from '../services/event-bus.service'
+import { showErrorMsg, showSuccessMsg, showUserMsg } from '../services/event-bus.service'
 
 
 
 export function GroupList({ groups, labels, cmpOrder, progress, boardId }) {
-    const board = useSelector(state => state.boardModule.board)
-
-
-
 
 
     const handleEditClick = (groupId) => {
@@ -40,10 +36,10 @@ export function GroupList({ groups, labels, cmpOrder, progress, boardId }) {
     async function onDuplicateGroup(boardId, groupId) {
         try {
             await duplicatedGroup(boardId, groupId)
-            // showSuccessMsg('Task removed')
-
+            showSuccessMsg('Task Duplicated')
+            console.log('success')
         } catch (err) {
-            // showErrorMsg('Cannot remove task')
+            showErrorMsg('Cannot Duplicate')
         }
     }
 
@@ -60,10 +56,13 @@ export function GroupList({ groups, labels, cmpOrder, progress, boardId }) {
                     return (
                         <li key={group.id} className="group-list-item" data-group-id={group.id}>
                             <MenuButton
+                                closeDialogOnContentClick
+                                hideWhenReferenceHidden={true}
                                 size={MenuButton.sizes.XS}
                                 className="group-menu-btn"
                             >
                                 <Menu
+                                    onClick
                                     id="menu"
                                     size="medium"
                                 >
