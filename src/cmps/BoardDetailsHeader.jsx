@@ -1,6 +1,6 @@
-import { EditableHeading, IconButton, Tab, TabList } from "monday-ui-react-core";
-import { Favorite, Home, Info } from "monday-ui-react-core/icons";
-import { Link } from "react-router-dom";
+import { EditableHeading, IconButton, Tab, TabList } from "monday-ui-react-core"
+import { Favorite, Home, Info } from "monday-ui-react-core/icons"
+import { Link } from "react-router-dom"
 
 
 export function BoardDetailsHeader({ title }) {

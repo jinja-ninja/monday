@@ -1,4 +1,4 @@
-import { Box, Button, Text } from "monday-ui-react-core";
+import { Box, Button, Text } from "monday-ui-react-core"
 
 
 export function BoardIndexAside() {

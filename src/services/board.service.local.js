@@ -49,7 +49,7 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 board.groups[groupIdx].tasks[taskIdx][key] = value
                 break
             default:
-                break;
+                break
         }
 
         return await storageService.put(STORAGE_KEY, board)
@@ -116,16 +116,16 @@ async function getTasks(filterBy = { title: '' }) {
     // Placeholder - this function implementation may differ based on need
 }
 async function removeTask(boardId, groupId, taskId) {
-    try {
-        const board = await getBoardById(boardId)
-        const groupIdx = board.groups.findIndex(group => group.id === groupId)
-        const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-        board.groups[groupIdx].tasks.splice(taskIdx, 1)
-        return await storageService.put(STORAGE_KEY, board)
-    } catch (err) {
-        console.log('Coult not remove task:', err)
-        throw new Error('Coult not remove task')
-    }
+    // try {
+    const board = await getBoardById(boardId)
+    const groupIdx = board.groups.findIndex(group => group.id === groupId)
+    const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+    board.groups[groupIdx].tasks.splice(taskIdx, 1)
+    return await storageService.put(STORAGE_KEY, board)
+    // } catch (err) {
+    //     console.log('Coult not remove task:', err)
+    //     throw new Error('Coult not remove task')
+    // }
 }
 async function addTask(boardId, groupId, task) {
     try {
@@ -186,7 +186,7 @@ async function duplicatedGroup(board, groupId) {
         updatedBoard.groups.splice(groupIdx + 1, 0, duplicatedGroup)
         return await storageService.put(STORAGE_KEY, updatedBoard)
     }
-    catch {
+    catch (err) {
         console.log('error')
         throw new Error('Error updating')
     }

@@ -1,11 +1,11 @@
 import { Button, EditableHeading, Menu, MenuButton, MenuItem } from "monday-ui-react-core"
 import { Board, Delete, Edit } from "monday-ui-react-core/icons"
 import { useState } from "react"
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"
 
 export function BoardNavLink({ text, boardId, onSelectBoard, onDeleteBoard, onRenameBoard }) {
     const [isEditibleMode, setIsEditibleMode] = useState(false)
-    const [editableText, setEditableText] = useState(text);
+    const [editableText, setEditableText] = useState(text)
     const currBoard = useSelector((storeState => storeState.boardModule.board))
 
     const dynActiveBoardClass = currBoard._id === boardId ? 'selected-board' : ''
@@ -16,8 +16,8 @@ export function BoardNavLink({ text, boardId, onSelectBoard, onDeleteBoard, onRe
         value={text}
         shouldFocusOnMount={true}
         onBlur={() => {
-            onRenameBoard(boardId, editableText);
-            setIsEditibleMode((prevIsEditable) => !prevIsEditable);
+            onRenameBoard(boardId, editableText)
+            setIsEditibleMode((prevIsEditable) => !prevIsEditable)
         }}
         onChange={(newText) => setEditableText(newText)}
         onClick={(e) => { e.stopPropagation() }}

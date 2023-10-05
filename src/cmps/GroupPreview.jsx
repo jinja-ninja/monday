@@ -1,24 +1,24 @@
-import { useState } from "react";
+import { useState } from "react"
 
-import { EditableHeading, Icon, Text, Tooltip } from "monday-ui-react-core";
-import { DropdownChevronDown, DropdownChevronRight, Edit } from "monday-ui-react-core/icons";
+import { EditableHeading, Icon, Text, Tooltip } from "monday-ui-react-core"
+import { DropdownChevronDown, DropdownChevronRight, Edit } from "monday-ui-react-core/icons"
 
 
 
-import { Date } from "./dynamicCmps/Date";
-import { Member } from "./dynamicCmps/Member";
-import { Side } from "./dynamicCmps/Side";
-import { Status } from "./dynamicCmps/Status";
-import { TaskTitle } from "./dynamicCmps/TaskTitle";
-import { Priority } from "./dynamicCmps/Priority";
-import { TaskListHeader } from "./TaskListHeader";
-import { TaskList } from "./TaskList";
+import { Date } from "./dynamicCmps/Date"
+import { Member } from "./dynamicCmps/Member"
+import { Side } from "./dynamicCmps/Side"
+import { Status } from "./dynamicCmps/Status"
+import { TaskTitle } from "./dynamicCmps/TaskTitle"
+import { Priority } from "./dynamicCmps/Priority"
+import { TaskListHeader } from "./TaskListHeader"
+import { TaskList } from "./TaskList"
 
 
 export function GroupPreview({ group, label, cmpOrder, progress, boardId, onRenameGroup, initiateEdit }) {
 
     const [showGroup, setShowGroup] = useState(true)
-    const [editableText, setEditableText] = useState(group.title);
+    const [editableText, setEditableText] = useState(group.title)
 
     return <div className="group-preview-container">
         <div className="collapsible-header-wrapper">
@@ -34,7 +34,7 @@ export function GroupPreview({ group, label, cmpOrder, progress, boardId, onRena
                 type="h4"
                 value={editableText}
                 onBlur={() => {
-                    onRenameGroup(group.id, editableText);
+                    onRenameGroup(group.id, editableText)
                 }}
                 onChange={(newText) => setEditableText(newText)}
             />
@@ -74,7 +74,7 @@ export function GroupPreview({ group, label, cmpOrder, progress, boardId, onRena
 //     ))}
 // </section>
 //     </section>
-// );
-// };
+// )
+// }
 
 

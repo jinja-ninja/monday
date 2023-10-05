@@ -1,14 +1,14 @@
-import { Checkbox, EditableHeading } from "monday-ui-react-core";
-import { Date } from "./dynamicCmps/Date";
-import { Member } from "./dynamicCmps/Member";
-import { Priority } from "./dynamicCmps/Priority";
-import { Side } from "./dynamicCmps/Side";
-import { Status } from "./dynamicCmps/Status";
-import { TaskTitle } from "./dynamicCmps/TaskTitle";
-import { boardService } from "../services/board.service.local";
-import { useSelector } from "react-redux";
-import { addTask, removeTask, updateTask } from "../store/actions/board.action";
-import { useState } from "react";
+import { Checkbox, EditableHeading } from "monday-ui-react-core"
+import { Date } from "./dynamicCmps/Date"
+import { Member } from "./dynamicCmps/Member"
+import { Priority } from "./dynamicCmps/Priority"
+import { Side } from "./dynamicCmps/Side"
+import { Status } from "./dynamicCmps/Status"
+import { TaskTitle } from "./dynamicCmps/TaskTitle"
+import { boardService } from "../services/board.service.local"
+import { useSelector } from "react-redux"
+import { addTask, removeTask, updateTask } from "../store/actions/board.action"
+import { useState } from "react"
 
 export function TaskList({ group, cmpOrder }) {
 
@@ -100,23 +100,23 @@ const DynamicCmp = ({ cmpType, info, boardId, groupId, taskId, onUpdate }) => {
 
     switch (cmpType) {
         case "side":
-            return <Side info={info} />;
+            return <Side info={info} />
         case "priority":
-            return <Priority info={info} />;
+            return <Priority info={info} />
         case "title":
             return <TaskTitle info={info}
                 boardId={boardId}
                 groupId={groupId}
                 taskId={taskId}
-                onUpdate={onUpdate} />;
+                onUpdate={onUpdate} />
         case "status":
-            return <Status info={info} />;
+            return <Status info={info} />
         case "memberIds":
-            return <Member info={info} />;
+            return <Member info={info} />
         case "dueDate":
-            return <Date info={info} />;
+            return <Date info={info} />
 
         default:
-            break;
+            break
     }
 }

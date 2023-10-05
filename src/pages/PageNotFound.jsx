@@ -6,9 +6,9 @@ export function PageNotFound() {
 
     // React.useEffect(() => {
     //     setTimeout(() => {
-    //         history.push('/');
-    //     }, 3000); // Redirect after 3 seconds (adjust the delay as needed)
-    // }, [history]);
+    //         history.push('/')
+    //     }, 3000) // Redirect after 3 seconds (adjust the delay as needed)
+    // }, [history])
 
     return (
         <div>

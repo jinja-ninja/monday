@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
-import { Button, IconButton, MenuItem, SplitButton, SplitButtonMenu } from "monday-ui-react-core";
-import { Add, Announcement, Check, Filter, Hide, Menu, PersonRound, Search, Sort } from "monday-ui-react-core/icons";
-import { BoardDetailsHeader } from "../cmps/BoardDetailsHeader";
-import { GroupList } from "../cmps/GroupList";
-import { BoardMainHeader } from "../cmps/BoardMainHeader";
-import { SideBar } from "../cmps/SideBar";
-import { useParams } from "react-router-dom";
-import { getBoardById, updateBoard } from "../store/actions/board.action";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react"
+import { Button, IconButton, MenuItem, SplitButton, SplitButtonMenu } from "monday-ui-react-core"
+import { Add, Announcement, Check, Filter, Hide, Menu, PersonRound, Search, Sort } from "monday-ui-react-core/icons"
+import { BoardDetailsHeader } from "../cmps/BoardDetailsHeader"
+import { GroupList } from "../cmps/GroupList"
+import { BoardMainHeader } from "../cmps/BoardMainHeader"
+import { SideBar } from "../cmps/SideBar"
+import { useParams } from "react-router-dom"
+import { getBoardById, updateBoard } from "../store/actions/board.action"
+import { useSelector } from "react-redux"
 
 export function BoardDetails() {
     const params = useParams()
     const currBoard = useSelector(state => state.boardModule.board)
 
-    useEffect(() => {
-    }, [currBoard])
+    // useEffect(() => {
+    // }, [currBoard])
 
     useEffect(() => {
         loadBoard()
@@ -32,7 +32,7 @@ export function BoardDetails() {
         "priority",
         "memberIds",
         "dueDate"
-    ];
+    ]
 
     const progress = [null, null, "status", null, "priority", null]
 

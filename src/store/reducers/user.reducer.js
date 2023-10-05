@@ -1,4 +1,4 @@
-// import { userService } from "../../services/user.service.js";
+// import { userService } from "../../services/user.service.js"
 
 export const SET_USER = 'SET_USER'
 export const SET_USERS = 'SET_USERS'
@@ -33,6 +33,6 @@ export function userReducer(state = initialState, action = {}) {
             break
 
         default:
-            return state;
+            return state
     }
 }

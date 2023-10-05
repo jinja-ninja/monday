@@ -266,7 +266,7 @@ const cmp3 = {
 //       "member-picker",
 //       "date-picker",
 //       "priority-picker",
-//     ];
+//     ]
 //     return (
 //       <section>
 //         <h5>{task.txt}</h5>
@@ -276,24 +276,24 @@ const cmp3 = {
 //               cmp={cmp}
 //               key={idx}
 //               onUpdate={(data) => {
-//                 console.log("Updating: ", cmp, "with data:", data);
+//                 console.log("Updating: ", cmp, "with data:", data)
 //                 // make a copy, update the task, create an action
 //                 // Call action: updateTask(task, action)
 //               }}
 //             />
-//           );
+//           )
 //         })}
 //       </section>
-//     );
+//     )
 //   }
 
 // export function DynamicCmp({ cmp, info, onUpdate }) {
 //     switch (cmp) {
 //         case "status-picker":
-//             return <StatusPicker info={info} onUpdate={onUpdate} />;
+//             return <StatusPicker info={info} onUpdate={onUpdate} />
 //         case "member-picker":
-//             return <MemberPicker info={info} onUpdate={onUpdate} />;
+//             return <MemberPicker info={info} onUpdate={onUpdate} />
 //         default:
-//             return <p>UNKNOWN {cmp}</p>;
+//             return <p>UNKNOWN {cmp}</p>
 //     }
 // }

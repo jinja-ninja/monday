@@ -1,4 +1,4 @@
-import { Avatar, AvatarGroup } from "monday-ui-react-core";
+import { Avatar, AvatarGroup } from "monday-ui-react-core"
 
 export function Member({ info }) {
 

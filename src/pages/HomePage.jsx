@@ -13,13 +13,13 @@ import HoltCatImg from '../assets/img/HoltCatImg.avif'
 import CanvaImg from '../assets/img/CanvaImg.png'
 import CocaColaImg from '../assets/img/CocaColaImg.png'
 import OxyImg from '../assets/img/OxyImg.png'
-import LionsgateImg from '../assets/img/LionsgateImg.avif'
+import LionsgateImg from '../assets/img/LionsgateImg.png'
 import CarrefourImg from '../assets/img/CarrefourImg.png'
 import BdImg from '../assets/img/BdImg.png'
 import GlossierImg from '../assets/img/GlossierImg.png'
 import UniversalImg from '../assets/img/UniversalImg.png'
 import FiveStarsImg from '../assets/img/FiveStarsImg.png'
-import AwardOneImg from '../assets/img/AwardOneImg.avif'
+import AwardOneImg from '../assets/img/AwardOneImg.png'
 import AwardTwoImg from '../assets/img/AwardTwoImg.png'
 import AwardThreeImg from '../assets/img/AwardThreeImg.png'
 import { useNavigate } from 'react-router-dom'
@@ -77,7 +77,7 @@ export function HomePage() {
                 </div>
 
                 <div className='btn-container'>
-                    <button onClick={()=>navigate('/board')} className='btn-big-get-started'><span className='get-started-txt'>Get Started</span>
+                    <button onClick={() => navigate('/board')} className='btn-big-get-started'><span className='get-started-txt'>Get Started</span>
                         <svg className='arrow-icon' width="16" height="12" viewBox="0 0 9 7" xmlns="http://www.w3.org/2000/svg">
                             <path fillRule="evenodd" clipRule="evenodd" d="M4.628.616a.5.5 0 1 0-.64.768L6.203 3.23H.5a.5.5 0 0 0 0 1h5.612L3.988 6a.5.5 0 1 0 .64.769l3.23-2.693a.5.5 0 0 0 0-.768L4.628.616z" fill="#FFFFFF"></path>
                         </svg>
@@ -131,7 +131,7 @@ export function HomePage() {
             <section className='footer-section full'>
                 <h2>Deliver your best work <span>with monday.com</span></h2>
                 <p>No credit card needed   <span>✦</span>   Unlimited time on Free plan</p>
-                <button onClick={()=>navigate('/board')} className='btn-footer-get-started'><span className='get-started-txt'>Get Started</span>
+                <button onClick={() => navigate('/board')} className='btn-footer-get-started'><span className='get-started-txt'>Get Started</span>
                     <svg className='arrow-icon' width="16" height="12" viewBox="0 0 9 7" xmlns="http://www.w3.org/2000/svg">
                         <path fillRule="evenodd" clipRule="evenodd" d="M4.628.616a.5.5 0 1 0-.64.768L6.203 3.23H.5a.5.5 0 0 0 0 1h5.612L3.988 6a.5.5 0 1 0 .64.769l3.23-2.693a.5.5 0 0 0 0-.768L4.628.616z" fill="#FFFFFF"></path>
                     </svg>
