@@ -10,7 +10,8 @@ export const boardService = {
     update,
     save,
     remove,
-    getEmptyBoard,
+    // getEmptyBoard,
+    getNewBoard,
     getEmptyTask,
     removeTask,
     addTask,
@@ -19,7 +20,7 @@ export const boardService = {
     getEmptyGroup,
     duplicatedGroup,
     _createBoards,
-
+    duplicateBoard,
 }
 
 _createBoards()
@@ -28,7 +29,7 @@ _createBoards()
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
         const board = await getBoardById(boardId)
-        console.log('boardfromUpdate Function:', board)
+        // console.log('boardfromUpdate Function:', board)
         let groupIdx, taskIdx
 
         switch (type) {
@@ -78,14 +79,153 @@ async function remove(boardId) {
     return await storageService.remove(STORAGE_KEY, boardId)
 }
 
-function getEmptyBoard() {
+function getNewBoard() {
     return {
-        title: '',
+        title: "New Board",
+        isStarred: false,
+        archivedAt: '',
         createdAt: Date.now(),
         createdBy: {
-            _id: 'u101'
-        }
+            _id: utilService.makeId(),
+            fullname: "Gal Ben Natan",
+            imgUrl: "http://some-img"
+        },
+        style: {
+            backgroundImage: ""
+        },
+        labels: [
+            {
+                id: utilService.makeId(),
+                title: "Done",
+                color: "#61bd4f"
+            },
+            {
+                id: utilService.makeId(),
+                title: "Progress",
+                color: "#61bd33"
+            }
+        ],
+        members: [
+            {
+                _id: utilService.makeId(),
+                fullname: "Nati Feldman",
+                imgUrl: "https://www.google.com"
+            }
+        ],
+        groups: [
+            {
+                id: utilService.makeId(),
+                title: "Group 1",
+                archivedAt: '',
+                tasks: [
+                    {
+                        id: utilService.makeId(),
+                        title: "Type your task here"
+                    },
+                    {
+                        id: utilService.makeId(),
+                        title: "Type your task here"
+                    }
+                ],
+                style: {}
+            },
+            {
+                id: utilService.makeId(),
+                title: "Group 2",
+                tasks: [
+                    {
+                        id: utilService.makeId(),
+                        title: "Type your task here",
+                        archivedAt: ''
+                    },
+                    {
+                        id: utilService.makeId(),
+                        title: "Type your task here",
+                        status: "Not started",
+                        priority: "unset",
+                        description: "description",
+                        comments: [
+                            {
+                                id: "ZdPnm",
+                                txt: "also @yaronb please CR this",
+                                createdAt: 1590999817436,
+                                byMember: {
+                                    _id: "u101",
+                                    fullname: "Tal Tarablus",
+                                    imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                                }
+                            }
+                        ],
+                        checklists: [
+                            {
+                                id: "YEhmF",
+                                title: "Checklist",
+                                todos: [
+                                    {
+                                        id: "212jX",
+                                        title: "To Do 1",
+                                        isDone: false
+                                    }
+                                ]
+                            }
+                        ],
+                        memberIds: [""],
+                        labelIds: ["l101", "l102"],
+                        dueDate: "No deadline",
+                        byMember: {
+                            _id: "u101",
+                            username: "Tal",
+                            fullname: "Tal Tarablus",
+                            imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                        },
+                        style: {
+                            backgroundColor: "#26de81"
+                        }
+                    }
+                ],
+                style: {}
+            }
+        ],
+        activities: [
+            {
+                id: "a101",
+                txt: "Changed Color",
+                createdAt: 154514,
+                byMember: {
+                    _id: "u101",
+                    fullname: "Abi Abambi",
+                    imgUrl: "http://some-img"
+                },
+                group: {
+                    id: "g101",
+                    title: "Urgent Stuff"
+                },
+                task: {
+                    id: "c101",
+                    title: "Replace Logo"
+                }
+            }
+        ],
+        cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
     }
+}
+
+//MAKE AN EMPTY BOARD FUNCTION - TEST DEMO DATA LATER
+// function getEmptyBoard() {
+//     return {
+//         title: '',
+//         createdAt: Date.now(),
+//         createdBy: {
+//             _id: 'u101'
+//         }
+//     }
+// }
+
+async function duplicateBoard(board) {
+    const duplicatedBoard = JSON.parse(JSON.stringify(board))
+    duplicatedBoard._id = utilService.makeId()
+    duplicatedBoard.title = duplicatedBoard.title + ' copy'
+    return await save(duplicatedBoard)
 }
 
 function getEmptyTask(title = '') {
@@ -169,6 +309,7 @@ async function duplicatedGroup(board, groupId) {
     return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
+
 function _createBoards() {
     let boards = utilService.loadFromStorage(STORAGE_KEY)
     if (!boards || !boards.length) {
@@ -236,7 +377,7 @@ function _createBoards() {
                                     id: "c104",
                                     title: "Help me",
                                     status: "in-progress",
-                                    priority: "high",
+                                    priority: "unset",
                                     description: "description",
                                     comments: [
                                         {
@@ -641,7 +782,7 @@ function _createBoards() {
                                     id: "c120",
                                     title: "Create API Endpoints",
                                     status: "completed",
-                                    priority: "high",
+                                    priority: "unset",
                                     description: "Endpoints for CRUD operations",
                                     comments: [
                                         {

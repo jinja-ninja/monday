@@ -3,18 +3,19 @@ import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu, Editab
 import { Add, Board, Delete, Home, Edit } from "monday-ui-react-core/icons"
 import { useDispatch, useSelector } from "react-redux"
 import { BoardNavLink } from "./BoardNavLink"
-import { addBoard, loadBoards, removeBoard, updateBoard } from "../store/actions/board.action"
-import { useNavigate } from "react-router"
+import { addBoard, duplicateBoard, loadBoards, removeBoard, toggleBoardFavorite, updateBoard } from "../store/actions/board.action"
+import { useNavigate,useParams } from "react-router"
 
 export function SideBar() {
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const parmas = useParams()
     const boards = useSelector(storeState => storeState.boardModule.boards)
 
     useEffect(() => {
         loadBoards()
-    }, [])
+    }, [boards.length])
 
 
     function onSelectBoard(boardId) {
@@ -36,6 +37,19 @@ export function SideBar() {
     function onAddBoard() {
         addBoard()
         console.log('Add new empty Board')
+    }
+
+    function onToggleFavoriteBoard(boardId) {
+        toggleBoardFavorite(boardId)
+        console.log('toggle Board FAVORITE!:', boardId)
+    }
+
+    async function onDuplicateBoard(boardId) {
+        let duplicatedBoard = await duplicateBoard(boardId)
+        // console.log('duplicatedBoard:', duplicatedBoard)
+        // console.log('boards:', boards)
+        navigate(`/board/${duplicatedBoard._id}`)
+        // console.log('Duplicate board:', boardId)
     }
 
     const dynOpenCloseClass = isOpen ? 'open' : ''
@@ -94,8 +108,9 @@ export function SideBar() {
                     {boards && boards.map((board, idx) => {
                         return (
                             <BoardNavLink
-                                text={board.title} boardId={board._id} onSelectBoard={onSelectBoard}
-                                onDeleteBoard={onDeleteBoard} onRenameBoard={onRenameBoard}
+                                text={board.title} boardId={board._id} onSelectBoard={onSelectBoard} isStarred={board.isStarred}
+                                onDeleteBoard={onDeleteBoard} onRenameBoard={onRenameBoard} onToggleFavoriteBoard={onToggleFavoriteBoard}
+                                onDuplicateBoard={onDuplicateBoard}
                                 key={idx} />
                         )
                     })}
