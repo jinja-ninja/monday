@@ -5,11 +5,14 @@ import { useEffect, useState, useRef } from "react"
 import { useSelector } from "react-redux"
 import { addGroup, duplicatedGroup, getBoardById, removeGroup, updateBoard } from "../store/actions/board.action"
 import { IconButton, MenuButton, Menu, MenuTitle, MenuItem } from "monday-ui-react-core"
+import { showSuccessMsg, showUserMsg } from '../services/event-bus.service'
 
 
 
 export function GroupList({ groups, labels, cmpOrder, progress, boardId }) {
     const board = useSelector(state => state.boardModule.board)
+
+
 
 
 
@@ -27,9 +30,10 @@ export function GroupList({ groups, labels, cmpOrder, progress, boardId }) {
     async function onRemoveGroup(boardId, groupId) {
         try {
             await removeGroup(boardId, groupId)
-            // showSuccessMsg('Task removed')
+            showSuccessMsg('Group removed')
+            showUserMsg('success', 'Group removed')
         } catch (err) {
-            // showErrorMsg('Cannot remove task')
+            showUserMsg('error', 'Cannot remove group')
         }
     }
 
