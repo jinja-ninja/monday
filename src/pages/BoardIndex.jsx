@@ -24,7 +24,7 @@ export function BoardIndex() {
     return <main className="board-index">
 
         <BoardMainHeader />
-        {/* <SideBar /> */}
+        <SideBar />
 
         <section className="board-index-body">
             <Box

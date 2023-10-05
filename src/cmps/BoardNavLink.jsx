@@ -7,8 +7,13 @@ export function BoardNavLink({ text, boardId, onSelectBoard, onDeleteBoard, onRe
     const [isEditibleMode, setIsEditibleMode] = useState(false)
     const [editableText, setEditableText] = useState(text)
     const currBoard = useSelector((storeState => storeState.boardModule.board))
+    let dynActiveBoardClass
 
-    const dynActiveBoardClass = currBoard._id === boardId ? 'selected-board' : ''
+    if (currBoard) {
+        dynActiveBoardClass = currBoard._id === boardId ? 'selected-board' : ''
+    } else {
+        dynActiveBoardClass = ''
+    }
 
     const EditibleOrText = !isEditibleMode ? text : <EditableHeading
         className="editableHeading"

@@ -6,7 +6,7 @@ export function BoardList({ boards }) {
         <ul className="index-board-list ">
             {boards &&
                 boards.map(board => {
-                    console.log('board from list:', board)
+                    // console.log('board from list:', board)
                     return (
                         <li key={board._id}>
                             <BoardPreview board={board} />

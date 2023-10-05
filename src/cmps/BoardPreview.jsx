@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 export function BoardPreview({ board }) {
 
     const navigate = useNavigate()
-    console.log('board from preview:', board)
+    // console.log('board from preview:', board)
     return <>
         <Box
             // border={Box.borders.DEFAULT}
