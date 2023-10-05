@@ -4,13 +4,7 @@ import { Icon } from "monday-ui-react-core"
 import { Tooltip, } from "monday-ui-react-core"
 import { IconButton, } from "monday-ui-react-core"
 
-
-
-
-
-
 export function BoardMainHeader({ board, onRemoveBoard, onEditBoard }) {
-
 
     return (
 
