@@ -190,13 +190,11 @@ export async function updateBoard(type, boardId, groupId = null, taskId = null, 
     }
 }
 
-
 // Group Actions
 export async function addGroup(boardId) {
     try {
         let board = await boardService.getBoardById(boardId)
         board = await boardService.addNewGroup(board)
-        console.log('board from add group function:', board)
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {

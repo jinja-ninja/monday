@@ -8,6 +8,7 @@ export function TaskTitle({ info, boardId, groupId, taskId, onUpdate }) {
 
     return <div className="task-title">
         <EditableHeading type={EditableHeading.types.h5}
+            ellipsis
             onBlur={() => {
                 updatedTaskInput ? onUpdate(taskId, { key: 'title', value: updatedTaskInput }) : setUpdatedTask(info)
                 setUpdatedTask(info)
