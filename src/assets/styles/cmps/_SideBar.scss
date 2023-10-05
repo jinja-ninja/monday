@@ -12,7 +12,8 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     width: 30px;
     border-top-right-radius: 8px;
     background-color: var(--primary-background-color);
@@ -139,12 +140,12 @@
 
                 .editableHeading {
                     width: 165px;
-                    
+
                 }
-        
+
             }
 
-            .selected-board{
+            .selected-board {
                 background-color: var(--primary-selected-color);
                 border-radius: var(--border-radius-small);
             }

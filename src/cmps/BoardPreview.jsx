@@ -1,6 +1,6 @@
-import { Box, Clickable, Flex, Icon, IconButton, Text, Tooltip } from "monday-ui-react-core";
+import { Box, Clickable, Flex, Icon, IconButton, Text, Tooltip } from "monday-ui-react-core"
 import { Board, Favorite } from "/node_modules/monday-ui-react-core/src/components/Icon/Icons"
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 
 
 export function BoardPreview({ board }) {

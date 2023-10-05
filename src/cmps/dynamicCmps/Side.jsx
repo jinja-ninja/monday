@@ -1,4 +1,4 @@
-import { Checkbox } from "monday-ui-react-core";
+import { Checkbox } from "monday-ui-react-core"
 
 export function Side() {
 

@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu, EditableHeading } from "monday-ui-react-core";
-import { Add, Board, Delete, Home, Edit } from "monday-ui-react-core/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { BoardNavLink } from "./BoardNavLink";
-import { addBoard, loadBoards, removeBoard, updateBoard } from "../store/actions/board.action";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react"
+import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu, EditableHeading } from "monday-ui-react-core"
+import { Add, Board, Delete, Home, Edit } from "monday-ui-react-core/icons"
+import { useDispatch, useSelector } from "react-redux"
+import { BoardNavLink } from "./BoardNavLink"
+import { addBoard, loadBoards, removeBoard, updateBoard } from "../store/actions/board.action"
+import { useNavigate } from "react-router"
 
 export function SideBar() {
     const [isOpen, setIsOpen] = useState(false)
@@ -97,7 +97,7 @@ export function SideBar() {
                                 text={board.title} boardId={board._id} onSelectBoard={onSelectBoard}
                                 onDeleteBoard={onDeleteBoard} onRenameBoard={onRenameBoard}
                                 key={idx} />
-                        );
+                        )
                     })}
                 </div>
 

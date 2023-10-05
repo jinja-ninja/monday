@@ -1,31 +1,26 @@
-import { boardService } from '../../services/board.service.local'
-import { utilService } from '../../services/util.service'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, UPDATE_BOARDS, SET_BOARD } from '../reducers/board.reducer'
 import { store } from '../store'
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, UPDATE_BOARDS, SET_BOARD } from '../reducers/board.reducer'
+import { boardService } from '../../services/board.service.local'
 
+
+//General Board Actions
 export async function loadBoards() {
     try {
         const boards = await boardService.query()
         store.dispatch({ type: SET_BOARDS, boards })
     } catch (err) {
+        console.log('Board Actions: err in Loading Boards', err)
         throw err
     }
 }
-// Board Actions
+
+//Specific Board Actions
 export async function getBoardById(boardId) {
     try {
         const board = await boardService.getBoardById(boardId)
         store.dispatch({ type: SET_BOARD, board })
     } catch (err) {
-        throw err
-    }
-}
-
-export async function removeBoard(boardId) {
-    try {
-        await boardService.remove(boardId)
-        store.dispatch({ type: REMOVE_BOARD, boardId })
-    } catch (err) {
+        console.log('Board Actions: err in Getting Board', err)
         throw err
     }
 }
@@ -165,6 +160,17 @@ export async function addBoard() {
         const newBoard = await boardService.save(board)
         store.dispatch({ type: ADD_BOARD, board: newBoard })
     } catch (err) {
+        console.log('Board Actions: err in Adding Board', err)
+        throw err
+    }
+}
+
+export async function removeBoard(boardId) {
+    try {
+        await boardService.remove(boardId)
+        store.dispatch({ type: REMOVE_BOARD, boardId })
+    } catch (err) {
+        console.log('Board Actions: err in Removing Board', err)
         throw err
     }
 }
@@ -179,10 +185,13 @@ export async function updateBoard(type, boardId, groupId = null, taskId = null, 
         }
         store.dispatch({ type: UPDATE_BOARDS, board: newBoard })
     } catch (err) {
+        console.log('Updating actions: err in updating', err)
         throw err
     }
 }
 
+
+// Group Actions
 export async function addGroup(boardId) {
     try {
         let board = await boardService.getBoardById(boardId)
@@ -191,6 +200,7 @@ export async function addGroup(boardId) {
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {
+        console.log('Group Actions: err in Adding Group', err)
         throw err
     }
 }
@@ -202,6 +212,7 @@ export async function removeGroup(boardId, groupId) {
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {
+        console.log('Group Actions: err in Removing Group', err)
         throw err
     }
 }
@@ -213,21 +224,12 @@ export async function duplicatedGroup(boardId, groupId) {
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {
+        console.log('Group Actions: err in Duplicate Group', err)
         throw err
     }
 }
 
 // Task Actions
-export async function removeTask(boardId, groupId, taskId) {
-    try {
-        const board = await boardService.removeTask(boardId, groupId, taskId)
-        store.dispatch({ type: SET_BOARD, board })
-        store.dispatch({ type: UPDATE_BOARDS, board })
-    } catch (err) {
-        console.log('BoardActions: err in removeTask', err)
-        throw err
-    }
-}
 export async function addTask(boardId, groupId, task) {
     try {
         const board = await boardService.addTask(boardId, groupId, task)
@@ -238,6 +240,18 @@ export async function addTask(boardId, groupId, task) {
         throw err
     }
 }
+
+export async function removeTask(boardId, groupId, taskId) {
+    try {
+        const board = await boardService.removeTask(boardId, groupId, taskId)
+        store.dispatch({ type: SET_BOARD, board })
+        store.dispatch({ type: UPDATE_BOARDS, board })
+    } catch (err) {
+        console.log('BoardActions: err in removeTask', err)
+        throw err
+    }
+}
+
 export async function updateTask(boardId, groupId, taskId, data) {
     try {
         const board = await boardService.update('task', boardId, groupId, taskId, data)

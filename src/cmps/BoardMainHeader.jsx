@@ -1,16 +1,10 @@
 import imgLogo from "../assets/img/mondayLogo.png"
-import { DoubleCheck, Notifications, Inbox, Invite, Search, Help, LogIn, Hide } from "monday-ui-react-core/icons";
+import { DoubleCheck, Notifications, Inbox, Invite, Search, Help, LogIn, Hide } from "monday-ui-react-core/icons"
 import { Icon } from "monday-ui-react-core"
 import { Tooltip, } from "monday-ui-react-core"
 import { IconButton, } from "monday-ui-react-core"
 
-
-
-
-
-
 export function BoardMainHeader({ board, onRemoveBoard, onEditBoard }) {
-
 
     return (
 
