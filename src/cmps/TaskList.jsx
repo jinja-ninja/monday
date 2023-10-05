@@ -7,18 +7,26 @@ import { Status } from "./dynamicCmps/Status"
 import { TaskTitle } from "./dynamicCmps/TaskTitle"
 import { boardService } from "../services/board.service.local"
 import { useSelector } from "react-redux"
-import { addTask, removeTask, updateTask } from "../store/actions/board.action"
+import { addTask, removeTask, updateTask, duplicatedTask } from "../store/actions/board.action"
 import { useState } from "react"
+import { IconButton, MenuButton, Menu, MenuTitle, MenuItem } from "monday-ui-react-core"
+import { Add, Delete, DropdownChevronDown, DropdownChevronRight, Edit, Duplicate } from "monday-ui-react-core/icons"
+
 
 export function TaskList({ group, cmpOrder }) {
 
     const currBoard = useSelector(state => state.boardModule.board)
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [addTaskInput, setAddTask] = useState('+ Add Item')
 
     const boardId = currBoard._id
     const groupId = group.id
 
-    async function onRemove(taskId) {
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen)
+    };
+
+    async function onRemoveTask(taskId) {
         try {
             await removeTask(boardId, groupId, taskId)
             // showSuccessMsg('Task removed')
@@ -27,7 +35,7 @@ export function TaskList({ group, cmpOrder }) {
         }
     }
 
-    async function onAdd(task) {
+    async function onAddTask(task) {
         try {
             const newTask = boardService.getEmptyTask()
             newTask.title = task
@@ -38,9 +46,19 @@ export function TaskList({ group, cmpOrder }) {
         }
     }
 
-    async function onUpdate(taskId, data = {}) {
+    async function onUpdateTask(taskId, data = {}) {
         try {
             await updateTask(boardId, groupId, taskId, data)
+            // showSuccessMsg('Task removed')
+        } catch (err) {
+            // showErrorMsg('Cannot remove task')
+        }
+    }
+
+    async function onDuplicateTask(taskId) {
+
+        try {
+            await duplicatedTask(boardId, groupId, taskId)
             // showSuccessMsg('Task removed')
         } catch (err) {
             // showErrorMsg('Cannot remove task')
@@ -58,19 +76,51 @@ export function TaskList({ group, cmpOrder }) {
 
         {group.tasks.map(task => {
             const taskId = task.id
-            return <section className="task-list group-grid" key={task.id}>
+            return (<section className="task-list group-grid" key={task.id}>
+
+                <MenuButton
+                    size={MenuButton.sizes.XS}
+                    className={`task-menu-btn `}
+                    onClick={toggleMenu}
+                >
+                    <Menu
+                        id="menu"
+                        size="medium"
+
+                    >
+                        <MenuItem
+                            icon={Delete}
+                            iconType="SVG"
+                            onClick={() => onRemoveTask(task.id)}
+                            title="Delete"
+                        />
+                        <MenuItem
+                            icon={Edit}
+                            iconType="SVG"
+                            onClick={() => handleEditClick(group.id)}
+                            title="Rename Task"
+                        />
+                        <MenuItem
+                            icon={Duplicate}
+                            iconType="SVG"
+                            onClick={() => onDuplicateTask(task.id)}
+                            title="Duplicate this Task"
+                        />
+                    </Menu>
+                </MenuButton>
                 {/* <button button onClick={() => onRemove(boardId, groupId, taskId)}>X {task.title}</button> */}
                 {cmpOrder.map((cmp, idx) =>
                     < section section className="task-item" key={idx} >
                         <DynamicCmp cmpType={cmp}
                             info={task[cmp]}
-                            taskId={taskId}
+                            taskId={task.id}
                             boardId={boardId}
                             groupId={groupId}
-                            onUpdate={onUpdate} />
+                            onUpdateTask={onUpdateTask} />
                     </section>
                 )}
             </section>
+            )
         })}
 
         <section className="task-list-add group-grid">
@@ -81,7 +131,7 @@ export function TaskList({ group, cmpOrder }) {
                 type={EditableHeading.types.h5}
                 value={addTaskInput}
                 onBlur={() => {
-                    addTaskInput ? onAdd(addTaskInput) : setAddTask('+ Add Item')
+                    addTaskInput ? onAddTask(addTaskInput) : setAddTask('+ Add Item')
                     setAddTask('+ Add Item')
                 }}
                 onStartEditing={() => setAddTask('')}
@@ -96,7 +146,7 @@ export function TaskList({ group, cmpOrder }) {
     </div >
 }
 
-const DynamicCmp = ({ cmpType, info, boardId, groupId, taskId, onUpdate }) => {
+const DynamicCmp = ({ cmpType, info, boardId, groupId, taskId, onUpdateTask }) => {
 
     switch (cmpType) {
         case "side":
@@ -108,7 +158,7 @@ const DynamicCmp = ({ cmpType, info, boardId, groupId, taskId, onUpdate }) => {
                 boardId={boardId}
                 groupId={groupId}
                 taskId={taskId}
-                onUpdate={onUpdate} />
+                onUpdateTask={onUpdateTask} />
         case "status":
             return <Status info={info} />
         case "memberIds":

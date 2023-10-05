@@ -19,7 +19,10 @@ export const boardService = {
     removeGroup,
     getEmptyGroup,
     duplicatedGroup,
+    getEmptyTask,
+    createActivity,
     _createBoards,
+    duplicatedTask,
     duplicateBoard,
 }
 
@@ -28,27 +31,37 @@ _createBoards()
 // General Update function
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
+
         const board = await getBoardById(boardId)
-        // console.log('boardfromUpdate Function:', board)
-        let groupIdx, taskIdx
+        let groupIdx, taskIdx, activity
 
         switch (type) {
             case 'board':
                 if (!boardId) throw new Error('Error updating')
                 board[key] = value
                 break
+
             case 'group':
-                console.log('groupId:', groupId)
                 if (!groupId) throw new Error('Error updating')
                 groupIdx = board.groups.findIndex(group => group.id === groupId)
                 board.groups[groupIdx][key] = value
+
+                activity = createActivity(`Updated group ${board.groups[groupIdx].title}`, board._id, groupId)
+                board.activities.unshift(activity)
+                console.log('boardfromUpdate Function:', board)
+
                 break
+
             case 'task':
                 if (!taskId) throw new Error('Error updating')
                 groupIdx = board.groups.findIndex(group => group.id === groupId)
                 taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
                 board.groups[groupIdx].tasks[taskIdx][key] = value
+
+                activity = createActivity(`Updated task ${board.groups[groupIdx].tasks[taskIdx].title}`, boardId, groupId, taskId)
+                board.activities.unshift(activity)
                 break
+
             default:
                 break
         }
@@ -230,7 +243,7 @@ async function duplicateBoard(board) {
 
 function getEmptyTask(title = '') {
     return {
-        id: "t" + utilService.getRandomIntInclusive(201, 999),
+        id: makeTaskId(),
         title,
         status: ``,
         priority: ``,
@@ -251,15 +264,31 @@ function getEmptyTask(title = '') {
         }
     }
 }
-//Task functions
-async function getTasks(filterBy = { title: '' }) {
-    // Placeholder - this function implementation may differ based on need
+
+function createActivity(txt, boardId, groupId = null, taskId = null) {
+    return {
+        id: 'a-' + utilService.makeId(),
+        createdAt: Date.now(),
+        byMember: '',
+        boardId,
+        groupId,
+        taskId,
+        action: txt,
+    }
 }
+
+//Task functions
+
 async function removeTask(boardId, groupId, taskId) {
     const board = await getBoardById(boardId)
     const groupIdx = board.groups.findIndex(group => group.id === groupId)
     const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+    const task = board.groups[groupIdx].tasks[taskIdx]
     board.groups[groupIdx].tasks.splice(taskIdx, 1)
+
+    const activity = createActivity(`Removed task ${task.title}`, boardId, groupId, taskId)
+    board.activities.unshift(activity)
+
     return await storageService.put(STORAGE_KEY, board)
 }
 async function addTask(boardId, groupId, task) {
@@ -267,15 +296,30 @@ async function addTask(boardId, groupId, task) {
     const board = await getBoardById(boardId)
     const groupIdx = board.groups.findIndex(group => group.id === groupId)
     board.groups[groupIdx].tasks.push(task)
-    return await storageService.put(STORAGE_KEY, board)
 
+    const activity = createActivity(`Added task ${task.title}`, boardId, groupId, task.id)
+    board.activities.unshift(activity)
+
+    return await storageService.put(STORAGE_KEY, board)
+}
+
+async function duplicatedTask(board, groupId, taskId) {
+    const updatedBoard = { ...board }
+    const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
+    const taskIdx = updatedBoard.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+    const taskToDuplicate = updatedBoard.groups[groupIdx].tasks[taskIdx]
+    const duplicatedTask = JSON.parse(JSON.stringify(taskToDuplicate))
+    duplicatedTask.id = utilService.makeId()
+    duplicatedTask.title = duplicatedTask.title + ' copy'
+    updatedBoard.groups[groupIdx].tasks.splice(taskIdx + 1, 0, duplicatedTask)
+    return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
 //Group functions
 
 function getEmptyGroup() {
     return {
-        id: utilService.makeId(),
+        id: utilService.makeGroupId(),
         title: 'New Group',
         tasks: [],
         style: {},
@@ -287,14 +331,22 @@ async function addNewGroup(board) {
     const newGroup = getEmptyGroup()
     const updatedBoard = { ...board }
     updatedBoard.groups.push(newGroup)
-    console.log('updatedBoard:', updatedBoard)
+
+    const activity = createActivity(`Created group ${newGroup.title}`, board._id, newGroup.id)
+    updatedBoard.activities.unshift(activity)
+
     return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
 async function removeGroup(board, groupId) {
     const updatedBoard = { ...board }
     const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
+    const group = updatedBoard.groups[groupIdx]
     updatedBoard.groups.splice(groupIdx, 1)
+
+    const activity = createActivity(`Removed group ${group.title}`, board._id, groupId)
+    updatedBoard.activities.unshift(activity)
+
     return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
@@ -306,6 +358,10 @@ async function duplicatedGroup(board, groupId) {
     duplicatedGroup.id = utilService.makeId()
     duplicatedGroup.title = duplicatedGroup.title + ' copy'
     updatedBoard.groups.splice(groupIdx + 1, 0, duplicatedGroup)
+
+    const activity = createActivity(`Duplicated group ${groupToDuplicate.title}`, board._id, groupId)
+    updatedBoard.activities.unshift(activity)
+
     return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 

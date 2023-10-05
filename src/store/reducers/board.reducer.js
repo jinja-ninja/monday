@@ -8,6 +8,7 @@ export const UPDATE_TASK = 'UPDATE_TASK'
 export const SET_BOARD = 'SET_BOARD'
 
 
+
 const initialState = {
     boards: [],
     board: null
@@ -55,8 +56,6 @@ export function boardReducer(state = initialState, action) {
             newBoards = state.boards.map(currBoard => (currBoard._id === newBoard._id ? newBoard : currBoard))
             return { ...state, boards: newBoards }
         }
-
-
 
         default:
             return { ...state }

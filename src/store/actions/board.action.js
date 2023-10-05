@@ -90,13 +90,11 @@ export async function updateBoard(type, boardId, groupId = null, taskId = null, 
     }
 }
 
-
 // Group Actions
 export async function addGroup(boardId) {
     try {
         let board = await boardService.getBoardById(boardId)
         board = await boardService.addNewGroup(board)
-        // console.log('board from add group function:', board)
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {
@@ -162,3 +160,16 @@ export async function updateTask(boardId, groupId, taskId, data) {
         throw err
     }
 }
+
+export async function duplicatedTask(boardId, groupId, taskId) {
+    try {
+        let board = await boardService.getBoardById(boardId)
+        board = await boardService.duplicatedTask(board, groupId, taskId)
+        store.dispatch({ type: SET_BOARD, board })
+        store.dispatch({ type: UPDATE_BOARDS, board })
+    } catch (err) {
+        console.log('BoardActions: err in duplicateTask', err)
+        throw err
+    }
+}
+

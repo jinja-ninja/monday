@@ -74,7 +74,6 @@ export function BoardNavLink({ text, boardId, onSelectBoard, onDeleteBoard, onRe
 
             <MenuButton closeDialogOnContentClick className="btn-board-menu" size={MenuButton.sizes.S} onClick={(e) => {
                 e.stopPropagation()
-                console.log('MENU CLICKED:')
             }}>
                 <Menu id="menu" size={Menu.sizes.MEDIUM}>
                     {/* <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} /> */}
