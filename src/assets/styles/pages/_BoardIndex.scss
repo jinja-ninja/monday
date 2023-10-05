@@ -3,7 +3,9 @@
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr;
   column-gap: 12px;
-  background-color: var(--grey-background-color);
+  // background-color: var(--grey-background-color);
+  background-color: #ECEFF8;
+
 
   &-body {
     display: flex;
@@ -28,6 +30,11 @@
       align-items: center;
       gap: 10px;
     }
+
+  }
+
+  .myLarge_970c6d79b4 {
+    margin-top: 0 !important;
   }
 
   .index-board-list {
