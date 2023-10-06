@@ -26,7 +26,7 @@ export function BoardDetails() {
     }
 
 
-    const cmpOrder = [
+    const cmpsOrder = [
         "side",
         "title",
         "status",
@@ -77,7 +77,7 @@ export function BoardDetails() {
                 boardId={params.boardId}
                 groups={currBoard.groups}
                 labels={currBoard.labels}
-                cmpOrder={cmpOrder}
+                cmpsOrder={cmpsOrder}
                 progress={progress}
             />
 

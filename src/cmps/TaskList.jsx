@@ -9,14 +9,14 @@ import { boardService } from "../services/board.service.local"
 import { useSelector } from "react-redux"
 import { addTask, removeTask, updateTask, duplicatedTask } from "../store/actions/board.action"
 import { useState } from "react"
-import { IconButton, MenuButton, Menu, MenuTitle, MenuItem } from "monday-ui-react-core"
-import { Add, Delete, DropdownChevronDown, DropdownChevronRight, Edit, Duplicate } from "monday-ui-react-core/icons"
+import { MenuButton, Menu, MenuItem } from "monday-ui-react-core"
+import { Delete, Edit, Duplicate } from "monday-ui-react-core/icons"
 
 
-export function TaskList({ group, cmpOrder }) {
+export function TaskList({ group, cmpsOrder }) {
 
     const currBoard = useSelector(state => state.boardModule.board)
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [addTaskInput, setAddTask] = useState('+ Add Item')
 
     const boardId = currBoard._id
@@ -24,7 +24,7 @@ export function TaskList({ group, cmpOrder }) {
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
-    };
+    }
 
     async function onRemoveTask(taskId) {
         try {
@@ -64,58 +64,72 @@ export function TaskList({ group, cmpOrder }) {
         }
     }
 
+    function renderMenuButton(taskId) {
+        return (
+            <MenuButton size={MenuButton.sizes.XS}
+                className={`task-menu-btn `}
+                onClick={toggleMenu}>
+
+                <Menu id="menu" size="medium">
+                    <MenuItem
+                        icon={Delete}
+                        iconType="SVG"
+                        onClick={() => onRemoveTask(taskId)}
+                        title="Delete" />
+                    <MenuItem
+                        icon={Edit}
+                        iconType="SVG"
+                        onClick={() => handleEditClick(group.id)}
+                        title="Rename Task" />
+                    <MenuItem
+                        icon={Duplicate}
+                        iconType="SVG"
+                        onClick={() => onDuplicateTask(taskId)}
+                        title="Duplicate this Task" />
+                </Menu>
+
+            </MenuButton>
+        )
+    }
+
+    function renderDynamicCmp(cmp, task) {
+        switch (cmp) {
+            case "side":
+                return <Side info={group['style']} />
+            case "priority":
+                return <Priority info={task[cmp]} />
+            case "title":
+                return <TaskTitle info={task[cmp]}
+                    boardId={boardId}
+                    groupId={groupId}
+                    taskId={task.id}
+                    onUpdateTask={onUpdateTask} />
+            case "status":
+                return <Status info={task[cmp]} />
+            case "memberIds":
+                return <Member info={task[cmp]} />
+            case "dueDate":
+                return <Date info={task[cmp]} />
+
+            default:
+                break
+        }
+    }
+
     return <div className="task-list-container">
 
         <section className="header-title-container group-grid">
-            {cmpOrder.map((title, idx) => (
+            {cmpsOrder.map((title, idx) =>
                 <div className="header-title" key={idx}>{title}</div>
-            ))
-            }
+            )}
         </section>
 
         {group.tasks.map(task => {
-            const taskId = task.id
             return (<section className="task-list group-grid" key={task.id}>
-
-                <MenuButton
-                    size={MenuButton.sizes.XS}
-                    className={`task-menu-btn `}
-                    onClick={toggleMenu}
-                >
-                    <Menu
-                        id="menu"
-                        size="medium"
-
-                    >
-                        <MenuItem
-                            icon={Delete}
-                            iconType="SVG"
-                            onClick={() => onRemoveTask(task.id)}
-                            title="Delete"
-                        />
-                        <MenuItem
-                            icon={Edit}
-                            iconType="SVG"
-                            onClick={() => handleEditClick(group.id)}
-                            title="Rename Task"
-                        />
-                        <MenuItem
-                            icon={Duplicate}
-                            iconType="SVG"
-                            onClick={() => onDuplicateTask(task.id)}
-                            title="Duplicate this Task"
-                        />
-                    </Menu>
-                </MenuButton>
-                {/* <button button onClick={() => onRemove(boardId, groupId, taskId)}>X {task.title}</button> */}
-                {cmpOrder.map((cmp, idx) =>
-                    < section section className="task-item" key={idx} >
-                        <DynamicCmp cmpType={cmp}
-                            info={task[cmp]}
-                            taskId={task.id}
-                            boardId={boardId}
-                            groupId={groupId}
-                            onUpdateTask={onUpdateTask} />
+                {renderMenuButton(task.id)}
+                {cmpsOrder.map((cmp, idx) =>
+                    <section className="task-item" key={idx}>
+                        {renderDynamicCmp(cmp, task)}
                     </section>
                 )}
             </section>
@@ -123,9 +137,11 @@ export function TaskList({ group, cmpOrder }) {
         })}
 
         <section className="task-list-add group-grid">
+
             <div className="task-list-add-side">
                 <Checkbox disabled />
             </div>
+
             <EditableHeading className="task-add-btn"
                 type={EditableHeading.types.h5}
                 value={addTaskInput}
@@ -135,37 +151,15 @@ export function TaskList({ group, cmpOrder }) {
                 }}
                 onStartEditing={() => setAddTask('')}
                 onChange={(value) => setAddTask(value)} />
+
         </section>
 
         <section className="task-list-summary-wrapper group-grid">
+
             <div className="task-list-summary-emptycell-left"></div>
             <div className="task-list-summary">StatusSum</div>
+
         </section>
 
-    </div >
-}
-
-const DynamicCmp = ({ cmpType, info, boardId, groupId, taskId, onUpdateTask }) => {
-
-    switch (cmpType) {
-        case "side":
-            return <Side info={info} />
-        case "priority":
-            return <Priority info={info} />
-        case "title":
-            return <TaskTitle info={info}
-                boardId={boardId}
-                groupId={groupId}
-                taskId={taskId}
-                onUpdateTask={onUpdateTask} />
-        case "status":
-            return <Status info={info} />
-        case "memberIds":
-            return <Member info={info} />
-        case "dueDate":
-            return <Date info={info} />
-
-        default:
-            break
-    }
+    </div>
 }

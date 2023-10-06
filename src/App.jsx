@@ -13,8 +13,8 @@ import { BoardDetails } from './pages/BoardDetails'
 import { TaskDetails } from './cmps/TaskDetails'
 import { PageNotFound } from './pages/PageNotFound'
 import { BoardIndex } from './pages/BoardIndex'
-import { useEffect } from 'react'
 import { store } from './store/store'
+import { TestCmp } from './pages/TestCmp'
 
 
 export function App() {
@@ -24,6 +24,7 @@ export function App() {
       <Router>
         <Routes>
           <Route element={<HomePage />} path="/" />
+          <Route element={<TestCmp />} path="/test" />
           <Route element={<BoardIndex />} path="/board" /> {/* TODO: add board index page */}
           <Route element={<BoardDetails />} path="board/:boardId">
           </Route>
