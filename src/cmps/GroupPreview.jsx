@@ -96,6 +96,7 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
                 animationType="expand">
                 <Icon iconType={Icon.type.SVG} iconSize={20}
                     icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
+                    style={{ color: `var(--color-${group.style})` }}
                     onClick={() => setShowGroup((prevShowGroup => !prevShowGroup))} />
             </Tooltip>
 
@@ -108,21 +109,24 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
                     onBlur={() => {
                         onRenameGroup(group.id, editableText)
                     }}
+                    style={{ color: `var(--color-${group.style})` }}
                     onChange={(newText) => setEditableText(newText)}
                 />
             </Tooltip>
-            <h1>{numOfTasks} Items</h1>
+            <span className="item-count" >{numOfTasks} Items</span>
         </div>
 
-        {showColorPicker && <ColorPicker
-            onSave={(color) => onSelectColor(color)}
-            colorSize="small"
-            className="color-picker"
-        />}
+        {
+            showColorPicker && <ColorPicker
+                onSave={(color) => onSelectColor(color)}
+                colorSize="small"
+                className="color-picker"
+            />
+        }
 
         {showGroup && <TaskList group={group} cmpsOrder={cmpsOrder} />}
 
-    </div>
+    </div >
 }
 
 // return (

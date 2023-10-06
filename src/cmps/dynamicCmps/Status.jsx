@@ -6,7 +6,6 @@ export function Status({ info }) {
 
     function openStatusMenu() {
         // open the menu
-
     }
 
     return <div className="task-status" onClick={() => setIsMenuOpen(prevState => !prevState)}>
@@ -26,7 +25,9 @@ export function Status({ info }) {
                 <Label text="Stuck" color={Label.colors.NEGATIVE} />
                 <Label text="Done" color={Label.colors.POSITIVE} />
             </DialogContentContainer>}>
-            <div className={`task-status ${info?.toLowerCase().split(' ').join('-')}`}
+            <div
+                // style={{ backgroundColor: `var(--color-${info})`, color: 'white' }}
+                className={`task-status ${info?.toLowerCase().split(' ').join('-')}`}
                 onClick={() => openStatusMenu()}>
                 {info}
             </div>

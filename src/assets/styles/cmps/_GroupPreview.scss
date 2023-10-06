@@ -1,1 +1,19 @@
-.group-preview-container {}
+.group-preview-container {
+
+    .collapsible-header-wrapper {
+
+        &>* {
+            display: flex;
+            align-items: center;
+            align-content: center;
+        }
+    }
+
+    .color-picker {
+        position: absolute;
+    }
+
+    .item-count {
+        font: var(--font-subtext);
+    }
+}
