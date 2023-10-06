@@ -40,7 +40,6 @@ export function TaskList({ group, cmpsOrder }) {
             const newTask = boardService.getEmptyTask()
             newTask.title = task
             await addTask(boardId, groupId, newTask)
-            // showSuccessMsg('Task removed')
         } catch (err) {
             // showErrorMsg('Cannot remove task')
         }

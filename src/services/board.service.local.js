@@ -242,7 +242,7 @@ async function duplicateBoard(board) {
 
 function getEmptyTask(title = '') {
     return {
-        id: makeTaskId(),
+        id: utilService.makeTaskId(),
         title,
         status: ``,
         priority: ``,

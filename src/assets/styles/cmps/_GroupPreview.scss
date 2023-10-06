@@ -1,5 +1,6 @@
 .group-preview-container {
 
+
     .collapsible-header-wrapper {
 
         &>* {
@@ -13,7 +14,13 @@
         position: absolute;
     }
 
-    .item-count {
+    .num-of-tasks {
+        opacity: 0;
+        transition: opacity 0.3s;
         font: var(--font-subtext);
+
+        &:hover {
+            opacity: 1;
+        }
     }
 }

@@ -113,7 +113,7 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
                     onChange={(newText) => setEditableText(newText)}
                 />
             </Tooltip>
-            <span className="item-count" >{numOfTasks} Items</span>
+            <span className="num-of-tasks">{numOfTasks} {numOfTasks === 1 ? 'Item' : 'Items'}</span>
         </div>
 
         {

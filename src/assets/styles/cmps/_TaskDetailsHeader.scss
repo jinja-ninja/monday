@@ -1,0 +1,30 @@
+.task-details-header {
+    height: 130px;
+    border-bottom: 1px solid;
+    border-color: var(--layout-border-color);
+    padding: 20px 20px 6px 24px;
+
+    .btn-close {
+        width: 24px;
+        height: 24px;
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    .editible-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 54px;
+
+        .avatar-and-icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .5em;
+        }
+    }
+}

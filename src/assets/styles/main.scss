@@ -26,8 +26,11 @@
 @import "cmps/_TaskTitle";
 @import "cmps/_TaskStatus";
 @import "cmps/_TaskSide";
-@import "cmps/_SideBar";
-@import "cmps/_UserMsg";
+@import 'cmps/SideBar';
+@import 'cmps/TaskDetails';
+@import 'cmps/TaskDetailsHeader';
+@import "cmps/SideBar";
+@import "cmps/UserMsg";
 
 // //PAGES
 @import "pages/_HomePage";

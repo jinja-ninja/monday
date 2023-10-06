@@ -8,6 +8,7 @@ import { BoardMainHeader } from "../cmps/BoardMainHeader"
 import { SideBar } from "../cmps/SideBar"
 import { loadBoards } from "../store/actions/board.action"
 import { useSelector } from "react-redux"
+import { UserMsg } from '../cmps/UserMsg'
 
 export function BoardIndex() {
 
@@ -25,6 +26,7 @@ export function BoardIndex() {
 
         <BoardMainHeader />
         <SideBar />
+
 
         <section className="board-index-body">
             <Box

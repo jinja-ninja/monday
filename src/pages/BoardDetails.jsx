@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Button, IconButton, MenuItem, SplitButton, SplitButtonMenu } from "monday-ui-react-core"
+import { Button, IconButton, Loader, MenuItem, SplitButton, SplitButtonMenu } from "monday-ui-react-core"
 import { Add, Announcement, Check, Filter, Hide, Menu, PersonRound, Search, Sort } from "monday-ui-react-core/icons"
 import { BoardDetailsHeader } from "../cmps/BoardDetailsHeader"
 import { GroupList } from "../cmps/GroupList"
@@ -8,6 +8,7 @@ import { SideBar } from "../cmps/SideBar"
 import { useParams } from "react-router-dom"
 import { getBoardById, updateBoard } from "../store/actions/board.action"
 import { useSelector } from "react-redux"
+import { UserMsg } from "../cmps/UserMsg"
 
 export function BoardDetails() {
     const params = useParams()
@@ -36,12 +37,13 @@ export function BoardDetails() {
 
     const progress = [null, null, "status", null, "priority", null]
 
-    if (!currBoard) return (<div>Loading...</div>)
+    if (!currBoard) return (<Loader className="loader" Loader color={Loader.colors.PRIMARY} size={100} />)
     return <main className="board-details-layout">
         <BoardMainHeader />
         <SideBar />
 
         <section className="board-details-container">
+            <UserMsg />
 
             <BoardDetailsHeader title={currBoard.title} />
 
