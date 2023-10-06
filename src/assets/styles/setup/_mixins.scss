@@ -5,9 +5,9 @@
     height: 100%;
     display: grid;
 
-    align-items: center;
-    justify-content: center;
-    align-content: center;
+    align-items: stretch;
+    justify-content: stretch;
+    align-content: stretch;
 
     // padding: var(--spacing-small);
     border-right: var(--border-width) var(--border-style) var(--ui-border-color);

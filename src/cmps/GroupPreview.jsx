@@ -1,33 +1,104 @@
 import { useState } from "react"
 
-import { EditableHeading, Icon, Text, Tooltip } from "monday-ui-react-core"
-import { DropdownChevronDown, DropdownChevronRight, Edit } from "monday-ui-react-core/icons"
-import { Date } from "./dynamicCmps/Date"
-import { Member } from "./dynamicCmps/Member"
-import { Side } from "./dynamicCmps/Side"
-import { Status } from "./dynamicCmps/Status"
-import { TaskTitle } from "./dynamicCmps/TaskTitle"
-import { Priority } from "./dynamicCmps/Priority"
-import { TaskListHeader } from "./TaskListHeader"
+import { ColorPicker, EditableHeading, Icon, Menu, MenuButton, MenuItem, Tooltip } from "monday-ui-react-core"
+import { Delete, DropdownChevronDown, DropdownChevronRight, Duplicate, Edit, HighlightColorBucket } from "monday-ui-react-core/icons"
 import { TaskList } from "./TaskList"
+import { duplicatedGroup, removeGroup, updateBoard } from "../store/actions/board.action"
 
-
-export function GroupPreview({ group, label, cmpOrder, progress, boardId, onRenameGroup, initiateEdit }) {
+export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRenameGroup, initiateEdit }) {
 
     const [showGroup, setShowGroup] = useState(true)
     const [editableText, setEditableText] = useState(group.title)
     const [numOfTasks, setNumOfTasks] = useState(group.tasks.length)
+    const [showColorPicker, setShowColorPicker] = useState(false)
 
+    const handleEditClick = (groupId) => {
+        const groupElement = document.querySelector(`.group-list-item[data-group-id="${groupId}"]`)
+        if (groupElement) {
+            const editableElement = groupElement.querySelector('.editable-heading-target')
+            if (editableElement) {
+                editableElement.click() // Simulate a click on the EditableHeading
+            }
+        }
+    }
 
+    async function onRemoveGroup(boardId, groupId) {
+        try {
+            await removeGroup(boardId, groupId)
+            // showSuccessMsg('Group removed')
+            // showUserMsg('success', 'Group removed')
+        } catch (err) {
+            // showUserMsg('error', 'Cannot remove group')
+        }
+    }
+
+    async function onDuplicateGroup(boardId, groupId) {
+        try {
+            await duplicatedGroup(boardId, groupId)
+            // showSuccessMsg('Task removed')
+        } catch (err) {
+            // showErrorMsg('Cannot remove task')
+        }
+    }
+
+    function onRenameGroup(groupId, newText) {
+        try {
+            updateBoard('group', boardId, groupId, null, { key: 'title', value: newText })
+            // showSuccessMsg('Group name removed')
+        } catch (err) {
+            // showErrorMsg('Cannot change name')
+        }
+    }
+
+    function onChangeGroupColorClick() {
+        setShowColorPicker(prevState => !prevState)
+    }
+
+    function onSelectColor(color) {
+        updateBoard('group', boardId, group.id, null, { key: 'style', value: color[0] })
+        setShowColorPicker(prevState => !prevState)
+    }
 
     return <div className="group-preview-container">
+
+        <MenuButton
+            size={MenuButton.sizes.XS}
+            className="group-menu-btn"
+            closeDialogOnContentClick >
+            <Menu id="menu" size="medium">
+                <MenuItem
+                    icon={Delete}
+                    iconType="SVG"
+                    onClick={() => onRemoveGroup(boardId, group.id)}
+                    title="Delete" />
+                <MenuItem
+                    icon={Edit}
+                    iconType="SVG"
+                    onClick={() => handleEditClick(group.id)}
+                    title="Rename Group" />
+                <MenuItem
+                    icon={Duplicate}
+                    iconType="SVG"
+                    onClick={() => onDuplicateGroup(boardId, group.id)}
+                    title="Duplicate this group" />
+                <MenuItem
+                    icon={HighlightColorBucket}
+                    iconType="SVG"
+                    onClick={() => onChangeGroupColorClick()}
+                    title="Change group color" />
+            </Menu>
+        </MenuButton>
+
         <div className="collapsible-header-wrapper">
+
             <Tooltip
                 content="Collapse/Expand Group"
                 animationType="expand">
-                <Icon iconType={Icon.type.SVG} iconSize={20} icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
+                <Icon iconType={Icon.type.SVG} iconSize={20}
+                    icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
                     onClick={() => setShowGroup((prevShowGroup => !prevShowGroup))} />
             </Tooltip>
+
             <Tooltip content="Click to Edit"
                 animationType="expand">
                 <EditableHeading
@@ -41,11 +112,16 @@ export function GroupPreview({ group, label, cmpOrder, progress, boardId, onRena
                 />
             </Tooltip>
             <h1>{numOfTasks} Items</h1>
-
-
         </div>
-        {/* <TaskListHeader cmpOrder={cmpOrder} /> */}
-        {showGroup && <TaskList group={group} cmpOrder={cmpOrder} />}
+
+        {showColorPicker && <ColorPicker
+            onSave={(color) => onSelectColor(color)}
+            colorSize="small"
+            className="color-picker"
+        />}
+
+        {showGroup && <TaskList group={group} cmpsOrder={cmpsOrder} />}
+
     </div>
 }
 

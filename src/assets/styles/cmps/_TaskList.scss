@@ -4,8 +4,7 @@
     grid-template-columns: 40px 350px 140px 140px 140px 140px;
     justify-content: start;
     align-content: center;
-    border-bottom: var(--border-width) var(--border-style)
-      var(--ui-border-color);
+    border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
   }
 
   .header-title-container {
@@ -18,6 +17,7 @@
 
     .header-title {
       @include groupCell;
+      text-align: center;
       padding: var(--spacing-small);
     }
   }
@@ -58,7 +58,7 @@
 
       &:hover,
       &.active,
-      &:hover ~ .menu.active {
+      &:hover~.menu.active {
         opacity: 1;
       }
     }
@@ -82,54 +82,62 @@
 
     .task-item {
       @include groupCell;
-    }
 
-    .task-list-add {
-      border-left: 7px var(--border-style) rgb(183, 207, 183);
-      border-radius: 0 0 0 var(--border-radius-small);
-      box-shadow: var(--box-shadow-xs);
-
-      &:hover {
-        border-left: 7px var(--border-style) green;
-      }
-
-      &* > {
-        @include groupCell;
-      }
-
-      .task-list-add-side {
+      &>* {
         display: flex;
-        align-content: center;
-        justify-content: center;
         align-items: center;
-        border-right: var(--border-width) var(--border-style)
-          var(--ui-border-color);
+        justify-content: center;
+
+        width: 100%;
+        height: 100%;
+
+        text-align: center;
+        cursor: pointer;
       }
     }
+  }
 
-    .task-list-summary-wrapper {
-      border-bottom: unset;
-      margin-left: 6px;
+  .task-list-add {
+    border-left: 7px var(--border-style) rgb(183, 207, 183);
+    border-radius: 0 0 0 var(--border-radius-small);
+    box-shadow: var(--box-shadow-xs);
 
-      .task-list-summary-emptycell-left {
-        grid-column: 3;
-        border-radius: 0 0 0 var(--border-radius-small);
-        border-left: var(--border-width) var(--border-style)
-          var(--ui-border-color);
-        border-right: var(--border-width) var(--border-style)
-          var(--ui-border-color);
-        border-bottom: var(--border-width) var(--border-style)
-          var(--ui-border-color);
-        box-shadow: var(--box-shadow-xs);
-      }
+    &:hover {
+      border-left: 7px var(--border-style) green;
+    }
 
-      .task-list-summary {
-        @include groupCell;
-        border-bottom: var(--border-width) var(--border-style)
-          var(--ui-border-color);
-        box-shadow: var(--box-shadow-xs);
-        padding: var(--spacing-small);
-      }
+    &>* {
+      @include groupCell;
+    }
+
+    .task-list-add-side {
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+    }
+  }
+
+  .task-list-summary-wrapper {
+    border-bottom: unset;
+    margin-left: 6px;
+
+    .task-list-summary-emptycell-left {
+      grid-column: 3;
+      border-radius: 0 0 0 var(--border-radius-small);
+      border-left: var(--border-width) var(--border-style) var(--ui-border-color);
+      border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+      border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+      box-shadow: var(--box-shadow-xs);
+    }
+
+    .task-list-summary {
+      @include groupCell;
+      text-align: center;
+      padding: var(--spacing-small);
+      border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+      box-shadow: var(--box-shadow-xs);
     }
   }
 }

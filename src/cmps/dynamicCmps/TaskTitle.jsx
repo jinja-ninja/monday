@@ -6,7 +6,7 @@ export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask }) {
 
     const [updatedTaskInput, setUpdatedTask] = useState(info)
 
-    return <div className="task-title">
+    return <div className="task-title" id="task-title">
         <EditableHeading type={EditableHeading.types.h5}
             ellipsis
             onBlur={() => {
