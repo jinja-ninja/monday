@@ -52,7 +52,7 @@ export function TaskList({ group, cmpsOrder }) {
             newTask.title = task
             await addTask(boardId, groupId, newTask)
         } catch (err) {
-            // showErrorMsg('Cannot remove task')
+            showErrorMsg('Cannot add task')
         }
     }
 
@@ -76,7 +76,6 @@ export function TaskList({ group, cmpsOrder }) {
     }
 
     function renderMenuButton(taskId) {
-        console.log('taskId:', taskId)
         return (
             <MenuButton size={MenuButton.sizes.XS}
                 className={`task-menu-btn `}
@@ -109,6 +108,7 @@ export function TaskList({ group, cmpsOrder }) {
     }
 
     function renderDynamicCmp(cmp, task) {
+        let info
         switch (cmp) {
             case "side":
                 return <Side info={group['style']} />
