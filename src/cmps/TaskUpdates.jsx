@@ -1,20 +1,17 @@
 import { useState } from 'react'
 import { Button } from "monday-ui-react-core";
+import { Replay, ThumbsUp } from "monday-ui-react-core/icons"
 
 import TaskDetailsUpdatesImg from '../assets/img/TaskDetailsUpdatesImg.svg'
 import { updateTask } from '../store/actions/board.action';
-export function TaskUpdates({ boardId }) {
-    const [textAreaState, setTextAreaState] = useState(true)
+import { boardService } from '../services/board.service.local';
+import { CommentPreview } from './CommentPreview';
+
+export function TaskUpdates({ boardId, groupId, taskId, currTask }) {
+    const [textAreaState, setTextAreaState] = useState(false)
     const [TextAreaValue, setTextAreaValue] = useState('')
 
-    function onSaveTaskComment() {
-        console.log('button clicked!!!');
-        const newComment = TextAreaValue
-        updateTask(boardId, groupId, taskId, data)
-        //לבדוק איך לקבל את כל המשתנים האלה
-        setTextAreaValue('')
-        console.log("newComment", newComment);
-    }
+
 
     function toggleInputAndTextArea() {
         setTextAreaState((prevTextAreaState) => !prevTextAreaState)
@@ -25,6 +22,21 @@ export function TaskUpdates({ boardId }) {
         console.log(TextAreaValue);
     }
 
+    function onSaveTaskComment() {
+        const newCommentText = TextAreaValue
+        const newComment = boardService.createNewComment(newCommentText)
+        const updatedComments = [newComment, ...currTask.comments]
+        updateTask(boardId, groupId, taskId, { key: "comments", value: updatedComments })
+        setTextAreaValue('')
+    }
+
+    function onDeleteComment(commentId, currTask) {
+        const updatedComments = boardService.deleteComment(commentId, currTask)
+        updateTask(boardId, groupId, taskId, { key: "comments", value: updatedComments })
+
+    }
+
+    if (!currTask) return <div>Loading...</div>
     return (
         <div className='task-updates-container'>
             {!textAreaState &&
@@ -51,10 +63,21 @@ export function TaskUpdates({ boardId }) {
                     </Button>
                 </div>}
 
-            <img src={TaskDetailsUpdatesImg} alt="" />
-            <h2>No updates yet for this item</h2>
-            <p>Be the first one to update about progress, mention someone
-                or upload files to share with your team members</p>
+            {currTask.comments.length == 0 &&
+                <div>
+                    <img src={TaskDetailsUpdatesImg} alt="" />
+                    <h2>No updates yet for this item</h2>
+                    <p>Be the first one to update about progress, mention someone
+                        or upload files to share with your team members</p>
+                </div>}
+
+            {currTask.comments.length > 0 &&
+                <section className='task-comments-container'>
+                    {currTask.comments.map((comment) => (
+                        <CommentPreview comment={comment} onDeleteComment={onDeleteComment} currTask={currTask} key={comment.id} />
+                    ))}
+                </section>
+            }
         </div >
 
     )

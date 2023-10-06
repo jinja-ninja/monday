@@ -1,7 +1,19 @@
 import { Avatar, EditableHeading, IconButton, Tab, TabList } from "monday-ui-react-core";
 import { Close, Home, Menu } from "monday-ui-react-core/icons"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { updateTask } from "../store/actions/board.action";
 
-export function TaskDetailsHeader() {
+export function TaskDetailsHeader({ boardId, groupId, taskId, taskTitle, setCurrTab }) {
+    const [taskTitleValue, setTaskTitleValue] = useState(taskTitle)
+    const navigate = useNavigate()
+    console.log('taskTitleValue:', taskTitleValue)
+
+    function onRenameTask() {
+        if (taskTitle !== taskTitleValue) {
+            updateTask(boardId, groupId, taskId, { key: 'title', value: taskTitleValue })
+        }
+    }
 
     return (
         <div className="task-details-header" >
@@ -9,20 +21,23 @@ export function TaskDetailsHeader() {
             <IconButton
                 ariaLabel=""
                 icon={Close}
-                //   onClick={function noRefCheck(){}}
+                onClick={() => navigate(`/board/${boardId}`)}
                 size="xs"
             />
             <div className="editible-container">
                 <EditableHeading
                     type="h4"
-                    value="Task name"
+                    value={taskTitleValue}
+                    onChange={(newText) => setTaskTitleValue(newText)}
+                    onBlur={() => onRenameTask()}
+
                 />
 
                 <div className="avatar-and-icon-container">
                     <Avatar
                         ariaLabel="Hadas Fahri"
                         size="small"
-                        src="https://style.monday.com/static/media/person1.de30c8ee.png"
+                        src="https://cdn1.monday.com/dapulse_default_photo.png"
                         type="img"
                     />
                     <div></div>
@@ -30,7 +45,7 @@ export function TaskDetailsHeader() {
                         ariaLabel="Add"
                         icon={Menu}
                         size="50"
-                        // onClick={function noRefCheck() { }}
+                    // onClick={function noRefCheck() { }}
                     />
                 </div>
             </div>
@@ -38,14 +53,18 @@ export function TaskDetailsHeader() {
                 <TabList
                     size="sm">
                     <Tab
+                        onClick={() => setCurrTab('updates')}
                         icon={Home}
                         iconSide="left">
+
                         Updates
                     </Tab>
-                    <Tab >
+                    <Tab
+                        onClick={() => setCurrTab('files')}>
                         Files
                     </Tab>
-                    <Tab >
+                    <Tab
+                        onClick={() => setCurrTab('activityLog')}>
                         Activity Log
                     </Tab>
                 </TabList>
