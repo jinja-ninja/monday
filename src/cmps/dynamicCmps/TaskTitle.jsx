@@ -1,10 +1,16 @@
 import { Button, EditableHeading, Flex, IconButton } from "monday-ui-react-core"
 import { DropdownChevronRight, Open } from "monday-ui-react-core/icons"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask }) {
 
     const [updatedTaskInput, setUpdatedTask] = useState(info)
+    const navigate = useNavigate()
+
+    function openTaskDetails() {
+        navigate(`/board/${boardId}/group/${groupId}/task/${taskId}`)
+    }
 
     return <div className="task-title" id="task-title">
         <EditableHeading type={EditableHeading.types.h5}
@@ -19,8 +25,9 @@ export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask }) {
             kind="tertiary"
             leftIcon={Open}
             size="xs"
-            // onClick={}
-            // send the boardid to TaskDetails by navigate to route
+            onClick={() => { openTaskDetails() }}
+        //navigate to route
+        // send the boardid to TaskDetails by navigate to route
         >
             Open
         </Button>

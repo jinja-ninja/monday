@@ -5,7 +5,7 @@ import { BoardDetailsHeader } from "../cmps/BoardDetailsHeader"
 import { GroupList } from "../cmps/GroupList"
 import { BoardMainHeader } from "../cmps/BoardMainHeader"
 import { SideBar } from "../cmps/SideBar"
-import { useParams } from "react-router-dom"
+import { Outlet, useParams } from "react-router-dom"
 import { getBoardById, updateBoard } from "../store/actions/board.action"
 import { useSelector } from "react-redux"
 import { UserMsg } from "../cmps/UserMsg"
@@ -45,7 +45,7 @@ export function BoardDetails() {
         <section className="board-details-container">
             <UserMsg />
 
-            <BoardDetailsHeader title={currBoard.title} />
+            <BoardDetailsHeader title={currBoard.title} boardId={currBoard._id} />
 
             <div className="board-details-actions">
 
@@ -80,6 +80,8 @@ export function BoardDetails() {
                 cmpsOrder={cmpsOrder}
                 progress={progress}
             />
+
+            <Outlet />
 
         </section>
     </main >

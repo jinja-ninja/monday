@@ -11,19 +11,21 @@ export const boardService = {
     save,
     remove,
     // getEmptyBoard,
+    _createBoards,
     getNewBoard,
-    getEmptyTask,
-    removeTask,
-    addTask,
+    duplicateBoard,
     addNewGroup,
     removeGroup,
     getEmptyGroup,
     duplicatedGroup,
+    getTaskById,
     getEmptyTask,
-    createActivity,
-    _createBoards,
+    removeTask,
+    addTask,
     duplicatedTask,
-    duplicateBoard,
+    createNewComment,
+    deleteComment,
+    createActivity,
 }
 
 _createBoards()
@@ -132,11 +134,13 @@ function getNewBoard() {
                 tasks: [
                     {
                         id: utilService.makeId(),
-                        title: "Type your task here"
+                        title: "Type your task here",
+                        comments: []
                     },
                     {
                         id: utilService.makeId(),
-                        title: "Type your task here"
+                        title: "Type your task here",
+                        comments: []
                     }
                 ],
                 style: {}
@@ -148,7 +152,8 @@ function getNewBoard() {
                     {
                         id: utilService.makeId(),
                         title: "Type your task here",
-                        archivedAt: ''
+                        archivedAt: '',
+                        comments: []
                     },
                     {
                         id: utilService.makeId(),
@@ -156,18 +161,7 @@ function getNewBoard() {
                         status: "Not started",
                         priority: "unset",
                         description: "description",
-                        comments: [
-                            {
-                                id: "ZdPnm",
-                                txt: "also @yaronb please CR this",
-                                createdAt: 1590999817436,
-                                byMember: {
-                                    _id: "u101",
-                                    fullname: "Tal Tarablus",
-                                    imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
-                                }
-                            }
-                        ],
+                        comments: [],
                         checklists: [
                             {
                                 id: "YEhmF",
@@ -186,8 +180,8 @@ function getNewBoard() {
                         dueDate: "No deadline",
                         byMember: {
                             _id: "u101",
-                            username: "Tal",
-                            fullname: "Tal Tarablus",
+                            username: "Gal",
+                            fullname: "Gal Ben Natan",
                             imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
                         },
                         style: {
@@ -214,7 +208,8 @@ function getNewBoard() {
                 },
                 task: {
                     id: "c101",
-                    title: "Replace Logo"
+                    title: "Replace Logo",
+                    comments: []
                 }
             }
         ],
@@ -277,6 +272,12 @@ function createActivity(txt, boardId, groupId = null, taskId = null) {
 }
 
 //Task functions
+async function getTaskById(boardId, groupId, taskId) {
+    const board = await getBoardById(boardId)
+    const groupIdx = board.groups.findIndex(group => group.id === groupId)
+    const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+    return board.groups[groupIdx].tasks[taskIdx]
+}
 
 async function removeTask(boardId, groupId, taskId) {
     const board = await getBoardById(boardId)
@@ -312,6 +313,32 @@ async function duplicatedTask(board, groupId, taskId) {
     duplicatedTask.title = duplicatedTask.title + ' copy'
     updatedBoard.groups[groupIdx].tasks.splice(taskIdx + 1, 0, duplicatedTask)
     return await storageService.put(STORAGE_KEY, updatedBoard)
+}
+
+function createNewComment(newCommentText) {
+    return {
+        id: utilService.makeId(),
+        txt: newCommentText,
+        createdAt: Date.now(),
+        byMember: {
+            _id: "u101",
+            fullname: "Gal Ben Natan",
+            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+        }
+    }
+
+}
+
+function deleteComment(commentId, currTask) {
+    const commentIdx = currTask.comments.findIndex(comment => commentId === comment.id)
+    if (commentIdx !== -1) {
+        const commentsAfterDelete = currTask.comments.filter(comment => commentId !== comment.id)
+        return commentsAfterDelete
+    } else {
+        console.log('cant find comment')
+        throw new Error('comment wasnt found,couldnt delete it')
+    }
+
 }
 
 //Group functions
@@ -398,7 +425,7 @@ function _createBoards() {
                     members: [
                         {
                             _id: "u101",
-                            fullname: "Tal Tarablus",
+                            fullname: "Gal Ben Natan",
                             imgUrl: "https://www.google.com"
                         }
                     ],
@@ -410,11 +437,14 @@ function _createBoards() {
                             tasks: [
                                 {
                                     id: "c101",
-                                    title: "Replace logo"
+                                    title: "Replace logo",
+                                    comments: []
+
                                 },
                                 {
                                     id: "c102",
-                                    title: "Add Samples"
+                                    title: "Add Samples",
+                                    comments: []
                                 }
                             ],
                             style: {}
@@ -426,6 +456,7 @@ function _createBoards() {
                                 {
                                     id: "c103",
                                     title: "Do that",
+                                    comments: [],
                                     archivedAt: 1589983468418
                                 },
                                 {
@@ -441,7 +472,7 @@ function _createBoards() {
                                             createdAt: 1590999817436,
                                             byMember: {
                                                 _id: "u101",
-                                                fullname: "Tal Tarablus",
+                                                fullname: "Gal Ben Natan",
                                                 imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
                                             }
                                         }
@@ -464,8 +495,8 @@ function _createBoards() {
                                     dueDate: 16156215211,
                                     byMember: {
                                         _id: "u101",
-                                        username: "Tal",
-                                        fullname: "Tal Tarablus",
+                                        username: "Gal",
+                                        fullname: "Gal Ben Natan",
                                         imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
                                     },
                                     style: {
@@ -492,7 +523,8 @@ function _createBoards() {
                             },
                             task: {
                                 id: "c101",
-                                title: "Replace Logo"
+                                title: "Replace Logo",
+                                comments: []
                             }
                         }
                     ],
@@ -538,11 +570,13 @@ function _createBoards() {
                             tasks: [
                                 {
                                     id: "c105",
-                                    title: "Design Layout"
+                                    title: "Design Layout",
+                                    comments: []
                                 },
                                 {
                                     id: "c106",
-                                    title: "Refactor Code"
+                                    title: "Refactor Code",
+                                    comments: []
                                 }
                             ],
                             style: {}
@@ -554,7 +588,8 @@ function _createBoards() {
                                 {
                                     id: "c107",
                                     title: "Brainstorm ideas",
-                                    archivedAt: 1589983468520
+                                    archivedAt: 1589983468520,
+                                    comments: []
                                 },
                                 {
                                     id: "c108",
@@ -620,7 +655,8 @@ function _createBoards() {
                             },
                             task: {
                                 id: "c105",
-                                title: "Design Layout"
+                                title: "Design Layout",
+                                comments: []
                             }
                         }
                     ],
@@ -666,19 +702,23 @@ function _createBoards() {
                             tasks: [
                                 {
                                     id: "c109",
-                                    title: "Analyze Data"
+                                    title: "Analyze Data",
+                                    comments: []
                                 },
                                 {
                                     id: "c110",
-                                    title: "Create Visualization"
+                                    title: "Create Visualization",
+                                    comments: []
                                 },
                                 {
                                     id: "c111",
-                                    title: "Write Report"
+                                    title: "Write Report",
+                                    comments: []
                                 },
                                 {
                                     id: "c112",
-                                    title: "Gather Feedback"
+                                    title: "Gather Feedback",
+                                    comments: []
                                 }
                             ],
                             style: {}
@@ -690,6 +730,7 @@ function _createBoards() {
                                 {
                                     id: "c113",
                                     title: "Set up Environment",
+                                    comments: [],
                                     archivedAt: 1590010000000
                                 },
                                 {
@@ -761,7 +802,8 @@ function _createBoards() {
                             },
                             task: {
                                 id: "c109",
-                                title: "Analyze Data"
+                                title: "Analyze Data",
+                                comments: []
                             }
                         }
                     ],
@@ -807,19 +849,23 @@ function _createBoards() {
                             tasks: [
                                 {
                                     id: "c115",
-                                    title: "Design Landing Page"
+                                    title: "Design Landing Page",
+                                    comments: []
                                 },
                                 {
                                     id: "c116",
-                                    title: "Create Navigation"
+                                    title: "Create Navigation",
+                                    comments: []
                                 },
                                 {
                                     id: "c117",
-                                    title: "Implement Animations"
+                                    title: "Implement Animations",
+                                    comments: []
                                 },
                                 {
                                     id: "c118",
-                                    title: "Optimize for Mobile"
+                                    title: "Optimize for Mobile",
+                                    comments: []
                                 }
                             ],
                             style: {}
@@ -831,6 +877,7 @@ function _createBoards() {
                                 {
                                     id: "c119",
                                     title: "Set up Database",
+                                    comments: [],
                                     archivedAt: 1590500000000
                                 },
                                 {
@@ -902,7 +949,8 @@ function _createBoards() {
                             },
                             task: {
                                 id: "c115",
-                                title: "Design Landing Page"
+                                title: "Design Landing Page",
+                                comments: []
                             }
                         }
                     ],

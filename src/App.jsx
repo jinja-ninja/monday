@@ -27,9 +27,10 @@ export function App() {
           <Route element={<TestCmp />} path="/test" />
           <Route element={<BoardIndex />} path="/board" /> {/* TODO: add board index page */}
           <Route element={<BoardDetails />} path="board/:boardId">
+            <Route element={<TaskDetails />} path='group/:groupId/task/:taskId' />
+            {/* <Route element={<ActivityLog />} path='activityLog' /> */}
           </Route>
           <Route element={<BoardIndex />} path="/board" />
-          <Route element={<TaskDetails />} path='/task/:taskId' />
 
           <Route path="/auth">
             <Route path="login" element={<LoginSignUp />} />
