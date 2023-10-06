@@ -9,6 +9,7 @@ import { Outlet, useParams } from "react-router-dom"
 import { getBoardById, updateBoard } from "../store/actions/board.action"
 import { useSelector } from "react-redux"
 import { UserMsg } from "../cmps/UserMsg"
+import MondayLoader from '../assets/Loader/MondayLoader.gif'
 
 export function BoardDetails() {
     const params = useParams()
@@ -37,7 +38,10 @@ export function BoardDetails() {
 
     const progress = [null, null, "status", null, "priority", null]
 
-    if (!currBoard) return (<Loader className="loader" Loader color={Loader.colors.PRIMARY} size={100} />)
+    // if (!currBoard) return (<Loader className="loader" Loader color={Loader.colors.PRIMARY} size={100} />)
+    if (!currBoard) return (
+        <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
+    )
     return <main className="board-details-layout">
         <BoardMainHeader />
         <SideBar />
