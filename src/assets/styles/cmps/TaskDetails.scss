@@ -1,11 +1,3 @@
-///DELETE LATER!!!!!
-///DELETE LATER!!!!!
-html {
-    // background-color: rgb(93, 125, 255);
-}
-
-///DELETE LATER!!!!!
-///DELETE LATER!!!!!
 .task-details-container {
     //DESIGN PURPOSES
     height: 100vh;
@@ -33,27 +25,49 @@ html {
     text-align: center;
     padding: rem(20px);
 
-    input {
+    input,
+    textarea {
         border: none;
         margin: 0;
-        padding: 0;
-        width: auto;
-        overflow: visible;
-        background: transparent;
         border: 1px solid;
         border-color: var(--primary-color);
         border-radius: 8px;
         padding: 10px 20px;
         color: var(--primary-text-color);
         cursor: text;
-        width: 100%;
+        // width: 100%;
+        resize: none;
+        /* Prevent resizing */
+
+        width: 660px;
         justify-content: start;
         text-align: left;
         margin-bottom: 115px;
 
+
+
         &:focus-visible {
             outline: none
         }
+    }
+
+    .text-area-contianer {
+
+        textarea {
+            height: 144px;
+            margin: 0;
+        }
+
+        .update-btn {
+            padding-left: auto;
+            text-transform: none;
+            margin-inline-start: 600px;
+            margin-block-start: 6px;
+        }
+    }
+
+    .large {
+        height: 144px;
     }
 
     img {
