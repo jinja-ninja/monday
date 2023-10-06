@@ -315,12 +315,6 @@ async function duplicatedTask(board, groupId, taskId) {
     return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
-async function getTaskById(boardId, groupId, taskId) {
-    const board = await getBoardById(boardId)
-    const groupIdx = board.groups.findIndex(group => group.id === groupId)
-    const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-    return board.groups[groupIdx].tasks[taskIdx]
-}
 
 function createNewComment(newCommentText) {
     return {

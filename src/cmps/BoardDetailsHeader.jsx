@@ -1,5 +1,3 @@
-import { EditableHeading, IconButton, Tab, TabList, Text } from "monday-ui-react-core"
-import { Favorite, Home, Info } from "monday-ui-react-core/icons"
 import { Avatar, AvatarGroup, Button, EditableHeading, IconButton, Tab, TabList } from "monday-ui-react-core"
 import { Favorite, Home, Info, Menu, Invite } from "monday-ui-react-core/icons"
 import { Link } from "react-router-dom"
