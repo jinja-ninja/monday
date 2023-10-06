@@ -19,6 +19,8 @@ export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask }) {
             kind="tertiary"
             leftIcon={Open}
             size="xs"
+            // onClick={}
+            // send the boardid to TaskDetails by navigate to route
         >
             Open
         </Button>
