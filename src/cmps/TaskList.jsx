@@ -119,8 +119,22 @@ export function TaskList({ group, cmpsOrder }) {
     return <div className="task-list-container">
 
         <section className="header-title-container group-grid">
-            {cmpsOrder.map((title, idx) =>
-                <div className="header-title" key={idx}>{title}</div>
+            {cmpsOrder.map((title, idx) => {
+                if (idx === 0) return <div className="header-title-side-wrapper" key={idx}>
+                    <div className="header-title-side">
+                        <div className="color-indicator"
+                            style={{
+                                backgroundColor: `var(--color-${group.style})`
+                            }}>
+                        </div>
+
+                        <div className="task-select">
+                            <Checkbox ariaLabel="Select task" />
+                        </div>
+                    </div>
+                </div>
+                return <div className="header-title" key={idx}>{title}</div>
+            }
             )}
         </section>
 
@@ -139,7 +153,15 @@ export function TaskList({ group, cmpsOrder }) {
         <section className="task-list-add group-grid">
 
             <div className="task-list-add-side">
-                <Checkbox disabled />
+                <div className="color-indicator"
+                    style={{
+                        backgroundColor: `var(--color-${group.style})`
+                    }}>
+                </div>
+
+                <div className="task-select">
+                    <Checkbox disabled ariaLabel="Select task" />
+                </div>
             </div>
 
             <EditableHeading className="task-add-btn"

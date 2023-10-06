@@ -10,6 +10,7 @@
 
   .group-list-item {
     position: relative;
+    margin-block-end: var(--spacing-large);
 
     .group-menu-btn {
       position: absolute;
@@ -19,6 +20,7 @@
       margin-inline-end: var(--spacing-medium);
       opacity: 0;
       transition: opacity 0.3s;
+
       &:hover {
         opacity: 1;
       }

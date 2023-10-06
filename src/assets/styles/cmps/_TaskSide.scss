@@ -1,11 +1,33 @@
-.task-side {
-
+.task-side-wrapper {
+    width: 100%;
+    height: 100%;
     display: flex;
 
-    .task-color {
-        width: 7px;
-        height: 16px;
-        border-radius: var(--border-radius-small) 0 0 var(--border-radius-small);
-        background-color: green;
+    .task-side {
+        display: flex;
+
+        width: 100%;
+        height: 100%;
+
+        .color-indicator {
+            width: 7px;
+            height: 100%;
+        }
+
+        .task-select {
+
+            flex-grow: 1;
+            align-self: center;
+            justify-self: center;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &>* {
+                display: flex;
+                flex-direction: column;
+            }
+        }
     }
 }

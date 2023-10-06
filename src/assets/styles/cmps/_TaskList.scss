@@ -4,21 +4,57 @@
     grid-template-columns: 40px 350px 140px 140px 140px 140px;
     justify-content: start;
     align-content: center;
-    border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+    // border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
   }
 
   .header-title-container {
-    border-top: var(--border-width) var(--border-style) var(--ui-border-color);
     border-right: var(--border-width) var(--border-style) var(--ui-border-color);
-    border-left: 7px var(--border-style) green;
-    border-radius: var(--border-radius-small) 0 0 0;
     display: grid;
     grid-auto-flow: column;
 
     .header-title {
       @include groupCell;
+      border-top: var(--border-width) var(--border-style) var(--ui-border-color);
       text-align: center;
       padding: var(--spacing-small);
+      border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+    }
+
+    .header-title-side {
+      display: flex;
+
+      width: 100%;
+      height: 100%;
+
+      border-top: var(--border-width) var(--border-style) var(--ui-border-color);
+      border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+      // border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+
+      .color-indicator {
+        width: 7px;
+        height: 100%;
+        border-radius: var(--border-radius-small) 0 0 0;
+      }
+
+      .task-select {
+        // border-top: var(--border-width) var(--border-style) var(--ui-border-color);
+
+        height: 100%;
+        border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+
+        flex-grow: 1;
+        align-self: center;
+        justify-self: center;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &>* {
+          display: flex;
+          flex-direction: column;
+        }
+      }
     }
   }
 
@@ -29,7 +65,6 @@
     justify-items: start;
 
     border-right: var(--border-width) var(--border-style) var(--ui-border-color);
-    border-left: 7px var(--border-style) green;
 
     //     .task-menu-btn {
     //       position: absolute;
@@ -82,6 +117,11 @@
 
     .task-item {
       @include groupCell;
+      border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+
+      &:nth-of-type(2) {
+        justify-content: start;
+      }
 
       &>* {
         display: flex;
@@ -98,13 +138,9 @@
   }
 
   .task-list-add {
-    border-left: 7px var(--border-style) rgb(183, 207, 183);
     border-radius: 0 0 0 var(--border-radius-small);
     box-shadow: var(--box-shadow-xs);
-
-    &:hover {
-      border-left: 7px var(--border-style) green;
-    }
+    border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
 
     &>* {
       @include groupCell;
@@ -112,16 +148,46 @@
 
     .task-list-add-side {
       display: flex;
-      align-content: center;
-      justify-content: center;
-      align-items: center;
-      border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+
+      width: 100%;
+      height: 100%;
+
+      .color-indicator {
+        width: 7px;
+        height: 100%;
+        border-radius: 0 0 0 var(--border-radius-small);
+      }
+
+      .task-select {
+        height: 100%;
+        // border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+
+        flex-grow: 1;
+        align-self: center;
+        justify-self: center;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &>* {
+          display: flex;
+          flex-direction: column;
+        }
+      }
     }
+
+    // .task-list-add-side {
+    //   display: flex;
+    //   align-content: center;
+    //   justify-content: center;
+    //   align-items: center;
+    //   border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+    // }
   }
 
   .task-list-summary-wrapper {
     border-bottom: unset;
-    margin-left: 6px;
 
     .task-list-summary-emptycell-left {
       grid-column: 3;
