@@ -4,7 +4,8 @@ import { Add, Board, Delete, Home, Edit } from "monday-ui-react-core/icons"
 import { useDispatch, useSelector } from "react-redux"
 import { BoardNavLink } from "./BoardNavLink"
 import { addBoard, duplicateBoard, loadBoards, removeBoard, toggleBoardFavorite, updateBoard } from "../store/actions/board.action"
-import { useNavigate,useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 
 export function SideBar() {
     const [isOpen, setIsOpen] = useState(false)
@@ -23,9 +24,14 @@ export function SideBar() {
         console.log('board clicked - display board in BoardDetails', boardId)
     }
 
-    function onDeleteBoard(boardId) {
-        removeBoard(boardId)
-        console.log('Delete Board', boardId)
+    async function onDeleteBoard(boardId) {
+        try {
+            await removeBoard(boardId)
+            showSuccessMsg('We successfully deleted the board')
+        }
+        catch (err) {
+            showErrorMsg('Cannot remove board from workspace (id: ${boardId})')
+        }
     }
 
     function onRenameBoard(boardId, newText) {

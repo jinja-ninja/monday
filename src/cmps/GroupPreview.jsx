@@ -1,9 +1,10 @@
-import { useState } from "react"
+import { useCallback, useRef, useState } from "react"
 
-import { ColorPicker, EditableHeading, Icon, Menu, MenuButton, MenuItem, Tooltip } from "monday-ui-react-core"
+import { ColorPicker, EditableHeading, Icon, Menu, MenuButton, MenuItem, Modal, ModalContent, ModalFooterButtons, ModalHeader, Tooltip } from "monday-ui-react-core"
 import { Delete, DropdownChevronDown, DropdownChevronRight, Duplicate, Edit, HighlightColorBucket } from "monday-ui-react-core/icons"
 import { TaskList } from "./TaskList"
 import { duplicatedGroup, removeGroup, updateBoard } from "../store/actions/board.action"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 
 export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRenameGroup, initiateEdit }) {
 
@@ -11,6 +12,11 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
     const [editableText, setEditableText] = useState(group.title)
     const [numOfTasks, setNumOfTasks] = useState(group.tasks.length)
     const [showColorPicker, setShowColorPicker] = useState(false)
+    const [show, setShow] = useState(false)
+    const openModalButtonRef = useRef()
+    const closeModal = useCallback(() => {
+        setShow(false);
+    }, []);
 
     const handleEditClick = (groupId) => {
         const groupElement = document.querySelector(`.group-list-item[data-group-id="${groupId}"]`)
@@ -25,9 +31,10 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
     async function onRemoveGroup(boardId, groupId) {
         try {
             await removeGroup(boardId, groupId)
-            // showSuccessMsg('Group removed')
+            showSuccessMsg(' Group Title group was successfully deleted')
             // showUserMsg('success', 'Group removed')
         } catch (err) {
+            showErrorMsg(`X Cannot remove group from board (id: ${groupId})`)
             // showUserMsg('error', 'Cannot remove group')
         }
     }
@@ -35,9 +42,9 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
     async function onDuplicateGroup(boardId, groupId) {
         try {
             await duplicatedGroup(boardId, groupId)
-            // showSuccessMsg('Task removed')
+            showSuccessMsg('Group has been duplicated successfully')
         } catch (err) {
-            // showErrorMsg('Cannot remove task')
+            showErrorMsg(`Cannot duplicate group (${groupId})`)
         }
     }
 
@@ -69,7 +76,7 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
                 <MenuItem
                     icon={Delete}
                     iconType="SVG"
-                    onClick={() => onRemoveGroup(boardId, group.id)}
+                    onClick={() => setShow(true)}
                     title="Delete" />
                 <MenuItem
                     icon={Edit}
@@ -126,7 +133,21 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
 
         {showGroup && <TaskList group={group} cmpsOrder={cmpsOrder} />}
 
-    </div >
+        <>
+
+            <Modal id="story-book-modal" title="Modal title" triggerElement={openModalButtonRef.current} show={show} onClose={closeModal}
+                width={Modal.width.DEFAULT} contentSpacing>
+                <ModalHeader title={"Delete"} iconSize={32} />
+                <ModalContent>Delete this Group? </ModalContent>
+                <ModalFooterButtons primaryButtonText="Delete" secondaryButtonText="Cancel" onPrimaryButtonClick={() => {
+                    onRemoveGroup(boardId, group.id)
+                    closeModal()
+                }
+                } onSecondaryButtonClick={closeModal} />
+            </Modal>
+        </>
+
+    </div>
 }
 
 // return (
