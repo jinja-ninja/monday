@@ -44,6 +44,15 @@ button {
   white-space: nowrap;
 }
 
+
+.monday-loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
 /* Simple and useful CSS Debugging Technique */
 .debug * {
   outline: 1px solid gold;
