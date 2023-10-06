@@ -48,6 +48,7 @@ function makeGroupId(length = 6) {
     for (var i = 1; i < length; i++) {
         txt += possible.charAt(Math.floor(Math.random() * possible.length))
     }
+    return txt
 }
 
 function makeTaskId(length = 6) {
@@ -56,7 +57,9 @@ function makeTaskId(length = 6) {
 
     for (var i = 1; i < length; i++) {
         txt += possible.charAt(Math.floor(Math.random() * possible.length))
+
     }
+    return txt
 }
 
 // function readJsonFile(path) {
