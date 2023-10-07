@@ -16,7 +16,7 @@ export function SelectedModal({ selectedTasks, currBoard }) {
     }, [selectedTasks])
 
     function getAllTaskColors() {
-        const colors = selectedTasks.map(groupTaskIds => boardService.getGroupByTask(currBoard, groupTaskIds.groupId).style)
+        const colors = selectedTasks.map(groupTaskIds => boardService.getGroupById(currBoard, groupTaskIds.groupId).style)
         console.log('colors:', colors)
         setGroupColors(colors)
     }

@@ -16,7 +16,7 @@ export const boardService = {
     addNewGroup,
     removeGroup,
     duplicatedGroup,
-    getGroupByTask: getGroupById,
+    getGroupById,
     getTaskById,
     removeTask,
     addTask,
@@ -279,6 +279,61 @@ function createActivity(txt, boardId, groupId = null, taskId = null) {
     }
 }
 
+//Group functions
+function getEmptyGroup() {
+    return {
+        id: utilService.makeGroupId(),
+        title: 'New Group',
+        tasks: [],
+        style: "done-green",
+        archivedAt: null,
+    }
+}
+
+async function addNewGroup(board) {
+
+    const newGroup = getEmptyGroup()
+    const updatedBoard = { ...board }
+    updatedBoard.groups.push(newGroup)
+
+    const activity = createActivity(`Created group ${newGroup.title}`, board._id, newGroup.id)
+    updatedBoard.activities.unshift(activity)
+
+    return await storageService.put(STORAGE_KEY, updatedBoard)
+}
+
+async function removeGroup(board, groupId) {
+    const updatedBoard = { ...board }
+    const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
+    const group = updatedBoard.groups[groupIdx]
+    updatedBoard.groups.splice(groupIdx, 1)
+
+    const activity = createActivity(`Removed group ${group.title}`, board._id, groupId)
+    updatedBoard.activities.unshift(activity)
+
+    return await storageService.put(STORAGE_KEY, updatedBoard)
+}
+
+async function duplicatedGroup(board, groupId) {
+    const updatedBoard = { ...board }
+    const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
+    const groupToDuplicate = updatedBoard.groups[groupIdx]
+    const duplicatedGroup = JSON.parse(JSON.stringify(groupToDuplicate))
+    duplicatedGroup.id = utilService.makeId()
+    duplicatedGroup.title = duplicatedGroup.title + ' copy'
+    updatedBoard.groups.splice(groupIdx + 1, 0, duplicatedGroup)
+
+    const activity = createActivity(`Duplicated group ${groupToDuplicate.title}`, board._id, groupId)
+    updatedBoard.activities.unshift(activity)
+
+    return await storageService.put(STORAGE_KEY, updatedBoard)
+}
+
+function getGroupById(board, groupId) {
+    // const newBoard = structuredClone(board)
+    return board.groups.find(group => group.id === groupId)
+}
+
 //Task functions
 async function getTaskById(boardId, groupId, taskId) {
     const board = await getBoardById(boardId)
@@ -345,132 +400,6 @@ async function duplicatedTask(board, groupId, taskId) {
     return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
-
-function createNewComment(newCommentText) {
-    return {
-        id: utilService.makeId(),
-        txt: newCommentText,
-        createdAt: Date.now(),
-        byMember: {
-            _id: "u101",
-            fullname: "Gal Ben Natan",
-            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
-        }
-    }
-
-}
-
-function deleteComment(commentId, currTask) {
-    const commentIdx = currTask.comments.findIndex(comment => commentId === comment.id)
-    if (commentIdx !== -1) {
-        const commentsAfterDelete = currTask.comments.filter(comment => commentId !== comment.id)
-        return commentsAfterDelete
-    } else {
-        console.log('cant find comment')
-        throw new Error('comment wasnt found,couldnt delete it')
-    }
-
-}
-
-//Group functions
-function getEmptyGroup() {
-    return {
-        id: utilService.makeGroupId(),
-        title: 'New Group',
-        tasks: [],
-        style: "done-green",
-        archivedAt: null,
-    }
-}
-
-async function addNewGroup(board) {
-
-    const newGroup = getEmptyGroup()
-    const updatedBoard = { ...board }
-    updatedBoard.groups.push(newGroup)
-
-    const activity = createActivity(`Created group ${newGroup.title}`, board._id, newGroup.id)
-    updatedBoard.activities.unshift(activity)
-
-    return await storageService.put(STORAGE_KEY, updatedBoard)
-}
-
-async function removeGroup(board, groupId) {
-    const updatedBoard = { ...board }
-    const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
-    const group = updatedBoard.groups[groupIdx]
-    updatedBoard.groups.splice(groupIdx, 1)
-
-    const activity = createActivity(`Removed group ${group.title}`, board._id, groupId)
-    updatedBoard.activities.unshift(activity)
-
-    return await storageService.put(STORAGE_KEY, updatedBoard)
-}
-
-async function duplicatedGroup(board, groupId) {
-    const updatedBoard = { ...board }
-    const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
-    const groupToDuplicate = updatedBoard.groups[groupIdx]
-    const duplicatedGroup = JSON.parse(JSON.stringify(groupToDuplicate))
-    duplicatedGroup.id = utilService.makeId()
-    duplicatedGroup.title = duplicatedGroup.title + ' copy'
-    updatedBoard.groups.splice(groupIdx + 1, 0, duplicatedGroup)
-
-    const activity = createActivity(`Duplicated group ${groupToDuplicate.title}`, board._id, groupId)
-    updatedBoard.activities.unshift(activity)
-
-    return await storageService.put(STORAGE_KEY, updatedBoard)
-}
-
-function getGroupById(board, groupId) {
-    // const newBoard = structuredClone(board)
-    return board.groups.find(group => group.id === groupId)
-}
-
-//Task functions
-async function getTaskById(boardId, groupId, taskId) {
-    const board = await getBoardById(boardId)
-    const groupIdx = board.groups.findIndex(group => group.id === groupId)
-    const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-    return board.groups[groupIdx].tasks[taskIdx]
-}
-
-async function removeTask(boardId, groupId, taskId) {
-    const board = await getBoardById(boardId)
-    const groupIdx = board.groups.findIndex(group => group.id === groupId)
-    const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-    const task = board.groups[groupIdx].tasks[taskIdx]
-    board.groups[groupIdx].tasks.splice(taskIdx, 1)
-
-    const activity = createActivity(`Removed task ${task.title}`, boardId, groupId, taskId)
-    board.activities.unshift(activity)
-
-    return await storageService.put(STORAGE_KEY, board)
-}
-
-async function addTask(boardId, groupId, task) {
-
-    const board = await getBoardById(boardId)
-    const groupIdx = board.groups.findIndex(group => group.id === groupId)
-    board.groups[groupIdx].tasks.push(task)
-
-    const activity = createActivity(`Added task ${task.title}`, boardId, groupId, task.id)
-    board.activities.unshift(activity)
-
-    return await storageService.put(STORAGE_KEY, board)
-}
-
-async function duplicatedTask(board, groupId, taskId) {
-    const updatedBoard = { ...board }
-    const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
-    const taskIdx = updatedBoard.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-    const taskToDuplicate = updatedBoard.groups[groupIdx].tasks[taskIdx]
-    const duplicatedTask = JSON.parse(JSON.stringify(taskToDuplicate))
-    duplicatedTask.id = utilService.makeId()
-    duplicatedTask.title = duplicatedTask.title + ' copy'
-    updatedBoard.groups[groupIdx].tasks.splice(taskIdx + 1, 0, duplicatedTask)
-    return await storageService.put(STORAGE_KEY, updatedBoard)
-}
 
 //Label functions
 async function getEmptyLabel() {
@@ -591,13 +520,16 @@ function _createBoards() {
                                 {
                                     id: "c101",
                                     title: "Replace logo",
-                                    comments: []
-
+                                    comments: [],
+                                    priority: "Medium",
+                                    status: "Done",
                                 },
                                 {
                                     id: "c102",
                                     title: "Add Samples",
-                                    comments: []
+                                    comments: [],
+                                    priority: "Low",
+                                    status: "Progress",
                                 }
                             ],
                             style: "grass_green"
@@ -610,13 +542,15 @@ function _createBoards() {
                                     id: "c103",
                                     title: "Do that",
                                     comments: [],
-                                    archivedAt: 1589983468418
+                                    archivedAt: 1589983468418,
+                                    priority: "High",
+                                    status: "Stuck",
                                 },
                                 {
                                     id: "c104",
                                     title: "Help me",
                                     status: "Progress",
-                                    priority: "",
+                                    priority: "Critical",
                                     description: "description",
                                     comments: [
                                         {
@@ -645,6 +579,50 @@ function _createBoards() {
                                     ],
                                     memberIds: ["u101"],
                                     labelIds: ["l101", "l102"],
+                                    dueDate: 16156215211,
+                                    byMember: {
+                                        _id: "u101",
+                                        username: "Gal",
+                                        fullname: "Gal Ben Natan",
+                                        imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                                    },
+                                    style: {
+                                        backgroundColor: "done-green"
+                                    }
+                                },
+                                {
+                                    id: "c105",
+                                    title: "Change that",
+                                    status: "Done",
+                                    priority: "",
+                                    description: "description",
+                                    comments: [
+                                        {
+                                            id: "ZdPnm",
+                                            txt: "also @yaronb please CR this",
+                                            createdAt: 1590999817436,
+                                            byMember: {
+                                                _id: "u101",
+                                                fullname: "Gal Ben Natan",
+                                                imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                                            }
+                                        }
+                                    ],
+                                    checklists: [
+                                        {
+                                            id: "YEhmF",
+                                            title: "Checklist",
+                                            todos: [
+                                                {
+                                                    id: "212jX",
+                                                    title: "To Do 1",
+                                                    isDone: false
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    memberIds: ["u101"],
+                                    labelIds: ["l103", "l101"],
                                     dueDate: 16156215211,
                                     byMember: {
                                         _id: "u101",
