@@ -1,5 +1,5 @@
 
-export function Priority({ info }) {
+export function TaskPriority({ info }) {
 
     return <div className="task-priority">
         {info ? info : 'Unset'}

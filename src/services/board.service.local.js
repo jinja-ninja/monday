@@ -11,16 +11,13 @@ export const boardService = {
     save,
     remove,
     // getEmptyBoard,
-    _createBoards,
     getNewBoard,
     duplicateBoard,
     addNewGroup,
     removeGroup,
-    getEmptyGroup,
     duplicatedGroup,
     getGroupByTask: getGroupById,
     getTaskById,
-    getEmptyTask,
     removeTask,
     addTask,
     duplicatedTask,
@@ -28,6 +25,15 @@ export const boardService = {
     deleteComment,
     createActivity,
     removeBatchTasks,
+    getLabels,
+    getLabelById,
+    addLabel,
+    removeLabel,
+    updateLabel,
+    getEmptyGroup,
+    getEmptyTask,
+    getEmptyLabel,
+    _createBoards,
 }
 
 _createBoards()
@@ -161,7 +167,7 @@ function getNewBoard() {
                         id: utilService.makeId(),
                         title: "Type your task here",
                         status: "Not started",
-                        priority: "unset",
+                        priority: "",
                         description: "description",
                         comments: [],
                         checklists: [
@@ -299,7 +305,8 @@ async function removeBatchTasks(boardId, selectedTasks, actions = []) {
     const taskIds = selectedTasks.map(task => task.taskId);
     try {
         const board = await getBoardById(boardId)
-        board.groups = board.groups.map(group => ({...group,tasks: group.tasks.filter(t => {
+        board.groups = board.groups.map(group => ({
+            ...group, tasks: group.tasks.filter(t => {
                 const keepTask = !taskIds.includes(t.id)
                 // if (!keepTask) {
                 // 	const activity = getEmptyActivity(board, t.id, actions.splice(0, 1)[0]) // splice first item, and send it to getEmptyActivity
@@ -366,7 +373,6 @@ function deleteComment(commentId, currTask) {
 }
 
 //Group functions
-
 function getEmptyGroup() {
     return {
         id: utilService.makeGroupId(),
@@ -376,6 +382,7 @@ function getEmptyGroup() {
         archivedAt: null,
     }
 }
+
 async function addNewGroup(board) {
 
     const newGroup = getEmptyGroup()
@@ -420,6 +427,114 @@ function getGroupById(board, groupId) {
     return board.groups.find(group => group.id === groupId)
 }
 
+//Task functions
+async function getTaskById(boardId, groupId, taskId) {
+    const board = await getBoardById(boardId)
+    const groupIdx = board.groups.findIndex(group => group.id === groupId)
+    const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+    return board.groups[groupIdx].tasks[taskIdx]
+}
+
+async function removeTask(boardId, groupId, taskId) {
+    const board = await getBoardById(boardId)
+    const groupIdx = board.groups.findIndex(group => group.id === groupId)
+    const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+    const task = board.groups[groupIdx].tasks[taskIdx]
+    board.groups[groupIdx].tasks.splice(taskIdx, 1)
+
+    const activity = createActivity(`Removed task ${task.title}`, boardId, groupId, taskId)
+    board.activities.unshift(activity)
+
+    return await storageService.put(STORAGE_KEY, board)
+}
+
+async function addTask(boardId, groupId, task) {
+
+    const board = await getBoardById(boardId)
+    const groupIdx = board.groups.findIndex(group => group.id === groupId)
+    board.groups[groupIdx].tasks.push(task)
+
+    const activity = createActivity(`Added task ${task.title}`, boardId, groupId, task.id)
+    board.activities.unshift(activity)
+
+    return await storageService.put(STORAGE_KEY, board)
+}
+
+async function duplicatedTask(board, groupId, taskId) {
+    const updatedBoard = { ...board }
+    const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
+    const taskIdx = updatedBoard.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+    const taskToDuplicate = updatedBoard.groups[groupIdx].tasks[taskIdx]
+    const duplicatedTask = JSON.parse(JSON.stringify(taskToDuplicate))
+    duplicatedTask.id = utilService.makeId()
+    duplicatedTask.title = duplicatedTask.title + ' copy'
+    updatedBoard.groups[groupIdx].tasks.splice(taskIdx + 1, 0, duplicatedTask)
+    return await storageService.put(STORAGE_KEY, updatedBoard)
+}
+
+//Label functions
+async function getEmptyLabel() {
+    return { id: utilService.makeId(), title: '', color: '' }
+}
+
+async function getLabels(boardId) {
+    const board = await getBoardById(boardId)
+    return board.labels
+}
+
+async function getLabelById(boardId, labelId) {
+    const board = await getBoardById(boardId)
+    const label = board.labels.find(label => label.id === labelId)
+    return label
+}
+
+async function addLabel(boardId, label) {
+    const board = await getBoardById(boardId)
+    board.labels.push(label)
+    return await storageService.put(STORAGE_KEY, board)
+}
+
+async function removeLabel(boardId, labelId) {
+    const board = await getBoardById(boardId)
+    const labelIdx = board.labels.findIndex(label => label.id === labelId)
+    board.labels.splice(labelIdx, 1)
+    return await storageService.put(STORAGE_KEY, board)
+}
+
+async function updateLabel(boardId, labelId, label) {
+    const board = await getBoardById(boardId)
+    const labelIdx = board.labels.findIndex(label => label.id === labelId)
+    board.labels[labelIdx] = label
+    return await storageService.put(STORAGE_KEY, board)
+}
+
+//Comment functions
+function createNewComment(newCommentText) {
+    return {
+        id: utilService.makeId(),
+        txt: newCommentText,
+        createdAt: Date.now(),
+        byMember: {
+            _id: "u101",
+            fullname: "Gal Ben Natan",
+            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+        }
+    }
+
+}
+
+function deleteComment(commentId, currTask) {
+    const commentIdx = currTask.comments.findIndex(comment => commentId === comment.id)
+    if (commentIdx !== -1) {
+        const commentsAfterDelete = currTask.comments.filter(comment => commentId !== comment.id)
+        return commentsAfterDelete
+    } else {
+        console.log('cant find comment')
+        throw new Error('comment wasnt found,couldnt delete it')
+    }
+
+}
+
 function _createBoards() {
     let boards = utilService.loadFromStorage(STORAGE_KEY)
     if (!boards || !boards.length) {
@@ -440,14 +555,24 @@ function _createBoards() {
                     },
                     labels: [
                         {
+                            id: "l100",
+                            title: "",
+                            color: "explosive"
+                        },
+                        {
                             id: "l101",
                             title: "Done",
-                            color: "#61bd4f"
+                            color: "done-green"
                         },
                         {
                             id: "l102",
                             title: "Progress",
-                            color: "#61bd33"
+                            color: "working_orange"
+                        },
+                        {
+                            id: "l103",
+                            title: "Stuck",
+                            color: "stuck-red"
                         }
                     ],
                     members: [
@@ -475,7 +600,7 @@ function _createBoards() {
                                     comments: []
                                 }
                             ],
-                            style: {}
+                            style: "grass_green"
                         },
                         {
                             id: "g102",
@@ -490,8 +615,8 @@ function _createBoards() {
                                 {
                                     id: "c104",
                                     title: "Help me",
-                                    status: "in-progress",
-                                    priority: "unset",
+                                    status: "Progress",
+                                    priority: "",
                                     description: "description",
                                     comments: [
                                         {
@@ -528,11 +653,11 @@ function _createBoards() {
                                         imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
                                     },
                                     style: {
-                                        backgroundColor: "#26de81"
+                                        backgroundColor: "done-green"
                                     }
                                 }
                             ],
-                            style: {}
+                            style: "peach"
                         }
                     ],
                     activities: [
@@ -555,6 +680,35 @@ function _createBoards() {
                                 comments: []
                             }
                         }
+                    ],
+                    priorities: [
+
+                        {
+                            id: "p100",
+                            title: "Critical",
+                            color: "blackish"
+                        },
+                        {
+                            id: "p101",
+                            title: "High",
+                            color: "dark_indigo"
+                        },
+                        {
+                            id: "p102",
+                            title: "Medium",
+                            color: "indigo"
+                        },
+                        {
+                            id: "p103",
+                            title: "Low",
+                            color: "bright-blue"
+                        },
+                        {
+                            id: "p105",
+                            title: "",
+                            color: "explosive"
+                        }
+
                     ],
                     cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
                 },
@@ -912,7 +1066,7 @@ function _createBoards() {
                                     id: "c120",
                                     title: "Create API Endpoints",
                                     status: "completed",
-                                    priority: "unset",
+                                    priority: "high",
                                     description: "Endpoints for CRUD operations",
                                     comments: [
                                         {

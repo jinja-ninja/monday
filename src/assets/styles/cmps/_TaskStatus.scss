@@ -18,19 +18,23 @@
     gap: 8px;
 
     .label {
-        &>* {
-            width: 150px;
-            height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 150px;
+        height: 32px;
+        color: var(--text-color-on-primary);
+        border-radius: var(--border-radius-small);
+        cursor: pointer;
 
-            &:last-of-type {
-                margin-bottom: 8px;
-            }
+        &:last-of-type {
+            margin-bottom: 8px;
         }
     }
 
     .line-break {
         height: .5px;
-        width: 120%;
+        width: 110%;
         background-color: var(--secondary-text-color)
     }
 

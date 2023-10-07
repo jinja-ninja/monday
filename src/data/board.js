@@ -255,6 +255,35 @@ const cmp3 = {
 }
 
 
+//Tal's proposal return (
+//     <section className="group-list">
+//         {/* Render group labels by labels array */}
+//         <section className="labels-grid">
+//             {labels.map((label, index) => (
+//                 <div key={index}>{label}</div>
+//             ))}
+//         </section>
+
+//         {/* Render tasks by cmp order */}
+//         {group.tasks.map((task) => (
+//             <section className="group grid" key={task.id}>
+//                 {cmpOrder.map((cmp, idx) => (
+//                     <section className="grid-item" key={idx}>
+//                         <DynamicCmp cmpType={cmp} info={task[cmp]} />
+//                     </section>
+//                 ))}
+//             </section>
+//         ))}
+
+// {/* Render progress by progress array */}
+// <section className="progress-grid">
+//     {progress.map((item, idx) => (
+//         <div key={idx}>{item}</div>
+//     ))}
+// </section>
+//     </section>
+// )
+// }
 
 
 

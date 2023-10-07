@@ -3,7 +3,7 @@ import { GroupPreview } from "./GroupPreview"
 import { Add } from "monday-ui-react-core/icons"
 import { addGroup } from "../store/actions/board.action"
 
-export function GroupList({ groups, labels, cmpsOrder, progress, boardId }) {
+export function GroupList({ groups, labels, cmpsOrder, progress, boardId, priorities }) {
 
     return <div className="group-list-container">
         <ul className="group-list">
@@ -15,6 +15,7 @@ export function GroupList({ groups, labels, cmpsOrder, progress, boardId }) {
                         labels={labels}
                         cmpsOrder={cmpsOrder}
                         progress={progress}
+                        priorities={priorities}
                         key={`group-preview-${group.id}`} />
                 </li>
             })}
