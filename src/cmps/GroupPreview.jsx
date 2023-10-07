@@ -1,12 +1,12 @@
 import { useCallback, useRef, useState } from "react"
-
 import { ColorPicker, EditableHeading, Icon, Menu, MenuButton, MenuItem, Modal, ModalContent, ModalFooterButtons, ModalHeader, Tooltip } from "monday-ui-react-core"
 import { Delete, DropdownChevronDown, DropdownChevronRight, Duplicate, Edit, HighlightColorBucket } from "monday-ui-react-core/icons"
-import { TaskList } from "./TaskList"
+
 import { duplicatedGroup, removeGroup, updateBoard } from "../store/actions/board.action"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
+import { TaskList } from "./TaskList"
 
-export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRenameGroup, initiateEdit }) {
+export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, onRenameGroup }) {
 
     const [showGroup, setShowGroup] = useState(true)
     const [editableText, setEditableText] = useState(group.title)
@@ -16,7 +16,7 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
     const openModalButtonRef = useRef()
     const closeModal = useCallback(() => {
         setShow(false);
-    }, []);
+    }, [])
 
     const handleEditClick = (groupId) => {
         const groupElement = document.querySelector(`.group-list-item[data-group-id="${groupId}"]`)
@@ -32,10 +32,10 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
         try {
             await removeGroup(boardId, groupId)
             showSuccessMsg(' Group Title group was successfully deleted')
-            // showUserMsg('success', 'Group removed')
+            showUserMsg('success', 'Group removed')
         } catch (err) {
             showErrorMsg(`X Cannot remove group from board (id: ${groupId})`)
-            // showUserMsg('error', 'Cannot remove group')
+            showUserMsg('error', 'Cannot remove group')
         }
     }
 
@@ -51,9 +51,9 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
     function onRenameGroup(groupId, newText) {
         try {
             updateBoard('group', boardId, groupId, null, { key: 'title', value: newText })
-            // showSuccessMsg('Group name removed')
+            showSuccessMsg('Group name removed')
         } catch (err) {
-            // showErrorMsg('Cannot change name')
+            showErrorMsg('Cannot change name')
         }
     }
 
@@ -120,7 +120,11 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
                     onChange={(newText) => setEditableText(newText)}
                 />
             </Tooltip>
-            <span className="num-of-tasks">{numOfTasks} {numOfTasks === 1 ? 'Item' : 'Items'}</span>
+
+            <span className="num-of-tasks">
+                {numOfTasks} {numOfTasks === 1 ? 'Item' : 'Items'}
+            </span>
+
         </div>
 
         {
@@ -131,53 +135,32 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
             />
         }
 
-        {showGroup && <TaskList group={group} cmpsOrder={cmpsOrder} />}
+        {showGroup && <TaskList group={group} cmpsOrder={cmpsOrder} labels={labels} priorities={priorities} />}
 
         <>
-
-            <Modal id="story-book-modal" title="Modal title" triggerElement={openModalButtonRef.current} show={show} onClose={closeModal}
+            <Modal
+                id="story-book-modal"
+                title="Modal title"
+                triggerElement={openModalButtonRef.current}
+                show={show}
+                onClose={closeModal}
                 width={Modal.width.DEFAULT} contentSpacing>
+
                 <ModalHeader title={"Delete"} iconSize={32} />
                 <ModalContent>Delete this Group? </ModalContent>
-                <ModalFooterButtons primaryButtonText="Delete" secondaryButtonText="Cancel" onPrimaryButtonClick={() => {
-                    onRemoveGroup(boardId, group.id)
-                    closeModal()
-                }
-                } onSecondaryButtonClick={closeModal} />
+                <ModalFooterButtons
+                    primaryButtonText="Delete"
+                    secondaryButtonText="Cancel"
+                    onPrimaryButtonClick={() => {
+                        onRemoveGroup(boardId, group.id)
+                        closeModal()
+                    }}
+                    onSecondaryButtonClick={closeModal} />
+
             </Modal>
         </>
 
     </div>
 }
-
-// return (
-//     <section className="group-list">
-//         {/* Render group labels by labels array */}
-//         <section className="labels-grid">
-//             {labels.map((label, index) => (
-//                 <div key={index}>{label}</div>
-//             ))}
-//         </section>
-
-//         {/* Render tasks by cmp order */}
-//         {group.tasks.map((task) => (
-//             <section className="group grid" key={task.id}>
-//                 {cmpOrder.map((cmp, idx) => (
-//                     <section className="grid-item" key={idx}>
-//                         <DynamicCmp cmpType={cmp} info={task[cmp]} />
-//                     </section>
-//                 ))}
-//             </section>
-//         ))}
-
-// {/* Render progress by progress array */}
-// <section className="progress-grid">
-//     {progress.map((item, idx) => (
-//         <div key={idx}>{item}</div>
-//     ))}
-// </section>
-//     </section>
-// )
-// }
 
 

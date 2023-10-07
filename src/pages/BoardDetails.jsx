@@ -15,9 +15,6 @@ export function BoardDetails() {
     const params = useParams()
     const currBoard = useSelector(state => state.boardModule.board)
 
-    // useEffect(() => {
-    // }, [currBoard])
-
     useEffect(() => {
         loadBoard()
     }, [params.boardId])
@@ -25,7 +22,6 @@ export function BoardDetails() {
     async function loadBoard() {
         await getBoardById(params.boardId)
     }
-
 
     const cmpsOrder = [
         "side",
@@ -38,10 +34,7 @@ export function BoardDetails() {
 
     const progress = [null, null, "status", null, "priority", null]
 
-    // if (!currBoard) return (<Loader className="loader" Loader color={Loader.colors.PRIMARY} size={100} />)
-    if (!currBoard) return (
-        <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
-    )
+    if (!currBoard) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
     return <main className="board-details-layout">
         <BoardMainHeader />
         <SideBar />
@@ -83,6 +76,7 @@ export function BoardDetails() {
                 labels={currBoard.labels}
                 cmpsOrder={cmpsOrder}
                 progress={progress}
+                priorities={currBoard.priorities}
             />
 
             <Outlet />

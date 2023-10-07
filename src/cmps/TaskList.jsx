@@ -1,20 +1,22 @@
-import { Button, Checkbox, DialogContentContainer, EditableHeading, Loader, Modal, ModalContent, ModalFooterButtons, ModalHeader, Search, SearchComponent } from "monday-ui-react-core"
-import { Date } from "./dynamicCmps/Date"
-import { Member } from "./dynamicCmps/Member"
-import { Priority } from "./dynamicCmps/Priority"
-import { Side } from "./dynamicCmps/Side"
-import { Status } from "./dynamicCmps/Status"
-import { TaskTitle } from "./dynamicCmps/TaskTitle"
-import { boardService } from "../services/board.service.local"
 import { useSelector } from "react-redux"
-import { addTask, removeTask, updateTask, duplicatedTask } from "../store/actions/board.action"
 import { useCallback, useRef, useState } from "react"
 import { MenuButton, Menu, MenuItem } from "monday-ui-react-core"
-import { Delete, Edit, Duplicate, Upgrade } from "monday-ui-react-core/icons"
+
+import { Checkbox, EditableHeading, Modal, ModalContent, ModalFooterButtons, ModalHeader } from "monday-ui-react-core"
+import { Date } from "./dynamicCmps/Date"
+import { Member } from "./dynamicCmps/Member"
+import { TaskPriority } from "./dynamicCmps/TaskPriority"
+import { Side } from "./dynamicCmps/Side"
+import { TaskStatus } from "./dynamicCmps/TaskStatus"
+import { Delete, Edit, Duplicate } from "monday-ui-react-core/icons"
+
+import { addTask, removeTask, updateTask, duplicatedTask } from "../store/actions/board.action"
+import { boardService } from "../services/board.service.local"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 
+import { TaskTitle } from "./dynamicCmps/TaskTitle"
 
-export function TaskList({ group, cmpsOrder }) {
+export function TaskList({ group, cmpsOrder, labels, priorities }) {
 
     const currBoard = useSelector(state => state.boardModule.board)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -24,10 +26,8 @@ export function TaskList({ group, cmpsOrder }) {
     const [loading, setLoading] = useState(false)
     const openModalButtonRef = useRef()
     const closeModal = useCallback(() => {
-        setShow(false);
-    }, []);
-
-
+        setShow(false)
+    }, [])
 
     const boardId = currBoard._id
     const groupId = group.id
@@ -48,7 +48,6 @@ export function TaskList({ group, cmpsOrder }) {
     async function onAddTask(task) {
         try {
             const newTask = boardService.getEmptyTask()
-            console.log('newTask:', newTask)
             newTask.title = task
             await addTask(boardId, groupId, newTask)
         } catch (err) {
@@ -107,13 +106,12 @@ export function TaskList({ group, cmpsOrder }) {
         )
     }
 
-    function renderDynamicCmp(cmp, task) {
-        let info
+    function renderDynamicCmp(cmp, task, labels, priorities) {
         switch (cmp) {
             case "side":
                 return <Side info={group['style']} />
-            case "priority":
-                return <Priority info={task[cmp]} />
+            // case "priority":
+            //     return <TaskPriority info={task[cmp]} labels={labels} />
             case "title":
                 return <TaskTitle info={task[cmp]}
                     boardId={boardId}
@@ -121,7 +119,17 @@ export function TaskList({ group, cmpsOrder }) {
                     taskId={task.id}
                     onUpdateTask={onUpdateTask} />
             case "status":
-                return <Status info={task[cmp]} />
+                return <TaskStatus
+                    type={'status'}
+                    task={task}
+                    labels={labels}
+                    onUpdateTask={onUpdateTask} />
+            case "priority":
+                return <TaskStatus
+                    type={'priority'}
+                    task={task}
+                    labels={priorities}
+                    onUpdateTask={onUpdateTask} />
             case "memberIds":
                 return <Member info={task[cmp]} />
             case "dueDate":
@@ -156,11 +164,10 @@ export function TaskList({ group, cmpsOrder }) {
 
         {group.tasks.map(task => {
             return (<section className="task-list group-grid" key={task.id}>
-                {console.log('task:', task)}
                 {renderMenuButton(task.id)}
                 {cmpsOrder.map((cmp, idx) =>
                     <section className="task-item" key={idx}>
-                        {renderDynamicCmp(cmp, task)}
+                        {renderDynamicCmp(cmp, task, labels, priorities)}
                     </section>
                 )}
             </section>
@@ -194,14 +201,11 @@ export function TaskList({ group, cmpsOrder }) {
         </section>
 
         <section className="task-list-summary-wrapper group-grid">
-
             <div className="task-list-summary-emptycell-left"></div>
             <div className="task-list-summary">StatusSum</div>
-
         </section>
 
         <>
-
             <Modal id="story-book-modal" title="Modal title" triggerElement={openModalButtonRef.current} show={show} onClose={closeModal} // Width prop effects on the modal width
                 width={Modal.width.DEFAULT} contentSpacing>
                 <ModalHeader title={"Delete"} iconSize={32} />
@@ -216,12 +220,4 @@ export function TaskList({ group, cmpsOrder }) {
 
     </div>
 
-
-    {/* <Flex direction={Flex.directions.ROW} gap={Flex.gaps.SMALL}>
-      <StoryDescription description="Xs" vertical align={Flex.align.START}>
-        <div className="monday-storybook-loader_size-variants_container">
-          <Loader size={Loader.sizes.XS} />
-        </div>
-      </StoryDescription>
-</Flex> */}
 }

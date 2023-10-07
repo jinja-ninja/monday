@@ -40,6 +40,7 @@ export async function addBoard() {
         throw err
     }
 }
+
 export async function toggleBoardFavorite(boardId) {
     try {
         let board = await boardService.getBoardById(boardId)
@@ -175,3 +176,36 @@ export async function duplicatedTask(boardId, groupId, taskId) {
     }
 }
 
+// Label Actions
+export async function addLabel(boardId, label) {
+    try {
+        const board = await boardService.addLabel(boardId, label)
+        store.dispatch({ type: SET_BOARD, board })
+        store.dispatch({ type: UPDATE_BOARDS, board })
+    } catch (err) {
+        console.log('BoardActions: err in addLabel', err)
+        throw err
+    }
+}
+
+export async function removeLabel(boardId, labelId) {
+    try {
+        const board = await boardService.removeLabel(boardId, labelId)
+        store.dispatch({ type: SET_BOARD, board })
+        store.dispatch({ type: UPDATE_BOARDS, board })
+    } catch (err) {
+        console.log('BoardActions: err in removeLabel', err)
+        throw err
+    }
+}
+
+export async function updateLabel(boardId, labelId, label) {
+    try {
+        const board = await boardService.updateLabel(boardId, labelId, label)
+        store.dispatch({ type: SET_BOARD, board })
+        store.dispatch({ type: UPDATE_BOARDS, board })
+    } catch (err) {
+        console.log('BoardActions: err in updateLabel', err)
+        throw err
+    }
+}
