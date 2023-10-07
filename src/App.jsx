@@ -7,7 +7,6 @@ import { boardService } from './services/board.service.local'
 
 
 import { HomePage } from './pages/HomePage'
-// import { BoardIndex } from './pages/BoardIndex'
 import { LoginSignUp } from './pages/LoginSingup'
 import { BoardDetails } from './pages/BoardDetails'
 import { TaskDetails } from './cmps/TaskDetails'
@@ -15,6 +14,8 @@ import { PageNotFound } from './pages/PageNotFound'
 import { BoardIndex } from './pages/BoardIndex'
 import { store } from './store/store'
 import { TestCmp } from './pages/TestCmp'
+import { SelectedModal } from './cmps/selectedModal'
+
 
 
 export function App() {
@@ -31,6 +32,7 @@ export function App() {
             {/* <Route element={<ActivityLog />} path='activityLog' /> */}
           </Route>
           <Route element={<BoardIndex />} path="/board" />
+          <Route element={<SelectedModal />} path="/selectedModal" />
 
           <Route path="/auth">
             <Route path="login" element={<LoginSignUp />} />

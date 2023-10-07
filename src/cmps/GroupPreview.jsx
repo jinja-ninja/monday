@@ -31,29 +31,27 @@ export function GroupPreview({ group, label, cmpsOrder, progress, boardId, onRen
     async function onRemoveGroup(boardId, groupId) {
         try {
             await removeGroup(boardId, groupId)
-            showSuccessMsg(' Group Title group was successfully deleted')
-            // showUserMsg('success', 'Group removed')
+            showSuccessMsg(`Group ${groupId} was successfully deleted`)
         } catch (err) {
             showErrorMsg(`X Cannot remove group from board (id: ${groupId})`)
-            // showUserMsg('error', 'Cannot remove group')
         }
     }
 
     async function onDuplicateGroup(boardId, groupId) {
         try {
             await duplicatedGroup(boardId, groupId)
-            showSuccessMsg('Group has been duplicated successfully')
+            showSuccessMsg(`Group has been duplicated successfully ${groupId}`)
         } catch (err) {
-            showErrorMsg(`Cannot duplicate group (${groupId})`)
+            showErrorMsg(`Cannot duplicate group ${groupId}`)
         }
     }
 
     function onRenameGroup(groupId, newText) {
         try {
             updateBoard('group', boardId, groupId, null, { key: 'title', value: newText })
-            // showSuccessMsg('Group name removed')
+            showSuccessMsg(`Group name has been changed ${groupId}`)
         } catch (err) {
-            // showErrorMsg('Cannot change name')
+            showErrorMsg(`Cannot change group name ${groupId}`)
         }
     }
 

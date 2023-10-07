@@ -27,10 +27,10 @@ export function SideBar() {
     async function onDeleteBoard(boardId) {
         try {
             await removeBoard(boardId)
-            showSuccessMsg('We successfully deleted the board')
+            showSuccessMsg(`We successfully deleted the board ${boardId}`)
         }
         catch (err) {
-            showErrorMsg('Cannot remove board from workspace (id: ${boardId})')
+            showErrorMsg(`Cannot remove board from workspace (id: ${boardId})`)
         }
     }
 
