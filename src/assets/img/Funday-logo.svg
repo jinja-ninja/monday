@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="6000" height="1187" viewBox="0 0 6000 1187">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ff3d57;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: #ffcb00;
+      }
+
+      .cls-3 {
+        fill: #00d647;
+      }
+
+      .cls-4 {
+        font-size: 1041.667px;
+        font-weight: 500;
+      }
+
+      .cls-4, .cls-5 {
+        fill: #0e1b2f;
+        text-anchor: middle;
+        font-family: Poppins;
+      }
+
+      .cls-5 {
+        font-size: 416.667px;
+        font-weight: 200;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M316.613,302.641L803.966,192.55a81.619,81.619,0,0,1,97.555,61.663l0.1,0.457a81.576,81.576,0,0,1-61.543,97.6L352.728,462.363A81.62,81.62,0,0,1,255.173,400.7l-0.1-.457A81.576,81.576,0,0,1,316.613,302.641Z"/>
+  <path id="Rectangle_1_copy" data-name="Rectangle 1 copy" class="cls-2" d="M316.594,494.231L803.946,384.14A81.619,81.619,0,0,1,901.5,445.8l0.1,0.458a81.577,81.577,0,0,1-61.543,97.6L352.709,653.953a81.619,81.619,0,0,1-97.555-61.663l-0.1-.457A81.576,81.576,0,0,1,316.594,494.231Z"/>
+  <path class="cls-3" d="M335.274,677.565A82.406,82.406,0,1,1,253,759.971,82.339,82.339,0,0,1,335.274,677.565Z"/>
+  <text id="Funday" class="cls-4" transform="translate(2421.12 788.737) scale(0.779 0.779)"><tspan x="0">Funday</tspan></text>
+  <text id="_.com" data-name=".com" class="cls-5" transform="translate(4744.8 754.29) scale(1.857 1.858)"><tspan x="0">.com</tspan></text>
+</svg>
