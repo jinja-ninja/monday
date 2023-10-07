@@ -32,7 +32,6 @@ export function App() {
             {/* <Route element={<ActivityLog />} path='activityLog' /> */}
           </Route>
           <Route element={<BoardIndex />} path="/board" />
-          <Route element={<SelectedModal />} path="/selectedModal" />
 
           <Route path="/auth">
             <Route path="login" element={<LoginSignUp />} />
