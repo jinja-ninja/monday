@@ -220,7 +220,37 @@
         line-height: 22px;
         font-size: em(14px);
     }
-    button{
+
+    button {
         text-transform: none;
+    }
+}
+
+.task-activity-log-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // align-items: center;
+    text-align: center;
+    padding: rem(20px);
+
+    .task-activity-log-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        div {
+            display: flex;
+            align-items: center;
+
+            button {
+                text-transform: none;
+            }
+
+            .person-btn {
+                margin-inline-start: .5rem;
+                width: 85px;
+            }
+        }
     }
 }

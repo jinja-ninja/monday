@@ -1,0 +1,119 @@
+.selected-modal-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    bottom: 45px;
+    left: 300px;
+    z-index: 3000;
+    width: 800px;
+    height: 63px;
+    background-color: var(--secondary-background-color);
+    border-radius: 5px;
+    box-shadow: var(--box-shadow-large);
+
+    .number-dots-container {
+        display: flex;
+        height: 100%;
+    }
+
+    .selected-counter-container {
+        width: 63px;
+        font-size: rem(30px);
+        color: var(--primary-background-color);
+        background-color: var(--primary-color);
+        border-radius: 5px 0px 0px 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        cursor: default;
+    }
+
+    .items-selected-container {
+        width: 210px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        cursor: default;
+
+        .dots-container {
+            color: #333;
+            padding-left: 20px;
+            display: flex;
+            align-items: center;
+            height: 20px;
+
+            .dot {
+                width: 7px;
+                height: 7px;
+                border-radius: 20px;
+                margin-right: 4px;
+                background-color: rgb(69, 69, 255);
+            }
+        }
+    }
+
+    p {
+        color: var(--primary-text-color);
+        font-size: rem(24px);
+        padding-left: 20px;
+        padding-top: 6px;
+        height: 36px;
+        font-weight: 100;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+
+    .btns-container {
+        display: flex;
+        height: 100%;
+
+        .delete-btn-container,
+        .duplicate-btn-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            margin-right: 20px;
+
+            .delete-btn,
+            .duplicate-btn {
+                width: 24px;
+                height: 24px;
+
+                &:hover {
+                    color: var(--color-basic_blue);
+                }
+            }
+
+            span {
+                font-size: var(--font-size-10);
+                color: var(--primary-text-color);
+            }
+        }
+
+        .close-btn-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 2px solid var(--ui-border-color);
+            width: 63px;
+
+            .close-btn {
+                color: black;
+                width: 18px;
+                height: 18px;
+
+                &:hover {
+                    color: var(--color-basic_blue);
+                }
+            }
+
+        }
+    }
+
+}

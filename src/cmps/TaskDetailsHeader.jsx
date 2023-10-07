@@ -1,6 +1,6 @@
 import { Avatar, EditableHeading, IconButton, Tab, TabList } from "monday-ui-react-core";
 import { Close, Home, Menu } from "monday-ui-react-core/icons"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateTask } from "../store/actions/board.action";
 
@@ -27,7 +27,7 @@ export function TaskDetailsHeader({ boardId, groupId, taskId, taskTitle, setCurr
             <div className="editible-container">
                 <EditableHeading
                     type="h4"
-                    value={taskTitleValue}
+                    value={taskTitle}
                     onChange={(newText) => setTaskTitleValue(newText)}
                     onBlur={() => onRenameTask()}
 

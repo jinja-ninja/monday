@@ -3,6 +3,10 @@
   padding-block-end: var(--spacing-xl);
   margin-block-start: var(--spacing-medium);
 
+  button {
+    text-transform: none;
+  }
+
   .collapsible-header-wrapper {
     display: flex;
     align-items: center;

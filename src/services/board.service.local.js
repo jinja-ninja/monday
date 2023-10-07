@@ -18,6 +18,7 @@ export const boardService = {
     removeGroup,
     getEmptyGroup,
     duplicatedGroup,
+    getGroupByTask: getGroupById,
     getTaskById,
     getEmptyTask,
     removeTask,
@@ -26,6 +27,7 @@ export const boardService = {
     createNewComment,
     deleteComment,
     createActivity,
+    removeBatchTasks,
 }
 
 _createBoards()
@@ -281,16 +283,37 @@ async function getTaskById(boardId, groupId, taskId) {
 
 async function removeTask(boardId, groupId, taskId) {
     const board = await getBoardById(boardId)
+    console.log('board:', board)
     const groupIdx = board.groups.findIndex(group => group.id === groupId)
     const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
     const task = board.groups[groupIdx].tasks[taskIdx]
     board.groups[groupIdx].tasks.splice(taskIdx, 1)
-
+    console.log('removing task:', board)
     const activity = createActivity(`Removed task ${task.title}`, boardId, groupId, taskId)
     board.activities.unshift(activity)
 
     return await storageService.put(STORAGE_KEY, board)
 }
+
+async function removeBatchTasks(boardId, selectedTasks, actions = []) {
+    const taskIds = selectedTasks.map(task => task.taskId);
+    try {
+        const board = await getBoardById(boardId)
+        board.groups = board.groups.map(group => ({...group,tasks: group.tasks.filter(t => {
+                const keepTask = !taskIds.includes(t.id)
+                // if (!keepTask) {
+                // 	const activity = getEmptyActivity(board, t.id, actions.splice(0, 1)[0]) // splice first item, and send it to getEmptyActivity
+                // 	board.activities.unshift(activity)
+                // }
+                return keepTask
+            }),
+        }))
+        return await storageService.put(STORAGE_KEY, board)
+    } catch (err) {
+        throw err
+    }
+}
+
 async function addTask(boardId, groupId, task) {
 
     const board = await getBoardById(boardId)
@@ -349,7 +372,7 @@ function getEmptyGroup() {
         id: utilService.makeGroupId(),
         title: 'New Group',
         tasks: [],
-        style: {},
+        style: "done-green",
         archivedAt: null,
     }
 }
@@ -392,6 +415,10 @@ async function duplicatedGroup(board, groupId) {
     return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
+function getGroupById(board, groupId) {
+    // const newBoard = structuredClone(board)
+    return board.groups.find(group => group.id === groupId)
+}
 
 function _createBoards() {
     let boards = utilService.loadFromStorage(STORAGE_KEY)

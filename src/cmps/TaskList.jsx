@@ -39,9 +39,9 @@ export function TaskList({ group, cmpsOrder }) {
     async function onRemoveTask(taskId) {
         try {
             await removeTask(boardId, groupId, taskId)
-            showSuccessMsg('Task removed')
+            showSuccessMsg(`Task removed ${taskId}`)
         } catch (err) {
-            showErrorMsg('Cannot remove task')
+            showErrorMsg(`Cannot remove task ${taskId}`)
         }
     }
 
@@ -59,9 +59,9 @@ export function TaskList({ group, cmpsOrder }) {
     async function onUpdateTask(taskId, data = {}) {
         try {
             await updateTask(boardId, groupId, taskId, data)
-            showSuccessMsg('Task removed')
+            showSuccessMsg(`Task updated ${taskId}`)
         } catch (err) {
-            showErrorMsg('Cannot remove task')
+            showErrorMsg(`Cannot remove task ${taskId}`)
         }
     }
 
@@ -69,14 +69,14 @@ export function TaskList({ group, cmpsOrder }) {
 
         try {
             await duplicatedTask(boardId, groupId, taskId)
-            showSuccessMsg('We successfully duplicated your task!')
+            showSuccessMsg(`We successfully duplicated your task! ${taskId}`)
         } catch (err) {
-            showErrorMsg('Cannot duplicate task')
+            showErrorMsg(`Cannot duplicate task ${taskId}`)
         }
     }
 
     function renderMenuButton(taskId) {
-        console.log('taskId:', taskId)
+        // console.log('taskId:', taskId)
         return (
             <MenuButton size={MenuButton.sizes.XS}
                 className={`task-menu-btn `}
@@ -111,7 +111,7 @@ export function TaskList({ group, cmpsOrder }) {
     function renderDynamicCmp(cmp, task) {
         switch (cmp) {
             case "side":
-                return <Side info={group['style']} />
+                return <Side info={group['style']} taskId={task.id} groupId={groupId} />
             case "priority":
                 return <Priority info={task[cmp]} />
             case "title":
@@ -156,7 +156,7 @@ export function TaskList({ group, cmpsOrder }) {
 
         {group.tasks.map(task => {
             return (<section className="task-list group-grid" key={task.id}>
-                {console.log('task:', task)}
+                {/* {console.log('task:', task)} */}
                 {renderMenuButton(task.id)}
                 {cmpsOrder.map((cmp, idx) =>
                     <section className="task-item" key={idx}>

@@ -1,7 +1,8 @@
+import { Dialog, DialogContentContainer } from "monday-ui-react-core";
 
 export function TestCmp() {
 
-    return <div className="outside-div">
-        <div className="inside-div"></div>
-    </div>
+    return (
+      <div>hey</div>
+    )
 }

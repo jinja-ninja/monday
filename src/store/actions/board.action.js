@@ -1,5 +1,5 @@
 import { store } from '../store'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, UPDATE_BOARDS, SET_BOARD } from '../reducers/board.reducer'
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, UPDATE_BOARDS, SET_BOARD, REMOVE_SELECTED_TASKS } from '../reducers/board.reducer'
 import { boardService } from '../../services/board.service.local'
 
 
@@ -175,3 +175,14 @@ export async function duplicatedTask(boardId, groupId, taskId) {
     }
 }
 
+
+export async function removeBatchTasks(boardId, selectedTasks, actions = []) {
+    try {
+        const board = await boardService.removeBatchTasks(boardId, selectedTasks, actions)
+        console.log('board:', board)
+        store.dispatch({ type: REMOVE_SELECTED_TASKS, selectedTasks })
+        store.dispatch({ type: SET_BOARD, board })
+    } catch (err) {
+        throw err
+    }
+}
