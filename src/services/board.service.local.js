@@ -58,7 +58,6 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
 
                 activity = createActivity(`Updated group ${board.groups[groupIdx].title}`, board._id, groupId)
                 board.activities.unshift(activity)
-
                 break
 
             case 'task':
