@@ -8,6 +8,7 @@ export const UPDATE_TASK = 'UPDATE_TASK'
 export const SET_BOARD = 'SET_BOARD'
 
 export const SET_SELECTED_TASKS = 'SET_SELECTED_TASKS'
+export const ADD_SELECTED_TASKS = 'ADD_SELECTED_TASKS'
 export const ADD_SELECTED_TASK = 'ADD_SELECTED_TASK'
 export const REMOVE_SELECTED_TASK = 'REMOVE_SELECTED_TASK'
 export const REMOVE_SELECTED_TASKS = 'REMOVE_SELECTED_TASKS'
@@ -68,10 +69,16 @@ export function boardReducer(state = initialState, action) {
             return { ...state, selectedTasks: action.selectedTasks }
         }
 
+        case ADD_SELECTED_TASKS: {
+            newSelectedTasks = [...state.selectedTasks, ...action.selectedTasks]
+            return { ...state, selectedTasks: newSelectedTasks }
+        }
+
         case ADD_SELECTED_TASK: {
             newSelectedTasks = [...state.selectedTasks, action.selectedTask]
             return { ...state, selectedTasks: newSelectedTasks }
         }
+
 
         case REMOVE_SELECTED_TASK: {
             const { taskId, groupId } = action.selectedTask

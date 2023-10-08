@@ -11,12 +11,15 @@ export function Side({ info, taskId, groupId }) {
 
     useEffect(() => {
         if (selectedTasks.length === 0) setIsChecked(false)
+        const isSelected = selectedTasks.some(task => task.taskId === taskId && task.groupId === groupId)
+        setIsChecked(isSelected)
     }, [selectedTasks])
 
     // width: 7px;
     // height: 16px;
     // border - radius: var(--border - radius - small) 0 0 var(--border - radius - small);
     // background - color: green;
+
 
     function selectTask(e) {
         const taskIds = { groupId, taskId }
@@ -33,8 +36,6 @@ export function Side({ info, taskId, groupId }) {
             }
         }
     }
-
-    // console.log('selectedTasks:', selectedTasks)
 
     return <div className={"task-side-wrapper"}>
 

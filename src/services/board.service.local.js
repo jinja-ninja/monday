@@ -25,6 +25,7 @@ export const boardService = {
     deleteComment,
     createActivity,
     removeBatchTasks,
+    duplicateBatchTasks,
     getLabels,
     getLabelById,
     addLabel,
@@ -341,6 +342,18 @@ async function getTaskById(boardId, groupId, taskId) {
     return board.groups[groupIdx].tasks[taskIdx]
 }
 
+async function addTask(boardId, groupId, task) {
+
+    const board = await getBoardById(boardId)
+    const groupIdx = board.groups.findIndex(group => group.id === groupId)
+    board.groups[groupIdx].tasks.push(task)
+
+    const activity = createActivity(`Added task ${task.title}`, boardId, groupId, task.id)
+    board.activities.unshift(activity)
+
+    return await storageService.put(STORAGE_KEY, board)
+}
+
 async function removeTask(boardId, groupId, taskId) {
     const board = await getBoardById(boardId)
     console.log('board:', board)
@@ -356,7 +369,7 @@ async function removeTask(boardId, groupId, taskId) {
 }
 
 async function removeBatchTasks(boardId, selectedTasks, actions = []) {
-    const taskIds = selectedTasks.map(task => task.taskId);
+    const taskIds = selectedTasks.map(task => task.taskId)
     try {
         const board = await getBoardById(boardId)
         board.groups = board.groups.map(group => ({
@@ -375,18 +388,6 @@ async function removeBatchTasks(boardId, selectedTasks, actions = []) {
     }
 }
 
-async function addTask(boardId, groupId, task) {
-
-    const board = await getBoardById(boardId)
-    const groupIdx = board.groups.findIndex(group => group.id === groupId)
-    board.groups[groupIdx].tasks.push(task)
-
-    const activity = createActivity(`Added task ${task.title}`, boardId, groupId, task.id)
-    board.activities.unshift(activity)
-
-    return await storageService.put(STORAGE_KEY, board)
-}
-
 async function duplicatedTask(board, groupId, taskId) {
     const updatedBoard = { ...board }
     const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
@@ -397,6 +398,32 @@ async function duplicatedTask(board, groupId, taskId) {
     duplicatedTask.title = duplicatedTask.title + ' copy'
     updatedBoard.groups[groupIdx].tasks.splice(taskIdx + 1, 0, duplicatedTask)
     return await storageService.put(STORAGE_KEY, updatedBoard)
+}
+
+async function duplicateBatchTasks(boardId, selectedTasks, actions = []) {
+    const taskIds = selectedTasks.map(task => task.taskId)
+    console.log('taskIds:', taskIds)
+    try {
+        const board = await getBoardById(boardId)
+        const updatedBoard = { ...board }
+
+        selectedTasks.forEach(({ groupId, taskId }) => {
+            const groupIdx = updatedBoard.groups.findIndex(group => group.id === groupId)
+            const taskIdx = updatedBoard.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+
+            if (groupIdx !== -1 && taskIdx !== -1) {
+                const taskToDuplicate = updatedBoard.groups[groupIdx].tasks[taskIdx]
+                const duplicatedTask = JSON.parse(JSON.stringify(taskToDuplicate))
+                duplicatedTask.id = utilService.makeId()
+                duplicatedTask.title = duplicatedTask.title + ' copy'
+                updatedBoard.groups[groupIdx].tasks.splice(taskIdx + 1, 0, duplicatedTask)
+            }
+        })
+
+        return await storageService.put(STORAGE_KEY, updatedBoard)
+    } catch (err) {
+        throw err
+    }
 }
 
 

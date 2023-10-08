@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Button, IconButton, Loader, MenuItem, SplitButton, SplitButtonMenu } from "monday-ui-react-core"
+import { Button, IconButton, Loader, MenuItem, SplitButton, SplitButtonMenu, Search as SearchInput } from "monday-ui-react-core"
 import { Add, Announcement, Check, Filter, Hide, Menu, PersonRound, Search, Sort } from "monday-ui-react-core/icons"
 import { BoardDetailsHeader } from "../cmps/BoardDetailsHeader"
 import { GroupList } from "../cmps/GroupList"
@@ -16,6 +16,7 @@ export function BoardDetails() {
     const params = useParams()
     const currBoard = useSelector(state => state.boardModule.board)
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
+    const [isSearch, setIsSearch] = useState(false)
 
     useEffect(() => {
         loadBoard()
@@ -23,6 +24,9 @@ export function BoardDetails() {
 
     async function loadBoard() {
         await getBoardById(params.boardId)
+    }
+    function toggleIsSearch() {
+        setIsSearch((prevIsSearch) => !prevIsSearch)
     }
 
     const cmpsOrder = [
@@ -33,6 +37,23 @@ export function BoardDetails() {
         "memberIds",
         "dueDate"
     ]
+    const dynSearchBtnInput = isSearch ?
+        // width 265px
+        <SearchInput
+        className="search-input"
+            onBlur={() => toggleIsSearch()}
+            autoFocus
+            iconName={Search}
+            placeholder="Search"
+            size="small"
+            wrapperClassName="monday-storybook-search_size"
+        /> :
+        <Button
+            onClick={() => toggleIsSearch()}
+            leftIcon={Search}
+            kind="tertiary"
+            size="small">Search
+        </Button>
 
     const progress = [null, null, "status", null, "priority", null]
 
@@ -55,7 +76,8 @@ export function BoardDetails() {
                     New Task
                 </SplitButton>
 
-                <Button leftIcon={Search} kind="tertiary" size="small">Search</Button>
+                {/* <Button leftIcon={Search} kind="tertiary" size="small">Search</Button> */}
+                {dynSearchBtnInput}
                 <Button leftIcon={PersonRound} kind="tertiary" size="small">Person</Button>
 
                 <SplitButton kind="tertiary" leftIcon={Filter} size="small" secondaryDialogContent={

@@ -21,6 +21,18 @@
     border-radius: var(--border-radius-medium) 0 0 var(--border-radius-medium);
     box-shadow: var(--box-shadow-xs);
 
+    .monday-storybook-search_size {
+      width: 265px;
+
+      input {
+        padding-left: 28px;
+      }
+
+      div {
+        left: 4px;
+      }
+    }
+
     .header-wrapper {
       display: grid;
 

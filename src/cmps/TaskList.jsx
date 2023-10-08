@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux"
-import { useCallback, useRef, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useCallback, useRef, useState, useEffect } from "react"
 import { MenuButton, Menu, MenuItem } from "monday-ui-react-core"
 
 import { Checkbox, EditableHeading, Modal, ModalContent, ModalFooterButtons, ModalHeader } from "monday-ui-react-core"
@@ -15,22 +15,53 @@ import { boardService } from "../services/board.service.local"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 
 import { TaskTitle } from "./dynamicCmps/TaskTitle"
+import { ADD_SELECTED_TASKS, REMOVE_SELECTED_TASKS, SET_SELECTED_TASKS } from "../store/reducers/board.reducer"
 
 export function TaskList({ group, cmpsOrder, labels, priorities }) {
-
+    const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
     const currBoard = useSelector(state => state.boardModule.board)
+
+    const [isChecked, setIsChecked] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [addTaskInput, setAddTask] = useState('+ Add Item ')
     const [show, setShow] = useState(false)
     const [taskId, setTaskId] = useState(null)
     const [loading, setLoading] = useState(false)
     const openModalButtonRef = useRef()
+    const dispatch = useDispatch()
     const closeModal = useCallback(() => {
         setShow(false)
     }, [])
 
     const boardId = currBoard._id
     const groupId = group.id
+
+    useEffect(() => {
+        if (selectedTasks.length === 0) setIsChecked(false)
+    }, [selectedTasks])
+
+    function selectAllTasks(e) {
+        const allTaskIds = getAllTasksIds()
+        console.log('allTaskIds:', allTaskIds)
+        if (e.target.checked) {
+            if (!selectedTasks) {
+                dispatch({ type: SET_SELECTED_TASKS, selectedTasks: allTaskIds })
+            } else {
+                dispatch({ type: ADD_SELECTED_TASKS, selectedTasks: allTaskIds })
+            }
+            setIsChecked(true)
+        } else {
+            dispatch({ type: REMOVE_SELECTED_TASKS, selectedTasks: allTaskIds })
+            setIsChecked(false)
+        }
+    }
+
+    function getAllTasksIds() {
+        return group.tasks.map(task => ({
+            groupId: group.id,
+            taskId: task.id,
+        }))
+    }
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
@@ -152,7 +183,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities }) {
                         </div>
 
                         <div className="task-select">
-                            <Checkbox ariaLabel="Select task" />
+                            <Checkbox checked={isChecked} onChange={(e) => selectAllTasks(e)} ariaLabel="Select task" />
                         </div>
                     </div>
                 </div>

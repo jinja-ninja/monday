@@ -5,7 +5,7 @@ import { boardService } from "../services/board.service.local";
 import { SET_SELECTED_TASKS } from "../store/reducers/board.reducer";
 import { useDispatch } from "react-redux";
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
-import { removeBatchTasks } from "../store/actions/board.action";
+import { duplicatedBatchTasks, duplicatedTask, removeBatchTasks } from "../store/actions/board.action";
 
 export function SelectedModal({ selectedTasks, currBoard }) {
     const [groupColors, setGroupColors] = useState([])
@@ -17,7 +17,6 @@ export function SelectedModal({ selectedTasks, currBoard }) {
 
     function getAllTaskColors() {
         const colors = selectedTasks.map(groupTaskIds => boardService.getGroupById(currBoard, groupTaskIds.groupId).style)
-        console.log('colors:', colors)
         setGroupColors(colors)
     }
     function onCloseModal() {
@@ -46,16 +45,30 @@ export function SelectedModal({ selectedTasks, currBoard }) {
         }
     }
 
-    // async function onDuplicate() {
-    // 	for (let taskId of checkedTaskIds) {
-    // 		try {
-    // 			const group = await boardService.getGroupByTask(board, taskId)
-    // 			const task = await boardService.getTaskById(board, taskId)
-    // 			await duplicateTask(board._id, group, task, true)
-    // 		} catch (err) {
-    // 			showErrorMsg('Error duplicating tasks')
-    // 		}
-    // 	}
+    async function onDuplicateTasks() {
+        console.log('currBoard._id:', currBoard._id)
+        console.log('selectedTasks:', selectedTasks)
+        try {
+            // await duplicatedTask(currBoard._id, groupTaskIds.groupId, groupTaskIds.taskId)
+            await duplicatedBatchTasks(currBoard._id, selectedTasks)
+            showSuccessMsg('Duplicated multiple tasks')
+        } catch (err) {
+            showErrorMsg('Error duplicating tasks')
+        }
+
+        dispatch({ type: SET_SELECTED_TASKS, selectedTasks: [] })
+    }
+
+    // async function onDuplicateTasks() {
+    //     for (let groupTaskIds of selectedTasks) {
+    //         try {
+    //             await duplicatedTask(currBoard._id, groupTaskIds.groupId, groupTaskIds.taskId)
+    //             // await duplicatedBatchTasks(currBoard._id,groupTaskIds.groupId, groupTaskIds.taskId)
+    //         } catch (err) {
+    //             showErrorMsg('Error duplicating tasks')
+    //         }
+    //     }
+    //     dispatch({ type: SET_SELECTED_TASKS, selectedTasks: [] })
     // }
 
     return (
@@ -75,12 +88,12 @@ export function SelectedModal({ selectedTasks, currBoard }) {
             </div>
 
             <div className="btns-container">
-                <div className="duplicate-btn-container">
+                <div className="duplicate-btn-container" onClick={() => onDuplicateTasks()}>
                     <Icon className='duplicate-btn' icon={Duplicate} />
                     <span>Duplicate</span>
                 </div>
-                <div className="delete-btn-container">
-                    <Icon className='delete-btn' icon={Delete} onClick={() => onRemoveTasks()} />
+                <div className="delete-btn-container" onClick={() => onRemoveTasks()}>
+                    <Icon className='delete-btn' icon={Delete} />
                     <span>Delete</span>
                 </div>
 
