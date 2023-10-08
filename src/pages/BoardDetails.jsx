@@ -40,6 +40,7 @@ export function BoardDetails() {
     const dynSearchBtnInput = isSearch ?
         // width 265px
         <SearchInput
+        id="filter-search-input"
         className="search-input"
             onBlur={() => toggleIsSearch()}
             autoFocus
