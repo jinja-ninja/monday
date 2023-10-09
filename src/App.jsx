@@ -13,8 +13,6 @@ import { TaskDetails } from './cmps/TaskDetails'
 import { PageNotFound } from './pages/PageNotFound'
 import { BoardIndex } from './pages/BoardIndex'
 import { store } from './store/store'
-import { TestCmp } from './pages/TestCmp'
-import { SelectedModal } from './cmps/selectedModal'
 
 
 
@@ -25,7 +23,7 @@ export function App() {
       <Router>
         <Routes>
           <Route element={<HomePage />} path="/" />
-          <Route element={<TestCmp />} path="/test" />
+          {/* <Route element={<BoardDescription />} path="/test" /> */}
           <Route element={<BoardIndex />} path="/board" /> {/* TODO: add board index page */}
           <Route element={<BoardDetails />} path="board/:boardId">
             <Route element={<TaskDetails />} path='group/:groupId/task/:taskId' />

@@ -9,7 +9,7 @@ import { useState } from "react"
 import { updateBoard } from "../store/actions/board.action"
 
 
-export function BoardDetailsHeader({ title, boardId }) {
+export function BoardDetailsHeader({ title, boardId, setIsBoardDesc }) {
     const [boardTitle, setBoardTitle] = useState(title)
 
     function onRenameBoard() {
@@ -28,11 +28,14 @@ export function BoardDetailsHeader({ title, boardId }) {
                             value={title}
                             onChange={(newText) => setBoardTitle(newText)}
                             onBlur={() => onRenameBoard()} />
+
                         <IconButton
                             ariaLabel="Show board description"
                             icon={Info}
                             tooltipProps={{ position: "top" }}
+                            onClick={() => setIsBoardDesc((prevIsBoardDesc)=> !prevIsBoardDesc)}
                         />
+
                         <IconButton
                             className="star-icon"
                             ariaLabel="Add to favorites"
@@ -91,7 +94,8 @@ export function BoardDetailsHeader({ title, boardId }) {
 
                 <div className="header-description">
                     Manage any type of project. Assign owners, set timelines and keep track of where your project stands.
-                    <Link to="#"><span> See More</span></Link>
+                    <Link onClick={() => setIsBoardDesc((prevIsBoardDesc)=> !prevIsBoardDesc)} to="#"><span> See More</span></Link>
+                    
                 </div>
             </div>
 

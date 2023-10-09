@@ -17,9 +17,9 @@ export async function loadBoards() {
 //Specific Board Actions
 // !!!!! TO DO !!!!!!
 // change name to updateCurrentBoard
-export async function getBoardById(boardId) {
+export async function getBoardById(boardId, filterBy) {
     try {
-        const board = await boardService.getBoardById(boardId)
+        const board = await boardService.getBoardById(boardId, filterBy)
         store.dispatch({ type: SET_BOARD, board })
     } catch (err) {
         console.log('Board Actions: err in Getting Board', err)
@@ -130,6 +130,9 @@ export async function duplicatedGroup(boardId, groupId) {
 
 // Task Actions
 export async function addTask(boardId, groupId, task) {
+    console.log('boardId:', boardId)
+    console.log('groupId:', groupId)
+    console.log('task:', task)
     try {
         const board = await boardService.addTask(boardId, groupId, task)
         store.dispatch({ type: SET_BOARD, board })

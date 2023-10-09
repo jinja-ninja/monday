@@ -88,8 +88,13 @@ async function query() {
     return await storageService.query(STORAGE_KEY)
 }
 
-async function getBoardById(boardId) {
-    const board = await storageService.get(STORAGE_KEY, boardId)
+async function getBoardById(boardId, filterBy = { txt: '', person: null }) {
+    console.log('filterBy:', filterBy)
+    let board = await storageService.get(STORAGE_KEY, boardId)
+    if (filterBy.txt) {
+        const regex = new RegExp(filterBy.txt, 'i')
+        board.groups = board.groups.filter((group) => regex.test(group.title))
+      }
     return board
 }
 
