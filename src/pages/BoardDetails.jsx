@@ -90,7 +90,7 @@ export function BoardDetails() {
         <section className="board-details-container">
             <UserMsg />
 
-            <BoardDetailsHeader title={currBoard.title} boardId={currBoard._id} setIsBoardDesc={setIsBoardDesc} />
+            <BoardDetailsHeader isStarred={currBoard.isStarred} title={currBoard.title} boardId={currBoard._id} setIsBoardDesc={setIsBoardDesc} />
 
             <div className="board-details-actions">
 

@@ -58,8 +58,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
+          }
 
+          .star-icon-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            cursor: pointer;
 
+            &:hover {
+              background: var(--primary-background-hover-color);
+            }
           }
 
           .left-btns {

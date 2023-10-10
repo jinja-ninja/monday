@@ -45,6 +45,7 @@ export async function toggleBoardFavorite(boardId) {
     try {
         let board = await boardService.getBoardById(boardId)
         let starredState = board.isStarred = !board.isStarred
+        store.dispatch({ type: SET_BOARD, board: board })
         store.dispatch({ type: UPDATE_BOARDS, board: board })
         return await boardService.update('board', boardId, null, null, { key: 'isStarred', value: starredState })
     } catch (error) {

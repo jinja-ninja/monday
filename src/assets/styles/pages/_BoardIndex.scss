@@ -39,7 +39,7 @@
   .index-board-list {
     display: grid;
     grid-template-rows: auto;
-    grid-auto-flow: column;
+    // grid-auto-flow: column;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: var(--spacing-large);
     padding: var(--spacing-medium) var(--spacing-medium) var(--spacing-large) var(--spacing-medium);

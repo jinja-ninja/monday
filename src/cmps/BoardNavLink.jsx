@@ -18,7 +18,7 @@ export function BoardNavLink({ text, boardId, onSelectBoard, onDeleteBoard, onRe
         dynActiveBoardClass = ''
     }
 
-    const dynIsFavoriteText = isStarred ? 'Add to favorites' : 'Remove from favorites'
+    const dynIsFavoriteText = !isStarred ? 'Add to favorites' : 'Remove from favorites'
 
     const EditibleOrText = !isEditibleMode ?
         text
