@@ -1,9 +1,10 @@
-import { Avatar, AvatarGroup } from "monday-ui-react-core"
-
+import { Avatar, AvatarGroup, Icon } from "monday-ui-react-core"
+import { Add, AddSmall, PersonRound } from "monday-ui-react-core/icons"
+import PersonCircle from '../../assets/Icons/PersonCircle.svg'
 export function Member({ info }) {
 
     return <div className="task-members">
-        <AvatarGroup
+        {/* <AvatarGroup
             max={3}
             size="small"
             type="img"
@@ -73,6 +74,12 @@ export function Member({ info }) {
                 text="MR"
                 type="text"
             />
-        </AvatarGroup>
+        </AvatarGroup> */}
+        <img className="person-circle" src={PersonCircle} alt="" />
+        
+        <div className="btn-add-member">
+          {/* PLUS ICON */}
+        </div>
     </div>
 }
+

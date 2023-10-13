@@ -1,4 +1,58 @@
 #task-title {
+    height: 100%;
     display: flex;
     align-items: center;
+
+    .editible-task-title {
+        margin-left: 0.7rem;
+    }
+}
+
+.open-task-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    .btn-open-task {
+        margin-right: 10px;
+    }
+
+    .add-comment-container {
+        width: 65px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-left: var(--border-width) var(--border-style) var(--ui-border-color);
+        position: relative;
+
+        &:hover {
+            .comments-counter {
+                background-color: var(--primary-color);
+
+            }
+
+            path {
+                fill: var(--color-basic_blue);
+            }
+        }
+
+        .has-comments-container {
+            color: var(--color-basic_blue);
+
+            .comments-counter {
+                color: var(--text-color-on-primary);
+                background-color: var(--color-basic_blue);
+                position: absolute;
+                right: 18px;
+                top: 15px;
+                line-height: 9px;
+                font-size: 10px;
+                border-radius: 10px;
+                text-align: center;
+                padding: 2px 4px;
+            }
+        }
+
+    }
 }

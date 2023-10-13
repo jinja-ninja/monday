@@ -1,0 +1,30 @@
+.task-members {
+    position: relative;
+
+    &:hover {
+        .btn-add-member {
+            // display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .person-circle {
+        width: 26px;
+    }
+
+    .btn-add-member {
+        display: none;
+        color: var(--text-color-on-primary);
+        background-color: var(--primary-color);
+        z-index: 1;
+        font-size: 14px;
+        margin: 0 -6px;
+        border-radius: 50%;
+        width: 13px;
+        height: 13px;
+        position: absolute;
+        left: 14px;
+    }
+}

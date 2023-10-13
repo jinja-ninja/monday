@@ -123,10 +123,10 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
                         Main Table
                     </Tab>
                     <Tab >
-                        Dashboard
+                        Kanban
                     </Tab>
                     <Tab >
-                        Kanban
+                        Dashboard
                     </Tab>
                 </TabList>
             </div>

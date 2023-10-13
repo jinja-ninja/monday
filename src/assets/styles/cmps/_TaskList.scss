@@ -18,6 +18,8 @@
       @include groupCell;
       text-align: center;
       padding: var(--spacing-small);
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
 
     .header-title-side {
@@ -95,11 +97,9 @@
 
     .task-item {
       @include groupCell;
+      height: 36px;
       // border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
 
-      &:nth-of-type(2) {
-        justify-content: start;
-      }
 
       &>* {
         display: flex;
@@ -112,6 +112,14 @@
         text-align: center;
         cursor: pointer;
       }
+
+      &:nth-of-type(2) {
+
+        .task-title-container {
+          justify-content: space-between;
+        }
+
+      }
     }
   }
 
@@ -122,6 +130,11 @@
 
     &>* {
       @include groupCell;
+    }
+
+    .task-add-btn {
+      margin-left: 0.7rem;
+      width: calc(100% - 0.7rem);
     }
 
     .task-list-add-side {
@@ -175,5 +188,12 @@
       border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
       box-shadow: var(--box-shadow-xs);
     }
+  }
+
+}
+
+#story-book-modal {
+  button {
+    text-transform: none;
   }
 }

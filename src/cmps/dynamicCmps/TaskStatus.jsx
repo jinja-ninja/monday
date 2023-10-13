@@ -78,6 +78,8 @@ export function TaskStatus({ task, labels, onUpdateTask, type }) {
                     className="task-status-info"
                     style={{ backgroundColor: `var(--color-${getCurrLabel().color})` }}>
                     {task[type]}
+
+                    <div className="fold-label"></div>
                 </div>
 
             </Dialog >

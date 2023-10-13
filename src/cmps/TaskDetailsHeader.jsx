@@ -7,7 +7,6 @@ import { updateTask } from "../store/actions/board.action";
 export function TaskDetailsHeader({ boardId, groupId, taskId, taskTitle, setCurrTab }) {
     const [taskTitleValue, setTaskTitleValue] = useState(taskTitle)
     const navigate = useNavigate()
-    console.log('taskTitleValue:', taskTitleValue)
 
     function onRenameTask() {
         if (taskTitle !== taskTitleValue) {

@@ -29,6 +29,7 @@ export function HomePage() {
     return (
         <div className="home-page-container main-layout">
             <HomeAppHeader />
+
             <main className="home-page-content main-layout">
 
                 <div className='main-titles-container'>
@@ -84,6 +85,7 @@ export function HomePage() {
                     </button>
                     <p className='no-credit-card-txt'>No credit card needed<span>✦</span>Unlimited time on Free plan</p>
                 </div>
+
             </main>
 
             <section className='home-first-img-container full'>
@@ -138,6 +140,7 @@ export function HomePage() {
                 </button>
 
             </section>
+            
         </div>
     )
 }

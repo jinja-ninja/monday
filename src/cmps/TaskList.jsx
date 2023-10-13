@@ -42,12 +42,15 @@ export function TaskList({ group, cmpsOrder, labels, priorities }) {
 
     function selectAllTasks(e) {
         const allTaskIds = getAllTasksIds()
-        console.log('allTaskIds:', allTaskIds)
+
         if (e.target.checked) {
             if (!selectedTasks) {
                 dispatch({ type: SET_SELECTED_TASKS, selectedTasks: allTaskIds })
             } else {
-                dispatch({ type: ADD_SELECTED_TASKS, selectedTasks: allTaskIds })
+                const filteredTaskIds = allTaskIds.filter(task => {
+                    return !selectedTasks.some(selectedTask => selectedTask.taskId === task.taskId && selectedTask.groupId === task.groupId);
+                })
+                dispatch({ type: ADD_SELECTED_TASKS, selectedTasks: filteredTaskIds })
             }
             setIsChecked(true)
         } else {
@@ -220,7 +223,8 @@ export function TaskList({ group, cmpsOrder, labels, priorities }) {
                 </div>
             </div>
 
-            <EditableHeading className="task-add-btn"
+            <EditableHeading
+                className="task-add-btn"
                 type={EditableHeading.types.h5}
                 value={addTaskInput}
                 onBlur={() => {
