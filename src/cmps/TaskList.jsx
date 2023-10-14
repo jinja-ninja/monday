@@ -35,14 +35,23 @@ export function TaskList({ group, cmpsOrder, labels, priorities }) {
 
     const boardId = currBoard._id
     const groupId = group.id
+    let allTaskIds
 
     useEffect(() => {
-        if (selectedTasks.length === 0) setIsChecked(false)
+        allTaskIds = getAllTasksIds()
+        if (!allTaskIds.every(task => selectedTasks.some(selectedTask =>
+            task.taskId === selectedTask.taskId && task.groupId === selectedTask.groupId))) {
+            setIsChecked(false)
+        }
+        else {
+            setIsChecked(true)
+        }
+        if (selectedTasks.length === 0 || allTaskIds.length == 0) setIsChecked(false)
+
     }, [selectedTasks])
 
     function selectAllTasks(e) {
-        const allTaskIds = getAllTasksIds()
-
+        allTaskIds = getAllTasksIds()
         if (e.target.checked) {
             if (!selectedTasks) {
                 dispatch({ type: SET_SELECTED_TASKS, selectedTasks: allTaskIds })

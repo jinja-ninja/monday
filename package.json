@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.13",
     "axios": "^1.5.1",
     "fs": "^0.0.1-security",
     "monday-ui-react-core": "^2.41.1",

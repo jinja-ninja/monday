@@ -79,7 +79,6 @@ export function boardReducer(state = initialState, action) {
             return { ...state, selectedTasks: newSelectedTasks }
         }
 
-
         case REMOVE_SELECTED_TASK: {
             const { taskId, groupId } = action.selectedTask
             newSelectedTasks = state.selectedTasks.filter(task =>
@@ -93,11 +92,8 @@ export function boardReducer(state = initialState, action) {
                     selectedTask.groupId === task.groupId && selectedTask.taskId === task.taskId
                 )
             })
-            console.log('newSelectedTasks:', newSelectedTasks)
-
             return { ...state, selectedTasks: newSelectedTasks }
         }
-
 
         case REMOVE_SELECTED_TASKS: {
             newSelectedTasks = state.selectedTasks.filter(taskId => !action.selectedTasks.includes(taskId))
@@ -106,7 +102,6 @@ export function boardReducer(state = initialState, action) {
 
         default:
             return { ...state }
-
 
     }
 }
