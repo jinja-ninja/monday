@@ -3,7 +3,6 @@
 
     &:hover {
         .btn-add-member {
-            // display: block;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -11,7 +10,10 @@
     }
 
     .person-circle {
-        width: 26px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
     }
 
     .btn-add-member {
@@ -26,5 +28,19 @@
         height: 13px;
         position: absolute;
         left: 14px;
+
+        .line-one {
+            width: 9px;
+            height: 2px;
+            background-color: white;
+            position: absolute;
+        }
+
+        .line-two {
+            width: 2px;
+            height: 9px;
+            background-color: white;
+            position: absolute;
+        }
     }
 }

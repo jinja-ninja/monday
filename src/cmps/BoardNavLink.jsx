@@ -1,14 +1,11 @@
 import { Button, EditableHeading, Menu, MenuButton, MenuItem, TextField, useSetFocus } from "monday-ui-react-core"
 import { Board, Delete, Duplicate, Edit, Favorite } from "monday-ui-react-core/icons"
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { useSelector } from "react-redux"
-// import EditableHeadingWithRef from './EditableHeadingWithRef'
 
 export function BoardNavLink({ text, boardId, onSelectBoard, onDeleteBoard, onRenameBoard, onToggleFavoriteBoard, onDuplicateBoard, isStarred }) {
     const [isEditibleMode, setIsEditibleMode] = useState(false)
     const [editableText, setEditableText] = useState(text)
-    const ref = useRef(null)
-    const { isFocused, focus } = useSetFocus({ ref })
     const currBoard = useSelector((storeState => storeState.boardModule.board))
     let dynActiveBoardClass
 
@@ -27,36 +24,16 @@ export function BoardNavLink({ text, boardId, onSelectBoard, onDeleteBoard, onRe
             className="editableHeading"
             type="h6"
             value={text}
+            // autoFocus
             onBlur={() => {
                 onRenameBoard(boardId, editableText)
                 setIsEditibleMode((prevIsEditable) => !prevIsEditable)
             }}
             onChange={(newText) => setEditableText(newText)}
             onClick={(e) => {
-                // focus()
                 e.stopPropagation()
             }}
         />
-    // <div className="monday-storybook-text-field_size">
-    //     <TextField
-    //         className="editableHeading"
-    //         value={text}
-    //         size={TextField.sizes.SMALL}
-    //         onBlur={() => {
-    //             onRenameBoard(boardId, editableText)
-    //             setIsEditibleMode((prevIsEditable) => !prevIsEditable)
-    //         }}
-    //         onChange={(newText) => setEditableText(newText)}
-    //         onClick={(e) => {
-    //             focus()
-    //             e.stopPropagation()
-    //         }}
-    //         ref={ref}
-    //     />
-
-    // </div>
-
-
 
     return (
 
@@ -76,7 +53,6 @@ export function BoardNavLink({ text, boardId, onSelectBoard, onDeleteBoard, onRe
                 e.stopPropagation()
             }}>
                 <Menu id="menu" size={Menu.sizes.MEDIUM}>
-                    {/* <MenuTitle caption="Look up, you might see" captionPosition={MenuTitle.positions.TOP} /> */}
                     <MenuItem onClick={() => onDeleteBoard(boardId)} icon={Delete} iconType={MenuItem.iconType.SVG} title="Delete" />
                     <MenuItem
                         onClick={() => {

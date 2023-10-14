@@ -78,6 +78,8 @@ export function Member({ info }) {
         <img className="person-circle" src={PersonCircle} alt="" />
         
         <div className="btn-add-member">
+            <div className="line-one"></div>
+            <div className="line-two"></div>
           {/* PLUS ICON */}
         </div>
     </div>
