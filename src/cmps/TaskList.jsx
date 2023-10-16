@@ -249,6 +249,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities }) {
         <section className="task-list-summary-wrapper group-grid">
             <div className="task-list-summary-emptycell-left"></div>
             <div className="task-list-summary">StatusSum</div>
+            <div className="task-list-summary">PrioritySum</div>
         </section>
 
         <>

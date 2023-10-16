@@ -66,36 +66,36 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
 
     return <div className="group-preview-container">
 
-        <MenuButton
-            size={MenuButton.sizes.XS}
-            className="group-menu-btn"
-            closeDialogOnContentClick >
-            <Menu id="menu" size="medium">
-                <MenuItem
-                    icon={Delete}
-                    iconType="SVG"
-                    onClick={() => setShow(true)}
-                    title="Delete" />
-                <MenuItem
-                    icon={Edit}
-                    iconType="SVG"
-                    onClick={() => handleEditClick(group.id)}
-                    title="Rename Group" />
-                <MenuItem
-                    icon={Duplicate}
-                    iconType="SVG"
-                    onClick={() => onDuplicateGroup(boardId, group.id)}
-                    title="Duplicate this group" />
-                <MenuItem
-                    icon={HighlightColorBucket}
-                    iconType="SVG"
-                    onClick={() => onChangeGroupColorClick()}
-                    title="Change group color" />
-            </Menu>
-        </MenuButton>
+
 
         <div className="collapsible-header-wrapper">
-
+            <MenuButton
+                size={MenuButton.sizes.XS}
+                className="group-menu-btn"
+                closeDialogOnContentClick >
+                <Menu id="menu" size="medium">
+                    <MenuItem
+                        icon={Delete}
+                        iconType="SVG"
+                        onClick={() => setShow(true)}
+                        title="Delete" />
+                    <MenuItem
+                        icon={Edit}
+                        iconType="SVG"
+                        onClick={() => handleEditClick(group.id)}
+                        title="Rename Group" />
+                    <MenuItem
+                        icon={Duplicate}
+                        iconType="SVG"
+                        onClick={() => onDuplicateGroup(boardId, group.id)}
+                        title="Duplicate this group" />
+                    <MenuItem
+                        icon={HighlightColorBucket}
+                        iconType="SVG"
+                        onClick={() => onChangeGroupColorClick()}
+                        title="Change group color" />
+                </Menu>
+            </MenuButton>
             <Tooltip
                 content="Collapse/Expand Group"
                 animationType="expand">
@@ -120,9 +120,8 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
             </Tooltip>
 
             <span className="num-of-tasks">
-                {numOfTasks} {numOfTasks === 1 ? 'Item' : 'Items'}
+                {numOfTasks === 0 ? 'No tasks' : `${numOfTasks} ${numOfTasks === 1 ? 'Task' : 'Tasks'}`}
             </span>
-
         </div>
 
         {

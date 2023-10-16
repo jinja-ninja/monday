@@ -7,11 +7,31 @@
     text-transform: none;
   }
 
+  .group-list-item {
+    position: relative;
+    margin-block-end: var(--spacing-large);
+
+    .group-menu-btn {
+      position: absolute;
+      left: -27px;
+      top: 0px;
+      // margin-inline-start: auto;
+      margin-inline-end: var(--spacing-medium);
+      opacity: 0;
+      transition: opacity 0.3s;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
   .collapsible-header-wrapper {
     display: flex;
     align-items: center;
 
     &:hover {
+
       .num-of-tasks {
         opacity: 1;
       }
@@ -24,22 +44,5 @@
 
   }
 
-  .group-list-item {
-    position: relative;
-    margin-block-end: var(--spacing-large);
 
-    .group-menu-btn {
-      position: absolute;
-      left: -30px;
-      top: 0px;
-      // margin-inline-start: auto;
-      margin-inline-end: var(--spacing-medium);
-      opacity: 0;
-      transition: opacity 0.3s;
-
-      &:hover {
-        opacity: 1;
-      }
-    }
-  }
 }

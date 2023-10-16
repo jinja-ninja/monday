@@ -11,8 +11,6 @@
 
     }
 
-
-
     .color-picker {
         position: absolute;
     }
@@ -21,6 +19,10 @@
         opacity: 0;
         transition: opacity 0.3s;
         font: var(--font-subtext);
+        position: relative;
+        bottom: -1px;
+        right: -3px;
+        color: var(--primary-text-on-secondary-color);
 
         &:hover {
             opacity: 1;

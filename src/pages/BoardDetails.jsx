@@ -52,9 +52,9 @@ export function BoardDetails() {
     const cmpsOrder = [
         "side",
         "title",
+        "memberIds",
         "status",
         "priority",
-        "memberIds",
         "dueDate"
     ]
 

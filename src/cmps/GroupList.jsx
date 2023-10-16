@@ -26,7 +26,7 @@ export function GroupList({ groups, labels, cmpsOrder, progress, boardId, priori
             kind="secondary"
             size="small"
             leftIcon={Add}>
-            Add new Group
+            Add new group
         </Button>
     </div >
 }
