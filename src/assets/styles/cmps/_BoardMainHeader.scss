@@ -2,6 +2,9 @@
   // background-color: var(--grey-background-color);
   // background-color: var(--board-main-header-background);
   background-color: #ECEFF8;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 
   //ADD TO THEMES IN INDEX.CSS!!!
   height: 48px;

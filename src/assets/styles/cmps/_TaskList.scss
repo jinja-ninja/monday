@@ -11,11 +11,16 @@
   }
 
   .header-title-container {
-    border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+    position: sticky;
+    top: 227px;
+    z-index: 5;
+    background-color: var(--primary-background-color);
+
     display: grid;
     grid-auto-flow: column;
     border-top: var(--border-width) var(--border-style) var(--ui-border-color);
     border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+    border-right: var(--border-width) var(--border-style) var(--ui-border-color);
     border-image: linear-gradient(to right, transparent 8px, var(--ui-border-color) 0) 1;
 
 
