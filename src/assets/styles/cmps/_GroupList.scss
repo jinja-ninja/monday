@@ -10,6 +10,18 @@
   .collapsible-header-wrapper {
     display: flex;
     align-items: center;
+
+    &:hover {
+      .num-of-tasks {
+        opacity: 1;
+      }
+
+      .group-menu-btn {
+        opacity: 1;
+        //DOESNT WORK FOR SOME REASON CHECK LATER.
+      }
+    }
+
   }
 
   .group-list-item {

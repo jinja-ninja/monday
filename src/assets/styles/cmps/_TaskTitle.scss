@@ -15,6 +15,10 @@
 
     .btn-open-task {
         margin-right: 10px;
+        opacity: 0;
+        // &:hover{
+        //     background-color: white;
+        // }
     }
 
     .add-comment-container {

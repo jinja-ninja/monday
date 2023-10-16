@@ -1,4 +1,7 @@
 .task-list-container {
+  // color: color rgb(50, 51, 56);
+  // font-size: 14px;
+
   .group-grid {
     display: grid;
     grid-template-columns: 40px 350px 140px 140px 140px 140px;
@@ -70,6 +73,12 @@
 
     border-right: var(--border-width) var(--border-style) var(--ui-border-color);
     border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+    &:hover{
+      background-color: rgb(245, 246, 248);
+      .task-menu-btn{
+        opacity: 1;
+      }
+    }
 
     .task-menu-btn {
       position: absolute;
@@ -123,6 +132,13 @@
 
         .task-title-container {
           justify-content: space-between;
+
+          &:hover {
+            .btn-open-task {
+              opacity: 1;
+              transition: all .2s;
+            }
+          }
         }
 
       }
@@ -133,9 +149,12 @@
     border-radius: 0 0 0 var(--border-radius-small);
     box-shadow: var(--box-shadow-xs);
     border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+    opacity: 0.6;
+    height: 36px;
 
     &>* {
       @include groupCell;
+      align-items: center;
     }
 
     .task-add-btn {
@@ -151,11 +170,11 @@
 
       .color-indicator {
         width: 7px;
-        // height: 100%;
-        height: calc(100% + 1px);
+        height: 37px;
+        // height: calc(100% + 1px);
         border-radius: 0 0 0 var(--border-radius-small);
       }
-      
+
 
       .task-select {
         height: 100%;

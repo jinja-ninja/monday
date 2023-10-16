@@ -23,7 +23,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities }) {
 
     const [isChecked, setIsChecked] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const [addTaskInput, setAddTask] = useState('+ Add Item ')
+    const [addTaskInput, setAddTask] = useState('+ Add task ')
     const [show, setShow] = useState(false)
     const [taskId, setTaskId] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -223,7 +223,8 @@ export function TaskList({ group, cmpsOrder, labels, priorities }) {
             <div className="task-list-add-side">
                 <div className="color-indicator"
                     style={{
-                        backgroundColor: `var(--color-${group.style})`
+                        backgroundColor: `var(--color-${group.style})`,
+                        // opacity : 0.6,
                     }}>
                 </div>
 
@@ -237,8 +238,8 @@ export function TaskList({ group, cmpsOrder, labels, priorities }) {
                 type={EditableHeading.types.h5}
                 value={addTaskInput}
                 onBlur={() => {
-                    addTaskInput ? onAddTask(addTaskInput) : setAddTask('+ Add Item ')
-                    setAddTask('+ Add Item')
+                    addTaskInput ? onAddTask(addTaskInput) : setAddTask('+ Add task ')
+                    setAddTask('+ Add task')
                 }}
                 onStartEditing={() => setAddTask('')}
                 onChange={(value) => setAddTask(value)} />
