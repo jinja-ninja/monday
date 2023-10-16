@@ -43,6 +43,7 @@
       padding-top: var(--spacing-medium);
       padding-left: var(--spacing-xl);
       padding-right: var(--spacing-xl);
+      border-top-left-radius: 8px;
       grid-template-rows: auto auto;
 
       .board-header {
