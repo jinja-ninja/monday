@@ -17,7 +17,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { TaskTitle } from "./dynamicCmps/TaskTitle"
 import { ADD_SELECTED_TASKS, REMOVE_SELECTED_TASKS, SET_SELECTED_TASKS } from "../store/reducers/board.reducer"
 
-export function TaskList({ group, cmpsOrder, labels, priorities }) {
+export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }) {
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
     const currBoard = useSelector(state => state.boardModule.board)
 
@@ -82,6 +82,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities }) {
     async function onRemoveTask(taskId) {
         try {
             await removeTask(boardId, groupId, taskId)
+            setNumOfTasks(group.tasks.length - 1)
             showSuccessMsg(`Task removed ${taskId}`)
         } catch (err) {
             showErrorMsg(`Cannot remove task ${taskId}`)
@@ -93,6 +94,8 @@ export function TaskList({ group, cmpsOrder, labels, priorities }) {
             const newTask = boardService.getEmptyTask()
             newTask.title = task
             await addTask(boardId, groupId, newTask)
+            setNumOfTasks(group.tasks.length + 1)
+            showSuccessMsg(`Task added ${newTask.id}`)
         } catch (err) {
             showErrorMsg('Cannot add task')
         }
@@ -111,6 +114,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities }) {
 
         try {
             await duplicatedTask(boardId, groupId, taskId)
+            setNumOfTasks(group.tasks.length + 1)
             showSuccessMsg(`We successfully duplicated your task! ${taskId}`)
         } catch (err) {
             showErrorMsg(`Cannot duplicate task ${taskId}`)

@@ -12,7 +12,8 @@ export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask }) {
     const currBoard = useSelector(state => state.boardModule.board)
 
     const navigate = useNavigate()
-
+    console.log('info:', info)
+    console.log('updatedTaskInput:', updatedTaskInput)
     useEffect(() => {
         checkIfTaskHasComments()
     }, [currBoard])
@@ -44,8 +45,8 @@ export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask }) {
                     type={EditableHeading.types.h5}
                     ellipsis
                     onBlur={() => {
-                        updatedTaskInput ? onUpdateTask(taskId, { key: 'title', value: updatedTaskInput }) : setUpdatedTask(info)
-                        setUpdatedTask(info)
+                        updatedTaskInput && updatedTaskInput !== info ? onUpdateTask(taskId, { key: 'title', value: updatedTaskInput }) : setUpdatedTask(info)
+                        // setUpdatedTask(info)
                     }}
                     onChange={(value) => setUpdatedTask(value)}
                     value={info} />
