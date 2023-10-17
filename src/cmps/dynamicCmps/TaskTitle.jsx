@@ -12,8 +12,7 @@ export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask }) {
     const currBoard = useSelector(state => state.boardModule.board)
 
     const navigate = useNavigate()
-    console.log('info:', info)
-    console.log('updatedTaskInput:', updatedTaskInput)
+  
     useEffect(() => {
         checkIfTaskHasComments()
     }, [currBoard])

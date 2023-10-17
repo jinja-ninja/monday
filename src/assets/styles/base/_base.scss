@@ -52,7 +52,9 @@ button {
   width: 100vw;
   height: 100vh;
 }
-
+.monday-style-dialog-content-wrapper{
+  z-index: 20;
+}
 /* Simple and useful CSS Debugging Technique */
 .debug * {
   outline: 1px solid gold;

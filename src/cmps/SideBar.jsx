@@ -63,15 +63,14 @@ export function SideBar() {
     return (
         <div className={"side-bar-container " + dynOpenCloseClass}>
 
-            <button onClick={() => setIsOpen(prevIsOpen => !prevIsOpen)} className="btn-open-close">
-
-                <svg viewBox="0 0 20 20" fill="currentColor" width="12" height="12" role="button" tabIndex="0" aria-hidden="false" className="open-close-arrow icon_bff579c0cd collapse-icon clickable_2774bbf3f2 noFocusStyle_d1e810e473" data-testid="icon">
-                    <path d="M14.5303 10.5303L14 10L14.5303 9.46967C14.8232 9.76256 14.8232 10.2374 14.5303 10.5303ZM7.93934 10L1.46967 16.4697C1.17678 16.7626 1.17678 17.2374 1.46967 17.5303C1.76256 17.8232 2.23744 17.8232 2.53033 17.5303L9.53033 10.5303L9 10L9.53033 9.46967L2.53033 2.46967C2.23744 2.17678 1.76256 2.17678 1.46967 2.46967C1.17678 2.76256 1.17678 3.23744 1.46967 3.53033L7.93934 10Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd" ></path>
-                </svg>
-
-            </button>
-
             <div className="side-bar-upper-container">
+                
+                <button onClick={() => setIsOpen(prevIsOpen => !prevIsOpen)} className="btn-open-close">
+                    <svg viewBox="0 0 20 20" fill="currentColor" width="12" height="12" role="button" tabIndex="0" aria-hidden="false" className="open-close-arrow icon_bff579c0cd collapse-icon clickable_2774bbf3f2 noFocusStyle_d1e810e473" data-testid="icon">
+                        <path d="M14.5303 10.5303L14 10L14.5303 9.46967C14.8232 9.76256 14.8232 10.2374 14.5303 10.5303ZM7.93934 10L1.46967 16.4697C1.17678 16.7626 1.17678 17.2374 1.46967 17.5303C1.76256 17.8232 2.23744 17.8232 2.53033 17.5303L9.53033 10.5303L9 10L9.53033 9.46967L2.53033 2.46967C2.23744 2.17678 1.76256 2.17678 1.46967 2.46967C1.17678 2.76256 1.17678 3.23744 1.46967 3.53033L7.93934 10Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd" ></path>
+                    </svg>
+                </button>
+
                 <Button
                     className="home-btn"
                     kind="tertiary"
@@ -80,13 +79,6 @@ export function SideBar() {
                 >
                     Home
                 </Button>
-                {/* <button onClick={() => setIsOpen(prevIsOpen => !prevIsOpen)} className="btn-open-close">
-
-                    <svg viewBox="0 0 20 20" fill="currentColor" width="12" height="12" role="button" tabIndex="0" aria-hidden="false" className="open-close-arrow icon_bff579c0cd collapse-icon clickable_2774bbf3f2 noFocusStyle_d1e810e473" data-testid="icon">
-                        <path d="M14.5303 10.5303L14 10L14.5303 9.46967C14.8232 9.76256 14.8232 10.2374 14.5303 10.5303ZM7.93934 10L1.46967 16.4697C1.17678 16.7626 1.17678 17.2374 1.46967 17.5303C1.76256 17.8232 2.23744 17.8232 2.53033 17.5303L9.53033 10.5303L9 10L9.53033 9.46967L2.53033 2.46967C2.23744 2.17678 1.76256 2.17678 1.46967 2.46967C1.17678 2.76256 1.17678 3.23744 1.46967 3.53033L7.93934 10Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd" ></path>
-                    </svg>
-
-                </button> */}
             </div>
 
             <div className="side-bar-lower-container">
@@ -130,7 +122,6 @@ export function SideBar() {
                 </div>
 
             </div>
-
         </div >
     )
 }

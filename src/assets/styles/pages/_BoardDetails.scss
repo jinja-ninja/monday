@@ -110,8 +110,6 @@
           }
         }
 
-
-
         .header-description {
           grid-row: 2;
           text-overflow: ellipsis;
@@ -152,9 +150,8 @@
           }
         }
 
-
         .btn-collapse-header {
-          border: 1px var(--border-style)var(--layout-border-color);
+          border: 1px var(--border-style) var(--layout-border-color);
           background-color: var(--primary-background-color);
           width: 26px;
           height: 26px;
@@ -165,7 +162,7 @@
           cursor: pointer;
           padding: var(--spacing-xs);
 
-          &:hover {
+          &:hover:not(.collapseBtn) {
             background-color: var(--primary-background-hover-on-secondary-color);
 
             svg {
@@ -175,14 +172,44 @@
 
         }
 
+        .collapseBtn {
+          transform: rotate(180deg);
+          margin-left: auto;
+
+          &:hover {
+            background-color: var(--primary-background-hover-on-secondary-color);
+
+            svg {
+              animation: bounce 1s ease infinite;
+            }
+          }
+        }
+
+        .hide-collapse-btn {
+          opacity: 0;
+        }
+
+        .collapse-heading {
+          max-width: max-content;
+        }
+
+        .collapse-header-navbar {
+          align-items: center;
+        }
+
+        .collapse-tabs {
+          position: relative;
+          bottom: -2px;
+          left: 15px;
+        }
 
         .tabsWrapper_0b06c51730 {
           padding-bottom: 0;
         }
 
         ul {
-          // border-bottom: 1px solid var(--ui-border-color);
 
+          // border-bottom: 1px solid var(--ui-border-color);
           li:first-of-type {
             a {
               padding-left: 6px;
@@ -209,9 +236,9 @@
     }
 
     .board-details-actions {
-      // position: sticky;
-      // top: 199px;
-      // z-index: 10;
+      position: sticky;
+      top: 122px;
+      z-index: 10;
       background-color: var(--primary-background-color);
 
       display: flex;
@@ -219,8 +246,8 @@
       padding-left: var(--spacing-xl);
       padding-right: var(--spacing-xl);
       padding-block-end: var(--spacing-xl);
-      // margin-block-end: var(--spacing-xl);
 
+      // margin-block-end: var(--spacing-xl);
       button {
         text-transform: none;
       }
@@ -228,6 +255,3 @@
   }
 
 }
-
-
-// .loader {}

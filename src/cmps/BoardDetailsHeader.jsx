@@ -1,22 +1,44 @@
 import { Avatar, AvatarGroup, Button, EditableHeading, IconButton, Tab, TabList } from "monday-ui-react-core"
 import { Favorite, Home, Info, Menu, Invite } from "monday-ui-react-core/icons"
 import { Link } from "react-router-dom"
-
 import GalImg from '../assets/img/GalImg.png'
 import NatiImg from '../assets/img/NatiImg.png'
 import OmerImg from '../assets/img/OmerImg.png'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { toggleBoardFavorite, updateBoard } from "../store/actions/board.action"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
+
 
 
 export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }) {
     const [boardTitle, setBoardTitle] = useState(title)
+    const [isCollapse, setIsCollapse] = useState(true)
+    const [DynIsScrolledClass, setDynIsScrolledClass] = useState('')
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const isAtTop = window.scrollY === 0
+            //check if its better to use if and only then update the state
+            setDynIsScrolledClass(isAtTop ? '' : 'hide-collapse-btn')
+            setIsCollapse(isAtTop)
+        }
+
+        window.addEventListener('scroll', handleScroll)
+
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
 
     function onRenameBoard() {
-        if (title !== boardTitle) {
-            updateBoard('board', boardId, null, null, { key: 'title', value: boardTitle })
+        try {
+            if (title !== boardTitle) {
+                updateBoard('board', boardId, null, null, { key: 'title', value: boardTitle })
+            }
+            showSuccessMsg(`Board ${boardId} has been renamed`)
+        } catch (err) {
+            showErrorMsg(`Cannot rename board ${boardId}`)
         }
     }
+
 
     const dynStarIcon = isStarred ?
         <span onClick={() => toggleBoardFavorite(boardId)} className="star-icon-container">
@@ -30,25 +52,28 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
             tooltipProps={{ position: "top" }}
             onClick={() => toggleBoardFavorite(boardId)}
         />
+    const dynCollapseBtnClass = isCollapse ? '' : 'collapseBtn'
+    const dynCollapseHeaderNavClass = isCollapse ? '' : 'collapse-header-navbar'
+    const dynCollapseTabsClass = isCollapse ? '' : 'collapse-tabs'
 
     return <div className="header-wrapper">
         <div className="header-info">
             <div className="board-header">
                 <div className="board-title">
                     <div className="editible-container">
-                        <EditableHeading
+                        {isCollapse && <EditableHeading
                             type={EditableHeading.types.h1}
                             value={title}
                             onChange={(newText) => setBoardTitle(newText)}
                             onBlur={() => onRenameBoard()} />
-
-                        <IconButton
+                        }
+                        {isCollapse && <IconButton
                             ariaLabel="Show board description"
                             icon={Info}
                             tooltipProps={{ position: "top" }}
                             onClick={() => setIsBoardDesc((prevIsBoardDesc) => !prevIsBoardDesc)}
-                        />
-                        {dynStarIcon}
+                        />}
+                        {isCollapse && dynStarIcon}
 
                         {/* <IconButton
                             className="star-icon"
@@ -57,7 +82,7 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
                             tooltipProps={{ position: "top" }}
                         /> */}
                     </div>
-                    <div className="left-btns">
+                    {isCollapse && <div className="left-btns">
                         <Button
                             className="btn-avatars"
                             kind="tertiary"
@@ -103,18 +128,25 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
                             // onClick={function noRefCheck() { }}
                             size="small"
                         />
-                    </div>
+                    </div>}
                 </div>
 
-                <div className="header-description">
+                {isCollapse && <div className="header-description">
                     Manage any type of project. Assign owners, set timelines and keep track of where your project stands.
                     <Link onClick={() => setIsBoardDesc((prevIsBoardDesc) => !prevIsBoardDesc)} to="#"><span> See More</span></Link>
 
-                </div>
+                </div>}
             </div>
 
-            <div className="header-navbar">
+            <div className={"header-navbar " + dynCollapseHeaderNavClass}>
+                {!isCollapse && <EditableHeading
+                    className="collapse-heading"
+                    type={EditableHeading.types.h2}
+                    value={title}
+                    onChange={(newText) => setBoardTitle(newText)}
+                    onBlur={() => onRenameBoard()} />}
                 <TabList
+                    className={dynCollapseTabsClass}
                     size="sm">
                     <Tab
                         className="main-table-tab"
@@ -129,7 +161,55 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
                         Dashboard
                     </Tab>
                 </TabList>
-                <div className="btn-collapse-header"><svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true" className="icon_5270a679af direction-icon expand-mode noFocusStyle_0c365cd2de" data-testid="icon"><path d="M9.46967 7.46967L10 8L10.5303 7.46967C10.2374 7.17678 9.76256 7.17678 9.46967 7.46967ZM10 9.06066L13.4697 12.5303C13.7626 12.8232 14.2374 12.8232 14.5303 12.5303C14.8232 12.2374 14.8232 11.7626 14.5303 11.4697L10.5303 7.46967L10 8L9.46967 7.46967L5.46967 11.4697C5.17678 11.7626 5.17678 12.2374 5.46967 12.5303C5.76256 12.8232 6.23744 12.8232 6.53033 12.5303L10 9.06066Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg></div>
+                {/* {!isCollapse && <div className="left-btns">
+                    <Button
+                        className="btn-avatars"
+                        kind="tertiary"
+                        // onClick={function noRefCheck() { }}
+                        size="small"
+                    >
+                        Activity
+                        <AvatarGroup
+                            max={2}
+                            size="small"
+                        >
+                            <Avatar
+                                ariaLabel="Gal Ben Natan"
+                                src={GalImg}
+                                type="img"
+                            />
+                            <Avatar
+                                ariaLabel="Omer Vered"
+                                src={OmerImg}
+                                type="img"
+                            />
+                            <Avatar
+                                ariaLabel="Nati Feldbaum"
+                                src={NatiImg}
+                                type="img"
+                            />
+
+                        </AvatarGroup>
+                    </Button>
+
+                    <Button
+                        className="btn-invite"
+                        kind="tertiary"
+                        leftIcon={Invite}
+                        // onClick={function noRefCheck() { }}
+                        size="small"
+                    >
+                        Invite / 3
+                    </Button>
+
+                    <IconButton
+                        icon={Menu}
+                        // onClick={function noRefCheck() { }}
+                        size="small"
+                    />
+                </div>} */}
+                <div onClick={() => setIsCollapse(prevIsCollapse => !prevIsCollapse)} className={"btn-collapse-header " + dynCollapseBtnClass + " " + DynIsScrolledClass}><svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true" className="icon_5270a679af direction-icon expand-mode noFocusStyle_0c365cd2de" data-testid="icon"><path d="M9.46967 7.46967L10 8L10.5303 7.46967C10.2374 7.17678 9.76256 7.17678 9.46967 7.46967ZM10 9.06066L13.4697 12.5303C13.7626 12.8232 14.2374 12.8232 14.5303 12.5303C14.8232 12.2374 14.8232 11.7626 14.5303 11.4697L10.5303 7.46967L10 8L9.46967 7.46967L5.46967 11.4697C5.17678 11.7626 5.17678 12.2374 5.46967 12.5303C5.76256 12.8232 6.23744 12.8232 6.53033 12.5303L10 9.06066Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg>
+                </div>
 
             </div>
         </div>
