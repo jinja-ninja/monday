@@ -78,10 +78,12 @@
 
     border-right: var(--border-width) var(--border-style) var(--ui-border-color);
     border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
-    &:hover{
+
+    &:hover {
       background-color: rgb(245, 246, 248);
       box-shadow: 4px 3px 6px -3px var(--ui-border-color);
-      .task-menu-btn{
+
+      .task-menu-btn {
         opacity: 1;
       }
     }
@@ -142,6 +144,7 @@
           &:hover {
             .btn-open-task {
               opacity: 1;
+              background-color: rgb(245, 246, 248);
               transition: all .2s;
             }
           }
@@ -215,11 +218,31 @@
     }
 
     .task-list-summary {
-      @include groupCell;
-      text-align: center;
+      // @include groupCell;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 35px;
       padding: var(--spacing-small);
+      border-right: var(--border-width) var(--border-style) var(--ui-border-color);
       border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
       box-shadow: var(--box-shadow-xs);
+
+      .label-progress-item,
+      .status-sum-container {
+        transition: all .2s ease-out;
+
+        &:hover {
+          transform: scaleY(1.2);
+
+        }
+      }
+
+      .status-sum-container {
+        height: 24px;
+        width: 100%;
+        background-color: var(--color-explosive);
+      }
     }
   }
 

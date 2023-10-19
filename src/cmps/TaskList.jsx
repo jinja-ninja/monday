@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useCallback, useRef, useState, useEffect } from "react"
-import { MenuButton, Menu, MenuItem } from "monday-ui-react-core"
+import { MenuButton, Menu, MenuItem, Tooltip } from "monday-ui-react-core"
 
 import { Checkbox, EditableHeading, Modal, ModalContent, ModalFooterButtons, ModalHeader } from "monday-ui-react-core"
 import { Date } from "./dynamicCmps/Date"
@@ -36,7 +36,6 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
     const boardId = currBoard._id
     const groupId = group.id
     let allTaskIds
-
     useEffect(() => {
         allTaskIds = getAllTasksIds()
         if (!allTaskIds.every(task => selectedTasks.some(selectedTask =>
@@ -121,8 +120,33 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
         }
     }
 
+    function getPriorityOrStatusColor(title, kind) {
+        return kind.find(k => k.title === title).color
+    }
+
+    function calculatePercentages(tasks, kind) {
+        const propertyKey = kind === 'status' ? 'status' : 'priority'
+
+        const propertyCounts = tasks.reduce((counts, task) => {
+            const propertyValue = task[propertyKey]
+            counts[propertyValue] = (counts[propertyValue] || 0) + 1
+            return counts
+        }, {});
+
+        const totalTasks = tasks.length
+        const propertyPercentages = []
+
+        for (const propertyValue in propertyCounts) {
+            const count = propertyCounts[propertyValue]
+            const percentage = ((count / totalTasks) * 100).toFixed(1)
+            propertyPercentages.push({ [propertyKey]: propertyValue, percentage })
+        }
+
+        // console.log('propertyPercentages:', propertyPercentages)
+        return propertyPercentages
+    }
+
     function renderMenuButton(taskId) {
-        // console.log('taskId:', taskId)
         return (
             <MenuButton size={MenuButton.sizes.XS}
                 className={`task-menu-btn `}
@@ -185,7 +209,6 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
                 break
         }
     }
-
     return <div className="task-list-container">
 
         <section className="header-title-container group-grid">
@@ -228,7 +251,6 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
                 <div className="color-indicator"
                     style={{
                         backgroundColor: `var(--color-${group.style})`,
-                        // opacity : 0.6,
                     }}>
                 </div>
 
@@ -252,8 +274,46 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
 
         <section className="task-list-summary-wrapper group-grid">
             <div className="task-list-summary-emptycell-left"></div>
-            <div className="task-list-summary">StatusSum</div>
-            <div className="task-list-summary">PrioritySum</div>
+            <div className="task-list-summary">
+                {calculatePercentages(group.tasks, 'status').map((status, index) => (
+                    <Tooltip
+                    content={`${status.status} ${status.percentage}% `}
+                    animationType="expand">
+                    <div
+                        className="label-progress-item"
+                        key={index}
+                        style={{
+                            width: `${status.percentage}%`,
+                            backgroundColor: `var(--color-${getPriorityOrStatusColor(status.status, labels)})`,
+                            height: '24px',
+                        }}
+                    >
+                    </div>
+                    </Tooltip>
+                ))}
+                {group.tasks.length === 0 && <div className="status-sum-container"></div>}
+            </div>
+
+            <div className="task-list-summary">
+                {calculatePercentages(group.tasks, 'priority').map((priority, index) => (
+                    <Tooltip
+                        content={`${priority.priority} ${priority.percentage}% `}
+                        animationType="expand">
+                        <div
+                            className="label-progress-item"
+                            key={index}
+                            style={{
+                                width: `${priority.percentage}%`,
+                                backgroundColor: `var(--color-${getPriorityOrStatusColor(priority.priority, priorities)})`,
+                                height: '24px',
+                            }}
+                        >
+                        </div>
+                    </Tooltip>
+
+                ))}
+                {group.tasks.length === 0 && <div className="status-sum-container"></div>}
+            </div>
         </section>
 
         <>

@@ -1,4 +1,4 @@
-import { Button, EditableHeading, Flex, Icon, IconButton } from "monday-ui-react-core"
+import { Button, EditableHeading, Flex, Icon, IconButton, Tooltip } from "monday-ui-react-core"
 import { Add, DropdownChevronRight, Open, Update } from "monday-ui-react-core/icons"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
@@ -10,9 +10,9 @@ export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask }) {
     const [updatedTaskInput, setUpdatedTask] = useState(info)
     const [commentsLength, setCommentsLength] = useState(null)
     const currBoard = useSelector(state => state.boardModule.board)
-
+    const dynCommentsTooltipTxt = !commentsLength ? 'Start conversation' : 'Add to conversation'
     const navigate = useNavigate()
-  
+
     useEffect(() => {
         checkIfTaskHasComments()
     }, [currBoard])
@@ -52,17 +52,27 @@ export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask }) {
             </div>
 
             <div className="open-task-container">
-                <Button
-                    className="btn-open-task"
-                    kind="tertiary"
-                    leftIcon={Open}
-                    size="xs"
-                    onClick={() => openTaskDetails()}
-                >
-                    Open
-                </Button>
+                <Tooltip
+                    content='Open item page'
+                    animationType="expand">
+                    <Button
+                        className="btn-open-task"
+                        kind="tertiary"
+                        leftIcon={Open}
+                        size="xs"
+                        onClick={() => openTaskDetails()}
+                    >
+                        Open
+                    </Button>
+                </Tooltip>
+
                 <div className="add-comment-container" onClick={() => openTaskDetails()}>
-                    {dynCommentIcon}
+                    <Tooltip
+                        content={dynCommentsTooltipTxt}
+                        animationType="expand">
+                        {dynCommentIcon}
+                    </Tooltip>
+
                 </div>
             </div>
 
