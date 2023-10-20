@@ -82,13 +82,6 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
                             onClick={() => setIsBoardDesc((prevIsBoardDesc) => !prevIsBoardDesc)}
                         />}
                         {isCollapse && dynStarIcon}
-
-                        {/* <IconButton
-                            className="star-icon"
-                            ariaLabel="Add to favorites"
-                            icon={Favorite}
-                            tooltipProps={{ position: "top" }}
-                        /> */}
                     </div>
                     {isCollapse && <div className="left-btns">
                         <Button
@@ -148,12 +141,12 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
 
             <div className={"header-navbar " + dynCollapseHeaderNavClass}>
                 {!isCollapse &&
-                 <EditableHeading
-                    className="collapse-heading"
-                    type={EditableHeading.types.h2}
-                    value={title}
-                    onChange={(newText) => setBoardTitle(newText)}
-                    onBlur={() => onRenameBoard()} />}
+                    <EditableHeading
+                        className="collapse-heading"
+                        type={EditableHeading.types.h2}
+                        value={title}
+                        onChange={(newText) => setBoardTitle(newText)}
+                        onBlur={() => onRenameBoard()} />}
                 <TabList
                     className={dynCollapseTabsClass}
                     size="sm">

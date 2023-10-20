@@ -1,0 +1,63 @@
+.task-date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .date-picker-container {
+        position: absolute;
+        z-index: 15;
+    }
+
+    .no-date-container {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        width: 129px;
+        height: 27px;
+        border: 1px var(--border-style);
+        border-color: var(--ui-border-color);
+
+        .btn-add-member {
+            color: var(--text-color-on-primary);
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            position: relative;
+
+            .line-one {
+                width: 10px;
+                height: 2px;
+                background-color: white;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .line-two {
+                width: 2px;
+                height: 10px;
+                background-color: white;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+
+            }
+        }
+
+        .calendar-icon {
+            color: #676879;
+        }
+
+    }
+
+
+    &:hover {
+        .no-date-container {
+            display: flex;
+        }
+    }
+}

@@ -5,7 +5,6 @@ import { addGroup } from "../store/actions/board.action"
 import { BoardKanban } from "../pages/BoardKanban"
 
 export function GroupList({ groups, labels, cmpsOrder, progress, boardId, priorities }) {
-    console.log('progress:', progress)
     // here we need to render either kanban or the BoardDetails check by params what to render
 
     return <div className="group-list-container">
