@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Button, IconButton, Loader, MenuItem, SplitButton, SplitButtonMenu, Search as SearchInput } from "monday-ui-react-core"
+import { Button, IconButton, Loader, MenuItem, SplitButton, SplitButtonMenu, Search as SearchInput, Tooltip } from "monday-ui-react-core"
 import { Add, Announcement, Check, Filter, Group, Hide, Menu, PersonRound, Search, Sort } from "monday-ui-react-core/icons"
 import { BoardDetailsHeader } from "../cmps/BoardDetailsHeader"
 import { GroupList } from "../cmps/GroupList"
@@ -100,9 +100,13 @@ export function BoardDetails() {
                     New Task
                 </SplitButton>
 
-                {/* <Button leftIcon={Search} kind="tertiary" size="small">Search</Button> */}
                 {dynSearchBtnInput}
-                <Button leftIcon={PersonRound} kind="tertiary" size="small">Person</Button>
+
+                <Tooltip
+                    content='Filter by person'
+                    animationType="expand">
+                    <Button leftIcon={PersonRound} kind="tertiary" size="small">Person</Button>
+                </Tooltip>
 
                 <SplitButton kind="tertiary" leftIcon={Filter} size="small" secondaryDialogContent={
                     <SplitButtonMenu _id="split-menu">
@@ -113,8 +117,13 @@ export function BoardDetails() {
                 </SplitButton>
 
                 <Button onClick={() => setSortBy(!sortBy)} leftIcon={Sort} kind="tertiary" size="small">{dynSortTitle}</Button>
-                <Button leftIcon={Hide} kind="tertiary" size="small">Hide</Button>
 
+                <Tooltip
+                    content='Hidden columns'
+                    animationType="expand">
+                    <Button leftIcon={Hide} kind="tertiary" size="small">Hide</Button>
+                </Tooltip>
+                
                 <IconButton icon={Menu} size="small" />
             </div>
 

@@ -94,7 +94,7 @@ async function getBoardById(boardId, filterBy = { txt: '', person: null }) {
     if (filterBy.txt) {
         const regex = new RegExp(filterBy.txt, 'i')
         board.groups = board.groups.filter((group) => regex.test(group.title))
-      }
+    }
     return board
 }
 
@@ -122,14 +122,24 @@ function getNewBoard() {
         },
         labels: [
             {
-                id: utilService.makeId(),
-                title: "Done",
-                color: "#61bd4f"
+                id: "l100",
+                title: "",
+                color: "explosive"
             },
             {
-                id: utilService.makeId(),
+                id: "l101",
+                title: "Done",
+                color: "done-green"
+            },
+            {
+                id: "l102",
                 title: "Progress",
-                color: "#61bd33"
+                color: "working_orange"
+            },
+            {
+                id: "l103",
+                title: "Stuck",
+                color: "stuck-red"
             }
         ],
         members: [
@@ -148,15 +158,19 @@ function getNewBoard() {
                     {
                         id: utilService.makeId(),
                         title: "Type your task here",
-                        comments: []
+                        comments: [],
+                        priority: "",
+                        status: "",
                     },
                     {
                         id: utilService.makeId(),
                         title: "Type your task here",
-                        comments: []
+                        comments: [],
+                        priority: "",
+                        status: "",
                     }
                 ],
-                style: {}
+                style: "grass_green"
             },
             {
                 id: utilService.makeId(),
@@ -166,13 +180,15 @@ function getNewBoard() {
                         id: utilService.makeId(),
                         title: "Type your task here",
                         archivedAt: '',
-                        comments: []
+                        comments: [],
+                        priority: "",
+                        status: "",
                     },
                     {
                         id: utilService.makeId(),
                         title: "Type your task here",
-                        status: "Not started",
                         priority: "",
+                        status: "",
                         description: "description",
                         comments: [],
                         checklists: [
@@ -198,11 +214,11 @@ function getNewBoard() {
                             imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
                         },
                         style: {
-                            backgroundColor: "#26de81"
+                            backgroundColor: "done-green"
                         }
                     }
                 ],
-                style: {}
+                style: "peach"
             }
         ],
         activities: [
@@ -225,6 +241,35 @@ function getNewBoard() {
                     comments: []
                 }
             }
+        ],
+        priorities: [
+
+            {
+                id: "p100",
+                title: "Critical",
+                color: "blackish"
+            },
+            {
+                id: "p101",
+                title: "High",
+                color: "dark_indigo"
+            },
+            {
+                id: "p102",
+                title: "Medium",
+                color: "indigo"
+            },
+            {
+                id: "p103",
+                title: "Low",
+                color: "bright-blue"
+            },
+            {
+                id: "p105",
+                title: "",
+                color: "explosive"
+            }
+
         ],
         cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
     }
@@ -666,7 +711,7 @@ function _createBoards() {
                                     }
                                 }
                             ],
-                            style: "peach"
+                            style: "bright-blue"
                         }
                     ],
                     activities: [
@@ -736,14 +781,24 @@ function _createBoards() {
                     },
                     labels: [
                         {
-                            id: "l103",
-                            title: "Started",
-                            color: "#f44236"
+                            id: "l100",
+                            title: "",
+                            color: "explosive"
                         },
                         {
-                            id: "l104",
-                            title: "On-hold",
-                            color: "#ff9800"
+                            id: "l101",
+                            title: "Done",
+                            color: "done-green"
+                        },
+                        {
+                            id: "l102",
+                            title: "Progress",
+                            color: "working_orange"
+                        },
+                        {
+                            id: "l103",
+                            title: "Stuck",
+                            color: "stuck-red"
                         }
                     ],
                     members: [
@@ -762,15 +817,19 @@ function _createBoards() {
                                 {
                                     id: "c105",
                                     title: "Design Layout",
-                                    comments: []
+                                    comments: [],
+                                    priority: "Medium",
+                                    status: "Done",
                                 },
                                 {
                                     id: "c106",
                                     title: "Refactor Code",
-                                    comments: []
+                                    comments: [],
+                                    priority: "Low",
+                                    status: "Progress",
                                 }
                             ],
-                            style: {}
+                            style: "grass_green"
                         },
                         {
                             id: "g104",
@@ -780,13 +839,15 @@ function _createBoards() {
                                     id: "c107",
                                     title: "Brainstorm ideas",
                                     archivedAt: 1589983468520,
-                                    comments: []
+                                    comments: [],
+                                    priority: "High",
+                                    status: "Stuck",
                                 },
                                 {
                                     id: "c108",
                                     title: "Document features",
-                                    status: "started",
-                                    priority: "medium",
+                                    status: "Progress",
+                                    priority: "Critical",
                                     description: "brief description",
                                     comments: [
                                         {
@@ -823,11 +884,11 @@ function _createBoards() {
                                         imgUrl: "http://another-cloudinary-image.jpg"
                                     },
                                     style: {
-                                        backgroundColor: "#f7c744"
+                                        backgroundColor: "done-green"
                                     }
                                 }
                             ],
-                            style: {}
+                            style: "dark_indigo"
                         }
                     ],
                     activities: [
@@ -851,6 +912,35 @@ function _createBoards() {
                             }
                         }
                     ],
+                    priorities: [
+
+                        {
+                            id: "p100",
+                            title: "Critical",
+                            color: "blackish"
+                        },
+                        {
+                            id: "p101",
+                            title: "High",
+                            color: "dark_indigo"
+                        },
+                        {
+                            id: "p102",
+                            title: "Medium",
+                            color: "indigo"
+                        },
+                        {
+                            id: "p103",
+                            title: "Low",
+                            color: "bright-blue"
+                        },
+                        {
+                            id: "p105",
+                            title: "",
+                            color: "explosive"
+                        }
+
+                    ],
                     cmpsOrder: ["MemberPicker", "StatusPicker", "DatePicker"]
                 },
                 {
@@ -868,14 +958,24 @@ function _createBoards() {
                     },
                     labels: [
                         {
-                            id: "l105",
-                            title: "In-Review",
-                            color: "#9c27b0"
+                            id: "l100",
+                            title: "",
+                            color: "explosive"
                         },
                         {
-                            id: "l106",
-                            title: "Testing",
-                            color: "#009688"
+                            id: "l101",
+                            title: "Done",
+                            color: "done-green"
+                        },
+                        {
+                            id: "l102",
+                            title: "Progress",
+                            color: "working_orange"
+                        },
+                        {
+                            id: "l103",
+                            title: "Stuck",
+                            color: "stuck-red"
                         }
                     ],
                     members: [
@@ -894,25 +994,34 @@ function _createBoards() {
                                 {
                                     id: "c109",
                                     title: "Analyze Data",
-                                    comments: []
+                                    comments: [],
+                                    priority: "Low",
+                                    status: "Done",
                                 },
                                 {
                                     id: "c110",
                                     title: "Create Visualization",
-                                    comments: []
+                                    comments: [],
+                                    priority: "Medium",
+                                    status: "Progress",
                                 },
                                 {
                                     id: "c111",
                                     title: "Write Report",
-                                    comments: []
+                                    comments: [],
+                                    priority: "Medium",
+                                    status: "Done",
+
                                 },
                                 {
                                     id: "c112",
                                     title: "Gather Feedback",
-                                    comments: []
+                                    comments: [],
+                                    priority: "Low",
+                                    status: "Stuck",
                                 }
                             ],
-                            style: {}
+                            style: "dark-orange"
                         },
                         {
                             id: "g106",
@@ -922,13 +1031,15 @@ function _createBoards() {
                                     id: "c113",
                                     title: "Set up Environment",
                                     comments: [],
-                                    archivedAt: 1590010000000
+                                    archivedAt: 1590010000000,
+                                    priority: "High",
+                                    status: "Stuck",
                                 },
                                 {
                                     id: "c114",
                                     title: "Review Code",
-                                    status: "pending",
-                                    priority: "low",
+                                    status: "Progress",
+                                    priority: "Critical",
                                     description: "Check for bugs",
                                     comments: [
                                         {
@@ -970,11 +1081,11 @@ function _createBoards() {
                                         imgUrl: "http://yet-another-cloudinary-image.jpg"
                                     },
                                     style: {
-                                        backgroundColor: "#ff5722"
+                                        backgroundColor: "bright-green"
                                     }
                                 }
                             ],
-                            style: {}
+                            style: "bright-green"
                         }
                     ],
                     activities: [
@@ -998,6 +1109,35 @@ function _createBoards() {
                             }
                         }
                     ],
+                    priorities: [
+
+                        {
+                            id: "p100",
+                            title: "Critical",
+                            color: "blackish"
+                        },
+                        {
+                            id: "p101",
+                            title: "High",
+                            color: "dark_indigo"
+                        },
+                        {
+                            id: "p102",
+                            title: "Medium",
+                            color: "indigo"
+                        },
+                        {
+                            id: "p103",
+                            title: "Low",
+                            color: "bright-blue"
+                        },
+                        {
+                            id: "p105",
+                            title: "",
+                            color: "explosive"
+                        }
+
+                    ],
                     cmpsOrder: ["DatePicker", "MemberPicker", "StatusPicker"]
                 },
                 {
@@ -1015,14 +1155,24 @@ function _createBoards() {
                     },
                     labels: [
                         {
-                            id: "l107",
-                            title: "Concept",
-                            color: "#e91e63"
+                            id: "l100",
+                            title: "",
+                            color: "explosive"
                         },
                         {
-                            id: "l108",
-                            title: "Feedback",
-                            color: "#ffc107"
+                            id: "l101",
+                            title: "Done",
+                            color: "done-green"
+                        },
+                        {
+                            id: "l102",
+                            title: "Progress",
+                            color: "working_orange"
+                        },
+                        {
+                            id: "l103",
+                            title: "Stuck",
+                            color: "stuck-red"
                         }
                     ],
                     members: [
@@ -1041,25 +1191,33 @@ function _createBoards() {
                                 {
                                     id: "c115",
                                     title: "Design Landing Page",
-                                    comments: []
+                                    comments: [],
+                                    priority: "Medium",
+                                    status: "Done",
                                 },
                                 {
                                     id: "c116",
                                     title: "Create Navigation",
-                                    comments: []
+                                    comments: [],
+                                    priority: "Low",
+                                    status: "Stuck",
                                 },
                                 {
                                     id: "c117",
                                     title: "Implement Animations",
-                                    comments: []
+                                    comments: [],
+                                    priority: "Low",
+                                    status: "Progress",
                                 },
                                 {
                                     id: "c118",
                                     title: "Optimize for Mobile",
-                                    comments: []
+                                    comments: [],
+                                    priority: "Medium",
+                                    status: "Done",
                                 }
                             ],
-                            style: {}
+                            style: "stuck-red"
                         },
                         {
                             id: "g108",
@@ -1069,13 +1227,15 @@ function _createBoards() {
                                     id: "c119",
                                     title: "Set up Database",
                                     comments: [],
+                                    priority: "High",
+                                    status: "Stuck",
                                     archivedAt: 1590500000000
                                 },
                                 {
                                     id: "c120",
                                     title: "Create API Endpoints",
-                                    status: "completed",
-                                    priority: "high",
+                                    status: "Progress",
+                                    priority: "Critical",
                                     description: "Endpoints for CRUD operations",
                                     comments: [
                                         {
@@ -1117,11 +1277,11 @@ function _createBoards() {
                                         imgUrl: "http://different-cloudinary-url.jpg"
                                     },
                                     style: {
-                                        backgroundColor: "#4caf50"
+                                        backgroundColor: "done-green"
                                     }
                                 }
                             ],
-                            style: {}
+                            style: "dark-blue"
                         }
                     ],
                     activities: [
@@ -1144,6 +1304,35 @@ function _createBoards() {
                                 comments: []
                             }
                         }
+                    ],
+                    priorities: [
+
+                        {
+                            id: "p100",
+                            title: "Critical",
+                            color: "blackish"
+                        },
+                        {
+                            id: "p101",
+                            title: "High",
+                            color: "dark_indigo"
+                        },
+                        {
+                            id: "p102",
+                            title: "Medium",
+                            color: "indigo"
+                        },
+                        {
+                            id: "p103",
+                            title: "Low",
+                            color: "bright-blue"
+                        },
+                        {
+                            id: "p105",
+                            title: "",
+                            color: "explosive"
+                        }
+
                     ],
                     cmpsOrder: ["MemberPicker", "DatePicker", "StatusPicker"]
                 }

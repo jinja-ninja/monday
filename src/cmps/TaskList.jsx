@@ -56,7 +56,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
                 dispatch({ type: SET_SELECTED_TASKS, selectedTasks: allTaskIds })
             } else {
                 const filteredTaskIds = allTaskIds.filter(task => {
-                    return !selectedTasks.some(selectedTask => selectedTask.taskId === task.taskId && selectedTask.groupId === task.groupId);
+                    return !selectedTasks.some(selectedTask => selectedTask.taskId === task.taskId && selectedTask.groupId === task.groupId)
                 })
                 dispatch({ type: ADD_SELECTED_TASKS, selectedTasks: filteredTaskIds })
             }
@@ -139,10 +139,9 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
         for (const propertyValue in propertyCounts) {
             const count = propertyCounts[propertyValue]
             const percentage = ((count / totalTasks) * 100).toFixed(1)
-            propertyPercentages.push({ [propertyKey]: propertyValue, percentage })
+            propertyPercentages.push({ [propertyKey]: propertyValue, percentage, count })
         }
 
-        // console.log('propertyPercentages:', propertyPercentages)
         return propertyPercentages
     }
 
@@ -277,18 +276,18 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
             <div className="task-list-summary">
                 {calculatePercentages(group.tasks, 'status').map((status, index) => (
                     <Tooltip
-                    content={`${status.status} ${status.percentage}% `}
-                    animationType="expand">
-                    <div
-                        className="label-progress-item"
-                        key={index}
-                        style={{
-                            width: `${status.percentage}%`,
-                            backgroundColor: `var(--color-${getPriorityOrStatusColor(status.status, labels)})`,
-                            height: '24px',
-                        }}
-                    >
-                    </div>
+                        content={`${status.status} ${status.count}/${group.tasks.length} ${status.percentage}% `}
+                        animationType="expand">
+                        <div
+                            className="label-progress-item"
+                            key={index}
+                            style={{
+                                width: `${status.percentage}%`,
+                                backgroundColor: `var(--color-${getPriorityOrStatusColor(status.status, labels)})`,
+                                height: '24px',
+                            }}
+                        >
+                        </div>
                     </Tooltip>
                 ))}
                 {group.tasks.length === 0 && <div className="status-sum-container"></div>}
@@ -297,7 +296,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
             <div className="task-list-summary">
                 {calculatePercentages(group.tasks, 'priority').map((priority, index) => (
                     <Tooltip
-                        content={`${priority.priority} ${priority.percentage}% `}
+                        content={`${priority.priority} ${priority.count}/${group.tasks.length} ${priority.percentage}% `}
                         animationType="expand">
                         <div
                             className="label-progress-item"

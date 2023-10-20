@@ -42,6 +42,7 @@ export function BoardMainHeader({ board, onRemoveBoard, onEditBoard }) {
                 // onClick={function noRefCheck() { }}
                 />
                 <IconButton
+                    onClick={() => navigate('/auth/login')}
                     ariaLabel="Login"
                     icon={LogIn}
                 // onClick={function noRefCheck() { }}
