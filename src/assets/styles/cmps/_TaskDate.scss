@@ -2,11 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    .date-picker-container {
-        position: absolute;
-        z-index: 15;
-    }
+    
 
     .no-date-container {
         display: none;
