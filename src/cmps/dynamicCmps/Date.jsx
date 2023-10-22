@@ -1,18 +1,37 @@
 
+import { useState } from "react";
+import { usePopper } from "react-popper";
+import { format } from 'date-fns';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+
 import { Icon } from "monday-ui-react-core";
 import { Calendar } from "monday-ui-react-core/icons";
-import { useState } from "react";
-import { TestCmp } from "../../pages/TestCmp";
-// import { format } from 'date-fns';
-// import { DayPicker } from 'react-day-picker';
-// import 'react-day-picker/dist/style.css';
 
 export function Date({ info }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [selected, setSelected] = useState(null)
+    const [toggle, setToggle] = useState(false)
 
+    const [referenceElement, setReferenceElement] = useState(null)
+    const [popperElement, setPopperElement] = useState(null)
+    const [arrowElement, setArrowElement] = useState(null)
+    const { styles, attributes } = usePopper(referenceElement, popperElement, {
+        modifiers: [{ name: 'arrow', options: { element: arrowElement } }],
+    })
+    function onToggleModal(ev) {
+		if (ev.target.closest('.date-picker-container')) return
+		ev.stopPropagation()
+		setToggle(prev => !prev)
+	}
+
+    let footer = <p>Please pick a day.</p>
+    if (selected) {
+        footer = <p>You picked {format(selected, 'PP')}.</p>
+    }
 
     return (
-        <div className="task-date" onClick={() => setIsMenuOpen(prevState => !prevState)}>
+        <div className="task-date" ref={setReferenceElement} onClick={(ev) => onToggleModal(ev)}>
 
             {!info && <div className="no-date-container" >
 
@@ -26,7 +45,16 @@ export function Date({ info }) {
 
             {info && <span>{info}</span>}
 
-            {isMenuOpen && <TestCmp isMenuOpen={isMenuOpen} />}
+            {toggle && <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="date-picker-modal">
+                <DayPicker
+                    mode="single"
+                    selected={selected}
+                    onSelect={setSelected}
+                    footer={footer}
+                />
+                <div ref={setArrowElement} style={styles.arrow} />
+            </div>}
+
 
         </div>
     );

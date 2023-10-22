@@ -2,7 +2,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
+    .date-picker-modal {
+        background-color: white;
+        z-index: 10;
+    }
 
     .no-date-container {
         display: none;

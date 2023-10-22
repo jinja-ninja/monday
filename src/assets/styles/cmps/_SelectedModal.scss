@@ -4,7 +4,8 @@
     align-items: center;
     position: fixed;
     bottom: 45px;
-    left: 300px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 3000;
     width: 800px;
     height: 63px;

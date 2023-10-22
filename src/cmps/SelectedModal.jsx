@@ -23,19 +23,7 @@ export function SelectedModal({ selectedTasks, currBoard }) {
         dispatch({ type: SET_SELECTED_TASKS, selectedTasks: [] })
     }
 
-
     async function onRemoveTasks() {
-        // const actions = selectedTasks.map(groupTaskIds => {
-        //     const group = boardService.getGroupById(currBoard, groupTaskIds.taskId)
-        //     const task = boardService.getTaskById(currBoard, groupTaskIds.taskId)
-        //     return {
-        //         description: task.title,
-        //         groupTitle: group.title,
-        //         groupColor: group.style,
-        //         type: 'Deleted task',
-        //     }
-        //     actions is for activities
-        // })
         const actions = []
         try {
             await removeBatchTasks(currBoard._id, selectedTasks, actions)
@@ -49,7 +37,6 @@ export function SelectedModal({ selectedTasks, currBoard }) {
         console.log('currBoard._id:', currBoard._id)
         console.log('selectedTasks:', selectedTasks)
         try {
-            // await duplicatedTask(currBoard._id, groupTaskIds.groupId, groupTaskIds.taskId)
             await duplicatedBatchTasks(currBoard._id, selectedTasks)
             showSuccessMsg('Duplicated multiple tasks')
         } catch (err) {
@@ -58,18 +45,6 @@ export function SelectedModal({ selectedTasks, currBoard }) {
 
         dispatch({ type: SET_SELECTED_TASKS, selectedTasks: [] })
     }
-
-    // async function onDuplicateTasks() {
-    //     for (let groupTaskIds of selectedTasks) {
-    //         try {
-    //             await duplicatedTask(currBoard._id, groupTaskIds.groupId, groupTaskIds.taskId)
-    //             // await duplicatedBatchTasks(currBoard._id,groupTaskIds.groupId, groupTaskIds.taskId)
-    //         } catch (err) {
-    //             showErrorMsg('Error duplicating tasks')
-    //         }
-    //     }
-    //     dispatch({ type: SET_SELECTED_TASKS, selectedTasks: [] })
-    // }
 
     return (
         <div className="selected-modal-container">

@@ -187,6 +187,8 @@
 
         .hide-collapse-btn {
           opacity: 0;
+          cursor: default;
+          pointer-events: none;
         }
 
         .collapse-heading {
