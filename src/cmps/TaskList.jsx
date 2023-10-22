@@ -141,6 +141,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
             const percentage = ((count / totalTasks) * 100).toFixed(1)
             propertyPercentages.push({ [propertyKey]: propertyValue, percentage, count })
         }
+        console.log('propertyPercentages:', propertyPercentages)
 
         return propertyPercentages
     }
@@ -282,7 +283,6 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
 
                         <div
                             className="label-progress-item"
-                            // key={index}
                             style={{
                                 width: `${status.percentage}%`,
                                 backgroundColor: `var(--color-${getPriorityOrStatusColor(status.status, labels)})`,
@@ -303,7 +303,6 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
                         animationType="expand">
                         <div
                             className="label-progress-item"
-                            // key={index}
                             style={{
                                 width: `${priority.percentage}%`,
                                 backgroundColor: `var(--color-${getPriorityOrStatusColor(priority.priority, priorities)})`,

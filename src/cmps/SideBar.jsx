@@ -24,6 +24,7 @@ export function SideBar() {
         if (isFavorites === 'main') return boards
         else if (isFavorites === 'favorites') return boards.filter(board => board.isStarred)
     }
+
     function onSelectBoard(boardId) {
         navigate(`/board/${boardId}`)
         console.log('board clicked - display board in BoardDetails', boardId)

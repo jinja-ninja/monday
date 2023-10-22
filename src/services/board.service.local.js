@@ -585,6 +585,16 @@ function _createBoards() {
                             _id: "u101",
                             fullname: "Gal Ben Natan",
                             imgUrl: "https://www.google.com"
+                        },
+                        {
+                            _id: "u102",
+                            fullname: "Omer Vered",
+                            imgUrl: "https://www.google.com"
+                        },
+                        {
+                            _id: "u103",
+                            fullname: "Nati Feldbaum",
+                            imgUrl: "https://www.google.com"
                         }
                     ],
                     groups: [
@@ -621,6 +631,7 @@ function _createBoards() {
                                     archivedAt: 1589983468418,
                                     priority: "High",
                                     status: "Stuck",
+                                    memberIds: []
                                 },
                                 {
                                     id: "c104",
@@ -803,9 +814,19 @@ function _createBoards() {
                     ],
                     members: [
                         {
+                            _id: "u101",
+                            fullname: "Gal Ben Natan",
+                            imgUrl: "https://www.google.com"
+                        },
+                        {
+                            _id: "u102",
+                            fullname: "Omer Vered",
+                            imgUrl: "https://www.google.com"
+                        },
+                        {
                             _id: "u103",
-                            fullname: "Jane Doe",
-                            imgUrl: "https://www.bing.com"
+                            fullname: "Nati Feldbaum",
+                            imgUrl: "https://www.google.com"
                         }
                     ],
                     groups: [
@@ -980,9 +1001,19 @@ function _createBoards() {
                     ],
                     members: [
                         {
-                            _id: "u105",
-                            fullname: "Emma Stone",
-                            imgUrl: "https://www.yahoo.com"
+                            _id: "u101",
+                            fullname: "Gal Ben Natan",
+                            imgUrl: "https://www.google.com"
+                        },
+                        {
+                            _id: "u102",
+                            fullname: "Omer Vered",
+                            imgUrl: "https://www.google.com"
+                        },
+                        {
+                            _id: "u103",
+                            fullname: "Nati Feldbaum",
+                            imgUrl: "https://www.google.com"
                         }
                     ],
                     groups: [
@@ -1177,9 +1208,19 @@ function _createBoards() {
                     ],
                     members: [
                         {
-                            _id: "u107",
-                            fullname: "Mike Brown",
-                            imgUrl: "https://www.duckduckgo.com"
+                            _id: "u101",
+                            fullname: "Gal Ben Natan",
+                            imgUrl: "https://www.google.com"
+                        },
+                        {
+                            _id: "u102",
+                            fullname: "Omer Vered",
+                            imgUrl: "https://www.google.com"
+                        },
+                        {
+                            _id: "u103",
+                            fullname: "Nati Feldbaum",
+                            imgUrl: "https://www.google.com"
                         }
                     ],
                     groups: [
@@ -1194,6 +1235,8 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
+                                    date : '',
+                                    memberIds : []
                                 },
                                 {
                                     id: "c116",

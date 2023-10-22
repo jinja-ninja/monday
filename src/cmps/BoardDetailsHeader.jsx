@@ -17,7 +17,6 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
     useEffect(() => {
         const handleScroll = () => {
             const isAtTop = window.scrollY === 0
-            //check if its better to use if and only then update the state
             setDynIsScrolledClass(isAtTop ? '' : 'hide-collapse-btn')
             setIsCollapse(isAtTop)
         }
@@ -163,53 +162,6 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
                         Dashboard
                     </Tab>
                 </TabList>
-                {/* {!isCollapse && <div className="left-btns">
-                    <Button
-                        className="btn-avatars"
-                        kind="tertiary"
-                        // onClick={function noRefCheck() { }}
-                        size="small"
-                    >
-                        Activity
-                        <AvatarGroup
-                            max={2}
-                            size="small"
-                        >
-                            <Avatar
-                                ariaLabel="Gal Ben Natan"
-                                src={GalImg}
-                                type="img"
-                            />
-                            <Avatar
-                                ariaLabel="Omer Vered"
-                                src={OmerImg}
-                                type="img"
-                            />
-                            <Avatar
-                                ariaLabel="Nati Feldbaum"
-                                src={NatiImg}
-                                type="img"
-                            />
-
-                        </AvatarGroup>
-                    </Button>
-
-                    <Button
-                        className="btn-invite"
-                        kind="tertiary"
-                        leftIcon={Invite}
-                        // onClick={function noRefCheck() { }}
-                        size="small"
-                    >
-                        Invite / 3
-                    </Button>
-
-                    <IconButton
-                        icon={Menu}
-                        // onClick={function noRefCheck() { }}
-                        size="small"
-                    />
-                </div>} */}
                 <div onClick={() => setIsCollapse(prevIsCollapse => !prevIsCollapse)} className={"btn-collapse-header " + dynCollapseBtnClass + " " + DynIsScrolledClass}><svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true" className="icon_5270a679af direction-icon expand-mode noFocusStyle_0c365cd2de" data-testid="icon"><path d="M9.46967 7.46967L10 8L10.5303 7.46967C10.2374 7.17678 9.76256 7.17678 9.46967 7.46967ZM10 9.06066L13.4697 12.5303C13.7626 12.8232 14.2374 12.8232 14.5303 12.5303C14.8232 12.2374 14.8232 11.7626 14.5303 11.4697L10.5303 7.46967L10 8L9.46967 7.46967L5.46967 11.4697C5.17678 11.7626 5.17678 12.2374 5.46967 12.5303C5.76256 12.8232 6.23744 12.8232 6.53033 12.5303L10 9.06066Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg>
                 </div>
 

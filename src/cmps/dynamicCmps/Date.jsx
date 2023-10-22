@@ -20,10 +20,10 @@ export function Date({ info }) {
         modifiers: [{ name: 'arrow', options: { element: arrowElement } }],
     })
     function onToggleModal(ev) {
-		if (ev.target.closest('.date-picker-container')) return
-		ev.stopPropagation()
-		setToggle(prev => !prev)
-	}
+        if (ev.target.closest('.date-picker-container')) return
+        ev.stopPropagation()
+        setToggle(prev => !prev)
+    }
 
     let footer = <p>Please pick a day.</p>
     if (selected) {
@@ -33,6 +33,8 @@ export function Date({ info }) {
     return (
         <div className="task-date" ref={setReferenceElement} onClick={(ev) => onToggleModal(ev)}>
 
+
+            {/* //If there is no date show this on hover */}
             {!info && <div className="no-date-container" >
 
                 <div className="btn-add-member">
@@ -43,8 +45,10 @@ export function Date({ info }) {
                 <Icon className="calendar-icon" icon={Calendar} iconSize={20} />
             </div>}
 
+            {/* //If there is date show the date  */}
             {info && <span>{info}</span>}
 
+            {/* //If either being clicked show the date picker and update the "info" in the board and then re render the Date.jsx to show to new date */}
             {toggle && <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="date-picker-modal">
                 <DayPicker
                     mode="single"
@@ -54,7 +58,6 @@ export function Date({ info }) {
                 />
                 <div ref={setArrowElement} style={styles.arrow} />
             </div>}
-
 
         </div>
     );
