@@ -6,6 +6,57 @@
     .date-picker-modal {
         background-color: white;
         z-index: 10;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px 0px;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .date-container {
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        position: relative;
+
+        .date-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 13px;
+        }
+
+        &:hover {
+            .date-hover-container {
+                opacity: 1;
+            }
+        }
+
+        .date-hover-container {
+            opacity: 0;
+            width: 129px;
+            height: 27px;
+            border: 1px var(--border-style);
+            border-color: var(--ui-border-color);
+
+            .btn-delete-date {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 5px;
+                width: 18px;
+                height: 18px;
+                border-radius: 4px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: var(--primary-background-hover-on-secondary-color);
+                }
+            }
+        }
+
     }
 
     .no-date-container {
@@ -53,7 +104,6 @@
         }
 
     }
-
 
     &:hover {
         .no-date-container {
