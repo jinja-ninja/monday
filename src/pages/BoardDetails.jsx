@@ -52,10 +52,11 @@ export function BoardDetails() {
     const cmpsOrder = [
         "side",
         "title",
-        "memberIds",
-        "status",
-        "priority",
-        "dueDate"
+        "MembersIds",
+        "Status",
+        "Priority",
+        "dueDate",
+        "Timeline",
     ]
 
     const dynSearchBtnInput = isSearch ?

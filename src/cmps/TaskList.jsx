@@ -16,6 +16,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 
 import { TaskTitle } from "./dynamicCmps/TaskTitle"
 import { ADD_SELECTED_TASKS, REMOVE_SELECTED_TASKS, SET_SELECTED_TASKS } from "../store/reducers/board.reducer"
+import { Timeline } from "./dynamicCmps/Timeline"
 
 export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }) {
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
@@ -105,7 +106,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
             await updateTask(boardId, groupId, taskId, data)
             showSuccessMsg(`Task updated ${taskId}`)
         } catch (err) {
-            showErrorMsg(`Cannot remove task ${taskId}`)
+            showErrorMsg(`Cannot update task ${taskId}`)
         }
     }
 
@@ -143,7 +144,6 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
             const percentage = ((count / totalTasks) * 100).toFixed(1)
             propertyPercentages.push({ [propertyKey]: propertyValue, percentage, count })
         }
-        // console.log('propertyPercentages:', propertyPercentages)
 
         return propertyPercentages
     }
@@ -181,6 +181,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
     }
 
     function renderDynamicCmp(cmp, task, labels, priorities) {
+        // console.log('task[cmp]:', task[cmp])
         switch (cmp) {
             case "side":
                 return <Side info={group['style']} taskId={task.id} groupId={groupId} />
@@ -190,13 +191,13 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
                     groupId={groupId}
                     taskId={task.id}
                     onUpdateTask={onUpdateTask} />
-            case "status":
+            case "Status":
                 return <TaskStatus
                     type={'status'}
                     task={task}
                     labels={labels}
                     onUpdateTask={onUpdateTask} />
-            case "priority":
+            case "Priority":
                 return <TaskStatus
                     type={'priority'}
                     task={task}
@@ -208,8 +209,19 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
                     task={task}
                 />
             case "dueDate":
-                return <Date info={task[cmp]} />
-
+                return <Date
+                    dueDate={task[cmp]}
+                    boardId={boardId}
+                    groupId={groupId}
+                    taskId={task.id}
+                />
+            case "Timeline":
+                return <Timeline
+                    // Timeline={task[cmp]}
+                    boardId={boardId}
+                    groupId={groupId}
+                    taskId={task.id}
+                />
             default:
                 break
         }

@@ -146,8 +146,18 @@ function getNewBoard() {
         ],
         members: [
             {
-                _id: utilService.makeId(),
-                fullname: "Nati Feldman",
+                _id: "u101",
+                fullname: "Gal Ben Natan",
+                imgUrl: "https://www.google.com"
+            },
+            {
+                _id: "u102",
+                fullname: "Omer Vered",
+                imgUrl: "https://www.google.com"
+            },
+            {
+                _id: "u103",
+                fullname: "Nati Feldbaum",
                 imgUrl: "https://www.google.com"
             }
         ],
@@ -163,6 +173,7 @@ function getNewBoard() {
                         comments: [],
                         priority: "",
                         status: "",
+                        dueDate: undefined
                     },
                     {
                         id: utilService.makeId(),
@@ -170,6 +181,7 @@ function getNewBoard() {
                         comments: [],
                         priority: "",
                         status: "",
+                        dueDate: undefined
                     }
                 ],
                 style: "grass_green"
@@ -185,13 +197,13 @@ function getNewBoard() {
                         comments: [],
                         priority: "",
                         status: "",
-                        memberIds: []
                     },
                     {
                         id: utilService.makeId(),
                         title: "Type your task here",
                         priority: "",
                         status: "",
+                        dueDate: undefined,
                         description: "description",
                         comments: [],
                         checklists: [
@@ -209,7 +221,6 @@ function getNewBoard() {
                         ],
                         memberIds: [],
                         labelIds: ["l101", "l102"],
-                        dueDate: "No deadline",
                         byMember: {
                             _id: "u101",
                             username: "Gal",
@@ -612,6 +623,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
+                                    dueDate: undefined
                                 },
                                 {
                                     id: "c102",
@@ -619,6 +631,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Progress",
+                                    dueDate: undefined
                                 }
                             ],
                             style: "grass_green"
@@ -634,6 +647,7 @@ function _createBoards() {
                                     archivedAt: 1589983468418,
                                     priority: "High",
                                     status: "Stuck",
+                                    dueDate: undefined,
                                     memberIds: []
                                 },
                                 {
@@ -641,6 +655,7 @@ function _createBoards() {
                                     title: "Help me",
                                     status: "Progress",
                                     priority: "Critical",
+                                    dueDate: 16156215211,
                                     description: "description",
                                     comments: [
                                         {
@@ -669,7 +684,6 @@ function _createBoards() {
                                     ],
                                     memberIds: ["u101"],
                                     labelIds: ["l101", "l102"],
-                                    dueDate: 16156215211,
                                     byMember: {
                                         _id: "u101",
                                         username: "Gal",
@@ -685,6 +699,7 @@ function _createBoards() {
                                     title: "Change that",
                                     status: "Done",
                                     priority: "",
+                                    dueDate: 16156215211,
                                     description: "description",
                                     comments: [
                                         {
@@ -713,7 +728,6 @@ function _createBoards() {
                                     ],
                                     memberIds: ["u101"],
                                     labelIds: ["l103", "l101"],
-                                    dueDate: 16156215211,
                                     byMember: {
                                         _id: "u101",
                                         username: "Gal",
@@ -845,7 +859,6 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
-                                    memberIds: []
                                 },
                                 {
                                     id: "c106",
@@ -853,7 +866,6 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Progress",
-                                    memberIds: []
                                 }
                             ],
                             style: "grass_green"
@@ -869,7 +881,6 @@ function _createBoards() {
                                     comments: [],
                                     priority: "High",
                                     status: "Stuck",
-                                    memberIds: []
                                 },
                                 {
                                     id: "c108",
@@ -904,7 +915,6 @@ function _createBoards() {
                                     ],
                                     memberIds: ["u103"],
                                     labelIds: ["l103", "l104"],
-                                    dueDate: 16156215322,
                                     byMember: {
                                         _id: "u103",
                                         username: "Jane",
@@ -1035,6 +1045,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Done",
+                                    dueDate: undefined
                                 },
                                 {
                                     id: "c110",
@@ -1042,6 +1053,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Progress",
+                                    dueDate: undefined
                                 },
                                 {
                                     id: "c111",
@@ -1049,6 +1061,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
+                                    dueDate: undefined
 
                                 },
                                 {
@@ -1057,6 +1070,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Stuck",
+                                    dueDate: undefined
                                 }
                             ],
                             style: "dark-orange"
@@ -1072,13 +1086,13 @@ function _createBoards() {
                                     archivedAt: 1590010000000,
                                     priority: "High",
                                     status: "Stuck",
-                                    memberIds: []
                                 },
                                 {
                                     id: "c114",
                                     title: "Review Code",
                                     status: "Progress",
                                     priority: "Critical",
+                                    dueDate: 1615655555555,
                                     description: "Check for bugs",
                                     comments: [
                                         {
@@ -1112,7 +1126,6 @@ function _createBoards() {
                                     ],
                                     memberIds: ["u105"],
                                     labelIds: ["l105", "l106"],
-                                    dueDate: 1615655555555,
                                     byMember: {
                                         _id: "u105",
                                         username: "Emma",
@@ -1252,7 +1265,6 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Stuck",
-                                    memberIds: []
                                 },
                                 {
                                     id: "c117",
@@ -1260,7 +1272,6 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Progress",
-                                    memberIds: []
                                 },
                                 {
                                     id: "c118",
@@ -1268,7 +1279,6 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
-                                    memberIds: []
                                 }
                             ],
                             style: "stuck-red"
@@ -1283,7 +1293,6 @@ function _createBoards() {
                                     comments: [],
                                     priority: "High",
                                     status: "Stuck",
-                                    memberIds: [],
                                     archivedAt: 1590500000000
                                 },
                                 {
@@ -1291,6 +1300,7 @@ function _createBoards() {
                                     title: "Create API Endpoints",
                                     status: "Progress",
                                     priority: "Critical",
+                                    dueDate: undefined,
                                     description: "Endpoints for CRUD operations",
                                     comments: [
                                         {
@@ -1324,7 +1334,6 @@ function _createBoards() {
                                     ],
                                     memberIds: ["u107"],
                                     labelIds: ["l107", "l108"],
-                                    dueDate: 1615700000000,
                                     byMember: {
                                         _id: "u107",
                                         username: "Mike",
@@ -1361,7 +1370,6 @@ function _createBoards() {
                         }
                     ],
                     priorities: [
-
                         {
                             id: "p100",
                             title: "Critical",
