@@ -18,6 +18,7 @@ import { TaskTitle } from "./dynamicCmps/TaskTitle"
 import { ADD_SELECTED_TASKS, REMOVE_SELECTED_TASKS, SET_SELECTED_TASKS } from "../store/reducers/board.reducer"
 import { Timeline } from "./dynamicCmps/Timeline"
 import { utilService } from "../services/util.service"
+import { Files } from "./dynamicCmps/Files"
 
 export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }) {
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
@@ -259,6 +260,12 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
                     taskId={task.id}
                     groupColor={group.style}
                 />
+            case "Files":
+                return <Files
+                    boardId={boardId}
+                    groupId={groupId}
+                    taskId={task.id}
+                />
             default:
                 break
         }
@@ -386,7 +393,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
                         }
                 }>
                     <span className="dates-summary-txt">{`${utilService.getTimelineRange(datesSummary)}`}</span>
-                    {datesSummary.from && datesSummary.to &&<span className="dates-summary-days-txt">{utilService.getTimestampInDays(datesSummary) + 'd'}</span>}
+                    {datesSummary.from && datesSummary.to && <span className="dates-summary-days-txt">{utilService.getTimestampInDays(datesSummary) + 'd'}</span>}
 
                 </div>
             </div>
@@ -406,6 +413,10 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
                 </div>
             </div>
 
+            <div className="task-list-summary">
+
+            </div>
+            
         </section>
 
         <>

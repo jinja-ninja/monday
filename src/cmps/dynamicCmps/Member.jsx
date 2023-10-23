@@ -18,8 +18,8 @@ export function Member({ boardMembers, task }) {
         <div className="btn-add-member" >
             <div className="line-one"></div>
             <div className="line-two"></div>
-
         </div>
+        
     </div>
 }
 
