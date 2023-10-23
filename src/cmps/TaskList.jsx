@@ -17,6 +17,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { TaskTitle } from "./dynamicCmps/TaskTitle"
 import { ADD_SELECTED_TASKS, REMOVE_SELECTED_TASKS, SET_SELECTED_TASKS } from "../store/reducers/board.reducer"
 import { Timeline } from "./dynamicCmps/Timeline"
+import { utilService } from "../services/util.service"
 
 export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }) {
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
@@ -37,6 +38,9 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
     const boardId = currBoard._id
     const groupId = group.id
     let allTaskIds
+    let timelineSummary = getSmallestFromAndLargestTo()
+    let datesSummary = getSmallestAndBiggestDates()
+
     useEffect(() => {
         allTaskIds = getAllTasksIds()
         if (!allTaskIds.every(task => selectedTasks.some(selectedTask =>
@@ -125,7 +129,39 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
         return kind.find(k => k.title === title).color
     }
 
+    function getAllTimelines() {
+        return group.tasks.filter(task => task.Timeline).map(task => task.Timeline)
+    }
 
+    function getSmallestFromAndLargestTo() {
+        const timelines = getAllTimelines()
+
+        if (timelines.length === 0) {
+            return { from: null, to: null }
+        }
+        const smallestFrom = Math.min(...timelines.map(timeline => timeline.from))
+        const biggestTo = Math.max(...timelines.map(timeline => timeline.to))
+
+        return { from: smallestFrom, to: biggestTo }
+    }
+
+    function getAllDates() {
+        return group.tasks.filter(task => task.dueDate).map(task => task.dueDate)
+    }
+
+    function getSmallestAndBiggestDates() {
+        const dates = getAllDates()
+
+        if (dates.length === 0) {
+            return { from: null, to: null }
+        }
+
+        const smallestDate = Math.min(...dates)
+        const biggestDate = Math.max(...dates)
+
+        return { from: smallestDate, to: biggestDate }
+
+    }
 
     function calculatePercentages(tasks, kind) {
         const propertyKey = kind === 'status' ? 'status' : 'priority'
@@ -203,7 +239,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
                     task={task}
                     labels={priorities}
                     onUpdateTask={onUpdateTask} />
-            case "memberIds":
+            case "MembersIds":
                 return <Member
                     boardMembers={currBoard.members}
                     task={task}
@@ -217,15 +253,17 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
                 />
             case "Timeline":
                 return <Timeline
-                    // Timeline={task[cmp]}
+                    Timeline={task[cmp]}
                     boardId={boardId}
                     groupId={groupId}
                     taskId={task.id}
+                    groupColor={group.style}
                 />
             default:
                 break
         }
     }
+
     return <div className="task-list-container">
 
         <section className="header-title-container group-grid">
@@ -313,6 +351,8 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
             </div>
 
             <div className="task-list-summary">
+                {/* <div className="priority-summary-container"> */}
+
                 {calculatePercentages(group.tasks, 'priority').map((priority, index) => (
                     <Tooltip
                         key={index}
@@ -331,7 +371,41 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
 
                 ))}
                 {group.tasks.length === 0 && <div className="status-sum-container"></div>}
+                {/* </div> */}
+
             </div>
+
+            <div className="task-list-summary">
+                <div className="date-summary-container" style={
+                    (!datesSummary || !datesSummary.from || !datesSummary.to) ?
+                        { backgroundColor: '#c4c4c4' } :
+                        {
+                            background: `linear-gradient(to right, 
+                                var(--color-${group.style}) ${utilService.calculateTimelineProgress(datesSummary)}, 
+                                #333333 ${utilService.calculateTimelineProgress(datesSummary)})`
+                        }
+                }>
+                    <span className="dates-summary-txt">{`${utilService.getTimelineRange(datesSummary)}`}</span>
+                    {datesSummary.from && datesSummary.to &&<span className="dates-summary-days-txt">{utilService.getTimestampInDays(datesSummary) + 'd'}</span>}
+
+                </div>
+            </div>
+
+            <div className="task-list-summary">
+                <div className="timeline-summary-container" style={
+                    (!timelineSummary || !timelineSummary.from || !timelineSummary.to) ?
+                        { backgroundColor: '#c4c4c4' } :
+                        {
+                            background: `linear-gradient(to right, 
+                                var(--color-${group.style}) ${utilService.calculateTimelineProgress(timelineSummary)}, 
+                                #333333 ${utilService.calculateTimelineProgress(timelineSummary)})`
+                        }
+                }>
+                    <span className="timeline-summary-txt">{`${utilService.getTimelineRange(timelineSummary)}`}</span>
+                    {timelineSummary.from && timelineSummary.to && <span className="timeline-summary-days-txt">{utilService.getTimestampInDays(timelineSummary) + 'd'}</span>}
+                </div>
+            </div>
+
         </section>
 
         <>

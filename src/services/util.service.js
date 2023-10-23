@@ -10,7 +10,6 @@ export const utilService = {
     debounce,
     getAssetSrc,
     makeLabel,
-    getTimeFromStamp,
     randomTrueFalse,
     makeImage,
     getEmptyMsg,
@@ -18,7 +17,11 @@ export const utilService = {
     makeGroupId,
     makeBoardId,
     makeTaskId,
-    timeStampToDate
+    timeStampToDate,
+    getTimelineRange,
+    getTimestampInDays,
+    millisecondsToDays,
+    calculateTimelineProgress,
 
 }
 
@@ -139,43 +142,70 @@ function timeStampToDate(timeStamp) {
     return timelineToSave
 }
 
-function getTimeFromStamp(timestamp) {
-    const days = [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-    ]
-    const months = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-    ]
-    const date = new Date(timestamp)
-    const time =
-        timeFormat(date.getHours()) + ':' + timeFormat(date.getMinutes())
-    const currTimestamp = Date.now()
-    const currDate = new Date(currTimestamp)
-    const day = 1000 * 60 * 60 * 24
-    if (currTimestamp - timestamp < day) return 'Today ' + time
-    if (currTimestamp - timestamp < day * 2) return 'Yesterday ' + time
-    if (currTimestamp - timestamp < day * 7) return days[date.getDay()]
-    if (currDate.getUTCFullYear() !== date.getUTCFullYear())
-        return months[date.getMonth()].slice(0, 3) + ' ' + date.getUTCFullYear()
-    return date.getDate() + ' ' + months[date.getMonth()].slice(0, 3)
+function getTimelineRange(timeline) {
+
+    if (!timeline || !timeline.from || !timeline.to) {
+        return '-'
+    }
+    // Used by activity-preview, unlike "getTimelineRange" at timeline-summary.
+    const startMonth = timeStampToDate(timeline.from).slice(0, 3)
+    const endMonth = timeStampToDate(timeline.to).slice(0, 3)
+
+    const startDay = timeStampToDate(timeline.from).slice(4)
+    const endDay = timeStampToDate(timeline.to).slice(4)
+
+    if (startMonth === endMonth) {
+        if (startDay === endDay) {
+            return `${startMonth} ${startDay}`
+        } else {
+            return `${startMonth} ${startDay}-${endDay}`
+        }
+    } else {
+        return `${startMonth} ${startDay} - ${endMonth} ${endDay}`
+    }
 }
+
+export function millisecondsToDays(ms) {
+    return Math.floor(ms / 86400000) //num of ms in day
+}
+
+export function calculateTimelineProgress(timeline) {
+    if (timeline === null) return
+    if (!timeline.from || !timeline.to) return 0
+
+    // Get the current date
+    const currentDate = Date.now()
+
+    // Convert the start and end dates to timestamps
+    const startTimestamp = timeline.from
+    const endTimestamp = timeline.to
+
+    // Check if the current date is after the end date
+    if (currentDate >= endTimestamp) {
+        // If so, the progress is 100%
+        return `100%`
+    }
+
+    const totalDuration = endTimestamp - startTimestamp
+
+    // Calculate the elapsed time from the start date to the current date
+    const timePassedSinceStart = currentDate - startTimestamp
+
+    // Calculate the progress as a percentage of time passed
+    const progress = (timePassedSinceStart / totalDuration) * 100
+
+    // Round the progress to two decimal places and return as a whole number
+    const result = Math.round(progress)
+    return `${result}%`
+}
+
+
+function getTimestampInDays(Timeline) {
+    if (!Timeline || !Timeline.from || !Timeline.to) return
+    const estTime = Timeline.to - Timeline.from
+    return utilService.millisecondsToDays(estTime) || 1
+}
+
 
 function timeFormat(time) {
     return time < 10 ? '0' + time : time

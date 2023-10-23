@@ -35,7 +35,7 @@ export function Date({ dueDate, taskId, boardId, groupId }) {
       }
       .my-today { 
         border-radius: var(--border-radius-small);
-        border-color : var(--primary-color);
+        border : 1px solid var(--primary-color);
       }
     `
     
@@ -45,7 +45,6 @@ export function Date({ dueDate, taskId, boardId, groupId }) {
             setIsPickerOpen(!isPickerOpen)
         }
 
-        //works kinda like onBlur for div
         document.addEventListener('mousedown', onClosePicker)
         return () => {
             document.removeEventListener('mousedown', onClosePicker)
@@ -142,4 +141,3 @@ export function Date({ dueDate, taskId, boardId, groupId }) {
         </div>
     );
 }
-

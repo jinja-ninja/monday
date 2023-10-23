@@ -34,6 +34,14 @@
 
         .open-close-arrow {
             transition: all .4s;
+
+            &:focus {
+                outline: none;
+            }
+
+            path {
+                outline: none;
+            }
         }
     }
 
@@ -242,6 +250,14 @@
 
         .open-close-arrow {
             transform: rotate(180deg);
+
+            &:focus {
+                outline: none;
+            }
+
+            path {
+                outline: none;
+            }
         }
 
         .side-bar-upper-container {

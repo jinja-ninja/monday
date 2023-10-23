@@ -131,9 +131,6 @@ export async function duplicatedGroup(boardId, groupId) {
 
 // Task Actions
 export async function addTask(boardId, groupId, task) {
-    console.log('boardId:', boardId)
-    console.log('groupId:', groupId)
-    console.log('task:', task)
     try {
         const board = await boardService.addTask(boardId, groupId, task)
         store.dispatch({ type: SET_BOARD, board })
@@ -159,6 +156,7 @@ export async function removeTask(boardId, groupId, taskId) {
 export async function updateTask(boardId, groupId, taskId, data) {
     try {
         const board = await boardService.update('task', boardId, groupId, taskId, data)
+        console.log('board:', board)
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {

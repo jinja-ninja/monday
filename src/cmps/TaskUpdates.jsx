@@ -11,8 +11,6 @@ export function TaskUpdates({ boardId, groupId, taskId, currTask }) {
     const [textAreaState, setTextAreaState] = useState(false)
     const [TextAreaValue, setTextAreaValue] = useState('')
 
-
-
     function toggleInputAndTextArea() {
         setTextAreaState((prevTextAreaState) => !prevTextAreaState)
     }
@@ -32,6 +30,7 @@ export function TaskUpdates({ boardId, groupId, taskId, currTask }) {
 
     function onDeleteComment(commentId, currTask) {
         const updatedComments = boardService.deleteComment(commentId, currTask)
+        //tried ...updatedComments
         updateTask(boardId, groupId, taskId, { key: "comments", value: updatedComments })
 
     }

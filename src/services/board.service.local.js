@@ -91,13 +91,26 @@ async function query() {
 }
 
 async function getBoardById(boardId, filterBy = { txt: '', person: null }) {
-    // console.log('filterBy:', filterBy)
     let board = await storageService.get(STORAGE_KEY, boardId)
     if (filterBy.txt) {
         const regex = new RegExp(filterBy.txt, 'i')
-        board.groups = board.groups.filter((group) => regex.test(group.title))
+        board.groups = board.groups.map((group) => {
+            const filteredTasks = group.tasks.filter((task) => regex.test(task.title))
+
+            // If there are matching tasks or the group title matches, include the group
+            if (filteredTasks.length > 0 || regex.test(group.title)) {
+                if (filteredTasks.length > 0) {
+                    group.tasks = filteredTasks
+                }
+                return group;
+            }
+            // If no matching tasks and group title doesn't match, exclude the group
+            return null
+        }).filter((group) => group !== null) // Remove groups without matching tasks or title
     }
-    return board
+
+    return board;
+
 }
 
 async function save(board) {

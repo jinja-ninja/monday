@@ -244,6 +244,49 @@
         background-color: var(--color-explosive);
       }
     }
+
+    .date-summary-container,
+    .timeline-summary-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      // background-color: #c4c4c4;
+      height: 22px;
+      width: 100%;
+      margin-inline: 8px;
+      font-size: 13px;
+      border-radius: 11px;
+      color: #fff;
+      position: relative;
+
+      &:hover {
+        .dates-summary-txt {
+          display: none;
+        }
+
+        .dates-summary-days-txt {
+          display: inline-block;
+        }
+
+        .timeline-summary-txt {
+          display: none;
+        }
+
+        .timeline-summary-days-txt {
+          display: inline-block;
+        }
+
+      }
+    }
+
+    .dates-summary-days-txt {
+      display: none;
+    }
+
+    .timeline-summary-days-txt {
+      display: none;
+
+    }
   }
 
 }
