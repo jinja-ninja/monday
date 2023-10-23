@@ -17,7 +17,8 @@ export const utilService = {
     getEmptyReview,
     makeGroupId,
     makeBoardId,
-    makeTaskId
+    makeTaskId,
+    timeStampToDate
 
 }
 
@@ -128,6 +129,14 @@ function getAssetSrc(name) {
     const modules = import.meta.globEager('/src/assets/img/*')
     const mod = modules[path]
     return mod.default
+}
+
+function timeStampToDate(timeStamp) {
+    const timelineToSave = new Date(timeStamp).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+    })
+    return timelineToSave
 }
 
 function getTimeFromStamp(timestamp) {

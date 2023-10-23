@@ -1,0 +1,37 @@
+.timeline-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #c4c4c4;
+    height: 22px;
+    width: 100%;
+    margin: 6px 16px;
+    font-size: 14px;
+    border-radius: 11px;
+    color: #fff;
+
+    &:hover {
+        background-color: #ababab;
+
+        .set-dates-txt {
+            opacity: 1;
+        }
+
+        .dash {
+            opacity: 0;
+        }
+    }
+
+    .set-dates-txt {
+        position: absolute;
+        opacity: 0;
+    }
+}
+
+.timeline-picker-modal{
+    background-color: white;
+    z-index: 10;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px 0px;
+    border-radius: 4px;
+    font-size: 14px;
+}

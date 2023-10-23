@@ -1,17 +1,19 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePopper } from "react-popper";
 import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 
 import { Icon } from "monday-ui-react-core";
-import { Calendar } from "monday-ui-react-core/icons";
+import { Calendar, CloseSmall } from "monday-ui-react-core/icons";
+import { updateTask } from "../../store/actions/board.action";
+import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service";
+import { utilService } from "../../services/util.service";
 
-export function Date({ info }) {
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
+export function Date({ dueDate, taskId, boardId, groupId }) {
     const [selected, setSelected] = useState(null)
-    const [toggle, setToggle] = useState(false)
+    const [isPickerOpen, setIsPickerOpen] = useState(false)
 
     const [referenceElement, setReferenceElement] = useState(null)
     const [popperElement, setPopperElement] = useState(null)
@@ -19,10 +21,75 @@ export function Date({ info }) {
     const { styles, attributes } = usePopper(referenceElement, popperElement, {
         modifiers: [{ name: 'arrow', options: { element: arrowElement } }],
     })
+
+    const pickerCss = `
+    .my-selected:not([disabled]) { 
+        border-radius: var(--border-radius-small);
+        background-color: var(--primary-color);
+        color : white;
+      }
+      .my-selected:hover:not([disabled]) { 
+        background-color: #0060b9;
+        border : 1px solid black;
+        color: black;
+      }
+      .my-today { 
+        border-radius: var(--border-radius-small);
+        border-color : var(--primary-color);
+      }
+    `
+
+
+
+    useEffect(() => {
+        if (selected) {
+            onChangeDueDate()
+            setIsPickerOpen(!isPickerOpen)
+        }
+
+        //works kinda like onBlur for div
+        document.addEventListener('mousedown', onClosePicker)
+        return () => {
+            document.removeEventListener('mousedown', onClosePicker)
+        }
+    }, [selected])
+
+    function onClosePicker(ev) {
+        if (ev.target.closest('.date-picker-modal')) return
+        setIsPickerOpen(false)
+    }
+
     function onToggleModal(ev) {
-        if (ev.target.closest('.date-picker-container')) return
+        if (ev.target.closest('.date-picker-modal')) return
         ev.stopPropagation()
-        setToggle(prev => !prev)
+        setIsPickerOpen(prev => !prev)
+    }
+
+    async function onChangeDueDate() {
+        const timestamp = selected.getTime()
+        console.log('timestamp:', timestamp)
+        // const taskToEdit = { ...task, dueDate: timestamp }
+        try {
+            //     // const action = {
+            //     //     description: taskToEdit.title,
+            //     //     fromDate: task.dueDate,
+            //     //     toDate: taskToEdit.dueDate,
+            //     //     type: 'Date',
+            //     // }
+            await updateTask(boardId, groupId, taskId, { key: 'dueDate', value: timestamp })
+            showSuccessMsg(`Changed due date in task ${taskId}`)
+        } catch {
+            showErrorMsg(`Cant change due date in task ${taskId}`)
+        }
+    }
+
+    async function clearTaskDueDate(ev) {
+        ev.stopPropagation()
+        try {
+            await updateTask(boardId, groupId, taskId, { key: 'dueDate', value: null })
+        } catch {
+            showErrorMsg('Something went wrong')
+        }
     }
 
     let footer = <p>Please pick a day.</p>
@@ -33,9 +100,8 @@ export function Date({ info }) {
     return (
         <div className="task-date" ref={setReferenceElement} onClick={(ev) => onToggleModal(ev)}>
 
-
             {/* //If there is no date show this on hover */}
-            {!info && <div className="no-date-container" >
+            {!dueDate && <div className="no-date-container" >
 
                 <div className="btn-add-member">
                     <div className="line-one"></div>
@@ -46,15 +112,31 @@ export function Date({ info }) {
             </div>}
 
             {/* //If there is date show the date  */}
-            {info && <span>{info}</span>}
+            {dueDate && (
+                <div className="date-container">
+                    <span className="date-text">
+                        {utilService.timeStampToDate(dueDate)}
+                    </span>
+                    <div className="date-hover-container">
+                        <div className="btn-delete-date" onClick={(ev) => { clearTaskDueDate(ev) }}>
+                            <Icon size="small" icon={CloseSmall} />
+                        </div>
+                    </div>
+                </div>
+            )}
 
-            {/* //If either being clicked show the date picker and update the "info" in the board and then re render the Date.jsx to show to new date */}
-            {toggle && <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="date-picker-modal">
+
+            {isPickerOpen && <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="date-picker-modal">
+                <style>{pickerCss}</style>
                 <DayPicker
                     mode="single"
                     selected={selected}
                     onSelect={setSelected}
                     footer={footer}
+                    modifiersClassNames={{
+                        selected: 'my-selected',
+                        today: 'my-today'
+                    }}
                 />
                 <div ref={setArrowElement} style={styles.arrow} />
             </div>}

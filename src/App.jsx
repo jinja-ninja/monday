@@ -5,7 +5,6 @@ import "monday-ui-react-core/tokens"
 import './assets/styles/main.scss'
 import { boardService } from './services/board.service.local'
 
-
 import { HomePage } from './pages/HomePage'
 import { LoginSignUp } from './pages/LoginSingup'
 import { BoardDetails } from './pages/BoardDetails'
@@ -14,8 +13,6 @@ import { PageNotFound } from './pages/PageNotFound'
 import { BoardIndex } from './pages/BoardIndex'
 import { store } from './store/store'
 import { TestCmp } from './pages/TestCmp'
-
-
 
 export function App() {
 
