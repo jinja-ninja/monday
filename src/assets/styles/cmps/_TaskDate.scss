@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: text;
 
     .date-picker-modal {
         background-color: white;
@@ -16,6 +17,7 @@
         // align-items: center;
         // justify-content: center;
         position: relative;
+        cursor: text;
 
         .date-text {
             position: absolute;
@@ -29,6 +31,10 @@
             .date-hover-container {
                 opacity: 1;
             }
+
+            .date-text {
+                color: var(--primary-color);
+            }
         }
 
         .date-hover-container {
@@ -37,6 +43,7 @@
             height: 27px;
             border: 1px var(--border-style);
             border-color: var(--ui-border-color);
+            cursor: text;
 
             .btn-delete-date {
                 display: flex;
@@ -53,6 +60,7 @@
 
                 &:hover {
                     background-color: var(--primary-background-hover-on-secondary-color);
+
                 }
             }
         }
@@ -68,6 +76,7 @@
         height: 27px;
         border: 1px var(--border-style);
         border-color: var(--ui-border-color);
+        cursor: text;
 
         .btn-add-member {
             color: var(--text-color-on-primary);
