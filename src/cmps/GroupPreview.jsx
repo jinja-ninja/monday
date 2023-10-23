@@ -66,8 +66,6 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
 
     return <div className="group-preview-container">
 
-
-
         <div className="collapsible-header-wrapper">
             <MenuButton
                 size={MenuButton.sizes.XS}
@@ -96,8 +94,9 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                         title="Change group color" />
                 </Menu>
             </MenuButton>
+
             <Tooltip
-                content="Collapse/Expand Group"
+                content={showGroup ? "Collapse Group" : "Expand Group"}
                 animationType="expand">
                 <Icon iconType={Icon.type.SVG} iconSize={20}
                     icon={showGroup ? DropdownChevronDown : DropdownChevronRight}

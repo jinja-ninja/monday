@@ -1,5 +1,5 @@
-import { Button, Dialog, DialogContentContainer, TextField, useSwitch } from "monday-ui-react-core"
-import { Edit } from "monday-ui-react-core/icons"
+import { Button, Dialog, DialogContentContainer, Icon, TextField, useSwitch } from "monday-ui-react-core"
+import { Alert, Edit } from "monday-ui-react-core/icons"
 import { useState } from "react"
 
 export function TaskStatus({ task, labels, onUpdateTask, type }) {
@@ -77,8 +77,12 @@ export function TaskStatus({ task, labels, onUpdateTask, type }) {
                 <div
                     className="task-status-info"
                     style={{ backgroundColor: `var(--color-${getCurrLabel().color})` }}>
-                    {task[type]}
-
+                    {task[type] === "Critical" ?
+                        <div className="critical-priority-container">
+                            <span>{task[type]}</span>
+                            <Icon icon={Alert} iconSize={17} />
+                        </div>
+                        : task[type]}
                     <div className="fold-label"></div>
                 </div>
 
@@ -86,3 +90,5 @@ export function TaskStatus({ task, labels, onUpdateTask, type }) {
         </div >
     )
 }
+
+

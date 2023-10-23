@@ -64,7 +64,6 @@ export function Date({ dueDate, taskId, boardId, groupId }) {
 
     async function onChangeDueDate() {
         const timestamp = selected.getTime()
-        console.log('timestamp:', timestamp)
         // const taskToEdit = { ...task, dueDate: timestamp }
         try {
             //     // const action = {
