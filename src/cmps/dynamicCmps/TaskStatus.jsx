@@ -22,7 +22,7 @@ export function TaskStatus({ task, labels, onUpdateTask, type }) {
         setIsMenuOpen(true)
     }
 
-    console.log(`RENDER`)
+    // console.log(`RENDER`)
     return (
         <div className="task-status" onClick={() => setIsMenuOpen(prevState => !prevState)}>
             <Dialog modifiers={[{

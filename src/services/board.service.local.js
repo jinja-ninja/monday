@@ -24,6 +24,8 @@ export const boardService = {
     createNewComment,
     deleteComment,
     createActivity,
+    getMemberById,
+    getMembers,
     removeBatchTasks,
     duplicateBatchTasks,
     getLabels,
@@ -183,6 +185,7 @@ function getNewBoard() {
                         comments: [],
                         priority: "",
                         status: "",
+                        memberIds: []
                     },
                     {
                         id: utilService.makeId(),
@@ -204,7 +207,7 @@ function getNewBoard() {
                                 ]
                             }
                         ],
-                        memberIds: [""],
+                        memberIds: [],
                         labelIds: ["l101", "l102"],
                         dueDate: "No deadline",
                         byMember: {
@@ -742,7 +745,8 @@ function _createBoards() {
                             task: {
                                 id: "c101",
                                 title: "Replace Logo",
-                                comments: []
+                                comments: [],
+                                memberIds: []
                             }
                         }
                     ],
@@ -841,6 +845,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
+                                    memberIds: []
                                 },
                                 {
                                     id: "c106",
@@ -848,6 +853,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Progress",
+                                    memberIds: []
                                 }
                             ],
                             style: "grass_green"
@@ -863,6 +869,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "High",
                                     status: "Stuck",
+                                    memberIds: []
                                 },
                                 {
                                     id: "c108",
@@ -1065,6 +1072,7 @@ function _createBoards() {
                                     archivedAt: 1590010000000,
                                     priority: "High",
                                     status: "Stuck",
+                                    memberIds: []
                                 },
                                 {
                                     id: "c114",
@@ -1235,8 +1243,8 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
-                                    date : '',
-                                    memberIds : []
+                                    date: '',
+                                    memberIds: []
                                 },
                                 {
                                     id: "c116",
@@ -1244,6 +1252,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Stuck",
+                                    memberIds: []
                                 },
                                 {
                                     id: "c117",
@@ -1251,6 +1260,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Progress",
+                                    memberIds: []
                                 },
                                 {
                                     id: "c118",
@@ -1258,6 +1268,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
+                                    memberIds: []
                                 }
                             ],
                             style: "stuck-red"
@@ -1272,6 +1283,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "High",
                                     status: "Stuck",
+                                    memberIds: [],
                                     archivedAt: 1590500000000
                                 },
                                 {
@@ -1386,4 +1398,14 @@ function _createBoards() {
 }
 
 
+//Member functions
+async function getMembers(boardId) {
+    const board = await getBoardById(boardId)
+    return board.members
+}
 
+async function getMemberById(boardId, memberId) {
+    const board = await getBoardById(boardId)
+    const member = board.members.find(member => member._id === memberId)
+    return member
+}

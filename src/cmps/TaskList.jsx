@@ -124,6 +124,8 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
         return kind.find(k => k.title === title).color
     }
 
+
+
     function calculatePercentages(tasks, kind) {
         const propertyKey = kind === 'status' ? 'status' : 'priority'
 
@@ -141,7 +143,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
             const percentage = ((count / totalTasks) * 100).toFixed(1)
             propertyPercentages.push({ [propertyKey]: propertyValue, percentage, count })
         }
-        console.log('propertyPercentages:', propertyPercentages)
+        // console.log('propertyPercentages:', propertyPercentages)
 
         return propertyPercentages
     }
@@ -201,7 +203,10 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
                     labels={priorities}
                     onUpdateTask={onUpdateTask} />
             case "memberIds":
-                return <Member info={task[cmp]} />
+                return <Member
+                    boardMembers={currBoard.members}
+                    task={task}
+                />
             case "dueDate":
                 return <Date info={task[cmp]} />
 
