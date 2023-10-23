@@ -203,7 +203,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks }
                     task={task}
                     labels={priorities}
                     onUpdateTask={onUpdateTask} />
-            case "memberIds":
+            case "MembersIds":
                 return <Member
                     boardMembers={currBoard.members}
                     task={task}
