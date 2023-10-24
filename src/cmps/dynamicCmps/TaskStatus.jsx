@@ -128,7 +128,7 @@ export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
                                             size="small"
                                             onClick={(ev) => onAddLabel(ev)}
                                             className="add-labels-btn">
-                                            Add Label
+                                            New label
                                         </Button>
                                     </>
                                 )

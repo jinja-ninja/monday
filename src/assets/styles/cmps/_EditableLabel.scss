@@ -4,11 +4,20 @@
     align-items: center;
     gap: var(--spacing-xs);
 
+    &:hover {
+
+        .delete-label-container,
+        .drag-icon {
+            opacity: 1;
+        }
+    }
+
     .label-wrapper {
         display: flex;
         align-items: center;
-
+        height: 32px;
         border-radius: var(--border-radius-small);
+        border-color: rgb(230, 233, 239);
         padding: var(--spacing-xs);
 
         .label-color-container {
@@ -27,6 +36,8 @@
             text-overflow: ellipsis;
             width: 100px;
             @include vibe-text('small', 'normal');
+            font-size: 14px;
+            font-weight: 400;
         }
     }
 
@@ -34,7 +45,12 @@
         position: absolute;
     }
 
+    .drag-icon {
+        opacity: 0;
+    }
+
     .delete-label-container {
         display: flex;
+        opacity: 0;
     }
 }

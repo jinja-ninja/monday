@@ -50,12 +50,12 @@ export function EditableLabel({ boardId, label, onRemoveLabel, onUpdateLabel }) 
 
     return (
         <div className='editable-label'>
-            <Icon iconType={Icon.type.SVG} icon={Drag} />
+            <Icon iconType={Icon.type.SVG} icon={Drag} className='drag-icon'/>
             <div
                 className='label-wrapper'
                 style={isLabelSelected ?
                     { border: `1px solid var(--primary-color)` }
-                    : { border: `1px solid var(--color-wolf_gray)` }}
+                    : { border: `1px solid rgb(230, 233, 239)` }}
                 onBlur={() => setIsLabelSelected(false)}
             >
                 <div
