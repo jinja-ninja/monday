@@ -205,19 +205,6 @@ function timeFormat(time) {
     return time < 10 ? '0' + time : time
 }
 
-function debounce(fn, wait) {
-    let timer
-    return function (...args) {
-        if (timer) {
-            clearTimeout(timer) // clear any pre-existing timer
-        }
-        const context = this // get the current context
-        timer = setTimeout(() => {
-            fn.apply(context, args) // call the function if time expires
-        }, wait)
-    }
-}
-
 function makeLorem(size = 1) {
     var words = [
         "Superman", "Batman", "Wonder Woman", "Spider-Man", "Iron Man",

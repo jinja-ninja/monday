@@ -19,7 +19,7 @@ import { Timeline } from "./dynamicCmps/Timeline"
 import { utilService } from "../services/util.service"
 import { Files } from "./dynamicCmps/Files"
 
-export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks, showGroup }) {
+export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGroup }) {
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
     const currBoard = useSelector(state => state.boardModule.board)
 

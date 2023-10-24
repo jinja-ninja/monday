@@ -146,7 +146,7 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
             />
         }
 
-        <TaskList group={group} cmpsOrder={cmpsOrder} labels={labels} priorities={priorities} setNumOfTasks={setNumOfTasks} showGroup={showGroup} />
+        <TaskList group={group} cmpsOrder={cmpsOrder} priorities={priorities} setNumOfTasks={setNumOfTasks} showGroup={showGroup} />
 
         <>
             <Modal
