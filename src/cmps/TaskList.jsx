@@ -5,12 +5,11 @@ import { MenuButton, Menu, MenuItem, Tooltip } from "monday-ui-react-core"
 import { Checkbox, EditableHeading, Modal, ModalContent, ModalFooterButtons, ModalHeader } from "monday-ui-react-core"
 import { Date } from "./dynamicCmps/Date"
 import { Member } from "./dynamicCmps/Member"
-import { TaskPriority } from "./dynamicCmps/TaskPriority"
 import { Side } from "./dynamicCmps/Side"
 import { TaskStatus } from "./dynamicCmps/TaskStatus"
 import { Delete, Edit, Duplicate } from "monday-ui-react-core/icons"
 
-import { addTask, removeTask, updateTask, duplicatedTask } from "../store/actions/board.action"
+import { addTask, removeTask, updateTask, duplicatedTask, updateBoard } from "../store/actions/board.action"
 import { boardService } from "../services/board.service.local"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 
@@ -29,7 +28,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks, 
     const [addTaskInput, setAddTask] = useState('+ Add task ')
     const [show, setShow] = useState(false)
     const [taskId, setTaskId] = useState(null)
-    const [loading, setLoading] = useState(false)
+
     const openModalButtonRef = useRef()
     const dispatch = useDispatch()
     const closeModal = useCallback(() => {
@@ -38,6 +37,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks, 
 
     const boardId = currBoard._id
     const groupId = group.id
+    const labels = currBoard.labels
     const dynCollapseGroupClass = showGroup ? '' : 'collapse-group'
 
     let allTaskIds
@@ -64,7 +64,9 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks, 
                 dispatch({ type: SET_SELECTED_TASKS, selectedTasks: allTaskIds })
             } else {
                 const filteredTaskIds = allTaskIds.filter(task => {
-                    return !selectedTasks.some(selectedTask => selectedTask.taskId === task.taskId && selectedTask.groupId === task.groupId)
+                    return !selectedTasks.some(selectedTask =>
+                        selectedTask.taskId === task.taskId
+                        && selectedTask.groupId === task.groupId)
                 })
                 dispatch({ type: ADD_SELECTED_TASKS, selectedTasks: filteredTaskIds })
             }
@@ -118,7 +120,6 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks, 
     }
 
     async function onDuplicateTask(taskId) {
-
         try {
             await duplicatedTask(boardId, groupId, taskId)
             setNumOfTasks(group.tasks.length + 1)
@@ -173,7 +174,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks, 
             const propertyValue = task[propertyKey]
             counts[propertyValue] = (counts[propertyValue] || 0) + 1
             return counts
-        }, {});
+        }, {})
 
         const totalTasks = tasks.length
         const propertyPercentages = []
@@ -220,7 +221,6 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks, 
     }
 
     function renderDynamicCmp(cmp, task, labels, priorities) {
-        // console.log('task[cmp]:', task[cmp])
         switch (cmp) {
             case "side":
                 return <Side info={group['style']} taskId={task.id} groupId={groupId} />
@@ -232,6 +232,7 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks, 
                     onUpdateTask={onUpdateTask} />
             case "Status":
                 return <TaskStatus
+                    board={currBoard}
                     type={'status'}
                     task={task}
                     labels={labels}
@@ -358,7 +359,6 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks, 
                         key={index}
                         content={`${status.status} ${status.count}/${group.tasks.length} ${status.percentage}% `}
                         animationType="expand">
-
                         <div
                             className="label-progress-item"
                             style={{
@@ -436,15 +436,23 @@ export function TaskList({ group, cmpsOrder, labels, priorities, setNumOfTasks, 
         </section>
 
         <>
-            <Modal id="story-book-modal" title="Modal title" triggerElement={openModalButtonRef.current} show={show} onClose={closeModal} // Width prop effects on the modal width
+            <Modal
+                id="story-book-modal"
+                title="Modal title"
+                triggerElement={openModalButtonRef.current}
+                show={show}
+                onClose={closeModal} // Width prop effects on the modal width
                 width={Modal.width.DEFAULT} contentSpacing>
                 <ModalHeader title={"Delete"} iconSize={32} />
                 <ModalContent>Delete this item? </ModalContent>
-                <ModalFooterButtons primaryButtonText="Delete" secondaryButtonText="Cancel" onPrimaryButtonClick={() => {
-                    onRemoveTask(taskId)
-                    closeModal()
-                }
-                } onSecondaryButtonClick={closeModal} />
+                <ModalFooterButtons
+                    primaryButtonText="Delete"
+                    secondaryButtonText="Cancel"
+                    onPrimaryButtonClick={() => {
+                        onRemoveTask(taskId)
+                        closeModal()
+                    }
+                    } onSecondaryButtonClick={closeModal} />
             </Modal>
         </>
 

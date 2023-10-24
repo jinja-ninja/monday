@@ -1,7 +1,6 @@
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 
-
 const STORAGE_KEY = 'boardDB'
 
 export const boardService = {
@@ -36,6 +35,7 @@ export const boardService = {
     getEmptyGroup,
     getEmptyTask,
     getEmptyLabel,
+    getContentColors,
     _createBoards,
 }
 
@@ -503,10 +503,13 @@ async function duplicateBatchTasks(boardId, selectedTasks, actions = []) {
     }
 }
 
-
 //Label functions
 async function getEmptyLabel() {
-    return { id: utilService.makeId(), title: '', color: '' }
+    return {
+        id: utilService.makeId(),
+        title: '',
+        color: getContentColors()[utilService.getRandomIntInclusive(0, getContentColors().length - 1)]
+    }
 }
 
 async function getLabels(boardId) {
@@ -533,8 +536,9 @@ async function removeLabel(boardId, labelId) {
     return await storageService.put(STORAGE_KEY, board)
 }
 
-async function updateLabel(boardId, labelId, label) {
+async function updateLabel(boardId, label) {
     const board = await getBoardById(boardId)
+    const labelId = label.id
     const labelIdx = board.labels.findIndex(label => label.id === labelId)
     board.labels[labelIdx] = label
     return await storageService.put(STORAGE_KEY, board)
@@ -565,6 +569,66 @@ function deleteComment(commentId, currTask) {
         throw new Error('comment wasnt found,couldnt delete it')
     }
 
+}
+
+//Member functions
+async function getMembers(boardId) {
+    const board = await getBoardById(boardId)
+    return board.members
+}
+
+async function getMemberById(boardId, memberId) {
+    const board = await getBoardById(boardId)
+    const member = board.members.find(member => member._id === memberId)
+    return member
+}
+
+//General functions
+function getContentColors() {
+    const contentColors = [
+        'grass_green',
+        'done-green',
+        'bright-green',
+        'saladish',
+        'egg_yolk',
+        'working_orange',
+        'dark-orange',
+        'peach',
+        'sunset',
+        'stuck-red',
+        'dark-red',
+        'sofia_pink',
+        'lipstick',
+        'bubble',
+        'purple',
+        'dark_purple',
+        'berry',
+        'dark_indigo',
+        'indigo',
+        'navy',
+        'bright-blue',
+        'dark-blue',
+        'aquamarine',
+        'chili-blue',
+        'river',
+        'winter',
+        'explosive',
+        'american_gray',
+        'blackish',
+        'brown',
+        'orchid',
+        'tan',
+        'sky',
+        'coffee',
+        'royal',
+        'teal',
+        'lavender',
+        'steel',
+        'lilac',
+        'pecan'
+    ]
+
+    return contentColors
 }
 
 function _createBoards() {
@@ -1416,17 +1480,4 @@ function _createBoards() {
 
         utilService.saveToStorage(STORAGE_KEY, boards)
     }
-}
-
-
-//Member functions
-async function getMembers(boardId) {
-    const board = await getBoardById(boardId)
-    return board.members
-}
-
-async function getMemberById(boardId, memberId) {
-    const board = await getBoardById(boardId)
-    const member = board.members.find(member => member._id === memberId)
-    return member
 }

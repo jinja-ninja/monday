@@ -1,6 +1,6 @@
 
 import { ListItem } from 'monday-ui-react-core'
-import mondayLogo from '../assets/img/mondayLogo.png'
+import mondayLogo from '../assets/img/funday-logo-small-com.svg'
 import { useNavigate } from 'react-router-dom'
 
 export function HomeAppHeader() {
