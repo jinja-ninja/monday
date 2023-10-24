@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react"
-import { ColorPicker, EditableHeading, Icon, Menu, MenuButton, MenuItem, Modal, ModalContent, ModalFooterButtons, ModalHeader, Tooltip } from "monday-ui-react-core"
+import { ColorPicker, EditableHeading, Icon, Menu, MenuButton, MenuItem, Modal, ModalContent, ModalFooterButtons, ModalHeader, Tooltip, useClickOutside } from "monday-ui-react-core"
 import { Delete, DropdownChevronDown, DropdownChevronRight, Duplicate, Edit, HighlightColorBucket } from "monday-ui-react-core/icons"
 
 import { duplicatedGroup, removeGroup, updateBoard } from "../store/actions/board.action"
@@ -14,6 +14,7 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
     const [showColorPicker, setShowColorPicker] = useState(false)
     const [show, setShow] = useState(false)
     const openModalButtonRef = useRef()
+    const refColorDialog = useRef(null)
     const closeModal = useCallback(() => {
         setShow(false);
     }, [])
@@ -64,9 +65,16 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
         setShowColorPicker(prevState => !prevState)
     }
 
+    const onClickOutsideSelectColor = useCallback(() => {
+        setShowColorPicker(prevState => !prevState)
+    }, [])
+
+    useClickOutside({
+        ref: refColorDialog,
+        callback: onClickOutsideSelectColor
+    })
+
     return <div className="group-preview-container">
-
-
 
         <div className="collapsible-header-wrapper">
             <MenuButton
@@ -129,10 +137,11 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                 onSave={(color) => onSelectColor(color)}
                 colorSize="small"
                 className="color-picker"
+                ref={refColorDialog}
             />
         }
 
-        {showGroup && <TaskList group={group} cmpsOrder={cmpsOrder} labels={labels} priorities={priorities} setNumOfTasks={setNumOfTasks} />}
+        {showGroup && <TaskList group={group} cmpsOrder={cmpsOrder} priorities={priorities} setNumOfTasks={setNumOfTasks} />}
 
         <>
             <Modal

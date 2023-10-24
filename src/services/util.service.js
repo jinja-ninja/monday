@@ -9,7 +9,7 @@ export const utilService = {
     animateCSS,
     debounce,
     getAssetSrc,
-    makeLabel,
+    // makeLabel,
     getTimeFromStamp,
     randomTrueFalse,
     makeImage,
@@ -18,8 +18,7 @@ export const utilService = {
     makeGroupId,
     makeBoardId,
     makeTaskId,
-    timeStampToDate
-
+    timeStampToDate,
 }
 
 function makeId(length = 6) {
@@ -94,8 +93,6 @@ function loadFromStorage(key) {
     return (data) ? JSON.parse(data) : undefined
 }
 
-
-
 function debounce(func, timeout = 300) {
     let timer
     return (...args) => {
@@ -103,8 +100,6 @@ function debounce(func, timeout = 300) {
         timer = setTimeout(() => { func.apply(this, args) }, timeout)
     }
 }
-
-
 
 // In our utilService
 function animateCSS(el, animation) {
@@ -224,17 +219,17 @@ function makeLorem(size = 1) {
     }
     return txt
 }
-function makeLabel(size = 3) {
-    var words = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor', 'Battery Powered']
-    var word = ''
-    let labels = []
-    while (size > 0) {
-        size--
-        word = words[Math.floor(Math.random() * words.length)] + ''
-        labels.push(word)
-    }
-    return labels
-}
+// function makeLabel(size = 3) {
+//     var words = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor', 'Battery Powered']
+//     var word = ''
+//     let labels = []
+//     while (size > 0) {
+//         size--
+//         word = words[Math.floor(Math.random() * words.length)] + ''
+//         labels.push(word)
+//     }
+//     return labels
+// }
 function makeImage(size = 1) {
     const toyIcons = ["🧸", "🚗", "🎨", "🎆", "🌞", "☔", "⚡", "🎌", "🗼", "🗽", "🛴", "🛵", "🚍", "🚋", "🦼", "🚖", "🚜", "🦽", "🕋", "🚲", "⛑", "🏈", "🎱", "⛳", "💎", "👑", "⚽", "👓", "🏏", "🤿", "🎣", "🏐", "🏀", "🥎", "🏉", "🎲", "🎮", "🎯", /* Add more toy icons here */]
     var icon = ''

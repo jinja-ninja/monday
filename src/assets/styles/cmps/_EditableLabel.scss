@@ -1,0 +1,40 @@
+.editable-label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+
+    .label-wrapper {
+        display: flex;
+        align-items: center;
+
+        border-radius: var(--border-radius-small);
+        padding: var(--spacing-xs);
+
+        .label-color-container {
+            display: flex;
+            height: 24px;
+            width: 24px;
+            align-items: center;
+            padding: var(--spacing-xs);
+            border-radius: var(--border-radius-small);
+        }
+
+        .label-title {
+            border: 0;
+            outline: 0;
+            padding: 0 var(--spacing-xs) 0 var(--spacing-xs);
+            text-overflow: ellipsis;
+            width: 100px;
+            @include vibe-text('small', 'normal');
+        }
+    }
+
+    .color-picker {
+        position: absolute;
+    }
+
+    .delete-label-container {
+        display: flex;
+    }
+}

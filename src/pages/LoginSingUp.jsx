@@ -1,5 +1,6 @@
 
-import mondayLogo from '../assets/img/mondayLogo.png'
+// import mondayLogo from '../assets/img/mondayLogo.png'
+import mondayLogo from "../assets/img/Funday-logo-small-com.svg"
 import LoginSignUpImg from '../assets/img/LoginSignUpImg.avif'
 
 import { useState, useEffect } from 'react'

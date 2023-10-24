@@ -1,4 +1,4 @@
-import imgLogo from "../assets/img/Funday-logo.png"
+import imgLogo from "../assets/img/Funday-logo.svg"
 import { DoubleCheck, Notifications, Inbox, Invite, Search, Help, LogIn, Hide } from "monday-ui-react-core/icons"
 import { Icon } from "monday-ui-react-core"
 import { Tooltip, } from "monday-ui-react-core"

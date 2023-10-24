@@ -19,6 +19,7 @@ export function BoardDetails() {
     const params = useParams()
     const currBoard = useSelector(state => state.boardModule.board)
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
+
     const [isSearch, setIsSearch] = useState(false)
     const [filterBy, setFilterBy] = useState({ txt: '', person: null })
     const [sortBy, setSortBy] = useState(false)
@@ -27,7 +28,6 @@ export function BoardDetails() {
     useEffect(() => {
         loadBoard()
     }, [params.boardId, filterBy])
-    // [params.boardId, filterBy, sortBy]
 
     async function loadBoard() {
         await getBoardById(params.boardId, filterBy)
@@ -41,7 +41,6 @@ export function BoardDetails() {
         if (!currBoard.groups) return
         try {
             const newTask = boardService.getEmptyTask("New task")
-            console.log('newTask:', newTask)
             await addTask(currBoard._id, currBoard.groups[0].id, newTask)
             showSuccessMsg('Added new task')
         } catch (err) {
@@ -124,7 +123,7 @@ export function BoardDetails() {
                     animationType="expand">
                     <Button leftIcon={Hide} kind="tertiary" size="small">Hide</Button>
                 </Tooltip>
-                
+
                 <IconButton icon={Menu} size="small" />
             </div>
 
