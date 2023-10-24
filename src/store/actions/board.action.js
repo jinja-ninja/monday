@@ -177,6 +177,7 @@ export async function duplicatedTask(boardId, groupId, taskId) {
         throw err
     }
 }
+
 export async function duplicatedBatchTasks(boardId, selectedTasks, actions = []) {
     try {
         const board = await boardService.duplicateBatchTasks(boardId, selectedTasks)
@@ -202,6 +203,16 @@ export async function removeBatchTasks(boardId, selectedTasks, actions = []) {
 }
 
 // Label Actions
+export async function getLabelById(boardId, labelId) {
+    try {
+        const label = await boardService.getLabelById(boardId, labelId)
+        return label
+    } catch (err) {
+        console.log('BoardActions: err in getLabelById', err)
+        throw err
+    }
+}
+
 export async function addLabel(boardId, label) {
     try {
         const board = await boardService.addLabel(boardId, label)
@@ -224,9 +235,9 @@ export async function removeLabel(boardId, labelId) {
     }
 }
 
-export async function updateLabel(boardId, labelId, label) {
+export async function updateLabel(boardId, label) {
     try {
-        const board = await boardService.updateLabel(boardId, labelId, label)
+        const board = await boardService.updateLabel(boardId, label)
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {

@@ -9,7 +9,6 @@ export const utilService = {
     animateCSS,
     debounce,
     getAssetSrc,
-    makeLabel,
     randomTrueFalse,
     makeImage,
     getEmptyMsg,
@@ -22,7 +21,8 @@ export const utilService = {
     getTimestampInDays,
     millisecondsToDays,
     calculateTimelineProgress,
-
+    timeFormat,
+    makePhoneNumber
 }
 
 function makeId(length = 6) {
@@ -97,8 +97,6 @@ function loadFromStorage(key) {
     return (data) ? JSON.parse(data) : undefined
 }
 
-
-
 function debounce(func, timeout = 300) {
     let timer
     return (...args) => {
@@ -106,8 +104,6 @@ function debounce(func, timeout = 300) {
         timer = setTimeout(() => { func.apply(this, args) }, timeout)
     }
 }
-
-
 
 // In our utilService
 function animateCSS(el, animation) {
@@ -165,11 +161,11 @@ function getTimelineRange(timeline) {
     }
 }
 
-export function millisecondsToDays(ms) {
+function millisecondsToDays(ms) {
     return Math.floor(ms / 86400000) //num of ms in day
 }
 
-export function calculateTimelineProgress(timeline) {
+function calculateTimelineProgress(timeline) {
     if (timeline === null) return
     if (!timeline.from || !timeline.to) return 0
 
@@ -199,29 +195,16 @@ export function calculateTimelineProgress(timeline) {
     return `${result}%`
 }
 
-
 function getTimestampInDays(Timeline) {
     if (!Timeline || !Timeline.from || !Timeline.to) return
     const estTime = Timeline.to - Timeline.from
     return utilService.millisecondsToDays(estTime) || 1
 }
 
-
 function timeFormat(time) {
     return time < 10 ? '0' + time : time
 }
-// function debounce(fn, wait) {
-//     let timer
-//     return function (...args) {
-//         if (timer) {
-//             clearTimeout(timer) // clear any pre-existing timer
-//         }
-//         const context = this // get the current context
-//         timer = setTimeout(() => {
-//             fn.apply(context, args) // call the function if time expires
-//         }, wait)
-//     }
-// }
+
 function makeLorem(size = 1) {
     var words = [
         "Superman", "Batman", "Wonder Woman", "Spider-Man", "Iron Man",
@@ -254,17 +237,7 @@ function makeLorem(size = 1) {
     }
     return txt
 }
-function makeLabel(size = 3) {
-    var words = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor', 'Battery Powered']
-    var word = ''
-    let labels = []
-    while (size > 0) {
-        size--
-        word = words[Math.floor(Math.random() * words.length)] + ''
-        labels.push(word)
-    }
-    return labels
-}
+
 function makeImage(size = 1) {
     const toyIcons = ["🧸", "🚗", "🎨", "🎆", "🌞", "☔", "⚡", "🎌", "🗼", "🗽", "🛴", "🛵", "🚍", "🚋", "🦼", "🚖", "🚜", "🦽", "🕋", "🚲", "⛑", "🏈", "🎱", "⛳", "💎", "👑", "⚽", "👓", "🏏", "🤿", "🎣", "🏐", "🏀", "🥎", "🏉", "🎲", "🎮", "🎯", /* Add more toy icons here */]
     var icon = ''
@@ -274,6 +247,7 @@ function makeImage(size = 1) {
     }
     return icon
 }
+
 function makePhoneNumber(length = 8) {
     var txt = ''
     var possible = '0123456789'
@@ -284,15 +258,18 @@ function makePhoneNumber(length = 8) {
 
     return txt
 }
+
 function randomTrueFalse() {
     return Math.random() < 0.5;
 
 }
+
 function getEmptyMsg() {
     return {
         txt: '',
     }
 }
+
 function getEmptyReview() {
     return {
         txt: '',
