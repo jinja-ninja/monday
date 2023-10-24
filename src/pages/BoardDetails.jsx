@@ -80,7 +80,6 @@ export function BoardDetails() {
             size="small">Search
         </Button>
 
-    const dynSortTitle = sortBy ? 'UnSort' : 'Sort'
     const progress = [null, null, "status", null, "priority", null]
 
     if (!currBoard) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
@@ -117,7 +116,7 @@ export function BoardDetails() {
                     Filter
                 </SplitButton>
 
-                <Button onClick={() => setSortBy(!sortBy)} leftIcon={Sort} kind="tertiary" size="small">{dynSortTitle}</Button>
+                <Button onClick={() => setSortBy(!sortBy)} leftIcon={Sort} kind="tertiary" size="small">Sort</Button>
 
                 <Tooltip
                     content='Hidden columns'
