@@ -42,7 +42,8 @@
       background-color: var(--primary-background-color);
 
       padding-top: var(--spacing-medium);
-      padding-left: var(--spacing-xl);
+      // padding-left: var(--spacing-xl);
+      padding-left: 38px;
       padding-right: var(--spacing-xl);
       border-top-left-radius: 8px;
       grid-template-rows: auto auto;
@@ -246,7 +247,8 @@
 
       display: flex;
       column-gap: var(--spacing-medium);
-      padding-left: var(--spacing-xl);
+      // padding-left: var(--spacing-xl);
+      padding-left: 38px;
       padding-right: var(--spacing-xl);
       padding-block-end: var(--spacing-xl);
       // padding-block-end: var(--spacing-medium);
