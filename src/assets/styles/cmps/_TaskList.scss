@@ -1,6 +1,6 @@
 .task-list-container.collapse-group {
   position: relative;
-  top: -45px;
+  top: -35px;
 }
 
 .task-list-container {
@@ -270,6 +270,7 @@
     .task-list-summary.collapse-group {
       border-bottom: none;
       box-shadow: none;
+      height: 37px;
     }
 
     .task-list-summary {

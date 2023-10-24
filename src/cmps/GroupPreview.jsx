@@ -107,6 +107,7 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                         title="Change group color" />
                 </Menu>
             </MenuButton>
+<div>
 
             <Tooltip
                 content={showGroup ? "Collapse Group" : "Expand Group"}
@@ -131,8 +132,9 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                     onChange={(newText) => setEditableText(newText)}
                 />
             </Tooltip>
+            </div>
 
-            <span className="num-of-tasks">
+            <span className={"num-of-tasks " + dynCollapseGroupClass}>
                 {numOfTasks === 0 ? 'No tasks' : `${numOfTasks} ${numOfTasks === 1 ? 'Task' : 'Tasks'}`}
             </span>
         </div>
