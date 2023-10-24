@@ -1,0 +1,63 @@
+.task-file-container {
+
+    &:hover {
+
+        .add-file-img-container {
+            .add-file-img {
+                opacity: 1;
+            }
+
+            .btn-add-file {
+                transform:scale(1);
+            }
+        }
+
+    }
+
+    .add-file-img-container {
+        position: relative;
+
+        .add-file-img {
+            width: 19px;
+            height: 24px;
+            opacity: 0;
+
+        }
+
+        .btn-add-file {
+            color: var(--text-color-on-primary);
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            position: absolute;
+            left: -7px;
+            top: 6px;
+            transform: scale(0);
+            transition: transform .1s ease-in, opacity .1s ease-in;
+
+
+            .line-one {
+                width: 10px;
+                height: 2px;
+                background-color: white;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .line-two {
+                width: 2px;
+                height: 10px;
+                background-color: white;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+
+            }
+        }
+    }
+
+}

@@ -57,6 +57,7 @@ export function BoardDetails() {
         "Priority",
         "dueDate",
         "Timeline",
+        "Files",
     ]
 
     const dynSearchBtnInput = isSearch ?
@@ -124,9 +125,11 @@ export function BoardDetails() {
                     animationType="expand">
                     <Button leftIcon={Hide} kind="tertiary" size="small">Hide</Button>
                 </Tooltip>
-                
+
                 <IconButton icon={Menu} size="small" />
+
             </div>
+            <div className="spacing-div"></div>
 
             <GroupList
                 boardId={params.boardId}

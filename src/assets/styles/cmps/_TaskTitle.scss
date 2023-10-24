@@ -4,8 +4,15 @@
     align-items: center;
 
     .editible-task-title {
-        margin-left: 0.7rem;
-        max-width: 180px;
+        margin-left: 33px;
+        max-width: 290px;
+
+        h5 {
+            font-size: 14px;
+        }
+        input{
+            font-size: 14px;
+        }
     }
 }
 

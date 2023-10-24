@@ -2,13 +2,49 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #c4c4c4;
+    // background-color: #c4c4c4;
     height: 22px;
     width: 100%;
     margin: 6px 16px;
-    font-size: 14px;
+    font-size: 13px;
     border-radius: 11px;
     color: #fff;
+    position: relative;
+
+
+    .set-dates-txt {
+        position: absolute;
+        font-size: 13px;
+        opacity: 0;
+    }
+
+    .range-txt {
+        display: inline-block;
+        font-size: 13px;
+    }
+
+    .calculated-days-txt {
+        display: none;
+        font-size: 13px;
+
+    }
+
+    .btn-delete-timeline {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: -5px;
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        cursor: pointer;
+        color: black;
+        background-color: var(--primary-background-hover-on-secondary-color);
+    }
+
 
     &:hover {
         background-color: #ababab;
@@ -20,15 +56,23 @@
         .dash {
             opacity: 0;
         }
-    }
 
-    .set-dates-txt {
-        position: absolute;
-        opacity: 0;
+        .range-txt {
+            display: none;
+
+        }
+
+        .calculated-days-txt {
+            display: inline-block;
+        }
+
+        .btn-delete-timeline {
+            display: flex;
+        }
     }
 }
 
-.timeline-picker-modal{
+.timeline-picker-modal {
     background-color: white;
     z-index: 10;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px 0px;

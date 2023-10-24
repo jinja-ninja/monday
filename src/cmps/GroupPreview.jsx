@@ -15,8 +15,11 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
     const [show, setShow] = useState(false)
     const openModalButtonRef = useRef()
     const closeModal = useCallback(() => {
-        setShow(false);
+        setShow(false)
     }, [])
+
+    const dynCollapseGroupClass = showGroup ? '' : 'collapse-group'
+
 
     const handleEditClick = (groupId) => {
         const groupElement = document.querySelector(`.group-list-item[data-group-id="${groupId}"]`)
@@ -66,9 +69,7 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
 
     return <div className="group-preview-container">
 
-
-
-        <div className="collapsible-header-wrapper">
+        <div className={"collapsible-header-wrapper " + dynCollapseGroupClass} >
             <MenuButton
                 size={MenuButton.sizes.XS}
                 className="group-menu-btn"
@@ -96,10 +97,12 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                         title="Change group color" />
                 </Menu>
             </MenuButton>
+
             <Tooltip
-                content="Collapse/Expand Group"
+                content={showGroup ? "Collapse Group" : "Expand Group"}
                 animationType="expand">
                 <Icon iconType={Icon.type.SVG} iconSize={20}
+                    className={"collapse-arrow-btn " + dynCollapseGroupClass}
                     icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
                     style={{ color: `var(--color-${group.style})` }}
                     onClick={() => setShowGroup((prevShowGroup => !prevShowGroup))} />
@@ -132,7 +135,8 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
             />
         }
 
-        {showGroup && <TaskList group={group} cmpsOrder={cmpsOrder} labels={labels} priorities={priorities} setNumOfTasks={setNumOfTasks} />}
+        {/* {showGroup && <TaskList group={group} cmpsOrder={cmpsOrder} labels={labels} priorities={priorities} setNumOfTasks={setNumOfTasks} showGroup={showGroup}/>} */}
+        <TaskList group={group} cmpsOrder={cmpsOrder} labels={labels} priorities={priorities} setNumOfTasks={setNumOfTasks} showGroup={showGroup} />
 
         <>
             <Modal
