@@ -240,7 +240,7 @@
 
     .board-details-actions {
       position: sticky;
-      top: 122px;
+      top: 121px;
       z-index: 10;
       background-color: var(--primary-background-color);
 
@@ -249,12 +249,20 @@
       padding-left: var(--spacing-xl);
       padding-right: var(--spacing-xl);
       padding-block-end: var(--spacing-xl);
+      // padding-block-end: var(--spacing-medium);
 
-      // margin-block-end: var(--spacing-xl);
       button {
         text-transform: none;
       }
     }
   }
 
+}
+
+.spacing-div {
+  height: 12px;
+  width: 100%;
+  background-color: white;
+  position: relative;
+  z-index: 5;
 }

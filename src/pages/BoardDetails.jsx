@@ -127,7 +127,9 @@ export function BoardDetails() {
                 </Tooltip>
 
                 <IconButton icon={Menu} size="small" />
+
             </div>
+            <div className="spacing-div"></div>
 
             <GroupList
                 boardId={params.boardId}

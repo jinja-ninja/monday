@@ -27,14 +27,20 @@
     }
   }
 
+  .collapsible-header-wrapper.collapse-group {
+    background-color: transparent;
+    max-width: max-content;
+    top: 0;
+  }
+
   .collapsible-header-wrapper {
     display: flex;
     align-items: center;
     position: sticky;
-    top: 186px;
+    top: 185px;
     z-index: 6;
     background-color: var(--primary-background-color);
-    
+
     &:hover {
       .num-of-tasks {
         opacity: 1;
@@ -42,11 +48,7 @@
 
       .group-menu-btn {
         opacity: 1;
-        //DOESNT WORK FOR SOME REASON CHECK LATER.
       }
     }
-
   }
-
-
 }
