@@ -4,6 +4,8 @@
   grid-template-rows: auto 1fr;
   column-gap: 10px;
 
+  height: 100vh;
+
   // background-color: var(--grey-background-color);
   // background-color: var(--board-main-header-background);
   background-color: #eceff8;
@@ -22,6 +24,8 @@
     box-shadow: var(--box-shadow-xs);
     font-size: 14px;
 
+    overflow: auto;
+
     .monday-storybook-search_size {
       width: 265px;
 
@@ -37,7 +41,8 @@
     .header-wrapper {
       display: grid;
       position: sticky;
-      top: 48px;
+      // top: 48px;
+      left: 0;
       z-index: 10;
       background-color: var(--primary-background-color);
 
@@ -244,7 +249,8 @@
 
     .board-details-actions {
       position: sticky;
-      top: 121px;
+      // top: 121px;
+      left: 0;
       z-index: 10;
       background-color: var(--primary-background-color);
 

@@ -39,6 +39,8 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
     const groupId = group.id
     const labels = currBoard.labels
     const dynCollapseGroupClass = showGroup ? '' : 'collapse-group'
+    let dynTitleColClass
+    let dynSideColClass
 
     let allTaskIds
     let timelineSummary = getSmallestFromAndLargestTo()
@@ -291,53 +293,61 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                         </div>}
                     </div>
                 </div>
+                title === 'title' ? dynTitleColClass = 'title-col' : dynTitleColClass = ''
                 if (title === 'title' && !showGroup) title = ''
-                return <div className={"header-title " + dynCollapseGroupClass} key={idx}><span>{title}</span></div>
+                return <div className={"header-title " + dynCollapseGroupClass + dynTitleColClass} key={idx}><span>{title}</span></div>
             }
             )}
+            <div className="header-title empty-right-cell"></div>
 
         </section>
-
         {showGroup && group.tasks.map(task => {
-            return (<section className="task-list group-grid" key={task.id}>
-                {renderMenuButton(task.id)}
-                {
-                    cmpsOrder.map((cmp, idx) =>
-                        <section className="task-item" key={idx}>
-                            {renderDynamicCmp(cmp, task, labels, priorities)}
-                        </section>
-                    )
-                }
-            </section >
+            return (
+                <section className="task-list group-grid" key={task.id}>
+                    {renderMenuButton(task.id)}
+                    {
+                        cmpsOrder.map((cmp, idx) => {
+                            const dynSideColClass = cmp === 'side' ? 'side-col' : ''
+                            cmp === 'title' ? dynTitleColClass = 'title-col' : dynTitleColClass = ''
+                            return (
+                                <section className={"task-item " + dynSideColClass + dynTitleColClass} key={idx}>
+                                    {renderDynamicCmp(cmp, task, labels, priorities)}
+                                </section>
+                            )
+                        })
+                    }
+                </section>
             )
         })}
 
-        {showGroup && <section className="task-list-add group-grid">
+        {
+            showGroup && <section className="task-list-add group-grid">
 
-            <div className="task-list-add-side">
-                <div className="color-indicator"
-                    style={{
-                        backgroundColor: `var(--color-${group.style})`,
-                    }}>
+                <div className="task-list-add-side">
+                    <div className="color-indicator"
+                        style={{
+                            backgroundColor: `var(--color-${group.style})`,
+                        }}>
+                    </div>
+
+                    <div className="task-select">
+                        <Checkbox disabled ariaLabel="Select task" />
+                    </div>
                 </div>
 
-                <div className="task-select">
-                    <Checkbox disabled ariaLabel="Select task" />
-                </div>
-            </div>
+                <EditableHeading
+                    className="task-add-btn"
+                    type={EditableHeading.types.h5}
+                    value={addTaskInput}
+                    onBlur={() => {
+                        addTaskInput ? onAddTask(addTaskInput) : setAddTask('+ Add task ')
+                        setAddTask('+ Add task')
+                    }}
+                    onStartEditing={() => setAddTask('')}
+                    onChange={(value) => setAddTask(value)} />
 
-            <EditableHeading
-                className="task-add-btn"
-                type={EditableHeading.types.h5}
-                value={addTaskInput}
-                onBlur={() => {
-                    addTaskInput ? onAddTask(addTaskInput) : setAddTask('+ Add task ')
-                    setAddTask('+ Add task')
-                }}
-                onStartEditing={() => setAddTask('')}
-                onChange={(value) => setAddTask(value)} />
-
-        </section>}
+            </section>
+        }
 
         <section className={"task-list-summary-wrapper group-grid " + dynCollapseGroupClass}>
 
@@ -432,6 +442,8 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
             <div className={"task-list-summary " + dynCollapseGroupClass}>
 
             </div>
+
+            <div className="task-list-summary empty-right-cell"></div>
 
         </section>
 

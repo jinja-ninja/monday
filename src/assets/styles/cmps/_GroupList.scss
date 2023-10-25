@@ -1,9 +1,10 @@
 .group-list-container {
   // padding-left: var(--spacing-xl);
   padding-left: 38px;
-
   padding-block-end: var(--spacing-xl);
   padding-block-start: 5px;
+
+  width: max-content;
 
   button {
     text-transform: none;
@@ -38,9 +39,12 @@
     display: flex;
     align-items: center;
     position: sticky;
-    top: 185px;
+    // top: 185px;
+    left: 38px;
     z-index: 6;
     background-color: var(--primary-background-color);
+    width: max-content;
+
 
     &:hover {
       .num-of-tasks {

@@ -9,6 +9,11 @@ html {
   line-height: 1.15;
 }
 
+body {
+  overflow: hidden;
+  height: 100vh;
+}
+
 .transform-none {
   text-transform: none;
 }
@@ -52,11 +57,12 @@ button {
   width: 100vw;
   height: 100vh;
 }
-.monday-style-dialog-content-wrapper{
+
+.monday-style-dialog-content-wrapper {
   z-index: 20;
 }
+
 /* Simple and useful CSS Debugging Technique */
 .debug * {
   outline: 1px solid gold;
 }
-

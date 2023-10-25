@@ -10,7 +10,7 @@
 
   .group-grid {
     display: grid;
-    grid-template-columns: 40px 480px 140px 140px 140px 140px 140px 140px;
+    grid-template-columns: 40px 480px 140px 140px 140px 140px 140px 140px calc(100vw - 1440px);
     justify-content: start;
     align-content: center;
     // border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
@@ -37,17 +37,35 @@
       padding-block: 5px;
     }
 
+    .header-title.empty-right-cell {
+      border-right: none;
+    }
+
+    .header-title.title-col {
+      position: sticky;
+      left: 78px
+    }
+
     .header-title {
       @include groupCell;
       text-align: center;
       padding: var(--spacing-small);
       padding-top: 10px;
       padding-bottom: 10px;
+      background-color: white;
     }
 
 
     .header-title-side.collapse-group {
       border-right: none;
+    }
+
+
+
+    .header-title-side-wrapper {
+      position: sticky;
+      left: 38px;
+      background-color: white;
     }
 
     .header-title-side {
@@ -67,6 +85,8 @@
       }
 
       .task-select {
+        position: sticky;
+        left: 38px;
 
         height: 100%;
 
@@ -133,11 +153,23 @@
       // }
     }
 
+    .task-item.title-col {
+      position: sticky;
+      left: 78px;
+      background-color: white;
+      z-index: 1;
+    }
+
+    .task-item.side-col {
+      position: sticky;
+      left: 38px;
+      background-color: white;
+    }
+
     .task-item {
       @include groupCell;
       height: 36px;
       // border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
-
 
       &>* {
         display: flex;
@@ -188,9 +220,12 @@
     // }
 
     .task-add-btn {
-      margin-left: 33px;
+      padding-left: 33px;
       width: 447px;
       border-right: none;
+      position: sticky;
+      left: 78px;
+      // background-color: white;
 
       h5,
       input {
@@ -203,6 +238,9 @@
 
       width: 100%;
       height: 100%;
+
+      position: sticky;
+      left: 38px;
 
       .color-indicator {
         width: 7px;
@@ -265,12 +303,20 @@
       grid-column: 3;
       border-radius: 0 0 0 var(--border-radius-small);
       border-left: var(--border-width) var(--border-style) var(--ui-border-color);
+      z-index: 1;
+      position: sticky;
+      left: 558px;
+      background-color: white;
     }
 
     .task-list-summary.collapse-group {
       border-bottom: none;
       box-shadow: none;
       height: 37px;
+    }
+
+    .task-list-summary.empty-right-cell {
+      border-right: none;
     }
 
     .task-list-summary {
