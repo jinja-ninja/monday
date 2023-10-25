@@ -433,6 +433,10 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
 
             </div>
 
+            <div className={"task-list-summary last-col " + dynCollapseGroupClass}>
+
+            </div>
+
         </section>
 
         <>

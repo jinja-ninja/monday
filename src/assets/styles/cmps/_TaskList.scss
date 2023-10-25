@@ -10,7 +10,7 @@
 
   .group-grid {
     display: grid;
-    grid-template-columns: 40px 480px 140px 140px 140px 140px 140px 140px;
+    grid-template-columns: 40px 480px 140px 140px 140px 140px 140px 140px 1fr;
     justify-content: start;
     align-content: center;
     // border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
@@ -283,6 +283,14 @@
       border-right: var(--border-width) var(--border-style) var(--ui-border-color);
       border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
       box-shadow: var(--box-shadow-xs);
+
+      &.last-col {
+        border-right: none;
+
+        &.collapse-group {
+          display: none;
+        }
+      }
 
       .label-progress-item,
       .status-sum-container {

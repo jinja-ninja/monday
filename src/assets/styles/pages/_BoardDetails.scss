@@ -17,10 +17,15 @@
   .board-details-container {
     grid-row: 2;
     grid-column: 2;
+
     background-color: var(--primary-background-color);
     border-radius: var(--border-radius-medium) 0 0 var(--border-radius-medium);
     box-shadow: var(--box-shadow-xs);
     font-size: 14px;
+
+    .side-spacing-div {
+      grid-column: 1/2;
+    }
 
     .monday-storybook-search_size {
       width: 265px;
@@ -94,6 +99,10 @@
 
             .btn-avatars {
               padding-inline-end: 4px;
+
+              .counter_adf923d95a {
+                padding: 0;
+              }
 
               div {
                 padding-inline-end: 0;

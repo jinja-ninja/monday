@@ -1,6 +1,16 @@
 .group-list-container {
   // padding-left: var(--spacing-xl);
-  padding-left: 38px;
+  // padding-left: 38px;
+  display: grid;
+  grid-template-columns: 38px 1fr;
+
+  .side-spacing-div {
+    grid-column: 1/2;
+  }
+
+  .group-list {
+    grid-column: 2/3;
+  }
 
   padding-block-end: var(--spacing-xl);
   padding-block-start: 5px;
