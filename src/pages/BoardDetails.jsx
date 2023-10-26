@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { usePopper } from "react-popper";
 import { Button, IconButton, Loader, MenuItem, SplitButton, SplitButtonMenu, Search as SearchInput, Tooltip, Avatar, Icon, useClickOutside } from "monday-ui-react-core"
 import { Add, Announcement, Check, CloseSmall, Filter, Group, Hide, Menu, PersonRound, Search, Sort } from "monday-ui-react-core/icons"
@@ -35,17 +35,28 @@ export function BoardDetails() {
         modifiers: [{ name: 'arrow', options: { element: arrowElement } }],
     })
 
+    const refPersonModal = useRef(null)
 
     useEffect(() => {
         loadBoard()
     }, [params.boardId, filterBy])
 
-    useEffect(() => {
-        document.addEventListener('mousedown', onClosePersonPicker)
-        return () => {
-            document.removeEventListener('mousedown', onClosePersonPicker)
-        }
+    // useEffect(() => {
+    //     document.addEventListener('mousedown', onClosePersonPicker)
+    //     return () => {
+    //         document.removeEventListener('mousedown', onClosePersonPicker)
+    //     }
+    // }, [])
+
+
+    const onClickOutsidePersonModal = useCallback(() => {
+        setPersonPickerOpen(false)
     }, [])
+
+    useClickOutside({
+        ref: refPersonModal,
+        callback: onClickOutsidePersonModal
+    })
 
     async function loadBoard() {
         await getBoardById(params.boardId, filterBy)
@@ -184,8 +195,11 @@ export function BoardDetails() {
                 </Tooltip>
 
                 {personPickerOpen && <div className="person-picker-modal" ref={setPopperElement} style={styles.popper} {...attributes.popper}>
-                    <PersonPickerModal Members={currBoard.members} setFilterBy={setFilterBy} getNameInitials={getNameInitials} />
-                    <div ref={setArrowElement} style={styles.arrow} />
+                    <div className="click-outside-container" ref={refPersonModal}>
+                        <PersonPickerModal Members={currBoard.members} setFilterBy={setFilterBy} filterBy={filterBy}
+                            getNameInitials={getNameInitials}  />
+                    </div>
+                        <div ref={setArrowElement} style={styles.arrow} />
                 </div>}
 
                 <SplitButton kind="tertiary" leftIcon={Filter} size="small" secondaryDialogContent={

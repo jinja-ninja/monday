@@ -25,10 +25,25 @@
         align-items: center;
         gap: 10px;
 
+        .test {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+
+            &.selected {
+                background-color: var(--color-glitter);
+            }
+        }
+
         .avatar-img {
             width: 32px;
             height: 32px;
             cursor: pointer;
+
+
         }
     }
 }
@@ -43,7 +58,7 @@
     width: 108px;
     height: 32px;
     padding: var(--spacing-xs) var(--spacing-small);
-    padding-left: 10px;
+    padding-left: 11px;
     border-radius: var(--border-radius-small);
     cursor: pointer;
 

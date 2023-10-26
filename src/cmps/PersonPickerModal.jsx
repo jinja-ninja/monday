@@ -1,6 +1,6 @@
 import { Avatar } from 'monday-ui-react-core'
 
-export function PersonPickerModal({ Members, setFilterBy,getNameInitials }) {
+export function PersonPickerModal({ Members, setFilterBy, filterBy, getNameInitials }) {
 
     function onSetFilterBy(memberId) {
         setFilterBy((prevFilterBy) => ({
@@ -16,21 +16,29 @@ export function PersonPickerModal({ Members, setFilterBy,getNameInitials }) {
 
             <div className="member-list-container">
                 {Members.map(member => {
+                    let dynSelectedPersonClass = ''
+
+                    if (filterBy.person) {
+                        dynSelectedPersonClass = filterBy.person._id === member._id ? 'selected' : '';
+                    }
+
                     return (
                         <div className='person-img-container' key={member._id}>
                             {(!member.imgUrl || member.imgUrl === 'https://www.google.com') ? (
-                                <Avatar
-                                    className='avatar-img'
-                                    size={Avatar.sizes.SMALL}
-                                    type={Avatar.types.TEXT}
-                                    text={getNameInitials(member.fullname)}
-                                    backgroundColor={Avatar.colors.BLACKISH}
-                                    ariaLabel={member.fullname}
-                                    onClick={() => onSetFilterBy(member)}
-                                />
+                                <div className={'test ' + dynSelectedPersonClass}>
+                                    <Avatar
+                                        className='avatar-img'
+                                        size={Avatar.sizes.SMALL}
+                                        type={Avatar.types.TEXT}
+                                        text={getNameInitials(member.fullname)}
+                                        backgroundColor={Avatar.colors.BLACKISH}
+                                        ariaLabel={member.fullname}
+                                        onClick={() => onSetFilterBy(member)}
+                                    />
+                                </div>
                             ) : (
                                 <Avatar
-                                    className='avatar-img'
+                                    className={'avatar-img ' + dynSelectedPersonClass}
                                     ariaLabel={member.fullname}
                                     size={Avatar.sizes.SMALL}
                                     src={member.imgUrl}
