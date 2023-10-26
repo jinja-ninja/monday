@@ -98,7 +98,7 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                         size={Avatar.sizes.SMALL}
                         type={Avatar.types.TEXT}
                         text={getNameInitials(member.fullname)}
-                        backgroundColor={Avatar.colors.LIPSTICK}
+                        backgroundColor={Avatar.colors.BLACKISH}
                         ariaLabel={member.fullname}
                     />
                 }
@@ -151,7 +151,7 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                             <Avatar size={Avatar.sizes.SMALL}
                                 type={Avatar.types.TEXT}
                                 text={getNameInitials(member.fullname)}
-                                backgroundColor={Avatar.colors.LIPSTICK}
+                                backgroundColor={Avatar.colors.BLACKISH}
                                 ariaLabel={member.fullname}
                             />
                             <span className="member-name">{member.fullname}</span>
