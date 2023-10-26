@@ -1,12 +1,13 @@
 import { useCallback, useRef, useState } from "react"
 import { ColorPicker, EditableHeading, Icon, Menu, MenuButton, MenuItem, Modal, ModalContent, ModalFooterButtons, ModalHeader, Tooltip, useClickOutside } from "monday-ui-react-core"
 import { Delete, DropdownChevronDown, DropdownChevronRight, Duplicate, Edit, HighlightColorBucket } from "monday-ui-react-core/icons"
+import { Draggable, Droppable } from "react-beautiful-dnd"
 
 import { duplicatedGroup, removeGroup, updateBoard } from "../store/actions/board.action"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { TaskList } from "./TaskList"
 
-export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, onRenameGroup }) {
+export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, onRenameGroup, index }) {
 
     const [showGroup, setShowGroup] = useState(true)
     const [editableText, setEditableText] = useState(group.title)
@@ -77,103 +78,118 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
         callback: onClickOutsideSelectColor
     })
 
-    return <div className="group-preview-container">
+    return (
+        <Draggable draggableId={group.id} index={index}>
+            {(provider) => (
+                <div
+                    {...provider.draggableProps}
+                    {...provider.dragHandleProps}
+                    ref={provider.innerRef}
+                    className="group-preview-container">
 
-        <div className={"collapsible-header-wrapper " + dynCollapseGroupClass} >
-            <MenuButton
-                size={MenuButton.sizes.XS}
-                className="group-menu-btn"
-                closeDialogOnContentClick >
-                <Menu id="menu" size="medium">
-                    <MenuItem
-                        icon={Delete}
-                        iconType="SVG"
-                        onClick={() => setShow(true)}
-                        title="Delete" />
-                    <MenuItem
-                        icon={Edit}
-                        iconType="SVG"
-                        onClick={() => handleEditClick(group.id)}
-                        title="Rename Group" />
-                    <MenuItem
-                        icon={Duplicate}
-                        iconType="SVG"
-                        onClick={() => onDuplicateGroup(boardId, group.id)}
-                        title="Duplicate this group" />
-                    <MenuItem
-                        icon={HighlightColorBucket}
-                        iconType="SVG"
-                        onClick={() => onChangeGroupColorClick()}
-                        title="Change group color" />
-                </Menu>
-            </MenuButton>
-<div>
+                    <div className={"collapsible-header-wrapper " + dynCollapseGroupClass} >
+                        <MenuButton
+                            size={MenuButton.sizes.XS}
+                            className="group-menu-btn"
+                            closeDialogOnContentClick >
+                            <Menu id="menu" size="medium">
+                                <MenuItem
+                                    icon={Delete}
+                                    iconType="SVG"
+                                    onClick={() => setShow(true)}
+                                    title="Delete" />
+                                <MenuItem
+                                    icon={Edit}
+                                    iconType="SVG"
+                                    onClick={() => handleEditClick(group.id)}
+                                    title="Rename Group" />
+                                <MenuItem
+                                    icon={Duplicate}
+                                    iconType="SVG"
+                                    onClick={() => onDuplicateGroup(boardId, group.id)}
+                                    title="Duplicate this group" />
+                                <MenuItem
+                                    icon={HighlightColorBucket}
+                                    iconType="SVG"
+                                    onClick={() => onChangeGroupColorClick()}
+                                    title="Change group color" />
+                            </Menu>
+                        </MenuButton>
+                        <div>
 
-            <Tooltip
-                content={showGroup ? "Collapse Group" : "Expand Group"}
-                animationType="expand">
-                <Icon iconType={Icon.type.SVG} iconSize={20}
-                    className={"collapse-arrow-btn " + dynCollapseGroupClass}
-                    icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
-                    style={{ color: `var(--color-${group.style})` }}
-                    onClick={() => setShowGroup((prevShowGroup => !prevShowGroup))} />
-            </Tooltip>
+                            <Tooltip
+                                content={showGroup ? "Collapse Group" : "Expand Group"}
+                                animationType="expand">
+                                <Icon iconType={Icon.type.SVG} iconSize={20}
+                                    className={"collapse-arrow-btn " + dynCollapseGroupClass}
+                                    icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
+                                    style={{ color: `var(--color-${group.style})` }}
+                                    onClick={() => setShowGroup((prevShowGroup => !prevShowGroup))} />
+                            </Tooltip>
 
-            <Tooltip content="Click to Edit"
-                animationType="expand">
-                <EditableHeading
-                    className="editable-heading-target"
-                    type="h4"
-                    value={editableText}
-                    onBlur={() => {
-                        onRenameGroup(group.id, editableText)
-                    }}
-                    style={{ color: `var(--color-${group.style})` }}
-                    onChange={(newText) => setEditableText(newText)}
-                />
-            </Tooltip>
-            </div>
+                            <Tooltip content="Click to Edit"
+                                animationType="expand">
+                                <EditableHeading
+                                    className="editable-heading-target"
+                                    type="h4"
+                                    value={editableText}
+                                    onBlur={() => {
+                                        onRenameGroup(group.id, editableText)
+                                    }}
+                                    style={{ color: `var(--color-${group.style})` }}
+                                    onChange={(newText) => setEditableText(newText)}
+                                />
+                            </Tooltip>
+                        </div>
 
-            <span className={"num-of-tasks " + dynCollapseGroupClass}>
-                {numOfTasks === 0 ? 'No tasks' : `${numOfTasks} ${numOfTasks === 1 ? 'Task' : 'Tasks'}`}
-            </span>
-        </div>
+                        <span className={"num-of-tasks " + dynCollapseGroupClass}>
+                            {numOfTasks === 0 ?
+                                'No tasks' : `${numOfTasks} 
+                                ${numOfTasks === 1 ? 'Task' : 'Tasks'}`}
+                        </span>
+                    </div>
 
-        {
-            showColorPicker && <ColorPicker
-                onSave={(color) => onSelectColor(color)}
-                colorSize="small"
-                className="color-picker"
-                ref={refColorDialog}
-            />
-        }
+                    {
+                        showColorPicker && <ColorPicker
+                            onSave={(color) => onSelectColor(color)}
+                            colorSize="small"
+                            className="color-picker"
+                            ref={refColorDialog}
+                        />
+                    }
+                    <TaskList
+                        group={group}
+                        cmpsOrder={cmpsOrder}
+                        labels={labels}
+                        priorities={priorities}
+                        setNumOfTasks={setNumOfTasks}
+                        showGroup={showGroup} />
+                    <>
+                        <Modal
+                            id="story-book-modal"
+                            title="Modal title"
+                            triggerElement={openModalButtonRef.current}
+                            show={show}
+                            onClose={closeModal}
+                            width={Modal.width.DEFAULT} contentSpacing>
 
-        <TaskList group={group} cmpsOrder={cmpsOrder} labels={labels} priorities={priorities} setNumOfTasks={setNumOfTasks} showGroup={showGroup} />
+                            <ModalHeader title={"Delete"} iconSize={32} />
+                            <ModalContent>Delete this Group? </ModalContent>
+                            <ModalFooterButtons
+                                primaryButtonText="Delete"
+                                secondaryButtonText="Cancel"
+                                onPrimaryButtonClick={() => {
+                                    onRemoveGroup(boardId, group.id)
+                                    closeModal()
+                                }}
+                                onSecondaryButtonClick={closeModal} />
 
-        <>
-            <Modal
-                id="story-book-modal"
-                title="Modal title"
-                triggerElement={openModalButtonRef.current}
-                show={show}
-                onClose={closeModal}
-                width={Modal.width.DEFAULT} contentSpacing>
-
-                <ModalHeader title={"Delete"} iconSize={32} />
-                <ModalContent>Delete this Group? </ModalContent>
-                <ModalFooterButtons
-                    primaryButtonText="Delete"
-                    secondaryButtonText="Cancel"
-                    onPrimaryButtonClick={() => {
-                        onRemoveGroup(boardId, group.id)
-                        closeModal()
-                    }}
-                    onSecondaryButtonClick={closeModal} />
-
-            </Modal>
-        </>
-
-    </div>
+                        </Modal>
+                    </>
+                </div>
+            )}
+        </Draggable>
+    )
 }
 
 

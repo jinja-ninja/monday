@@ -16,6 +16,7 @@ import { boardService } from "../services/board.service.local"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { BoardDescriptionModal } from "../cmps/BoardDescriptionModal"
 import { PersonPickerModal } from "../cmps/personPickerModal";
+import { DragDropContext } from "react-beautiful-dnd"
 
 export function BoardDetails() {
     const params = useParams()
@@ -40,14 +41,6 @@ export function BoardDetails() {
     useEffect(() => {
         loadBoard()
     }, [params.boardId, filterBy])
-
-    // useEffect(() => {
-    //     document.addEventListener('mousedown', onClosePersonPicker)
-    //     return () => {
-    //         document.removeEventListener('mousedown', onClosePersonPicker)
-    //     }
-    // }, [])
-
 
     const onClickOutsidePersonModal = useCallback(() => {
         setPersonPickerOpen(false)
@@ -132,7 +125,46 @@ export function BoardDetails() {
             size="small">Search
         </Button>
 
-    const progress = [null, null, "status", null, "priority", null]
+    async function onDragEnd(result) {
+        const { destination, source, draggableId, type } = result
+        if (!destination) return
+        if (destination.droppableId === source.droppableId && destination.index === source.index) return
+
+        if (type === 'groups') {
+            const newGroups = [...currBoard.groups]
+            const [removed] = newGroups.splice(source.index, 1)
+            newGroups.splice(destination.index, 0, removed)
+            await updateBoard('board', currBoard._id, null, null, { key: 'groups', value: newGroups })
+            return
+        }
+        const start = currBoard.groups.find(group => group.id === source.droppableId)
+        const finish = currBoard.groups.find(group => group.id === destination.droppableId)
+        if (start === finish) {
+            const newTasks = [...start.tasks]
+            const [removed] = newTasks.splice(source.index, 1)
+            newTasks.splice(destination.index, 0, removed)
+            const newGroups = currBoard.groups.map(group => {
+                if (group.id === start.id) return { ...group, tasks: newTasks }
+                return group
+            })
+            await updateBoard('board', currBoard._id, null, null, { key: 'groups', value: newGroups })
+            return
+        }
+        const startTasks = [...start.tasks]
+        startTasks.splice(source.index, 1)
+        const newStart = { ...start, tasks: startTasks }
+        const task = start.tasks.find(task => task.id === draggableId)
+        const finishTasks = [...finish.tasks]
+        finishTasks.splice(destination.index, 0, task)
+        const newFinish = { ...finish, tasks: finishTasks }
+        const newGroups = currBoard.groups.map(group => {
+            if (group.id === start.id) return newStart
+            if (group.id === finish.id) return newFinish
+            return group
+        })
+        await updateBoard('board', currBoard._id, null, null, { key: 'groups', value: newGroups })
+    }
+
     if (!currBoard) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
     return <main className="board-details-layout">
         <BoardMainHeader />
@@ -197,9 +229,9 @@ export function BoardDetails() {
                 {personPickerOpen && <div className="person-picker-modal" ref={setPopperElement} style={styles.popper} {...attributes.popper}>
                     <div className="click-outside-container" ref={refPersonModal}>
                         <PersonPickerModal Members={currBoard.members} setFilterBy={setFilterBy} filterBy={filterBy}
-                            getNameInitials={getNameInitials}  />
+                            getNameInitials={getNameInitials} />
                     </div>
-                        <div ref={setArrowElement} style={styles.arrow} />
+                    <div ref={setArrowElement} style={styles.arrow} />
                 </div>}
 
                 <SplitButton kind="tertiary" leftIcon={Filter} size="small" secondaryDialogContent={
@@ -222,15 +254,15 @@ export function BoardDetails() {
 
             </div>
             <div className="spacing-div"></div>
-
-            <GroupList
-                boardId={params.boardId}
-                groups={currBoard.groups}
-                labels={currBoard.labels}
-                cmpsOrder={cmpsOrder}
-                progress={progress}
-                priorities={currBoard.priorities}
-            />
+            <DragDropContext onDragEnd={onDragEnd} >
+                <GroupList
+                    boardId={params.boardId}
+                    groups={currBoard.groups}
+                    labels={currBoard.labels}
+                    cmpsOrder={cmpsOrder}
+                    priorities={currBoard.priorities}
+                />
+            </DragDropContext>
 
             <Outlet />
 
