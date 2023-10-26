@@ -105,8 +105,8 @@
 
     &.group-grid {
       &:hover {
-        position: relative;
-        z-index: 1;
+        // position: relative;
+        // z-index: 1;
         background-color: rgb(245, 246, 248);
         box-shadow: 4px 3px 6px -3px var(--ui-border-color);
 
