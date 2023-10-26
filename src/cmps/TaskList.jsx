@@ -218,7 +218,6 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                         onClick={() => onDuplicateTask(taskId)}
                         title="Duplicate this Task" />
                 </Menu>
-
             </MenuButton>
         )
     }
@@ -226,7 +225,10 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
     function renderDynamicCmp(cmp, task, labels, priorities) {
         switch (cmp) {
             case "side":
-                return <Side info={group['style']} taskId={task.id} groupId={groupId} />
+                return <Side
+                    info={group['style']}
+                    taskId={task.id}
+                    groupId={groupId} />
             case "title":
                 return <TaskTitle info={task[cmp]}
                     boardId={boardId}
@@ -234,21 +236,21 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     taskId={task.id}
                     onUpdateTask={onUpdateTask}
                     setIsTyping={setIsTypingNewTask}
-                    />
-            case "Status":
+                />
+            case "status":
                 return <TaskStatus
                     board={currBoard}
                     type={'status'}
                     task={task}
                     labels={labels}
                     onUpdateTask={onUpdateTask} />
-            case "Priority":
+            case "priority":
                 return <TaskStatus
                     type={'priority'}
                     task={task}
                     labels={priorities}
                     onUpdateTask={onUpdateTask} />
-            case "Members":
+            case "members":
                 return <Member
                     boardMembers={currBoard.members}
                     task={task}
@@ -262,7 +264,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     groupId={groupId}
                     taskId={task.id}
                 />
-            case "Timeline":
+            case "timeline":
                 return <Timeline
                     Timeline={task[cmp]}
                     boardId={boardId}
@@ -270,7 +272,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     taskId={task.id}
                     groupColor={group.style}
                 />
-            case "Files":
+            case "files":
                 return <Files
                     boardId={boardId}
                     groupId={groupId}
@@ -281,35 +283,67 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
         }
     }
 
+    // const progress = cmpsOrder.map((cmp) => {
+    //     if (cmp === 'status' || cmp === 'priority' || cmp === 'dueDate' || cmp === 'timeline') return cmp
+    //     else return null
+    // })
+    // progress.splice(0, 2)
+
     return <div className={"task-list-container " + dynCollapseGroupClass}>
 
-        <section className={"header-title-container group-grid " + dynCollapseGroupClass}>
-            {cmpsOrder.map((title, idx) => {
-                if (idx === 0) return <div className="header-title-side-wrapper" key={idx}>
-                    <div className={"header-title-side " + dynCollapseGroupClass}>
-                        <div className="color-indicator"
-                            style={{
-                                backgroundColor: `var(--color-${group.style})`
-                            }}>
-                        </div>
+        <Droppable droppableId={'columns'} type="columns" direction="column">
+            {(provided) => (
+                <section
+                    className={"header-title-container group-grid " + dynCollapseGroupClass}
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                >
+                    {cmpsOrder.map((title, idx) => {
+                        if (idx === 0) return (
+                            <div className="header-title-side-wrapper" key={idx}>
+                                <div className={"header-title-side " + dynCollapseGroupClass}>
+                                    <div className="color-indicator"
+                                        style={{
+                                            backgroundColor: `var(--color-${group.style})`
+                                        }}>
+                                    </div>
 
-                        {showGroup && <div className="task-select">
-                            <Checkbox
-                                checked={isChecked}
-                                onChange={(e) => selectAllTasks(e)} ariaLabel="Select task" />
-                        </div>}
-                    </div>
-                </div>
-                if (title === 'title' && !showGroup) title = ''
-                return <div className={"header-title " + dynCollapseGroupClass} key={idx}>
-                    <span>
-                        <DisplayTitle title={title} />
-                    </span>
-                </div>
-            }
+                                    {showGroup &&
+                                        <div className="task-select">
+                                            <Checkbox
+                                                checked={isChecked}
+                                                onChange={(e) => selectAllTasks(e)}
+                                                ariaLabel="Select task" />
+                                        </div>}
+                                </div>
+                            </div>
+                        )
+                        if (title === 'title' && !showGroup) title = ''
+                        return (
+                            <Draggable
+                                key={idx}
+                                draggableId={`title-${idx}`}
+                                index={idx}
+                            >
+                                {(provided) => (
+                                    <div
+                                        className={"header-title " + dynCollapseGroupClass}
+                                        key={idx}
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                    >
+                                        <DisplayTitle title={title} />
+                                    </div>
+                                )}
+                            </Draggable>
+                        )
+                    })}
+                    {provided.placeholder}
+                </section>
             )}
+        </Droppable>
 
-        </section>
         <Droppable droppableId={groupId}>
             {(provided) => (
                 <div
@@ -338,8 +372,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     })}
                     {provided.placeholder}
                 </div>
-            )
-            }
+            )}
         </Droppable >
 
         {showGroup && <section className={"task-list-add group-grid " + (isTypingNewTask ? 'typing' : '')}>
@@ -383,9 +416,24 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                 </div>}
             </div>
 
-            <div className={"task-list-summary first-cell " + dynCollapseGroupClass}>
 
-            </div>
+            {/* {Progress.map((cmp, idx) => {
+                switch (cmp) {
+                    case "status":
+                        return <StatusProgress />
+                    case "priority":
+                        return <PriorityProgress />
+                    case "dueDate":
+                        return <DueDateProgress />
+                    case "timeline":
+                        return <TimelineProgress />
+                    default:
+                        return <div className={"task-list-summary first-cell " + dynCollapseGroupClass}></div>
+                    
+                }
+            })} */}
+
+            <div className={"task-list-summary first-cell " + dynCollapseGroupClass}></div>
 
             <div className={"task-list-summary " + dynCollapseGroupClass}>
                 {calculatePercentages(group.tasks, 'status').map((status, index) => (
@@ -408,7 +456,6 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
             </div>
 
             <div className={"task-list-summary " + dynCollapseGroupClass}>
-                {/* <div className="priority-summary-container"> */}
 
                 {calculatePercentages(group.tasks, 'priority').map((priority, index) => (
                     <Tooltip
@@ -428,7 +475,6 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
 
                 ))}
                 {group.tasks.length === 0 && <div className="status-sum-container"></div>}
-                {/* </div> */}
 
             </div>
 
@@ -463,9 +509,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                 </div>
             </div>
 
-            <div className={"task-list-summary " + dynCollapseGroupClass}>
-
-            </div>
+            <div className={"task-list-summary " + dynCollapseGroupClass}></div>
 
             <div className={"task-list-summary last-col " + dynCollapseGroupClass}>
 

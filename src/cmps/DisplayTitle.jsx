@@ -8,19 +8,19 @@ export function DisplayTitle({ title }) {
         case 'dueDate':
             newTitle = 'Due Date'
             break
-        case 'Status':
+        case 'status':
             newTitle = 'Status'
             break
-        case 'Priority':
+        case 'priority':
             newTitle = 'Priority'
             break
-        case 'Members':
+        case 'members':
             newTitle = 'Members'
             break
-        case 'Files':
+        case 'files':
             newTitle = 'Files'
             break
-        case 'Timeline':
+        case 'timeline':
             newTitle = 'Timeline'
             break
         case '':

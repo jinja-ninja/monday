@@ -1,6 +1,5 @@
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
-import { httpService } from './http.service.js'
 
 export const activityService = {
     getActivities,
@@ -10,12 +9,6 @@ export const activityService = {
     deleteActivity,
     getEmptyActivity
 }
-
-// async function getActivities({ boardId, groupId }) {
-
-//     return await storageService.put(STORAGE_KEY, board)
-//     // return await httpService.get('activity')
-// }
 
 async function addActivity({ txt, boardId, groupId, taskId }) {
     const activity = getEmptyActivity()

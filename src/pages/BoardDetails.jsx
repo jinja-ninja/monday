@@ -90,17 +90,6 @@ export function BoardDetails() {
         }))
     }
 
-    const cmpsOrder = [
-        "side",
-        "title",
-        "Members",
-        "Status",
-        "Priority",
-        "dueDate",
-        "Timeline",
-        "Files",
-    ]
-
     const dynSearchBtnInput = isSearch || filterBy.txt ?
         <SearchInput
             id="filter-search-input"
@@ -135,8 +124,19 @@ export function BoardDetails() {
             await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: newGroups }, newBoard)
             return
         }
+
+        if (type === 'columns') {
+            const newCmpsOrder = [...currBoard.cmpsOrder]
+            const [removed] = newCmpsOrder.splice(source.index, 1)
+            newCmpsOrder.splice(destination.index, 0, removed)
+            const newBoard = { ...currBoard, cmpsOrder: newCmpsOrder }
+            await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'cmpsOrder', value: newCmpsOrder }, newBoard)
+            return
+        }
+
         const start = currBoard.groups.find(group => group.id === source.droppableId)
         const finish = currBoard.groups.find(group => group.id === destination.droppableId)
+
         if (start === finish) {
             const newTasks = [...start.tasks]
             const [removed] = newTasks.splice(source.index, 1)
@@ -260,7 +260,7 @@ export function BoardDetails() {
                     boardId={params.boardId}
                     groups={currBoard.groups}
                     labels={currBoard.labels}
-                    cmpsOrder={cmpsOrder}
+                    cmpsOrder={currBoard.cmpsOrder}
                     priorities={currBoard.priorities}
                 />
             </DragDropContext>
