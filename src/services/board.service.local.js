@@ -1183,6 +1183,7 @@ function _createBoards() {
                                     status: "Progress",
                                     priority: "Critical",
                                     dueDate: 1615655555555,
+                                    memberIds: ["u102"],
                                     description: "Check for bugs",
                                     comments: [
                                         {
@@ -1214,7 +1215,6 @@ function _createBoards() {
                                             ]
                                         }
                                     ],
-                                    memberIds: ["u105"],
                                     labelIds: ["l105", "l106"],
                                     byMember: {
                                         _id: "u105",
@@ -1395,6 +1395,7 @@ function _createBoards() {
                                     status: "Progress",
                                     priority: "Critical",
                                     dueDate: undefined,
+                                    memberIds: ["u101"],
                                     description: "Endpoints for CRUD operations",
                                     comments: [
                                         {
@@ -1426,7 +1427,6 @@ function _createBoards() {
                                             ]
                                         }
                                     ],
-                                    memberIds: ["u107"],
                                     labelIds: ["l107", "l108"],
                                     byMember: {
                                         _id: "u107",
