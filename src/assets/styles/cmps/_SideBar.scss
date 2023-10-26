@@ -24,7 +24,7 @@
         border-top-right-radius: 8px;
         border-bottom-left-radius: 8px;
         border: none;
-        padding: 12px 8px 12px 8px;
+        padding: 12px 4px 12px 12px;
         background-color: var(--allgrey-background-color);
         cursor: pointer;
 
@@ -34,6 +34,7 @@
 
         .open-close-arrow {
             transition: all .4s;
+            margin-right: 3px;
 
             &:focus {
                 outline: none;
@@ -80,10 +81,33 @@
         padding-top: rem(22px);
         padding-left: rem(20px);
 
+        .monday-storybook-search_size {
+            width: 265px;
+            position: relative;
+            // left: -3px;
+
+            #filter-search-input.search-input {
+                padding-left: 28px;
+            }
+
+            div {
+                left: 1px;
+
+                &.disableTextSelection_1b236ba5cb {
+
+                    &:hover {
+                        background-color: transparent;
+                        cursor: default;
+                    }
+                }
+            }
+        }
+
         .workspace-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-left: 3px;
 
             .favorite-title {
                 display: flex;
@@ -167,6 +191,7 @@
                     padding-left: 0.1em;
                     width: 222px;
                     font-size: 14px;
+                    padding-left: 3px;
 
                 }
 
@@ -247,6 +272,10 @@
 
     &.open {
         width: 256px;
+
+        .btn-open-close {
+            padding: 12px 8px 12px 8px;
+        }
 
         .open-close-arrow {
             transform: rotate(180deg);

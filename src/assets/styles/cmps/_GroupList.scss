@@ -26,8 +26,12 @@
   }
 
   .group-list-item {
-    position: relative;
-    margin-block-end: var(--spacing-large);
+    // position: relative;
+    // margin-block-end: var(--spacing-large);
+
+    // &.collapse {
+    //   margin-block-end: 0;
+    // }
 
     .group-menu-btn {
       position: absolute;

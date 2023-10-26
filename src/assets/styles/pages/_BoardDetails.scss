@@ -29,6 +29,10 @@
 
       #filter-search-input.search-input {
         padding-left: 28px;
+
+        &.searching {
+          background-color: var(--primary-selected-color);
+        }
       }
 
       div {

@@ -17,6 +17,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { BoardDescriptionModal } from "../cmps/BoardDescriptionModal"
 import { PersonPickerModal } from "../cmps/personPickerModal";
 import { DragDropContext } from "react-beautiful-dnd"
+import { NoGroupsFound } from "../cmps/NoGroupsFound";
 
 export function BoardDetails() {
     const params = useParams()
@@ -56,12 +57,8 @@ export function BoardDetails() {
     }
 
     function toggleIsSearch() {
+        if (filterBy.txt) return
         setIsSearch((prevIsSearch) => !prevIsSearch)
-    }
-
-    function onClosePersonPicker(ev) {
-        if (ev.target.closest('.person-picker-container')) return
-        setPersonPickerOpen(false)
     }
 
     function onTogglePersonModal(ev) {
@@ -104,10 +101,10 @@ export function BoardDetails() {
         "Files",
     ]
 
-    const dynSearchBtnInput = isSearch ?
+    const dynSearchBtnInput = isSearch || filterBy.txt ?
         <SearchInput
             id="filter-search-input"
-            className="search-input"
+            className={"search-input " + (filterBy.txt ? 'searching' : '')}
             onBlur={() => toggleIsSearch()}
             value={filterBy.txt}
             onChange={(text) => setFilterBy({ ...filterBy, txt: text })}
@@ -264,6 +261,8 @@ export function BoardDetails() {
                     priorities={currBoard.priorities}
                 />
             </DragDropContext>
+
+            {currBoard.groups.length === 0 && <NoGroupsFound cmpsOrder={cmpsOrder} />}
 
             <Outlet />
 

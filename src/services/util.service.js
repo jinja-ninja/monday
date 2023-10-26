@@ -152,12 +152,12 @@ function getTimelineRange(timeline) {
 
     if (startMonth === endMonth) {
         if (startDay === endDay) {
-            return `${startMonth} ${startDay}`
+            return `${startDay} ${startMonth}`
         } else {
-            return `${startMonth} ${startDay}-${endDay}`
+            return `${startDay} - ${endDay} ${startMonth}`
         }
     } else {
-        return `${startMonth} ${startDay} - ${endMonth} ${endDay}`
+        return `${startDay} ${startMonth} - ${endDay} ${endMonth} `
     }
 }
 

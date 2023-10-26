@@ -1,4 +1,10 @@
 .group-preview-container {
+    position: relative;
+    margin-block-end: var(--spacing-large);
+
+    &.collapse-group {
+        margin-block-end: 0;
+    }
 
     .collapse-arrow-btn.collapse-group {
         margin-inline-start: 10px;

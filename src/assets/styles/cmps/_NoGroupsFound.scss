@@ -1,0 +1,32 @@
+.no-groups-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .no-group-img {
+        width: 220px;
+        height: 190px;
+    }
+
+    .no-results-txt {
+        font: var(--font-h4);
+        color: var(--secondary-text-color);
+    }
+
+    .colums-counter-txt {
+        margin-top: var(--spacing-small);
+        margin-bottom: var(--spacing-large);
+        font: var(--font-subtext);
+        color: var(--secondary-text-color);
+    }
+
+    .main-text {
+        font-size: 1rem;
+        text-align: center;
+        color: var(--secondary-text-color);
+        p{
+            margin-bottom: .5rem;
+        }
+    }
+}

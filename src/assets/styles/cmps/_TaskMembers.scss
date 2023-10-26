@@ -1,6 +1,10 @@
 .task-members {
   position: relative;
 
+  .counter_adf923d95a {
+    padding: 0;
+  }
+
   &:hover {
     .btn-add-member {
       display: flex;
@@ -38,6 +42,7 @@
       flex-wrap: wrap;
       max-width: 328px;
       gap: 4px;
+      padding-inline-start: 10px;
     }
 
     .selected-members {

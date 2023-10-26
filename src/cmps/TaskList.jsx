@@ -29,6 +29,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
     const [addTaskInput, setAddTask] = useState('+ Add task ')
     const [show, setShow] = useState(false)
     const [taskId, setTaskId] = useState(null)
+    const [isTypingNewTask, setIsTypingNewTask] = useState(false)
 
     const openModalButtonRef = useRef()
     const dispatch = useDispatch()
@@ -230,7 +231,9 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     boardId={boardId}
                     groupId={groupId}
                     taskId={task.id}
-                    onUpdateTask={onUpdateTask} />
+                    onUpdateTask={onUpdateTask}
+                    setIsTyping={setIsTypingNewTask}
+                    />
             case "Status":
                 return <TaskStatus
                     board={currBoard}
@@ -336,7 +339,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
             }
         </Droppable >
 
-        {showGroup && <section className="task-list-add group-grid">
+        {showGroup && <section className={"task-list-add group-grid " + (isTypingNewTask ? 'typing' : '')}>
 
             <div className="task-list-add-side">
                 <div className="color-indicator"
@@ -351,14 +354,18 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
             </div>
 
             <EditableHeading
-                className="task-add-btn"
+                className={"task-add-btn " + (isTypingNewTask ? 'typing' : '')}
                 type={EditableHeading.types.h5}
                 value={addTaskInput}
                 onBlur={() => {
                     addTaskInput ? onAddTask(addTaskInput) : setAddTask('+ Add task ')
                     setAddTask('+ Add task')
+                    setIsTypingNewTask(false)
                 }}
-                onStartEditing={() => setAddTask('')}
+                onStartEditing={() => {
+                    setAddTask('')
+                    setIsTypingNewTask(true)
+                }}
                 onChange={(value) => setAddTask(value)} />
 
         </section>}

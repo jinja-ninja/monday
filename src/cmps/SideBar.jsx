@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu, EditableHeading } from "monday-ui-react-core"
-import { Add, Board, Delete, Home, Edit, Favorite, Work } from "monday-ui-react-core/icons"
+import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu, EditableHeading ,Search as SearchInput} from "monday-ui-react-core"
+import { Add, Board, Delete, Home, Edit, Favorite, Work, Search } from "monday-ui-react-core/icons"
 import { useDispatch, useSelector } from "react-redux"
 import { BoardNavLink } from "./BoardNavLink"
 import { addBoard, duplicateBoard, loadBoards, removeBoard, toggleBoardFavorite, updateBoard } from "../store/actions/board.action"
@@ -110,11 +110,16 @@ export function SideBar() {
 
                 {isFavorites === 'main' && <div className="search-and-add-container">
 
-                    <SearchComponent
-                        placeholder="Search"
-                        wrapperClassName="monday-storybook-search_size"
-                        size="small"
+                   
+                    <SearchInput
+                        id="filter-search-input"
                         className="search-input"
+                        autoFocus
+                        debounceRate={200}
+                        iconName={Search}
+                        placeholder="Search"
+                        size="small"
+                        wrapperClassName="monday-storybook-search_size"
                     />
 
                     <IconButton
