@@ -85,7 +85,7 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                     {...provider.draggableProps}
                     {...provider.dragHandleProps}
                     ref={provider.innerRef}
-                    className="group-preview-container">
+                    className={"group-preview-container " + dynCollapseGroupClass}>
 
                     <div className={"collapsible-header-wrapper " + dynCollapseGroupClass} >
                         <MenuButton

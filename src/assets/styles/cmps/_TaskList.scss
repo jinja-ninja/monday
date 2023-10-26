@@ -195,6 +195,10 @@
       align-items: center;
     }
 
+    &.typing {
+      background-color: var(--primary-selected-color);
+    }
+
     // .task-add-btn.collapse-group {
     //   position: relative;
     //   bottom: -50px;
@@ -202,14 +206,19 @@
     // }
 
     .task-add-btn {
-      padding-left: 33px;
+      padding-left: 13px;
       width: 480px;
       border-right: none;
       opacity: 0.75;
 
+      &.typing {
+        opacity: 1;
+      }
+
       h5,
       input {
         font-size: 14px;
+        padding-left: 1rem;
       }
     }
 
@@ -264,6 +273,7 @@
 
     .task-list-summary-emptycell-left {
       grid-column: 1/3;
+      background-color: white;
 
       .color-indicator {
         width: 7px;

@@ -23,15 +23,16 @@
     box-shadow: var(--box-shadow-xs);
     font-size: 14px;
 
-    .side-spacing-div {
-      grid-column: 1/2;
-    }
 
     .monday-storybook-search_size {
       width: 265px;
 
       #filter-search-input.search-input {
         padding-left: 28px;
+
+        &.searching {
+          background-color: var(--primary-selected-color);
+        }
       }
 
       div {
