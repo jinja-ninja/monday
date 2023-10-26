@@ -19,6 +19,7 @@ import { Timeline } from "./dynamicCmps/Timeline"
 import { utilService } from "../services/util.service"
 import { Files } from "./dynamicCmps/Files"
 import { Draggable, Droppable } from "react-beautiful-dnd"
+import { DisplayTitle } from "./DisplayTitle"
 
 export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGroup }) {
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
@@ -298,7 +299,9 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                 </div>
                 if (title === 'title' && !showGroup) title = ''
                 return <div className={"header-title " + dynCollapseGroupClass} key={idx}>
-                    <span>{title}</span>
+                    <span>
+                        <DisplayTitle title={title} />
+                    </span>
                 </div>
             }
             )}

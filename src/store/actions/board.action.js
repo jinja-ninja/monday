@@ -90,6 +90,19 @@ export async function updateBoard(type, boardId, groupId = null, taskId = null, 
     }
 }
 
+export async function updateBoardOptimistic(type, boardId, groupId = null, taskId = null, { key, value }, board) {
+
+    try {
+        const currBoard = store.getState().boardModule.board
+        if (boardId === currBoard._id) store.dispatch({ type: SET_BOARD, board })
+        store.dispatch({ type: UPDATE_BOARDS, board })
+        await boardService.update(type, boardId, groupId, taskId, { key, value })
+    } catch (err) {
+        console.log('Updating actions: err in updating', err)
+        throw err
+    }
+}
+
 // Group Actions
 export async function addGroup(boardId) {
     try {

@@ -7,7 +7,7 @@ import { GroupList } from "../cmps/GroupList"
 import { BoardMainHeader } from "../cmps/BoardMainHeader"
 import { SideBar } from "../cmps/SideBar"
 import { Outlet, useParams } from "react-router-dom"
-import { addGroup, addTask, getBoardById, updateBoard } from "../store/actions/board.action"
+import { addGroup, addTask, getBoardById, updateBoard, updateBoardOptimistic } from "../store/actions/board.action"
 import { useSelector } from "react-redux"
 import { UserMsg } from "../cmps/UserMsg"
 import MondayLoader from '../assets/Loader/MondayLoader.gif'
@@ -134,7 +134,8 @@ export function BoardDetails() {
             const newGroups = [...currBoard.groups]
             const [removed] = newGroups.splice(source.index, 1)
             newGroups.splice(destination.index, 0, removed)
-            await updateBoard('board', currBoard._id, null, null, { key: 'groups', value: newGroups })
+            const newBoard = { ...currBoard, groups: newGroups }
+            await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: newGroups }, newBoard)
             return
         }
         const start = currBoard.groups.find(group => group.id === source.droppableId)
@@ -147,7 +148,8 @@ export function BoardDetails() {
                 if (group.id === start.id) return { ...group, tasks: newTasks }
                 return group
             })
-            await updateBoard('board', currBoard._id, null, null, { key: 'groups', value: newGroups })
+            const newBoard = { ...currBoard, groups: newGroups }
+            await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: newGroups }, newBoard)
             return
         }
         const startTasks = [...start.tasks]
@@ -162,7 +164,8 @@ export function BoardDetails() {
             if (group.id === finish.id) return newFinish
             return group
         })
-        await updateBoard('board', currBoard._id, null, null, { key: 'groups', value: newGroups })
+        const newBoard = { ...currBoard, groups: newGroups }
+        await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: newGroups }, newBoard)
     }
 
     if (!currBoard) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
