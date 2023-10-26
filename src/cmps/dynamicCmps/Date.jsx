@@ -38,7 +38,7 @@ export function Date({ dueDate, taskId, boardId, groupId }) {
         border-color : var(--primary-color);
       }
     `
-    
+
     useEffect(() => {
         if (selected) {
             onChangeDueDate()

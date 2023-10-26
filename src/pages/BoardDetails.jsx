@@ -52,7 +52,7 @@ export function BoardDetails() {
     const cmpsOrder = [
         "side",
         "title",
-        "MembersIds",
+        "Members",
         "Status",
         "Priority",
         "dueDate",
@@ -124,7 +124,7 @@ export function BoardDetails() {
                     animationType="expand">
                     <Button leftIcon={Hide} kind="tertiary" size="small">Hide</Button>
                 </Tooltip>
-                
+
                 <IconButton icon={Menu} size="small" />
             </div>
 
