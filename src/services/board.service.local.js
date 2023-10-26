@@ -186,7 +186,8 @@ function getNewBoard() {
                         comments: [],
                         priority: "",
                         status: "",
-                        dueDate: undefined
+                        dueDate: undefined,
+                        memberIds: []
                     },
                     {
                         id: utilService.makeId(),
@@ -194,7 +195,8 @@ function getNewBoard() {
                         comments: [],
                         priority: "",
                         status: "",
-                        dueDate: undefined
+                        dueDate: undefined,
+                        memberIds: []
                     }
                 ],
                 style: "grass_green"
@@ -210,6 +212,7 @@ function getNewBoard() {
                         comments: [],
                         priority: "",
                         status: "",
+                        memberIds: []
                     },
                     {
                         id: utilService.makeId(),
@@ -700,7 +703,8 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
-                                    dueDate: undefined
+                                    dueDate: undefined,
+                                    memberIds: []
                                 },
                                 {
                                     id: "c102",
@@ -708,7 +712,8 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Progress",
-                                    dueDate: undefined
+                                    dueDate: undefined,
+                                    memberIds: []
                                 }
                             ],
                             style: "grass_green"
@@ -936,6 +941,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
+                                    memberIds: []
                                 },
                                 {
                                     id: "c106",
@@ -943,6 +949,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Progress",
+                                    memberIds: []
                                 }
                             ],
                             style: "grass_green"
@@ -958,6 +965,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "High",
                                     status: "Stuck",
+                                    memberIds: []
                                 },
                                 {
                                     id: "c108",
@@ -1122,7 +1130,8 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Done",
-                                    dueDate: undefined
+                                    dueDate: undefined,
+                                    memberIds: []
                                 },
                                 {
                                     id: "c110",
@@ -1130,7 +1139,8 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Progress",
-                                    dueDate: undefined
+                                    dueDate: undefined,
+                                    memberIds: []
                                 },
                                 {
                                     id: "c111",
@@ -1138,7 +1148,8 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
-                                    dueDate: undefined
+                                    dueDate: undefined,
+                                    memberIds: []
 
                                 },
                                 {
@@ -1147,7 +1158,8 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Stuck",
-                                    dueDate: undefined
+                                    dueDate: undefined,
+                                    memberIds: []
                                 }
                             ],
                             style: "dark-orange"
@@ -1163,6 +1175,7 @@ function _createBoards() {
                                     archivedAt: 1590010000000,
                                     priority: "High",
                                     status: "Stuck",
+                                    memberIds: []
                                 },
                                 {
                                     id: "c114",
@@ -1342,6 +1355,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Stuck",
+                                    memberIds: []
                                 },
                                 {
                                     id: "c117",
@@ -1349,6 +1363,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Progress",
+                                    memberIds: []
                                 },
                                 {
                                     id: "c118",
@@ -1356,6 +1371,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
+                                    memberIds: []
                                 }
                             ],
                             style: "stuck-red"
@@ -1370,7 +1386,8 @@ function _createBoards() {
                                     comments: [],
                                     priority: "High",
                                     status: "Stuck",
-                                    archivedAt: 1590500000000
+                                    archivedAt: 1590500000000,
+                                    memberIds: []
                                 },
                                 {
                                     id: "c120",

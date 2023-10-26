@@ -244,10 +244,12 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     task={task}
                     labels={priorities}
                     onUpdateTask={onUpdateTask} />
-            case "MembersIds":
+            case "Members":
                 return <Member
                     boardMembers={currBoard.members}
                     task={task}
+                    boardId={boardId}
+                    groupId={groupId}
                 />
             case "dueDate":
                 return <Date

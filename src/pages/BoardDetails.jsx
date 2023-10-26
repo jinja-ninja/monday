@@ -96,7 +96,7 @@ export function BoardDetails() {
     const cmpsOrder = [
         "side",
         "title",
-        "MembersIds",
+        "Members",
         "Status",
         "Priority",
         "dueDate",
@@ -251,8 +251,9 @@ export function BoardDetails() {
                 </Tooltip>
 
                 <IconButton icon={Menu} size="small" />
-
             </div>
+
+
             <div className="spacing-div"></div>
             <DragDropContext onDragEnd={onDragEnd} >
                 <GroupList
