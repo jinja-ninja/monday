@@ -3,29 +3,38 @@ import { GroupPreview } from "./GroupPreview"
 import { Add } from "monday-ui-react-core/icons"
 import { addGroup } from "../store/actions/board.action"
 import { BoardKanban } from "../pages/BoardKanban"
+import { Droppable } from "react-beautiful-dnd"
 
-export function GroupList({ groups, labels, cmpsOrder, progress, boardId, priorities }) {
+export function GroupList({ groups, labels, cmpsOrder, boardId, priorities }) {
     // here we need to render either kanban or the BoardDetails check by params what to render
 
     return <div className="group-list-container">
         {/* <BoardKanban />
      OR
      BoardDetails ↓↓↓↓ */}
-     {/* <BoardKanban/> */}
-        <ul className="group-list">
-            {groups && groups.map((group) => {
-                return <li key={group.id} className="group-list-item" data-group-id={group.id}>
-                    <GroupPreview
-                        group={group}
-                        boardId={boardId}
-                        labels={labels}
-                        cmpsOrder={cmpsOrder}
-                        progress={progress}
-                        priorities={priorities}
-                        key={`group-preview-${group.id}`} />
-                </li>
-            })}
-        </ul >
+        {/* <BoardKanban/> */}
+        <Droppable droppableId="groups" type="groups">
+            {(provided) => (
+                <ul
+                    className="group-list"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}>
+                    {groups && groups.map((group, index) => {
+                        return <li key={group.id} className="group-list-item" data-group-id={group.id}>
+                            <GroupPreview
+                                index={index}
+                                group={group}
+                                boardId={boardId}
+                                labels={labels}
+                                cmpsOrder={cmpsOrder}
+                                priorities={priorities}
+                                key={`group-preview-${group.id}`} />
+                        </li>
+                    })}
+                    {provided.placeholder}
+                </ul >
+            )}
+        </Droppable>
 
         <Button
             onClick={() => { addGroup(boardId) }}

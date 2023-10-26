@@ -18,6 +18,7 @@ import { ADD_SELECTED_TASKS, REMOVE_SELECTED_TASKS, SET_SELECTED_TASKS } from ".
 import { Timeline } from "./dynamicCmps/Timeline"
 import { utilService } from "../services/util.service"
 import { Files } from "./dynamicCmps/Files"
+import { Draggable, Droppable } from "react-beautiful-dnd"
 
 export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGroup }) {
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
@@ -287,30 +288,51 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                         </div>
 
                         {showGroup && <div className="task-select">
-                            <Checkbox checked={isChecked} onChange={(e) => selectAllTasks(e)} ariaLabel="Select task" />
+                            <Checkbox
+                                checked={isChecked}
+                                onChange={(e) => selectAllTasks(e)} ariaLabel="Select task" />
                         </div>}
                     </div>
                 </div>
                 if (title === 'title' && !showGroup) title = ''
-                return <div className={"header-title " + dynCollapseGroupClass} key={idx}><span>{title}</span></div>
+                return <div className={"header-title " + dynCollapseGroupClass} key={idx}>
+                    <span>{title}</span>
+                </div>
             }
             )}
 
         </section>
-
-        {showGroup && group.tasks.map(task => {
-            return (<section className="task-list group-grid" key={task.id}>
-                {renderMenuButton(task.id)}
-                {
-                    cmpsOrder.map((cmp, idx) =>
-                        <section className="task-item" key={idx}>
-                            {renderDynamicCmp(cmp, task, labels, priorities)}
-                        </section>
-                    )
-                }
-            </section >
+        <Droppable droppableId={groupId}>
+            {(provided) => (
+                <div
+                    className="task-list tasks-container"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                >
+                    {showGroup && group.tasks.map((task, index) => {
+                        return (
+                            <Draggable key={task.id} draggableId={task.id} index={index}>
+                                {(provided) => (
+                                    <section className="task-list group-grid" key={task.id}
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}>
+                                        {renderMenuButton(task.id)}
+                                        {cmpsOrder.map((cmp, idx) =>
+                                            <section className="task-item" key={idx}>
+                                                {renderDynamicCmp(cmp, task, labels, priorities)}
+                                            </section>
+                                        )}
+                                    </section >
+                                )}
+                            </Draggable>
+                        )
+                    })}
+                    {provided.placeholder}
+                </div>
             )
-        })}
+            }
+        </Droppable >
 
         {showGroup && <section className="task-list-add group-grid">
 

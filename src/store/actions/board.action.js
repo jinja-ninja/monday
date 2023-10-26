@@ -82,9 +82,7 @@ export async function updateBoard(type, boardId, groupId = null, taskId = null, 
     try {
         const currBoard = store.getState().boardModule.board
         const newBoard = await boardService.update(type, boardId, groupId, taskId, { key, value })
-        if (boardId === currBoard._id) {
-            store.dispatch({ type: SET_BOARD, board: newBoard })
-        }
+        if (boardId === currBoard._id) store.dispatch({ type: SET_BOARD, board: newBoard })
         store.dispatch({ type: UPDATE_BOARDS, board: newBoard })
     } catch (err) {
         console.log('Updating actions: err in updating', err)

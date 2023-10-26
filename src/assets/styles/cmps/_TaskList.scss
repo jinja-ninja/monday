@@ -94,12 +94,21 @@
 
     border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
 
-    &:hover {
-      background-color: rgb(245, 246, 248);
-      box-shadow: 4px 3px 6px -3px var(--ui-border-color);
+    &.tasks-container {
+      display: flex;
+      flex-direction: column;
+      border-bottom: none;
+      align-items: unset;
+    }
 
-      .task-menu-btn {
-        opacity: 1;
+    &.group-grid {
+      &:hover {
+        background-color: rgb(245, 246, 248);
+        box-shadow: 4px 3px 6px -3px var(--ui-border-color);
+
+        .task-menu-btn {
+          opacity: 1;
+        }
       }
     }
 
