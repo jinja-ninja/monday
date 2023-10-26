@@ -37,6 +37,7 @@ export function GroupList({ groups, labels, cmpsOrder, boardId, priorities }) {
             onClick={() => { addGroup(boardId) }}
             kind="secondary"
             size="small"
+            className="btn-add-group"
             leftIcon={Add}>
             Add new group
         </Button>

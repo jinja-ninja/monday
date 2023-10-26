@@ -6,10 +6,16 @@
 
   .side-spacing-div {
     grid-column: 1/2;
+    grid-row: 1/-1;
   }
 
   .group-list {
     grid-column: 2/3;
+  }
+
+  .btn-add-group {
+    grid-column: 2;
+    justify-self: start;
   }
 
   padding-block-end: var(--spacing-xl);
