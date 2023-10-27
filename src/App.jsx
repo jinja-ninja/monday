@@ -25,7 +25,7 @@ export function App() {
           <Route element={<TestCmp />} path="/test" />
           <Route element={<BoardIndex />} path="/board" /> {/* TODO: add board index page */}
           <Route element={<BoardDetails />} path="board/:boardId">
-            <Route element={<BoardDeletedPage />} path='deleted/:deletedId/title/:title' />
+            {/* <Route element={<BoardDeletedPage />} path='deleted/:deletedId/title/:title' /> */}
             <Route element={<TaskDetails />} path='group/:groupId/task/:taskId' />
             // {/* <Route element={<ActivityLog />} path='activityLog' /> */}
           </Route>

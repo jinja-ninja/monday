@@ -19,6 +19,7 @@ import { PersonPickerModal } from "../cmps/PersonPickerModal";
 import { DragDropContext } from "react-beautiful-dnd"
 import { NoGroupsFound } from "../cmps/NoGroupsFound";
 import { utilService } from "../services/util.service";
+import { BoardDeletedPage } from "../cmps/BoardDeletedPage";
 
 export function BoardDetails() {
     const params = useParams()
@@ -53,7 +54,7 @@ export function BoardDetails() {
     })
 
     async function loadBoard() {
-        if(!params.deletedId){
+        if (!params.deletedId) {
             await getBoardById(params.boardId, filterBy)
         }
     }
@@ -163,7 +164,8 @@ export function BoardDetails() {
         await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: newGroups }, newBoard)
     }
 
-    if (!currBoard && params.boardId !== params.deletedId) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
+
+    if (currBoard === null) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
     return <main className="board-details-layout">
         <BoardMainHeader />
         <SideBar />
@@ -171,8 +173,8 @@ export function BoardDetails() {
         <section className="board-details-container">
             <UserMsg />
 
-            {params.boardId === params.deletedId && <Outlet />}
-            {!params.deletedId &&
+            {typeof currBoard === 'string' && <BoardDeletedPage boardTitle={currBoard} />}
+            {typeof currBoard !== 'string' &&
                 <>
                     <BoardDetailsHeader isStarred={currBoard.isStarred} title={currBoard.title} boardId={currBoard._id} setIsBoardDesc={setIsBoardDesc} />
 

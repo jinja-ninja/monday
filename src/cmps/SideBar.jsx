@@ -34,8 +34,7 @@ export function SideBar() {
     async function onDeleteBoard(boardId) {
         let isCurrentBoard = currBoard._id === boardId
         try {
-            await removeBoard(boardId, isCurrentBoard)
-            if (isCurrentBoard) navigate(`/board/${boardId}/deleted/${boardId}/title/${currBoard.title}`)
+            await removeBoard(boardId, isCurrentBoard, currBoard.title)
             showSuccessMsg(`We successfully deleted the board ${boardId}`)
         }
         catch (err) {
@@ -49,8 +48,8 @@ export function SideBar() {
         updateBoard('board', boardId, null, null, { key: 'title', value: newText })
     }
 
-     async function onAddBoard() {
-        let boardId =  await addBoard()
+    async function onAddBoard() {
+        let boardId = await addBoard()
         console.log('boardId:', boardId)
         navigate(`/board/${boardId}`)
         console.log('Add new empty Board')
@@ -59,7 +58,7 @@ export function SideBar() {
     function onToggleFavoriteBoard(boardId) {
         let isCurrentBoard = currBoard._id === boardId
         console.log('isCurrentBoard:', isCurrentBoard)
-        toggleBoardFavorite(boardId,isCurrentBoard)
+        toggleBoardFavorite(boardId, isCurrentBoard)
         console.log('toggle Board FAVORITE!:', boardId)
     }
 

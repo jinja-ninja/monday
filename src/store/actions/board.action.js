@@ -70,12 +70,12 @@ export async function duplicateBoard(boardId) {
     }
 }
 
-export async function removeBoard(boardId, isCurrentBoard) {
+export async function removeBoard(boardId, isCurrentBoard, boardTitle) {
     try {
         await boardService.remove(boardId)
         store.dispatch({ type: REMOVE_BOARD, boardId })
         if (isCurrentBoard) {
-            store.dispatch({ type: SET_BOARD, board: null })
+            store.dispatch({ type: SET_BOARD, board: boardTitle })
         }
     } catch (err) {
         console.log('Board Actions: err in Removing Board', err)
