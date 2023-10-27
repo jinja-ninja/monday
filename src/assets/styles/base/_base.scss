@@ -8,6 +8,9 @@ html {
   color: var(--primary-text-color);
   line-height: 1.15;
 }
+body{
+  height: 100vh;
+}
 
 .transform-none {
   text-transform: none;
@@ -55,6 +58,16 @@ button {
 .monday-style-dialog-content-wrapper{
   z-index: 20;
 }
+
+//tabs views from vibe monday library
+.tabWrapper_90b57f444a {
+  border-bottom: 0 ;
+  
+}
+.tabWrapper_90b57f444a:after{
+  bottom: -1px ;
+}
+
 /* Simple and useful CSS Debugging Technique */
 .debug * {
   outline: 1px solid gold;

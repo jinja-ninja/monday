@@ -17,7 +17,6 @@ export function SideBar() {
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const currBoard = useSelector((storeState => storeState.boardModule.board))
 
-
     useEffect(() => {
         loadBoards()
     }, [boards.length])

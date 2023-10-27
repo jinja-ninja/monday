@@ -139,6 +139,19 @@
         border-bottom: 1px solid var(--ui-border-color);
         margin-bottom: 20px;
 
+        .views-select-tabs-list {
+          // position: relative;
+          // top: -100px;
+          .tabWrapper_90b57f444a {
+            border-bottom: 0;
+            
+          }
+          .tabWrapper_90b57f444a:after{
+            bottom: 2px;
+          }
+          
+        }
+
         @keyframes bounce {
 
           0%,

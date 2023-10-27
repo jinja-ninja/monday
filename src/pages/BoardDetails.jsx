@@ -18,6 +18,7 @@ import { BoardDescriptionModal } from "../cmps/BoardDescriptionModal"
 import { PersonPickerModal } from "../cmps/PersonPickerModal";
 import { DragDropContext } from "react-beautiful-dnd"
 import { NoGroupsFound } from "../cmps/NoGroupsFound";
+import { utilService } from "../services/util.service";
 
 export function BoardDetails() {
     const params = useParams()
@@ -163,8 +164,6 @@ export function BoardDetails() {
     }
 
     if (!currBoard && params.boardId !== params.deletedId) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
-    console.log('currBoard.cmpsOrder:', currBoard.cmpsOrder)
-
     return <main className="board-details-layout">
         <BoardMainHeader />
         <SideBar />
@@ -278,33 +277,3 @@ export function BoardDetails() {
         </section>
     </main >
 }
-
-
-
-
-// <Button onClick={() => setSortBy(!sortBy)} leftIcon={Sort} kind="tertiary" size="small">Sort</Button>
-
-// <Tooltip
-//     content='Hidden columns'
-//     animationType="expand">
-//     <Button leftIcon={Hide} kind="tertiary" size="small">Hide</Button>
-// </Tooltip>
-
-// <IconButton icon={Menu} size="small" />
-// </div>
-
-
-// <div className="spacing-div"></div>
-// <DragDropContext onDragEnd={onDragEnd} >
-// <GroupList
-//     boardId={params.boardId}
-//     groups={currBoard.groups}
-//     labels={currBoard.labels}
-//     cmpsOrder={currBoard.cmpsOrder}
-//     priorities={currBoard.priorities}
-// />
-// </DragDropContext>
-
-// {currBoard.groups.length === 0 && <NoGroupsFound cmpsOrder={cmpsOrder} />}
-
-// <Outlet />

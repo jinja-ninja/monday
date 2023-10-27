@@ -1,4 +1,5 @@
 export function DisplayTitle({ title }) {
+
     let newTitle
 
     switch (title) {

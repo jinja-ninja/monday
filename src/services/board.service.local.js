@@ -315,7 +315,16 @@ function getNewBoard() {
             }
 
         ],
-        cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+        cmpsOrder: [
+            "side",
+            "title",
+            "members",
+            "status",
+            "priority",
+            "dueDate",
+            "timeline",
+            "files"
+        ]
     }
 }
 
@@ -436,13 +445,13 @@ async function getTaskById(boardId, groupId, taskId) {
     return board.groups[groupIdx].tasks[taskIdx]
 }
 
-async function addTask(boardId, groupId, task,fromBtn) {
+async function addTask(boardId, groupId, task, fromBtn) {
 
     const board = await getBoardById(boardId)
     const groupIdx = board.groups.findIndex(group => group.id === groupId)
-    
-        let pushOrUnshift = fromBtn ? 'unshift' : 'push'
-    
+
+    let pushOrUnshift = fromBtn ? 'unshift' : 'push'
+
     board.groups[groupIdx].tasks[pushOrUnshift](task)
 
     const activity = createActivity(`Added task ${task.title}`, boardId, groupId, task.id)

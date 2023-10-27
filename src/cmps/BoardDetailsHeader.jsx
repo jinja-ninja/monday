@@ -148,7 +148,7 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
                         onChange={(newText) => setBoardTitle(newText)}
                         onBlur={() => onRenameBoard()} />}
                 <TabList
-                    className={dynCollapseTabsClass}
+                    className={"views-select-tab-list" + dynCollapseTabsClass}
                     size="sm">
                     <Tab
                         className="main-table-tab"
