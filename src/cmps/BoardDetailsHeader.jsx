@@ -72,7 +72,8 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
                                     type={EditableHeading.types.h1}
                                     value={title}
                                     onChange={(newText) => setBoardTitle(newText)}
-                                    onBlur={() => onRenameBoard()} />
+                                    onFinishEditing={()=> onRenameBoard()}
+                                    />
                             </Tooltip>
                         }
                         {isCollapse && <IconButton
@@ -146,7 +147,7 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
                         type={EditableHeading.types.h2}
                         value={title}
                         onChange={(newText) => setBoardTitle(newText)}
-                        onBlur={() => onRenameBoard()} />}
+                        onFinishEditing={() => onRenameBoard()} />}
                 <TabList
                     className={"views-select-tab-list " + dynCollapseTabsClass}
                     size="sm">

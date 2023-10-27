@@ -43,7 +43,7 @@ export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask }) {
                     className="editible-task-title"
                     type={EditableHeading.types.h5}
                     ellipsis
-                    onBlur={() => {
+                    onFinishEditing={() => {
                         updatedTaskInput && updatedTaskInput !== info ? onUpdateTask(taskId, { key: 'title', value: updatedTaskInput }) : setUpdatedTask(info)
                         // setUpdatedTask(info)
                     }}

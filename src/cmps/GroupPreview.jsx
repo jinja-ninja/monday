@@ -133,7 +133,7 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                                     className="editable-heading-target"
                                     type="h4"
                                     value={editableText}
-                                    onBlur={() => {
+                                    onFinishEditing={() => {
                                         onRenameGroup(group.id, editableText)
                                     }}
                                     style={{ color: `var(--color-${group.style})` }}

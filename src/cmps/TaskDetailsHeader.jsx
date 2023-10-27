@@ -28,7 +28,7 @@ export function TaskDetailsHeader({ boardId, groupId, taskId, taskTitle, setCurr
                     type="h4"
                     value={taskTitle}
                     onChange={(newText) => setTaskTitleValue(newText)}
-                    onBlur={() => onRenameTask()}
+                    onFinishEditing={() => onRenameTask()}
 
                 />
 

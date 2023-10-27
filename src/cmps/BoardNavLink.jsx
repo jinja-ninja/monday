@@ -23,8 +23,8 @@ export function BoardNavLink({ text, boardId, onSelectBoard, onDeleteBoard, onRe
             className="editableHeading"
             type="h6"
             value={text}
-            // autoFocus
-            onBlur={() => {
+            shouldFocusOnMount
+            onFinishEditing={() => {
                 onRenameBoard(boardId, editableText)
                 setIsEditibleMode((prevIsEditable) => !prevIsEditable)
             }}

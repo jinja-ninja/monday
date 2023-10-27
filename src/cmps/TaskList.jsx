@@ -130,6 +130,11 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
             showErrorMsg(`Cannot duplicate task ${taskId}`)
         }
     }
+    function onFinishTypingTask() {
+        addTaskInput ? onAddTask(addTaskInput) : setAddTask('+ Add task ')
+        setAddTask('+ Add task')
+        setIsTypingNewTask(false)
+    }
 
     function getPriorityOrStatusColor(title, kind) {
         return kind.find(k => k.title === title).color
@@ -252,6 +257,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
         return progress.filter(item => item !== undefined)
     }
 
+
     return <div className={"task-list-container " + dynCollapseGroupClass}>
 
         <Droppable droppableId={'columns'} type="columns" direction="column">
@@ -356,10 +362,8 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                 className={"task-add-btn " + (isTypingNewTask ? 'typing' : '')}
                 type={EditableHeading.types.h5}
                 value={addTaskInput}
-                onBlur={() => {
-                    addTaskInput ? onAddTask(addTaskInput) : setAddTask('+ Add task ')
-                    setAddTask('+ Add task')
-                    setIsTypingNewTask(false)
+                onFinishEditing={() => {
+                    onFinishTypingTask()
                 }}
                 onStartEditing={() => {
                     setAddTask('')
