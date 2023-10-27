@@ -52,7 +52,7 @@ export function SelectedModal({ selectedTasks, currBoard }) {
                 <div className="selected-counter-container">{selectedTasks.length}</div>
 
                 <div className="items-selected-container">
-                    <p>Items selected</p>
+                    <p>{selectedTasks.length === 1 ? 'Item' : 'Items'} selected</p>
                     <div className="dots-container">
                         {groupColors.map((color, idx) => (
                             <div key={idx} className="dot" style={{ backgroundColor: `var(--color-${color})` }}></div>

@@ -109,6 +109,20 @@ async function getBoardById(boardId, filterBy = { txt: '', person: null }) {
         }).filter((group) => group !== null) // Remove groups without matching tasks or title
     }
 
+    if (filterBy.person) {
+        board.groups = board.groups.map((group) => {
+            const filteredTasks = group.tasks.filter((task) => task.memberIds.includes(filterBy.person._id));
+
+            // Include the group if there are matching tasks
+            if (filteredTasks.length > 0) {
+                group.tasks = filteredTasks;
+                return group;
+            }
+            // Exclude the group if no matching tasks
+            return null;
+        }).filter((group) => group !== null); // Remove groups without matching tasks
+    }
+
     return board;
 
 }
@@ -422,11 +436,14 @@ async function getTaskById(boardId, groupId, taskId) {
     return board.groups[groupIdx].tasks[taskIdx]
 }
 
-async function addTask(boardId, groupId, task) {
+async function addTask(boardId, groupId, task,fromBtn) {
 
     const board = await getBoardById(boardId)
     const groupIdx = board.groups.findIndex(group => group.id === groupId)
-    board.groups[groupIdx].tasks.push(task)
+    
+        let pushOrUnshift = fromBtn ? 'unshift' : 'push'
+    
+    board.groups[groupIdx].tasks[pushOrUnshift](task)
 
     const activity = createActivity(`Added task ${task.title}`, boardId, groupId, task.id)
     board.activities.unshift(activity)

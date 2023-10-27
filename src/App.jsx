@@ -13,6 +13,7 @@ import { PageNotFound } from './pages/PageNotFound'
 import { BoardIndex } from './pages/BoardIndex'
 import { store } from './store/store'
 import { TestCmp } from './pages/TestCmp'
+import { BoardDeletedPage } from './cmps/BoardDeletedPage'
 
 export function App() {
 
@@ -24,8 +25,9 @@ export function App() {
           <Route element={<TestCmp />} path="/test" />
           <Route element={<BoardIndex />} path="/board" /> {/* TODO: add board index page */}
           <Route element={<BoardDetails />} path="board/:boardId">
+            <Route element={<BoardDeletedPage />} path='deleted/:deletedId/title/:title' />
             <Route element={<TaskDetails />} path='group/:groupId/task/:taskId' />
-            {/* <Route element={<ActivityLog />} path='activityLog' /> */}
+            // {/* <Route element={<ActivityLog />} path='activityLog' /> */}
           </Route>
           <Route element={<BoardIndex />} path="/board" />
 

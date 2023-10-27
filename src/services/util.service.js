@@ -20,9 +20,11 @@ export const utilService = {
     getTimelineRange,
     getTimestampInDays,
     millisecondsToDays,
+    timeSince,
     calculateTimelineProgress,
     timeFormat,
-    makePhoneNumber
+    makePhoneNumber,
+    getNameInitials
 }
 
 function makeId(length = 6) {
@@ -165,6 +167,30 @@ function millisecondsToDays(ms) {
     return Math.floor(ms / 86400000) //num of ms in day
 }
 
+function timeSince(timeStamp) {
+    let now = new Date(),
+        secondsPast = (now.getTime() - timeStamp) / 1000
+    if (secondsPast < 60) {
+        return parseInt(secondsPast) + 's'
+    }
+    if (secondsPast < 3600) {
+        return parseInt(secondsPast / 60) + 'm'
+    }
+    if (secondsPast <= 86400) {
+        return parseInt(secondsPast / 3600) + 'h'
+    }
+    if (secondsPast > 86400) {
+        const date = new Date(timeStamp)
+        const day = date.getDate()
+        const month = date
+            .toDateString()
+            .match(/ [a-zA-Z]*/)[0]
+            .replace(' ', '')
+        const year = date.getFullYear() === now.getFullYear() ? '' : ' ' + date.getFullYear()
+        return day + ' ' + month + year
+    }
+}
+
 function calculateTimelineProgress(timeline) {
     if (timeline === null) return
     if (!timeline.from || !timeline.to) return 0
@@ -203,6 +229,11 @@ function getTimestampInDays(Timeline) {
 
 function timeFormat(time) {
     return time < 10 ? '0' + time : time
+}
+
+function getNameInitials(fullname) {
+    const names = fullname.split(' ')
+    return names.map(name => name[0]).join('')
 }
 
 function makeLorem(size = 1) {

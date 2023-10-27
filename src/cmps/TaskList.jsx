@@ -19,13 +19,17 @@ import { Timeline } from "./dynamicCmps/Timeline"
 import { utilService } from "../services/util.service"
 import { Files } from "./dynamicCmps/Files"
 import { Draggable, Droppable } from "react-beautiful-dnd"
+import { DateSummary } from "./dynamicSummaryCmps/DateSummary"
+import { TimelineSummary } from "./dynamicSummaryCmps/TimelineSummary"
+import { StatusSummary } from "./dynamicSummaryCmps/StatusSummary"
+import { PrioritySummary } from "./dynamicSummaryCmps/PrioritySummary"
+import { MembersSummary } from "./dynamicSummaryCmps/MembersSummary"
 
 export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGroup }) {
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
     const currBoard = useSelector(state => state.boardModule.board)
 
     const [isChecked, setIsChecked] = useState(false)
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [addTaskInput, setAddTask] = useState('+ Add task ')
     const [show, setShow] = useState(false)
     const [taskId, setTaskId] = useState(null)
@@ -43,8 +47,6 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
     const dynCollapseGroupClass = showGroup ? '' : 'collapse-group'
 
     let allTaskIds
-    let timelineSummary = getSmallestFromAndLargestTo()
-    let datesSummary = getSmallestAndBiggestDates()
 
     useEffect(() => {
         allTaskIds = getAllTasksIds()
@@ -84,10 +86,6 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
             groupId: group.id,
             taskId: task.id,
         }))
-    }
-
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen)
     }
 
     async function onRemoveTask(taskId) {
@@ -135,40 +133,6 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
         return kind.find(k => k.title === title).color
     }
 
-    function getAllTimelines() {
-        return group.tasks.filter(task => task.Timeline).map(task => task.Timeline)
-    }
-
-    function getSmallestFromAndLargestTo() {
-        const timelines = getAllTimelines()
-
-        if (timelines.length === 0) {
-            return { from: null, to: null }
-        }
-        const smallestFrom = Math.min(...timelines.map(timeline => timeline.from))
-        const biggestTo = Math.max(...timelines.map(timeline => timeline.to))
-
-        return { from: smallestFrom, to: biggestTo }
-    }
-
-    function getAllDates() {
-        return group.tasks.filter(task => task.dueDate).map(task => task.dueDate)
-    }
-
-    function getSmallestAndBiggestDates() {
-        const dates = getAllDates()
-
-        if (dates.length === 0) {
-            return { from: null, to: null }
-        }
-
-        const smallestDate = Math.min(...dates)
-        const biggestDate = Math.max(...dates)
-
-        return { from: smallestDate, to: biggestDate }
-
-    }
-
     function calculatePercentages(tasks, kind) {
         const propertyKey = kind === 'status' ? 'status' : 'priority'
 
@@ -192,10 +156,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
 
     function renderMenuButton(taskId) {
         return (
-            <MenuButton size={MenuButton.sizes.XS}
-                className={`task-menu-btn `}
-                onClick={toggleMenu}>
-
+            <MenuButton size={MenuButton.sizes.XS} className='task-menu-btn'>
                 <Menu id="menu" size="medium">
                     <MenuItem
                         icon={Delete}
@@ -210,14 +171,13 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                         icon={Edit}
                         iconType="SVG"
                         onClick={() => handleEditClick(group.id)}
-                        title="Rename Task" />
+                        title="Rename task" />
                     <MenuItem
                         icon={Duplicate}
                         iconType="SVG"
                         onClick={() => onDuplicateTask(taskId)}
-                        title="Duplicate this Task" />
+                        title="Duplicate" />
                 </Menu>
-
             </MenuButton>
         )
     }
@@ -233,7 +193,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     taskId={task.id}
                     onUpdateTask={onUpdateTask}
                     setIsTyping={setIsTypingNewTask}
-                    />
+                />
             case "Status":
                 return <TaskStatus
                     board={currBoard}
@@ -381,85 +341,30 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
             </div>
 
             <div className={"task-list-summary first-cell " + dynCollapseGroupClass}>
-
+                <MembersSummary group={group} currBoard={currBoard} />
             </div>
 
-            <div className={"task-list-summary " + dynCollapseGroupClass}>
-                {calculatePercentages(group.tasks, 'status').map((status, index) => (
-                    <Tooltip
-                        key={index}
-                        content={`${status.status} ${status.count}/${group.tasks.length} ${status.percentage}% `}
-                        animationType="expand">
-                        <div
-                            className="label-progress-item"
-                            style={{
-                                width: `${status.percentage}%`,
-                                backgroundColor: `var(--color-${getPriorityOrStatusColor(status.status, labels)})`,
-                                height: '24px',
-                            }}
-                        >
-                        </div>
-                    </Tooltip>
-                ))}
-                {group.tasks.length === 0 && <div className="status-sum-container"></div>}
-            </div>
+            <StatusSummary
+                dynCollapseGroupClass={dynCollapseGroupClass}
+                group={group}
+                labels={labels}
+                calculatePercentages={calculatePercentages}
+                getPriorityOrStatusColor={getPriorityOrStatusColor}
+            />
 
-            <div className={"task-list-summary " + dynCollapseGroupClass}>
-                {/* <div className="priority-summary-container"> */}
+            <PrioritySummary
+                dynCollapseGroupClass={dynCollapseGroupClass}
+                group={group}
+                priorities={priorities}
+                calculatePercentages={calculatePercentages}
+                getPriorityOrStatusColor={getPriorityOrStatusColor}
+            />
 
-                {calculatePercentages(group.tasks, 'priority').map((priority, index) => (
-                    <Tooltip
-                        key={index}
-                        content={`${priority.priority} ${priority.count}/${group.tasks.length} ${priority.percentage}% `}
-                        animationType="expand">
-                        <div
-                            className="label-progress-item"
-                            style={{
-                                width: `${priority.percentage}%`,
-                                backgroundColor: `var(--color-${getPriorityOrStatusColor(priority.priority, priorities)})`,
-                                height: '24px',
-                            }}
-                        >
-                        </div>
-                    </Tooltip>
+            <DateSummary dynCollapseGroupClass={dynCollapseGroupClass} group={group} />
 
-                ))}
-                {group.tasks.length === 0 && <div className="status-sum-container"></div>}
-                {/* </div> */}
+            <TimelineSummary dynCollapseGroupClass={dynCollapseGroupClass} group={group} />
 
-            </div>
-
-            <div className={"task-list-summary " + dynCollapseGroupClass}>
-                <div className="date-summary-container" style={
-                    (!datesSummary || !datesSummary.from || !datesSummary.to) ?
-                        { backgroundColor: '#c4c4c4' } :
-                        {
-                            background: `linear-gradient(to right, 
-                                var(--color-${group.style}) ${utilService.calculateTimelineProgress(datesSummary)}, 
-                                #333333 ${utilService.calculateTimelineProgress(datesSummary)})`
-                        }
-                }>
-                    <span className="dates-summary-txt">{`${utilService.getTimelineRange(datesSummary)}`}</span>
-                    {datesSummary.from && datesSummary.to && <span className="dates-summary-days-txt">{utilService.getTimestampInDays(datesSummary) + 'd'}</span>}
-
-                </div>
-            </div>
-
-            <div className={"task-list-summary " + dynCollapseGroupClass}>
-                <div className="timeline-summary-container" style={
-                    (!timelineSummary || !timelineSummary.from || !timelineSummary.to) ?
-                        { backgroundColor: '#c4c4c4' } :
-                        {
-                            background: `linear-gradient(to right, 
-                                var(--color-${group.style}) ${utilService.calculateTimelineProgress(timelineSummary)}, 
-                                #333333 ${utilService.calculateTimelineProgress(timelineSummary)})`
-                        }
-                }>
-                    <span className="timeline-summary-txt">{`${utilService.getTimelineRange(timelineSummary)}`}</span>
-                    {timelineSummary.from && timelineSummary.to && <span className="timeline-summary-days-txt">{utilService.getTimestampInDays(timelineSummary) + 'd'}</span>}
-                </div>
-            </div>
-
+            {/* ----------- FILES SUMMARY ----------*/}
             <div className={"task-list-summary " + dynCollapseGroupClass}>
 
             </div>

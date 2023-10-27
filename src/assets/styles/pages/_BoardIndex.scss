@@ -52,6 +52,14 @@
       box-shadow: var(--box-shadow-medium);
       border: 1px solid var(--primary-background-color);
     }
+
+    .board-title {
+      padding-left: 6px;
+    }
+
+    .favorite-btn {
+      padding-bottom: 10px;
+    }
   }
 
   img {

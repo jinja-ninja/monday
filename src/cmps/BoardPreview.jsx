@@ -40,6 +40,7 @@ export function BoardPreview({ board }) {
                     /> */}
 
                         <Text
+                            className="board-title"
                             ellipsis
                             weight="bold"
                             align="start"
@@ -51,6 +52,7 @@ export function BoardPreview({ board }) {
 
                         <IconButton
                             ariaLabel="Add to Favorites"
+                            className="favorite-btn"
                             icon={Favorite}
                         />
                     </Flex>

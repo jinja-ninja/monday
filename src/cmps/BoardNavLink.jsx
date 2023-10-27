@@ -3,10 +3,9 @@ import { Board, Delete, Duplicate, Edit, Favorite } from "monday-ui-react-core/i
 import { useState } from "react"
 import { useSelector } from "react-redux"
 
-export function BoardNavLink({ text, boardId, onSelectBoard, onDeleteBoard, onRenameBoard, onToggleFavoriteBoard, onDuplicateBoard, isStarred }) {
+export function BoardNavLink({ text, boardId, onSelectBoard, onDeleteBoard, onRenameBoard, onToggleFavoriteBoard, onDuplicateBoard, isStarred,currBoard }) {
     const [isEditibleMode, setIsEditibleMode] = useState(false)
     const [editableText, setEditableText] = useState(text)
-    const currBoard = useSelector((storeState => storeState.boardModule.board))
     let dynActiveBoardClass
 
     if (currBoard) {

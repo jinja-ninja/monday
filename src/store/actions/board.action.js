@@ -35,6 +35,7 @@ export async function addBoard() {
     try {
         const newBoard = await boardService.save(board)
         store.dispatch({ type: ADD_BOARD, board: newBoard })
+        return newBoard._id
     } catch (err) {
         console.log('Board Actions: err in Adding Board', err)
         throw err
@@ -67,10 +68,13 @@ export async function duplicateBoard(boardId) {
     }
 }
 
-export async function removeBoard(boardId) {
+export async function removeBoard(boardId,isCurrentBoard) {
     try {
         await boardService.remove(boardId)
         store.dispatch({ type: REMOVE_BOARD, boardId })
+        if(isCurrentBoard){
+            store.dispatch({ type: SET_BOARD, board: null })
+        }
     } catch (err) {
         console.log('Board Actions: err in Removing Board', err)
         throw err
@@ -128,9 +132,9 @@ export async function duplicatedGroup(boardId, groupId) {
 }
 
 // Task Actions
-export async function addTask(boardId, groupId, task) {
+export async function addTask(boardId, groupId, task, fromBtn) {
     try {
-        const board = await boardService.addTask(boardId, groupId, task)
+        const board = await boardService.addTask(boardId, groupId, task, fromBtn)
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {

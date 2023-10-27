@@ -15,7 +15,7 @@ import { SelectedModal } from "../cmps/selectedModal"
 import { boardService } from "../services/board.service.local"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { BoardDescriptionModal } from "../cmps/BoardDescriptionModal"
-import { PersonPickerModal } from "../cmps/personPickerModal";
+import { PersonPickerModal } from "../cmps/PersonPickerModal";
 import { DragDropContext } from "react-beautiful-dnd"
 import { NoGroupsFound } from "../cmps/NoGroupsFound";
 
@@ -53,7 +53,9 @@ export function BoardDetails() {
     })
 
     async function loadBoard() {
-        await getBoardById(params.boardId, filterBy)
+        if(!params.deletedId){
+            await getBoardById(params.boardId, filterBy)
+        }
     }
 
     function toggleIsSearch() {
@@ -71,17 +73,13 @@ export function BoardDetails() {
         if (!currBoard.groups) return
         try {
             const newTask = boardService.getEmptyTask("New task")
-            await addTask(currBoard._id, currBoard.groups[0].id, newTask)
+            await addTask(currBoard._id, currBoard.groups[0].id, newTask, true)
             showSuccessMsg('Added new task')
         } catch (err) {
             showErrorMsg('Cannot add task')
         }
     }
 
-    function getNameInitials(fullname) {
-        const names = fullname.split(' ')
-        return names.map(name => name[0]).join('')
-    }
     function onRemovePersonFilter(ev) {
         ev.stopPropagation()
         setFilterBy((prevFilterBy) => ({
@@ -162,7 +160,7 @@ export function BoardDetails() {
         await updateBoard('board', currBoard._id, null, null, { key: 'groups', value: newGroups })
     }
 
-    if (!currBoard) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
+    if (!currBoard && params.boardId !== params.deletedId) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
     return <main className="board-details-layout">
         <BoardMainHeader />
         <SideBar />
@@ -170,101 +168,105 @@ export function BoardDetails() {
         <section className="board-details-container">
             <UserMsg />
 
-            <BoardDetailsHeader isStarred={currBoard.isStarred} title={currBoard.title} boardId={currBoard._id} setIsBoardDesc={setIsBoardDesc} />
+            {params.boardId === params.deletedId && <Outlet />}
+            {!params.deletedId &&
+                <>
+                    <BoardDetailsHeader isStarred={currBoard.isStarred} title={currBoard.title} boardId={currBoard._id} setIsBoardDesc={setIsBoardDesc} />
 
-            <div className="board-details-actions">
+                    <div className="board-details-actions">
 
-                <SplitButton shouldCloseOnClickInsideDialog onClick={() => addTaskToFirstGroup()} size="small" secondaryDialogContent={<SplitButtonMenu _id="split-menu">
-                    <MenuItem onClick={() => addGroup(currBoard._id)} icon={Group} title="New group of items" />
-                </SplitButtonMenu>}>
-                    New Task
-                </SplitButton>
+                        <SplitButton shouldCloseOnClickInsideDialog onClick={() => addTaskToFirstGroup()} size="small" secondaryDialogContent={<SplitButtonMenu _id="split-menu">
+                            <MenuItem onClick={() => addGroup(currBoard._id)} icon={Group} title="New group of items" />
+                        </SplitButtonMenu>}>
+                            New Task
+                        </SplitButton>
 
-                {dynSearchBtnInput}
+                        {dynSearchBtnInput}
 
-                <Tooltip
-                    content='Filter by person'
-                    animationType="expand">
-                    <div className="person-filter-btns-container" ref={setReferenceElement}>
-                        {!filterBy.person ?
-                            <Button leftIcon={PersonRound} kind="tertiary" size="small" onClick={(ev) => onTogglePersonModal(ev)}>
-                                Person
-                            </Button> :
-                            <div className="chosen-person-filter-btn" onClick={(ev) => onTogglePersonModal(ev)}>
-                                <div className="person-img-txt-container">
-                                    {(!filterBy.person.imgUrl || filterBy.person.imgUrl === 'https://www.google.com') ? (
-                                        <Avatar
-                                            className='avatar-img'
-                                            size={Avatar.sizes.SMALL}
-                                            type={Avatar.types.TEXT}
-                                            text={getNameInitials(filterBy.person.fullname)}
-                                            backgroundColor={Avatar.colors.BLACKISH}
-                                            ariaLabel={filterBy.person.fullname}
-                                        />
-                                    ) : (
-                                        <Avatar
-                                            className='avatar-img'
-                                            ariaLabel={filterBy.person.fullname}
-                                            size={Avatar.sizes.SMALL}
-                                            src={filterBy.person.imgUrl}
-                                            type="img"
-                                        />
-                                    )}
-                                    <span>Person</span>
-                                </div>
-                                <div className="btn-remove-person" onClick={(ev) => onRemovePersonFilter(ev)}>
-                                    <svg viewBox="0 0 20 20" fill="currentColor" width="16px" height="16px" id="combobox-search" aria-hidden="true" aria-label="Clear Search" class="icon_component input-component__icon icon_component--no-focus-style"><path d="M6.53033 5.46967C6.23744 5.17678 5.76256 5.17678 5.46967 5.46967C5.17678 5.76256 5.17678 6.23744 5.46967 6.53033L8.62562 9.68628L5.47045 12.8415C5.17756 13.1343 5.17756 13.6092 5.47045 13.9021C5.76334 14.195 6.23822 14.195 6.53111 13.9021L9.68628 10.7469L12.8415 13.9021C13.1343 14.195 13.6092 14.195 13.9021 13.9021C14.195 13.6092 14.195 13.1343 13.9021 12.8415L10.7469 9.68628L13.9029 6.53033C14.1958 6.23744 14.1958 5.76256 13.9029 5.46967C13.61 5.17678 13.1351 5.17678 12.8422 5.46967L9.68628 8.62562L6.53033 5.46967Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-                                </div>
+                        <Tooltip
+                            content='Filter by person'
+                            animationType="expand">
+                            <div className="person-filter-btns-container" ref={setReferenceElement}>
+                                {!filterBy.person ?
+                                    <Button leftIcon={PersonRound} kind="tertiary" size="small" onClick={(ev) => onTogglePersonModal(ev)}>
+                                        Person
+                                    </Button> :
+                                    <div className="chosen-person-filter-btn" onClick={(ev) => onTogglePersonModal(ev)}>
+                                        <div className="person-img-txt-container">
+                                            {(!filterBy.person.imgUrl || filterBy.person.imgUrl === 'https://www.google.com') ? (
+                                                <Avatar
+                                                    className='avatar-img'
+                                                    size={Avatar.sizes.SMALL}
+                                                    type={Avatar.types.TEXT}
+                                                    text={utilService.getNameInitials(filterBy.person.fullname)}
+                                                    backgroundColor={Avatar.colors.BLACKISH}
+                                                    ariaLabel={filterBy.person.fullname}
+                                                />
+                                            ) : (
+                                                <Avatar
+                                                    className='avatar-img'
+                                                    ariaLabel={filterBy.person.fullname}
+                                                    size={Avatar.sizes.SMALL}
+                                                    src={filterBy.person.imgUrl}
+                                                    type="img"
+                                                />
+                                            )}
+                                            <span>Person</span>
+                                        </div>
+                                        <div className="btn-remove-person" onClick={(ev) => onRemovePersonFilter(ev)}>
+                                            <svg viewBox="0 0 20 20" fill="currentColor" width="16px" height="16px" id="combobox-search" aria-hidden="true" aria-label="Clear Search" class="icon_component input-component__icon icon_component--no-focus-style"><path d="M6.53033 5.46967C6.23744 5.17678 5.76256 5.17678 5.46967 5.46967C5.17678 5.76256 5.17678 6.23744 5.46967 6.53033L8.62562 9.68628L5.47045 12.8415C5.17756 13.1343 5.17756 13.6092 5.47045 13.9021C5.76334 14.195 6.23822 14.195 6.53111 13.9021L9.68628 10.7469L12.8415 13.9021C13.1343 14.195 13.6092 14.195 13.9021 13.9021C14.195 13.6092 14.195 13.1343 13.9021 12.8415L10.7469 9.68628L13.9029 6.53033C14.1958 6.23744 14.1958 5.76256 13.9029 5.46967C13.61 5.17678 13.1351 5.17678 12.8422 5.46967L9.68628 8.62562L6.53033 5.46967Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                                        </div>
 
 
+                                    </div>
+                                }
                             </div>
-                        }
+
+                        </Tooltip>
+
+                        {personPickerOpen && <div className="person-picker-modal" ref={setPopperElement} style={styles.popper} {...attributes.popper}>
+                            <div className="click-outside-container" ref={refPersonModal}>
+                                <PersonPickerModal Members={currBoard.members} setFilterBy={setFilterBy} filterBy={filterBy} />
+                            </div>
+                            <div ref={setArrowElement} style={styles.arrow} />
+                        </div>}
+
+                        <SplitButton kind="tertiary" leftIcon={Filter} size="small" secondaryDialogContent={
+                            <SplitButtonMenu _id="split-menu">
+                                <MenuItem icon={Check} title="Hey" />
+                                <MenuItem icon={Announcement} title="There" />
+                            </SplitButtonMenu>}>
+                            Filter
+                        </SplitButton>
+
+                        <Button onClick={() => setSortBy(!sortBy)} leftIcon={Sort} kind="tertiary" size="small">Sort</Button>
+
+                        <Tooltip
+                            content='Hidden columns'
+                            animationType="expand">
+                            <Button leftIcon={Hide} kind="tertiary" size="small">Hide</Button>
+                        </Tooltip>
+
+                        <IconButton icon={Menu} size="small" />
                     </div>
 
-                </Tooltip>
 
-                {personPickerOpen && <div className="person-picker-modal" ref={setPopperElement} style={styles.popper} {...attributes.popper}>
-                    <div className="click-outside-container" ref={refPersonModal}>
-                        <PersonPickerModal Members={currBoard.members} setFilterBy={setFilterBy} filterBy={filterBy}
-                            getNameInitials={getNameInitials} />
-                    </div>
-                    <div ref={setArrowElement} style={styles.arrow} />
-                </div>}
+                    <div className="spacing-div"></div>
+                    <DragDropContext onDragEnd={onDragEnd} >
+                        <GroupList
+                            boardId={params.boardId}
+                            groups={currBoard.groups}
+                            labels={currBoard.labels}
+                            cmpsOrder={cmpsOrder}
+                            priorities={currBoard.priorities}
+                        />
+                    </DragDropContext>
 
-                <SplitButton kind="tertiary" leftIcon={Filter} size="small" secondaryDialogContent={
-                    <SplitButtonMenu _id="split-menu">
-                        <MenuItem icon={Check} title="Hey" />
-                        <MenuItem icon={Announcement} title="There" />
-                    </SplitButtonMenu>}>
-                    Filter
-                </SplitButton>
+                    {currBoard.groups.length === 0 && <NoGroupsFound cmpsOrder={cmpsOrder} />}
 
-                <Button onClick={() => setSortBy(!sortBy)} leftIcon={Sort} kind="tertiary" size="small">Sort</Button>
-
-                <Tooltip
-                    content='Hidden columns'
-                    animationType="expand">
-                    <Button leftIcon={Hide} kind="tertiary" size="small">Hide</Button>
-                </Tooltip>
-
-                <IconButton icon={Menu} size="small" />
-            </div>
-
-
-            <div className="spacing-div"></div>
-            <DragDropContext onDragEnd={onDragEnd} >
-                <GroupList
-                    boardId={params.boardId}
-                    groups={currBoard.groups}
-                    labels={currBoard.labels}
-                    cmpsOrder={cmpsOrder}
-                    priorities={currBoard.priorities}
-                />
-            </DragDropContext>
-
-            {currBoard.groups.length === 0 && <NoGroupsFound cmpsOrder={cmpsOrder} />}
-
-            <Outlet />
+                    <Outlet />
+                </>
+            }
 
             {selectedTasks.length > 0 && < SelectedModal selectedTasks={selectedTasks} currBoard={currBoard} />}
             {isBoardDesc && <BoardDescriptionModal boardTitle={currBoard.title} setIsBoardDesc={setIsBoardDesc} />}

@@ -1,6 +1,7 @@
 import { Avatar } from 'monday-ui-react-core'
+import { utilService } from '../services/util.service';
 
-export function PersonPickerModal({ Members, setFilterBy, filterBy, getNameInitials }) {
+export function PersonPickerModal({ Members, setFilterBy, filterBy }) {
 
     function onSetFilterBy(memberId) {
         setFilterBy((prevFilterBy) => ({
@@ -30,7 +31,7 @@ export function PersonPickerModal({ Members, setFilterBy, filterBy, getNameIniti
                                         className='avatar-img'
                                         size={Avatar.sizes.SMALL}
                                         type={Avatar.types.TEXT}
-                                        text={getNameInitials(member.fullname)}
+                                        text={utilService.getNameInitials(member.fullname)}
                                         backgroundColor={Avatar.colors.BLACKISH}
                                         ariaLabel={member.fullname}
                                         onClick={() => onSetFilterBy(member)}

@@ -8,6 +8,7 @@ import { createPortal } from "react-dom";
 import { ReactDOM } from "react";
 import { set } from "date-fns";
 import { updateTask } from "../../store/actions/board.action";
+import { utilService } from "../../services/util.service";
 
 
 export function Member({ boardMembers, task, boardId, groupId }) {
@@ -73,10 +74,7 @@ export function Member({ boardMembers, task, boardId, groupId }) {
 
 
 
-    function getNameInitials(fullname) {
-        const names = fullname.split(' ')
-        return names.map(name => name[0]).join('')
-    }
+    
 
     function setDynamicMaxMembers(chosenMembersLength) {
         if (chosenMembersLength <= 2) return 2
@@ -97,7 +95,7 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                         key={member._id}
                         size={Avatar.sizes.SMALL}
                         type={Avatar.types.TEXT}
-                        text={getNameInitials(member.fullname)}
+                        text={utilService.getNameInitials(member.fullname)}
                         backgroundColor={Avatar.colors.BLACKISH}
                         ariaLabel={member.fullname}
                     />
@@ -150,7 +148,7 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                         return <div className="member" key={member._id} onClick={() => assignMemberToTask(member._id, task)}>
                             <Avatar size={Avatar.sizes.SMALL}
                                 type={Avatar.types.TEXT}
-                                text={getNameInitials(member.fullname)}
+                                text={utilService.getNameInitials(member.fullname)}
                                 backgroundColor={Avatar.colors.BLACKISH}
                                 ariaLabel={member.fullname}
                             />

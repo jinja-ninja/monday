@@ -46,26 +46,22 @@
         cursor: text;
         // width: 100%;
         resize: none;
-        /* Prevent resizing */
 
         width: 660px;
         justify-content: start;
         text-align: left;
-        margin-bottom: 115px;
-
-
+        // margin-bottom: 115px;
+        margin-bottom: 65px;
 
         &:focus-visible {
             outline: none
         }
     }
 
-    input {
-        margin-bottom: 115px;
-    }
+
 
     .text-area-contianer {
-        margin-bottom: 115px;
+        margin-bottom: 65px;
 
         textarea {
             height: 144px;
@@ -149,9 +145,22 @@
                     display: inline-block;
                 }
 
-                .delete-btn {
+                .comment-header-left {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     margin-left: auto;
+                    gap: 6px;
+
+                    .time-since {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 5px;
+                    }
                 }
+
+
             }
 
             pre {
@@ -253,4 +262,8 @@
             }
         }
     }
+}
+
+.monday-style-dialog-content-wrapper {
+    z-index: 1001;
 }

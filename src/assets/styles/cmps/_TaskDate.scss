@@ -56,15 +56,10 @@
                 width: 18px;
                 height: 18px;
                 border-radius: 4px;
+                background-color: var(--primary-background-hover-on-secondary-color);
                 cursor: pointer;
-
-                &:hover {
-                    background-color: var(--primary-background-hover-on-secondary-color);
-
-                }
             }
         }
-
     }
 
     .no-date-container {

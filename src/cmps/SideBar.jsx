@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu, EditableHeading ,Search as SearchInput} from "monday-ui-react-core"
+import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu, EditableHeading, Search as SearchInput } from "monday-ui-react-core"
 import { Add, Board, Delete, Home, Edit, Favorite, Work, Search } from "monday-ui-react-core/icons"
 import { useDispatch, useSelector } from "react-redux"
 import { BoardNavLink } from "./BoardNavLink"
@@ -15,6 +15,8 @@ export function SideBar() {
     const navigate = useNavigate()
     const parmas = useParams()
     const boards = useSelector(storeState => storeState.boardModule.boards)
+    const currBoard = useSelector((storeState => storeState.boardModule.board))
+
 
     useEffect(() => {
         loadBoards()
@@ -31,8 +33,10 @@ export function SideBar() {
     }
 
     async function onDeleteBoard(boardId) {
+        let isCurrentBoard = currBoard._id === boardId
         try {
-            await removeBoard(boardId)
+            await removeBoard(boardId, isCurrentBoard)
+            if (isCurrentBoard) navigate(`/board/${boardId}/deleted/${boardId}/title/${currBoard.title}`)
             showSuccessMsg(`We successfully deleted the board ${boardId}`)
         }
         catch (err) {
@@ -46,8 +50,10 @@ export function SideBar() {
         updateBoard('board', boardId, null, null, { key: 'title', value: newText })
     }
 
-    function onAddBoard() {
-        addBoard()
+     async function onAddBoard() {
+        let boardId =  await addBoard()
+        console.log('boardId:', boardId)
+        navigate(`/board/${boardId}`)
         console.log('Add new empty Board')
     }
 
@@ -110,7 +116,7 @@ export function SideBar() {
 
                 {isFavorites === 'main' && <div className="search-and-add-container">
 
-                   
+
                     <SearchInput
                         id="filter-search-input"
                         className="search-input"
@@ -139,7 +145,7 @@ export function SideBar() {
                             <BoardNavLink
                                 text={board.title} boardId={board._id} onSelectBoard={onSelectBoard} isStarred={board.isStarred}
                                 onDeleteBoard={onDeleteBoard} onRenameBoard={onRenameBoard} onToggleFavoriteBoard={onToggleFavoriteBoard}
-                                onDuplicateBoard={onDuplicateBoard}
+                                onDuplicateBoard={onDuplicateBoard} currBoard={currBoard}
                                 key={idx} />
                         )
                     })}

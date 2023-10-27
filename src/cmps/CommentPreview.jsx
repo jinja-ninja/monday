@@ -1,5 +1,6 @@
-import { Button, IconButton } from "monday-ui-react-core";
-import { Delete, Replay, ThumbsUp } from "monday-ui-react-core/icons";
+import { Button, Icon, IconButton, Menu, MenuButton, MenuItem } from "monday-ui-react-core";
+import { Delete, Replay, ThumbsUp, Time } from "monday-ui-react-core/icons";
+import { utilService } from "../services/util.service";
 
 export function CommentPreview({ comment, onDeleteComment, currTask }) {
     return (
@@ -12,12 +13,26 @@ export function CommentPreview({ comment, onDeleteComment, currTask }) {
                     <span className='member-name'>{comment.byMember.fullname}</span>
                     <div className='dot'></div>
 
-                    <IconButton
+                    <div className="comment-header-left">
+                        <span className="time-since">
+                            <Icon icon={Time} />
+                            <span>{utilService.timeSince(comment.createdAt)}</span>
+                        </span>
+                        <MenuButton closeDialogOnContentClick className="delete-btn" size={MenuButton.sizes.S}>
+                            <Menu id="menu" size={Menu.sizes.MEDIUM}>
+                                <MenuItem onClick={() => onDeleteComment(comment.id, currTask)} icon={Delete} iconType={MenuItem.iconType.SVG} title="Delete update for everyone" />
+                            </Menu>
+                        </MenuButton>
+                    </div>
+
+
+
+                    {/* <IconButton
                         className="delete-btn"
                         icon={Delete}
                         onClick={() => onDeleteComment(comment.id, currTask)}
                         size="small"
-                    />
+                    /> */}
                 </div>
                 <pre>{comment.txt}</pre>
             </div>
