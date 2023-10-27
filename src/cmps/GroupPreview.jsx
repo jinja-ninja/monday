@@ -1,13 +1,13 @@
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { ColorPicker, EditableHeading, Icon, Menu, MenuButton, MenuItem, Modal, ModalContent, ModalFooterButtons, ModalHeader, Tooltip, useClickOutside } from "monday-ui-react-core"
 import { Delete, DropdownChevronDown, DropdownChevronRight, Duplicate, Edit, HighlightColorBucket } from "monday-ui-react-core/icons"
-import { Draggable, Droppable } from "react-beautiful-dnd"
+import { Draggable } from "react-beautiful-dnd"
 
 import { duplicatedGroup, removeGroup, updateBoard } from "../store/actions/board.action"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { TaskList } from "./TaskList"
 
-export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, onRenameGroup, index }) {
+export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, onRenameGroup, index, collapseAll }) {
 
     const [showGroup, setShowGroup] = useState(true)
     const [editableText, setEditableText] = useState(group.title)
@@ -20,8 +20,12 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
         setShow(false)
     }, [])
 
-    const dynCollapseGroupClass = showGroup ? '' : 'collapse-group'
+    useEffect(() => {
+        if (collapseAll) setShowGroup(false)
+        else setShowGroup(true)
+    }, [collapseAll])
 
+    const dynCollapseGroupClass = showGroup ? '' : 'collapse-group'
 
     const handleEditClick = (groupId) => {
         const groupElement = document.querySelector(`.group-list-item[data-group-id="${groupId}"]`)

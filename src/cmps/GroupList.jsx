@@ -11,7 +11,7 @@ export function GroupList({ groups, labels, cmpsOrder, boardId, priorities }) {
         <div className="side-spacing-div"></div>
 
         <Droppable droppableId="groups" type="groups">
-            {(provided) => (
+            {(provided, snapshot) => (
                 <ul
                     className="group-list"
                     {...provided.droppableProps}
@@ -25,6 +25,7 @@ export function GroupList({ groups, labels, cmpsOrder, boardId, priorities }) {
                                 labels={labels}
                                 cmpsOrder={cmpsOrder}
                                 priorities={priorities}
+                                collapseAll={snapshot.isDraggingOver}
                                 key={`group-preview-${group.id}`} />
                         </li>
                     })}

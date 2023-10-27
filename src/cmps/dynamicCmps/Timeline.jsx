@@ -58,7 +58,7 @@ export function Timeline({ Timeline, boardId, groupId, taskId, groupColor }) {
         setIsPickerOpen(prev => !prev)
     }
 
-    
+
 
     async function onChangeTimelineRange() {
         if (!range.from || !range.to) return
@@ -66,7 +66,6 @@ export function Timeline({ Timeline, boardId, groupId, taskId, groupColor }) {
         const toTimestamp = range.to.getTime()
         let timeline = { from: fromTimestamp, to: toTimestamp }
         // const taskToEdit = { ...task, dueDate: timestamp }
-        console.log('timeline:', timeline)
         try {
             //     // const action = {
             //     //     description: taskToEdit.title,
@@ -90,7 +89,6 @@ export function Timeline({ Timeline, boardId, groupId, taskId, groupColor }) {
             showErrorMsg('Something went wrong')
         }
     }
-console.log('Timeline:', Timeline)
     return (
         <div className="task-timeline" ref={setReferenceElement}>
             <div className="timeline-container" onClick={(ev) => onToggleModal(ev)} style={
