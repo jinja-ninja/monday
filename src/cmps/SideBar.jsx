@@ -57,7 +57,9 @@ export function SideBar() {
     }
 
     function onToggleFavoriteBoard(boardId) {
-        toggleBoardFavorite(boardId)
+        let isCurrentBoard = currBoard._id === boardId
+        console.log('isCurrentBoard:', isCurrentBoard)
+        toggleBoardFavorite(boardId,isCurrentBoard)
         console.log('toggle Board FAVORITE!:', boardId)
     }
 

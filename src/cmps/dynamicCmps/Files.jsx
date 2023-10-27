@@ -4,7 +4,7 @@ export function Files({ boardId, groupId, taskId }) {
 
     return (
         <div className='task-file-container'>
-
+            {/* <input type="file" className='file-input'/> */}
             <div className='add-file-img-container'>
                 <img className='add-file-img' src={AddFileImg} alt="" />
                 <div className="btn-add-file" >
