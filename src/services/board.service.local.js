@@ -892,7 +892,16 @@ function _createBoards() {
                         }
 
                     ],
-                    cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+                    cmpsOrder: [
+                        "side",
+                        "title",
+                        "members",
+                        "status",
+                        "priority",
+                        "dueDate",
+                        "timeline",
+                        "files"
+                    ]
                 },
                 {
                     _id: "b102",
@@ -1081,7 +1090,16 @@ function _createBoards() {
                         }
 
                     ],
-                    cmpsOrder: ["MemberPicker", "StatusPicker", "DatePicker"]
+                    cmpsOrder: [
+                        "side",
+                        "title",
+                        "members",
+                        "status",
+                        "priority",
+                        "dueDate",
+                        "timeline",
+                        "files"
+                    ]
                 },
                 {
                     _id: "b103",
@@ -1297,7 +1315,16 @@ function _createBoards() {
                         }
 
                     ],
-                    cmpsOrder: ["DatePicker", "MemberPicker", "StatusPicker"]
+                    cmpsOrder: [
+                        "side",
+                        "title",
+                        "members",
+                        "status",
+                        "priority",
+                        "dueDate",
+                        "timeline",
+                        "files"
+                    ]
                 },
                 {
                     _id: "b104",
@@ -1508,7 +1535,16 @@ function _createBoards() {
                         }
 
                     ],
-                    cmpsOrder: ["MemberPicker", "DatePicker", "StatusPicker"]
+                    cmpsOrder: [
+                        "side",
+                        "title",
+                        "members",
+                        "status",
+                        "priority",
+                        "dueDate",
+                        "timeline",
+                        "files"
+                    ]
                 }
             ]
 

@@ -7,7 +7,7 @@ import { GroupList } from "../cmps/GroupList"
 import { BoardMainHeader } from "../cmps/BoardMainHeader"
 import { SideBar } from "../cmps/SideBar"
 import { Outlet, useParams } from "react-router-dom"
-import { addGroup, addTask, getBoardById, updateBoard } from "../store/actions/board.action"
+import { addGroup, addTask, getBoardById, updateBoard, updateBoardOptimistic } from "../store/actions/board.action"
 import { useSelector } from "react-redux"
 import { UserMsg } from "../cmps/UserMsg"
 import MondayLoader from '../assets/Loader/MondayLoader.gif'
@@ -36,7 +36,6 @@ export function BoardDetails() {
     const { styles, attributes } = usePopper(referenceElement, popperElement, {
         modifiers: [{ name: 'arrow', options: { element: arrowElement } }],
     })
-
     const refPersonModal = useRef(null)
 
     useEffect(() => {
@@ -88,17 +87,6 @@ export function BoardDetails() {
         }))
     }
 
-    const cmpsOrder = [
-        "side",
-        "title",
-        "Members",
-        "Status",
-        "Priority",
-        "dueDate",
-        "Timeline",
-        "Files",
-    ]
-
     const dynSearchBtnInput = isSearch || filterBy.txt ?
         <SearchInput
             id="filter-search-input"
@@ -129,11 +117,23 @@ export function BoardDetails() {
             const newGroups = [...currBoard.groups]
             const [removed] = newGroups.splice(source.index, 1)
             newGroups.splice(destination.index, 0, removed)
-            await updateBoard('board', currBoard._id, null, null, { key: 'groups', value: newGroups })
+            const newBoard = { ...currBoard, groups: newGroups }
+            await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: newGroups }, newBoard)
             return
         }
+
+        if (type === 'columns') {
+            const newCmpsOrder = [...currBoard.cmpsOrder]
+            const [removed] = newCmpsOrder.splice(source.index, 1)
+            newCmpsOrder.splice(destination.index, 0, removed)
+            const newBoard = { ...currBoard, cmpsOrder: newCmpsOrder }
+            await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'cmpsOrder', value: newCmpsOrder }, newBoard)
+            return
+        }
+
         const start = currBoard.groups.find(group => group.id === source.droppableId)
         const finish = currBoard.groups.find(group => group.id === destination.droppableId)
+
         if (start === finish) {
             const newTasks = [...start.tasks]
             const [removed] = newTasks.splice(source.index, 1)
@@ -142,7 +142,8 @@ export function BoardDetails() {
                 if (group.id === start.id) return { ...group, tasks: newTasks }
                 return group
             })
-            await updateBoard('board', currBoard._id, null, null, { key: 'groups', value: newGroups })
+            const newBoard = { ...currBoard, groups: newGroups }
+            await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: newGroups }, newBoard)
             return
         }
         const startTasks = [...start.tasks]
@@ -157,10 +158,13 @@ export function BoardDetails() {
             if (group.id === finish.id) return newFinish
             return group
         })
-        await updateBoard('board', currBoard._id, null, null, { key: 'groups', value: newGroups })
+        const newBoard = { ...currBoard, groups: newGroups }
+        await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: newGroups }, newBoard)
     }
 
     if (!currBoard && params.boardId !== params.deletedId) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
+    console.log('currBoard.cmpsOrder:', currBoard.cmpsOrder)
+
     return <main className="board-details-layout">
         <BoardMainHeader />
         <SideBar />
@@ -257,12 +261,12 @@ export function BoardDetails() {
                             boardId={params.boardId}
                             groups={currBoard.groups}
                             labels={currBoard.labels}
-                            cmpsOrder={cmpsOrder}
+                            cmpsOrder={currBoard.cmpsOrder}
                             priorities={currBoard.priorities}
                         />
                     </DragDropContext>
 
-                    {currBoard.groups.length === 0 && <NoGroupsFound cmpsOrder={cmpsOrder} />}
+                    {currBoard.groups.length === 0 && <NoGroupsFound cmpsOrder={currBoard.cmpsOrder} />}
 
                     <Outlet />
                 </>
@@ -274,3 +278,33 @@ export function BoardDetails() {
         </section>
     </main >
 }
+
+
+
+
+// <Button onClick={() => setSortBy(!sortBy)} leftIcon={Sort} kind="tertiary" size="small">Sort</Button>
+
+// <Tooltip
+//     content='Hidden columns'
+//     animationType="expand">
+//     <Button leftIcon={Hide} kind="tertiary" size="small">Hide</Button>
+// </Tooltip>
+
+// <IconButton icon={Menu} size="small" />
+// </div>
+
+
+// <div className="spacing-div"></div>
+// <DragDropContext onDragEnd={onDragEnd} >
+// <GroupList
+//     boardId={params.boardId}
+//     groups={currBoard.groups}
+//     labels={currBoard.labels}
+//     cmpsOrder={currBoard.cmpsOrder}
+//     priorities={currBoard.priorities}
+// />
+// </DragDropContext>
+
+// {currBoard.groups.length === 0 && <NoGroupsFound cmpsOrder={cmpsOrder} />}
+
+// <Outlet />
