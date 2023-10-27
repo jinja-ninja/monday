@@ -23,7 +23,7 @@ export function TaskDetails() {
     }
 
 
-    if (!currTask) return <div>Loading task...</div>
+    if (!currTask) return <div></div>
     return (
         <div className="task-details-container">
             <TaskDetailsHeader boardId={boardId} groupId={groupId} taskId={taskId} taskTitle={currTask.title} setCurrTab={setCurrTab} />

@@ -1,6 +1,6 @@
 import { utilService } from "../../services/util.service"
 
-export function DateSummary({ dynCollapseGroupClass,group }) {
+export function DateSummary({ group }) {
     let datesSummary = getSmallestAndBiggestDates()
 
     function getAllDates() {
@@ -21,7 +21,8 @@ export function DateSummary({ dynCollapseGroupClass,group }) {
 
     }
     return (
-        <div className={"task-list-summary " + dynCollapseGroupClass}>
+        <>
+            {/* <div className={"task-list-summary " + dynCollapseGroupClass}> */}
             <div className="date-summary-container" style={
                 (!datesSummary || !datesSummary.from || !datesSummary.to) ?
                     { backgroundColor: '#c4c4c4' } :
@@ -35,6 +36,8 @@ export function DateSummary({ dynCollapseGroupClass,group }) {
                 {datesSummary.from && datesSummary.to && <span className="dates-summary-days-txt">{utilService.getTimestampInDays(datesSummary) + 'd'}</span>}
 
             </div>
-        </div>
+            {/* </div> */}
+        </>
+
     )
 }

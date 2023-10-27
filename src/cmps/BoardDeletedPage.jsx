@@ -1,8 +1,7 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, } from 'react-router-dom'
 import BoardDeletedImg from '../assets/img/BoardDeletedImg.svg'
 import { Button } from 'monday-ui-react-core'
-export function BoardDeletedPage({boardTitle}) {
-    // let { title } = useParams()
+export function BoardDeletedPage({ boardTitle }) {
     let navigate = useNavigate()
 
     return (
@@ -11,7 +10,7 @@ export function BoardDeletedPage({boardTitle}) {
             <div className='texts-container'>
                 <h2 className='board-deleted-title'>{`“${boardTitle}” board has been deleted`}</h2>
                 <p>Select a different board to continue with or create a new board.</p>
-                <Button onClick={()=> navigate('/board')}>
+                <Button onClick={() => navigate('/board')}>
                     Back to workspace
                 </Button>
             </div>

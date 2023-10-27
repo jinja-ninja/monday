@@ -66,6 +66,7 @@ export function Timeline({ Timeline, boardId, groupId, taskId, groupColor }) {
         const toTimestamp = range.to.getTime()
         let timeline = { from: fromTimestamp, to: toTimestamp }
         // const taskToEdit = { ...task, dueDate: timestamp }
+        console.log('timeline:', timeline)
         try {
             //     // const action = {
             //     //     description: taskToEdit.title,
@@ -73,7 +74,7 @@ export function Timeline({ Timeline, boardId, groupId, taskId, groupColor }) {
             //     //     toDate: taskToEdit.dueDate,
             //     //     type: 'Date',
             //     // }
-            await updateTask(boardId, groupId, taskId, { key: 'Timeline', value: timeline })
+            await updateTask(boardId, groupId, taskId, { key: 'timeline', value: timeline })
             showSuccessMsg(`Changed timeline in task ${taskId}`)
         } catch {
             showErrorMsg(`Cant change timeline in task ${taskId}`)
@@ -84,12 +85,12 @@ export function Timeline({ Timeline, boardId, groupId, taskId, groupColor }) {
         ev.stopPropagation()
         setRange(null)
         try {
-            await updateTask(boardId, groupId, taskId, { key: 'Timeline', value: undefined })
+            await updateTask(boardId, groupId, taskId, { key: 'timeline', value: undefined })
         } catch {
             showErrorMsg('Something went wrong')
         }
     }
-
+console.log('Timeline:', Timeline)
     return (
         <div className="task-timeline" ref={setReferenceElement}>
             <div className="timeline-container" onClick={(ev) => onToggleModal(ev)} style={

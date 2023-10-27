@@ -25,6 +25,7 @@ import { StatusSummary } from "./dynamicSummaryCmps/StatusSummary"
 import { PrioritySummary } from "./dynamicSummaryCmps/PrioritySummary"
 import { MembersSummary } from "./dynamicSummaryCmps/MembersSummary"
 import { DisplayTitle } from "./DisplayTitle"
+import { FilesSummary } from "./dynamicSummaryCmps/FilesSummary"
 
 export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGroup }) {
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
@@ -244,11 +245,12 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
         }
     }
 
-    // const progress = cmpsOrder.map((cmp) => {
-    //     if (cmp === 'status' || cmp === 'priority' || cmp === 'dueDate' || cmp === 'timeline') return cmp
-    //     else return null
-    // })
-    // progress.splice(0, 2)
+    function getProgressOrder() {
+        let progress = currBoard.cmpsOrder.map((cmp) => {
+            if (cmp === 'status' || cmp === 'priority' || cmp === 'dueDate' || cmp === 'timeline' || cmp === 'members' || cmp === 'files') return cmp
+        })
+        return progress.filter(item => item !== undefined)
+    }
 
     return <div className={"task-list-container " + dynCollapseGroupClass}>
 
@@ -378,55 +380,30 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                 </div>}
             </div>
 
-            {/* {Progress.map((cmp, idx) => {
-                switch (cmp) {
-                    case "status":
-                        return <StatusProgress />
-                    case "priority":
-                        return <PriorityProgress />
-                    case "dueDate":
-                        return <DueDateProgress />
-                    case "timeline":
-                        return <TimelineProgress />
-                    default:
-                        return <div className={"task-list-summary first-cell " + dynCollapseGroupClass}></div>
-                    
-                }
-            })} */}
+            {getProgressOrder().map((cmp, idx) => (
+                <div className={`task-list-summary ${idx === 0 ? "first-cell " : ""} ${dynCollapseGroupClass}`} key={idx}>
+                    {cmp === "status" &&
+                        <StatusSummary
+                            group={group}
+                            labels={labels}
+                            calculatePercentages={calculatePercentages}
+                            getPriorityOrStatusColor={getPriorityOrStatusColor} />
+                    }
+                    {cmp === "priority" && <PrioritySummary
+                        group={group}
+                        priorities={priorities}
+                        calculatePercentages={calculatePercentages}
+                        getPriorityOrStatusColor={getPriorityOrStatusColor}
+                    />
+                    }
+                    {cmp === "dueDate" && <DateSummary group={group} />}
+                    {cmp === "timeline" && <TimelineSummary group={group} />}
+                    {cmp === "members" && <MembersSummary group={group} currBoard={currBoard} />}
+                    {cmp === "files" && <FilesSummary />}
+                </div>
+            ))}
 
-            <div className={"task-list-summary first-cell " + dynCollapseGroupClass}>
-                <MembersSummary group={group} currBoard={currBoard} />
-            </div>
-
-
-            <StatusSummary
-                dynCollapseGroupClass={dynCollapseGroupClass}
-                group={group}
-                labels={labels}
-                calculatePercentages={calculatePercentages}
-                getPriorityOrStatusColor={getPriorityOrStatusColor}
-            />
-
-            <PrioritySummary
-                dynCollapseGroupClass={dynCollapseGroupClass}
-                group={group}
-                priorities={priorities}
-                calculatePercentages={calculatePercentages}
-                getPriorityOrStatusColor={getPriorityOrStatusColor}
-            />
-
-            <DateSummary dynCollapseGroupClass={dynCollapseGroupClass} group={group} />
-
-            <TimelineSummary dynCollapseGroupClass={dynCollapseGroupClass} group={group} />
-
-    {/* ----------- FILES SUMMARY ----------*/ }
-            <div className={"task-list-summary " + dynCollapseGroupClass}>
-
-            </div>
-
-            <div className={"task-list-summary last-col " + dynCollapseGroupClass}>
-
-            </div>
+            <div className={"task-list-summary last-col " + dynCollapseGroupClass}> </div>
 
         </section >
 

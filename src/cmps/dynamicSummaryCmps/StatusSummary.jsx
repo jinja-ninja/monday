@@ -1,9 +1,9 @@
 import { Tooltip } from "monday-ui-react-core";
 
-export function StatusSummary({ dynCollapseGroupClass, group,labels, calculatePercentages, getPriorityOrStatusColor }) {
+export function StatusSummary({ group,labels, calculatePercentages, getPriorityOrStatusColor }) {
 
     return (
-        <div className={"task-list-summary " + dynCollapseGroupClass}>
+        <>
             {calculatePercentages(group.tasks, 'status').map((status, index) => (
                 <Tooltip
                     key={index}
@@ -21,6 +21,6 @@ export function StatusSummary({ dynCollapseGroupClass, group,labels, calculatePe
                 </Tooltip>
             ))}
             {group.tasks.length === 0 && <div className="status-sum-container"></div>}
-        </div>
+        </>
     )
 }

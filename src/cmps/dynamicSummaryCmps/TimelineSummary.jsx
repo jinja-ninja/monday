@@ -1,10 +1,10 @@
 import { utilService } from "../../services/util.service";
 
-export function TimelineSummary({ dynCollapseGroupClass, group }) {
+export function TimelineSummary({group }) {
     let timelineSummary = getSmallestFromAndLargestTo()
 
     function getAllTimelines() {
-        return group.tasks.filter(task => task.Timeline).map(task => task.Timeline)
+        return group.tasks.filter(task => task.timeline).map(task => task.timeline)
     }
 
     function getSmallestFromAndLargestTo() {
@@ -20,7 +20,7 @@ export function TimelineSummary({ dynCollapseGroupClass, group }) {
     }
 
     return (
-        <div className={"task-list-summary " + dynCollapseGroupClass}>
+        <>
             <div className="timeline-summary-container" style={
                 (!timelineSummary || !timelineSummary.from || !timelineSummary.to) ?
                     { backgroundColor: '#c4c4c4' } :
@@ -33,6 +33,7 @@ export function TimelineSummary({ dynCollapseGroupClass, group }) {
                 <span className="timeline-summary-txt">{`${utilService.getTimelineRange(timelineSummary)}`}</span>
                 {timelineSummary.from && timelineSummary.to && <span className="timeline-summary-days-txt">{utilService.getTimestampInDays(timelineSummary) + 'd'}</span>}
             </div>
-        </div>
+        </>
+
     )
 }
