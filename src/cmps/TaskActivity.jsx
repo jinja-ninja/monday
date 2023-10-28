@@ -37,7 +37,9 @@ export function TaskActvity() {
                 // onClick={function noRefCheck() { }}
                 />
             </div>
-            <ActivityList activities={activities} />
+            <ActivityList
+                activities={activities}
+            />
         </div>
     )
 }
