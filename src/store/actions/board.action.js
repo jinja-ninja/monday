@@ -14,12 +14,9 @@ export async function loadBoards() {
     }
 }
 
-//Specific Board Actions
-// !!!!! TO DO !!!!!!
-// change name to updateCurrentBoard
-export async function getBoardById(boardId, filterBy) {
+export async function getBoardById(boardId, filterBy, sortBy) {
     try {
-        const board = await boardService.getBoardById(boardId, filterBy)
+        const board = await boardService.getBoardById(boardId, filterBy, sortBy)
         store.dispatch({ type: SET_BOARD, board })
     } catch (err) {
         console.log('Board Actions: err in Getting Board', err)

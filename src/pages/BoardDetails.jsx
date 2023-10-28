@@ -46,7 +46,7 @@ export function BoardDetails() {
 
     useEffect(() => {
         loadBoard()
-    }, [params.boardId, filterBy])
+    }, [params.boardId, filterBy, sortBy])
 
     useEffect(() => {
         // if moving to another board reset the hidden columns to none
@@ -64,9 +64,7 @@ export function BoardDetails() {
     }, [params.boardId])
 
     async function loadBoard() {
-        if (!params.deletedId) {
-            await getBoardById(params.boardId, filterBy)
-        }
+        await getBoardById(params.boardId, filterBy, sortBy)
     }
 
     function toggleIsSearch() {
@@ -217,7 +215,14 @@ export function BoardDetails() {
                             Filter
                         </SplitButton>
 
-                        <Button onClick={() => setSortBy(!sortBy)} leftIcon={Sort} kind="tertiary" size="small">Sort</Button>
+                        <Button
+                        className={"btn-sortby " + (sortBy ? 'sorted' : '')}
+                            onClick={() => setSortBy(!sortBy)}
+                            leftIcon={Sort}
+                            kind="tertiary"
+                            size="small">
+                            Sort
+                        </Button>
 
 
                         <HideBtn

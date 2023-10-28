@@ -206,16 +206,15 @@ function calculateTimelineProgress(timeline) {
     if (currentDate >= endTimestamp) {
         // If so, the progress is 100%
         return `100%`
+    } else if (startTimestamp === endTimestamp && startTimestamp > currentDate) {
+        return 0
     }
 
     const totalDuration = endTimestamp - startTimestamp
-
     // Calculate the elapsed time from the start date to the current date
     const timePassedSinceStart = currentDate - startTimestamp
-
     // Calculate the progress as a percentage of time passed
     const progress = (timePassedSinceStart / totalDuration) * 100
-
     // Round the progress to two decimal places and return as a whole number
     const result = Math.round(progress)
     return `${result}%`

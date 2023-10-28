@@ -41,8 +41,7 @@
     color: rgb(103, 104, 121);
     text-align: left;
     padding-left: 16px;
-    padding-top: 8px;
-    margin-bottom: 4px;
+    padding-block: 8px;
   }
 
   .person-circle {
@@ -58,15 +57,26 @@
     box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px 0px;
     border-radius: 4px;
     font-size: 14px;
-    padding: 16px 16px 0 16px;
+    padding: 16px 16px 16px 16px;
     width: 328px;
 
     .chosen-members-container {
       display: flex;
       flex-wrap: wrap;
+      row-gap: 8px;
       max-width: 328px;
-      gap: 4px;
       padding-inline-start: 10px;
+      padding-bottom: 8px;
+
+      .chip {
+        border-radius: 24px;
+        position: relative;
+
+        .typography_1517eaf6c4 {
+          font-size: 12px;
+        }
+
+      }
     }
 
     .selected-members {
@@ -75,7 +85,7 @@
 
     .members-search {
       border: 1px;
-      padding: 8px 24px 8px 16px;
+      padding: 8px 24px 8px 10px;
       width: 278px;
       //   height: 14px;
     }

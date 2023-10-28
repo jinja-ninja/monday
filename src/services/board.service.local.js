@@ -90,7 +90,7 @@ async function query() {
     return await storageService.query(STORAGE_KEY)
 }
 
-async function getBoardById(boardId, filterBy = { txt: '', person: null }) {
+async function getBoardById(boardId, filterBy = { txt: '', person: null }, sortBy) {
     let board = await storageService.get(STORAGE_KEY, boardId)
     if (filterBy.txt) {
         const regex = new RegExp(filterBy.txt, 'i')
@@ -111,20 +111,33 @@ async function getBoardById(boardId, filterBy = { txt: '', person: null }) {
 
     if (filterBy.person) {
         board.groups = board.groups.map((group) => {
-            const filteredTasks = group.tasks.filter((task) => task.memberIds.includes(filterBy.person._id));
+            const filteredTasks = group.tasks.filter((task) => task.memberIds.includes(filterBy.person._id))
 
-            // Include the group if there are matching tasks
             if (filteredTasks.length > 0) {
-                group.tasks = filteredTasks;
+                group.tasks = filteredTasks
                 return group;
             }
-            // Exclude the group if no matching tasks
+
             return null;
-        }).filter((group) => group !== null); // Remove groups without matching tasks
+        }).filter((group) => group !== null)
+    }
+    if (sortBy) {
+        board.groups = board.groups.sort((a, b) => {
+            const titleA = a.title.toLowerCase();
+            const titleB = b.title.toLowerCase();
+        
+            if (titleA < titleB) {
+                return -1
+            } else if (titleA > titleB) {
+                return 1
+            } else {
+                return 0
+            }
+        })
+        
     }
 
     return board;
-
 }
 
 async function save(board) {

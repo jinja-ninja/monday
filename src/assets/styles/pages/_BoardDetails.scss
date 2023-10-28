@@ -139,7 +139,7 @@
         border-bottom: 1px solid var(--ui-border-color);
         margin-bottom: 20px;
 
-       
+
 
         @keyframes bounce {
 
@@ -259,7 +259,16 @@
       padding-left: 38px;
       padding-right: var(--spacing-xl);
       padding-block-end: var(--spacing-xl);
+
       // padding-block-end: var(--spacing-medium);
+      .btn-sortby {
+        border-radius: 4px;
+
+        &.sorted {
+          background-color: var(--primary-selected-color);
+
+        }
+      }
 
       button {
         text-transform: none;

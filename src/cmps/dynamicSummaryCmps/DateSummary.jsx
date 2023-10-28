@@ -16,13 +16,13 @@ export function DateSummary({ group }) {
 
         const smallestDate = Math.min(...dates)
         const biggestDate = Math.max(...dates)
-
+       
         return { from: smallestDate, to: biggestDate }
 
     }
+
     return (
         <>
-            {/* <div className={"task-list-summary " + dynCollapseGroupClass}> */}
             <div className="date-summary-container" style={
                 (!datesSummary || !datesSummary.from || !datesSummary.to) ?
                     { backgroundColor: '#c4c4c4' } :
@@ -36,7 +36,6 @@ export function DateSummary({ group }) {
                 {datesSummary.from && datesSummary.to && <span className="dates-summary-days-txt">{utilService.getTimestampInDays(datesSummary) + 'd'}</span>}
 
             </div>
-            {/* </div> */}
         </>
 
     )

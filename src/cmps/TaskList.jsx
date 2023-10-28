@@ -213,6 +213,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     onUpdateTask={onUpdateTask} />
             case "priority":
                 return <TaskStatus
+                    board={currBoard}
                     type={'priority'}
                     task={task}
                     labels={priorities}
@@ -337,8 +338,8 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     })}
                     {provided.placeholder}
                     <div
-                    className={"header-title last-col " + dynCollapseGroupClass}>
-                        <Icon icon={Add}  className="plus-icon"/>
+                        className={"header-title last-col " + dynCollapseGroupClass}>
+                        <Icon icon={Add} className="plus-icon" />
                     </div>
                 </section>
             )}

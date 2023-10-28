@@ -114,9 +114,10 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                                 const member = boardMembers.find(member => member._id === memberId)
                                 return <div className="chosen-members" key={member._id} onClick={() => assignMemberToTask(member._id, task)}>
                                     <Chips
+                                        leftAvatar={'https://cdn1.monday.com/dapulse_default_photo.png'}
+                                        className="chip"
                                         label={member.fullname}
                                         onDelete={() => (onDeleteChosenMember(member._id))}
-
                                     />
                                 </div>
                             }

@@ -11,6 +11,15 @@ export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
     const [isEditLabelsOpen, setIsEditLabelsOpen] = useState(false)
     const refLabelDialog = useRef(null)
 
+
+ 
+// get props priorities and lables(status) - check if(priorities){
+
+// }else if (labels){
+
+// }
+// and then you know what to update priorities or status
+
     function onSetStatus(status) {
         onUpdateTask(task.id, { key: type, value: status })
     }
@@ -68,6 +77,15 @@ export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
     }
 
     async function onUpdateLabel(boardId, label) {
+        if (isLabelInUse(label.id)) {
+            showErrorMsg(`Cannot edit a label while in use`)
+            return
+        }
+        else if (labels.some(l => l.title === label.title)) {
+            showErrorMsg(`Label title is already in use`)
+            return
+        }
+
         try {
             updateLabel(boardId, label)
             showSuccessMsg(`Label ${label.id} updated successfully`)
@@ -85,7 +103,6 @@ export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
         ref: refLabelDialog,
         callback: onClickOutsideLabels
     })
-
 
     return (
         <div className="task-status" onClick={() => setIsMenuOpen(prevState => !prevState)}>
