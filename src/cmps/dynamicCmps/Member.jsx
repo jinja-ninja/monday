@@ -72,10 +72,6 @@ export function Member({ boardMembers, task, boardId, groupId }) {
         }
     }
 
-
-
-
-
     function setDynamicMaxMembers(chosenMembersLength) {
         if (chosenMembersLength <= 2) return 2
         return 1

@@ -5,13 +5,14 @@ import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 
-import { Icon } from "monday-ui-react-core";
-import { Calendar, CloseSmall } from "monday-ui-react-core/icons";
+import { Icon, Tooltip } from "monday-ui-react-core";
+import { Calendar, Check, CloseSmall, Recurring } from "monday-ui-react-core/icons";
 import { updateTask } from "../../store/actions/board.action";
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service";
 import { utilService } from "../../services/util.service";
+import AlertRedImg from '../../assets/img/AlertRedImg.png'
 
-export function Date({ dueDate, taskId, boardId, groupId }) {
+export function DueDate({ dueDate, taskId, boardId, groupId, status }) {
     const [selected, setSelected] = useState(null)
     const [isPickerOpen, setIsPickerOpen] = useState(false)
 
@@ -88,10 +89,22 @@ export function Date({ dueDate, taskId, boardId, groupId }) {
         }
     }
 
+    function renderDynDateIndication() {
+        let now = Date.now()
+        if (status === "Done") return <div className="icon done-icon"> <Icon icon={Check} /></div>
+        else if (status !== "Done" && now < dueDate) return <div className="icon not-done-icon"></div>
+        else if (status !== "Done" && now > dueDate) return <div className="icon overtime-icon"> <img src={AlertRedImg} alt="" /> </div>
+    }
+
     let footer = <p>Please pick a day.</p>
     if (selected) {
         footer = <p>You picked {format(selected, 'PP')}.</p>
     }
+
+    let selectedTime
+    if (dueDate) {
+        selectedTime = new Date(dueDate)
+    } else selectedTime = null
 
     return (
         <div className="task-date" ref={setReferenceElement} onClick={(ev) => onToggleModal(ev)}>
@@ -110,7 +123,10 @@ export function Date({ dueDate, taskId, boardId, groupId }) {
             {/* //If there is date show the date  */}
             {dueDate && (
                 <div className="date-container">
-                    <span className="date-text">
+                    <div className="date-indication">
+                        {renderDynDateIndication()}
+                    </div>
+                    <span className={"date-text " + (status === "Done" ? 'done' : '')}>
                         {utilService.timeStampToDate(dueDate)}
                     </span>
                     <div className="date-hover-container">
@@ -126,7 +142,7 @@ export function Date({ dueDate, taskId, boardId, groupId }) {
                 <style>{pickerCss}</style>
                 <DayPicker
                     mode="single"
-                    selected={selected}
+                    selected={selectedTime}
                     onSelect={setSelected}
                     footer={footer}
                     modifiersClassNames={{
