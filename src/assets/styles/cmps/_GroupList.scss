@@ -7,6 +7,8 @@
   .side-spacing-div {
     grid-column: 1/2;
     grid-row: 1/-1;
+    position: sticky;
+    left: 0;
   }
 
   .group-list {
@@ -58,7 +60,8 @@
     display: flex;
     align-items: center;
     position: sticky;
-    top: 185px;
+    top: 215px;
+    left: 38px;
     z-index: 6;
     background-color: var(--primary-background-color);
 
