@@ -46,6 +46,7 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
     try {
 
         const board = await getBoardById(boardId)
+        const activityType = getActivityType(key)
         let groupIdx, taskIdx, activity
 
         switch (type) {
@@ -57,9 +58,10 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
             case 'group':
                 if (!groupId) throw new Error('Error updating')
                 groupIdx = board.groups.findIndex(group => group.id === groupId)
+                const oldGroup = board.groups[groupIdx]
                 board.groups[groupIdx][key] = value
 
-                activity = createActivity(`Updated group ${board.groups[groupIdx].title}`, board._id, groupId)
+                activity = createActivity({ type: activityType, from: oldGroup, to: value }, board._id, groupId)
                 board.activities.unshift(activity)
                 break
 
@@ -67,9 +69,10 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 if (!taskId) throw new Error('Error updating')
                 groupIdx = board.groups.findIndex(group => group.id === groupId)
                 taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+                const oldTask = board.groups[groupIdx].tasks[taskIdx][key]
                 board.groups[groupIdx].tasks[taskIdx][key] = value
 
-                activity = createActivity(`Updated task ${board.groups[groupIdx].tasks[taskIdx].title}`, boardId, groupId, taskId)
+                activity = await createActivity({ type: activityType, from: oldTask, to: value }, boardId, groupId, taskId)
                 board.activities.unshift(activity)
                 break
 
@@ -382,16 +385,37 @@ function getEmptyTask(title = '') {
         }
     }
 }
-
-function createActivity(txt, boardId, groupId = null, taskId = null) {
+//Activity functions
+async function createActivity(action = {}, boardId, groupId = null, taskId = null) {
     return {
         id: 'a-' + utilService.makeId(),
         createdAt: Date.now(),
-        byMember: '',
+        byMember: {
+            _id: 'u101',
+            fullname: 'Default user',
+            imgUrl: 'https://cdn1.monday.com/dapulse_default_photo.png'
+        },
         boardId,
         groupId,
         taskId,
-        action: txt,
+        action,
+        group: groupId ? await getGroupById(boardId, groupId) : null,
+        task: taskId ? await getTaskById(boardId, groupId, taskId) : null
+    }
+}
+
+function getActivityType(key) {
+    switch (key) {
+        case 'title':
+            return 'Name'
+        case 'status':
+            return 'Status'
+        case 'priority':
+            return 'Priority'
+        case 'dueDate':
+            return 'Date'
+        default:
+            throw new Error('Error updating')
     }
 }
 
@@ -412,7 +436,8 @@ async function addNewGroup(board) {
     const updatedBoard = { ...board }
     updatedBoard.groups.push(newGroup)
 
-    const activity = createActivity(`Created group ${newGroup.title}`, board._id, newGroup.id)
+    const activity = await createActivity({ type: 'Created', from: null, to: newGroup.title }, board._id, newGroup.id)
+    activity.group = newGroup
     updatedBoard.activities.unshift(activity)
 
     return await storageService.put(STORAGE_KEY, updatedBoard)
@@ -445,8 +470,9 @@ async function duplicatedGroup(board, groupId) {
     return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
-function getGroupById(board, groupId) {
+async function getGroupById(boardId, groupId) {
     // const newBoard = structuredClone(board)
+    const board = await getBoardById(boardId)
     return board.groups.find(group => group.id === groupId)
 }
 
@@ -686,7 +712,7 @@ function _createBoards() {
                     createdBy: {
                         _id: "u101",
                         fullname: "Abi Abambi",
-                        imgUrl: "http://some-img"
+                        imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                     },
                     style: {
                         backgroundImage: ""
@@ -717,17 +743,17 @@ function _createBoards() {
                         {
                             _id: "u101",
                             fullname: "Gal Ben Natan",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                         },
                         {
                             _id: "u102",
                             fullname: "Omer Vered",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                         },
                         {
                             _id: "u103",
                             fullname: "Nati Feldbaum",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                         }
                     ],
                     groups: [
@@ -865,24 +891,49 @@ function _createBoards() {
                     ],
                     activities: [
                         {
-                            id: "a101",
-                            txt: "Changed Color",
-                            createdAt: 154514,
+                            id: 'a101',
+                            createdAt: 1698500764637,
                             byMember: {
-                                _id: "u101",
-                                fullname: "Abi Abambi",
-                                imgUrl: "http://some-img"
+                                _id: 'u101',
+                                fullname: 'Default User',
+                                imgUrl: 'https://cdn1.monday.com/dapulse_default_photo.png'
                             },
+                            action: { type: 'Update', from: '', to: 'Replace logo' },
                             group: {
                                 id: "g101",
-                                title: "Urgent Stuff"
+                                title: "Group 1",
+                                archivedAt: 1589983468418,
+                                tasks: [
+                                    {
+                                        id: "c101",
+                                        title: "Replace logo",
+                                        comments: [],
+                                        priority: "Medium",
+                                        status: "Done",
+                                        dueDate: undefined,
+                                        memberIds: []
+                                    },
+                                    {
+                                        id: "c102",
+                                        title: "Add Samples",
+                                        comments: [],
+                                        priority: "Low",
+                                        status: "Progress",
+                                        dueDate: undefined,
+                                        memberIds: []
+                                    }
+                                ],
+                                style: "grass_green"
                             },
                             task: {
                                 id: "c101",
-                                title: "Replace Logo",
+                                title: "Replace logo",
                                 comments: [],
+                                priority: "Medium",
+                                status: "Done",
+                                dueDate: undefined,
                                 memberIds: []
-                            }
+                            },
                         }
                     ],
                     priorities: [
@@ -933,7 +984,7 @@ function _createBoards() {
                     createdBy: {
                         _id: "u102",
                         fullname: "Joe Johnson",
-                        imgUrl: "http://another-img"
+                        imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                     },
                     style: {
                         backgroundImage: ""
@@ -964,17 +1015,17 @@ function _createBoards() {
                         {
                             _id: "u101",
                             fullname: "Gal Ben Natan",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                         },
                         {
                             _id: "u102",
                             fullname: "Omer Vered",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                         },
                         {
                             _id: "u103",
                             fullname: "Nati Feldbaum",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                         }
                     ],
                     groups: [
@@ -1029,7 +1080,7 @@ function _createBoards() {
                                             byMember: {
                                                 _id: "u103",
                                                 fullname: "Jane Doe",
-                                                imgUrl: "http://another-cloudinary-image.jpg"
+                                                imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                                             }
                                         }
                                     ],
@@ -1066,11 +1117,11 @@ function _createBoards() {
                         {
                             id: "a102",
                             txt: "Added Task",
-                            createdAt: 154515,
+                            createdAt: 1698500721637,
                             byMember: {
                                 _id: "u102",
                                 fullname: "Joe Johnson",
-                                imgUrl: "http://another-img"
+                                imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                             },
                             group: {
                                 id: "g103",
@@ -1131,7 +1182,7 @@ function _createBoards() {
                     createdBy: {
                         _id: "u104",
                         fullname: "Liam Nelson",
-                        imgUrl: "http://yet-another-img"
+                        imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                     },
                     style: {
                         backgroundImage: ""
@@ -1162,17 +1213,17 @@ function _createBoards() {
                         {
                             _id: "u101",
                             fullname: "Gal Ben Natan",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                         },
                         {
                             _id: "u102",
                             fullname: "Omer Vered",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                         },
                         {
                             _id: "u103",
                             fullname: "Nati Feldbaum",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                         }
                     ],
                     groups: [
@@ -1250,7 +1301,7 @@ function _createBoards() {
                                             byMember: {
                                                 _id: "u105",
                                                 fullname: "Emma Stone",
-                                                imgUrl: "http://yet-another-cloudinary-image.jpg"
+                                                imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                                             }
                                         }
                                     ],
@@ -1277,7 +1328,7 @@ function _createBoards() {
                                         _id: "u105",
                                         username: "Emma",
                                         fullname: "Emma Stone",
-                                        imgUrl: "http://yet-another-cloudinary-image.jpg"
+                                        imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                                     },
                                     style: {
                                         backgroundColor: "bright-green"
@@ -1291,11 +1342,11 @@ function _createBoards() {
                         {
                             id: "a103",
                             txt: "Updated Task",
-                            createdAt: 154550,
+                            createdAt: 1698500524637,
                             byMember: {
                                 _id: "u104",
                                 fullname: "Liam Nelson",
-                                imgUrl: "http://yet-another-img"
+                                imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                             },
                             group: {
                                 id: "g105",
@@ -1356,7 +1407,7 @@ function _createBoards() {
                     createdBy: {
                         _id: "u106",
                         fullname: "Lucy Williams",
-                        imgUrl: "http://different-img-url"
+                        imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                     },
                     style: {
                         backgroundImage: ""
@@ -1387,17 +1438,17 @@ function _createBoards() {
                         {
                             _id: "u101",
                             fullname: "Gal Ben Natan",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                         },
                         {
                             _id: "u102",
                             fullname: "Omer Vered",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                         },
                         {
                             _id: "u103",
                             fullname: "Nati Feldbaum",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                         }
                     ],
                     groups: [
@@ -1471,7 +1522,7 @@ function _createBoards() {
                                             byMember: {
                                                 _id: "u107",
                                                 fullname: "Mike Brown",
-                                                imgUrl: "http://different-cloudinary-url.jpg"
+                                                imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                                             }
                                         }
                                     ],
@@ -1498,7 +1549,7 @@ function _createBoards() {
                                         _id: "u107",
                                         username: "Mike",
                                         fullname: "Mike Brown",
-                                        imgUrl: "http://different-cloudinary-url.jpg"
+                                        imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                                     },
                                     style: {
                                         backgroundColor: "done-green"
@@ -1512,11 +1563,11 @@ function _createBoards() {
                         {
                             id: "a104",
                             txt: "Added New Design",
-                            createdAt: 154580,
+                            createdAt: 1698500724637,
                             byMember: {
                                 _id: "u106",
                                 fullname: "Lucy Williams",
-                                imgUrl: "http://different-img-url"
+                                imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                             },
                             group: {
                                 id: "g107",

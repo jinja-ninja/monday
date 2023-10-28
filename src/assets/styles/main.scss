@@ -31,18 +31,18 @@
 @import "cmps/_TaskDate";
 @import "cmps/_TaskTimeline";
 @import "cmps/_TaskFiles";
-@import 'cmps/SideBar';
-@import 'cmps/TaskDetails';
-@import 'cmps/TaskDetailsHeader';
-@import "cmps/SideBar";
-@import "cmps/UserMsg";
-@import "cmps/SelectedModal";
-@import "cmps/BoardDescription";
-@import "cmps/personPickerModal";
-@import "cmps/NoGroupsFound";
-@import "cmps/MembersSummary";
-@import "cmps/DeletedBoardPage";
-@import "cmps/HideColumnsModal";
+@import 'cmps/_SideBar';
+@import 'cmps/_TaskDetails';
+@import 'cmps/_TaskDetailsHeader';
+@import "cmps/_UserMsg";
+@import "cmps/_SelectedModal";
+@import "cmps/_BoardDescription";
+@import "cmps/_personPickerModal";
+@import "cmps/_NoGroupsFound";
+@import "cmps/_MembersSummary";
+@import "cmps/_DeletedBoardPage";
+@import "cmps/_HideColumnsModal";
+@import "cmps/_ActivityPreview";
 
 
 // //PAGES
