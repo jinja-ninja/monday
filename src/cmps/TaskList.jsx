@@ -310,23 +310,28 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                         )
                         if (title === 'title' && !showGroup) title = ''
                         return (
-                            <Draggable
-                                key={idx}
-                                draggableId={`title-${idx}`}
-                                index={idx}
-                            >
-                                {(provided) => (
-                                    <div
-                                        className={"header-title " + dynCollapseGroupClass}
-                                        key={idx}
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                    >
-                                        <DisplayTitle title={title} />
-                                    </div>
-                                )}
-                            </Draggable>
+                            (title === 'title' || title === 'side') ?
+                                <div className={"header-title " + dynCollapseGroupClass} key={idx}>
+                                    <DisplayTitle title={title} />
+                                </div>
+                                :
+                                <Draggable
+                                    key={idx}
+                                    draggableId={`title-${idx}`}
+                                    index={idx}
+                                >
+                                    {(provided) => (
+                                        <div
+                                            className={"header-title " + dynCollapseGroupClass}
+                                            key={idx}
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                        >
+                                            <DisplayTitle title={title} />
+                                        </div>
+                                    )}
+                                </Draggable>
                         )
                     })}
                     {provided.placeholder}
