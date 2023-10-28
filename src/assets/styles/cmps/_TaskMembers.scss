@@ -9,6 +9,34 @@
     }
   }
 
+  .btn-add-member {
+    display: none;
+    color: var(--text-color-on-primary);
+    background-color: var(--primary-color);
+    z-index: 1;
+    font-size: 14px;
+    margin: 0 -6px;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    left: 14px;
+
+    .line-one {
+      width: 10px;
+      height: 2px;
+      background-color: white;
+      position: absolute;
+    }
+
+    .line-two {
+      width: 2px;
+      height: 10px;
+      background-color: white;
+      position: absolute;
+    }
+  }
+
   p {
     color: rgb(103, 104, 121);
     text-align: left;
@@ -81,33 +109,7 @@
       }
     }
 
-    .btn-add-member {
-      display: none;
-      color: var(--text-color-on-primary);
-      background-color: var(--primary-color);
-      z-index: 1;
-      font-size: 14px;
-      margin: 0 -6px;
-      border-radius: 50%;
-      width: 14px;
-      height: 14px;
-      position: absolute;
-      left: 14px;
 
-      .line-one {
-        width: 10px;
-        height: 2px;
-        background-color: white;
-        position: absolute;
-      }
-
-      .line-two {
-        width: 2px;
-        height: 10px;
-        background-color: white;
-        position: absolute;
-      }
-    }
   }
 }
 

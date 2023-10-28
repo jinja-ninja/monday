@@ -4,7 +4,9 @@ import { Add } from "monday-ui-react-core/icons"
 import { addGroup } from "../store/actions/board.action"
 import { Droppable } from "react-beautiful-dnd"
 
-export function GroupList({ groups, labels, cmpsOrder, boardId, priorities }) {
+export function GroupList({ groups, labels, cmpsOrder, boardId, priorities, hiddenColumns }) {
+
+    let filteredCmpOrder = cmpsOrder.filter(cmp => !hiddenColumns.map(str => str.toLowerCase()).includes(cmp.toLowerCase()))
 
     return <div className="group-list-container">
 
@@ -23,9 +25,10 @@ export function GroupList({ groups, labels, cmpsOrder, boardId, priorities }) {
                                 group={group}
                                 boardId={boardId}
                                 labels={labels}
-                                cmpsOrder={cmpsOrder}
+                                cmpsOrder={filteredCmpOrder}
                                 priorities={priorities}
                                 collapseAll={snapshot.isDraggingOver}
+                                hiddenColumns={hiddenColumns}
                                 key={`group-preview-${group.id}`} />
                         </li>
                     })}

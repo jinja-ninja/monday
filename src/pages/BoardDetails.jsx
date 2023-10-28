@@ -1,13 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from "react"
-import { usePopper } from "react-popper";
-import { Button, IconButton, Loader, MenuItem, SplitButton, SplitButtonMenu, Search as SearchInput, Tooltip, Avatar, Icon, useClickOutside } from "monday-ui-react-core"
-import { Add, Announcement, Check, CloseSmall, Filter, Group, Hide, Menu, PersonRound, Search, Sort } from "monday-ui-react-core/icons"
+import { useEffect, useState } from "react"
+import { Button, IconButton, MenuItem, SplitButton, SplitButtonMenu, Search as SearchInput, Tooltip, Avatar, useClickOutside, } from "monday-ui-react-core"
+import { Announcement, Check, Filter, Group, Menu, Search, Sort } from "monday-ui-react-core/icons"
 import { BoardDetailsHeader } from "../cmps/BoardDetailsHeader"
 import { GroupList } from "../cmps/GroupList"
 import { BoardMainHeader } from "../cmps/BoardMainHeader"
 import { SideBar } from "../cmps/SideBar"
 import { Outlet, useParams } from "react-router-dom"
-import { addGroup, addTask, getBoardById, updateBoard, updateBoardOptimistic } from "../store/actions/board.action"
+import { addGroup, addTask, getBoardById, updateBoardOptimistic } from "../store/actions/board.action"
 import { useSelector } from "react-redux"
 import { UserMsg } from "../cmps/UserMsg"
 import MondayLoader from '../assets/Loader/MondayLoader.gif'
@@ -15,43 +14,54 @@ import { SelectedModal } from "../cmps/selectedModal"
 import { boardService } from "../services/board.service.local"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { BoardDescriptionModal } from "../cmps/BoardDescriptionModal"
-import { PersonPickerModal } from "../cmps/PersonPickerModal";
 import { DragDropContext } from "react-beautiful-dnd"
 import { NoGroupsFound } from "../cmps/NoGroupsFound";
 import { utilService } from "../services/util.service";
 import { BoardDeletedPage } from "../cmps/BoardDeletedPage";
+import { HideBtn } from "../cmps/HideBtn";
+import { PersonBtn } from "../cmps/PersonBtn";
+import { useDispatch } from "react-redux"
+import { SET_COLUMNS_STATE } from "../store/reducers/board.reducer"
 
 export function BoardDetails() {
     const params = useParams()
+    const dispatch = useDispatch()
     const currBoard = useSelector(state => state.boardModule.board)
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
+    const columnsState = useSelector(state => state.boardModule.columnsState)
 
     const [isSearch, setIsSearch] = useState(false)
     const [filterBy, setFilterBy] = useState({ txt: '', person: null })
     const [sortBy, setSortBy] = useState(false)
     const [isBoardDesc, setIsBoardDesc] = useState(false)
     const [personPickerOpen, setPersonPickerOpen] = useState(false)
+    const [hidePickerOpen, setHidePickerOpen] = useState(false)
 
-    const [referenceElement, setReferenceElement] = useState(null)
-    const [popperElement, setPopperElement] = useState(null)
-    const [arrowElement, setArrowElement] = useState(null)
-    const { styles, attributes } = usePopper(referenceElement, popperElement, {
-        modifiers: [{ name: 'arrow', options: { element: arrowElement } }],
-    })
-    const refPersonModal = useRef(null)
+    let hiddenColumns = getAllUnCheckedColumns()
+
+    function getAllUnCheckedColumns() {
+        return columnsState.filter(column => !column.isChecked).map(uncheckedColumn => uncheckedColumn.name)
+    }
+
 
     useEffect(() => {
         loadBoard()
     }, [params.boardId, filterBy])
 
-    const onClickOutsidePersonModal = useCallback(() => {
-        setPersonPickerOpen(false)
-    }, [])
+    useEffect(() => {
+        // if moving to another board reset the hidden columns to none
+        dispatch({
+            type: SET_COLUMNS_STATE, columnsState: [
+                { name: "Members", isChecked: true },
+                { name: "Status", isChecked: true },
+                { name: "Priority", isChecked: true },
+                { name: "DueDate", isChecked: true },
+                { name: "Timeline", isChecked: true },
+                { name: "Files", isChecked: true }
+            ]
+        })
 
-    useClickOutside({
-        ref: refPersonModal,
-        callback: onClickOutsidePersonModal
-    })
+    }, [params.boardId])
 
     async function loadBoard() {
         if (!params.deletedId) {
@@ -65,9 +75,10 @@ export function BoardDetails() {
     }
 
     function onTogglePersonModal(ev) {
-        if (ev.target.closest('.person-picker-container')) return
-        ev.stopPropagation()
         setPersonPickerOpen(prev => !prev)
+    }
+    function onToggleHideColumnsModal(ev) {
+        setHidePickerOpen(prev => !prev)
     }
 
     async function addTaskToFirstGroup() {
@@ -188,53 +199,15 @@ export function BoardDetails() {
 
                         {dynSearchBtnInput}
 
-                        <Tooltip
-                            content='Filter by person'
-                            animationType="expand">
-                            <div className="person-filter-btns-container" ref={setReferenceElement}>
-                                {!filterBy.person ?
-                                    <Button leftIcon={PersonRound} kind="tertiary" size="small" onClick={(ev) => onTogglePersonModal(ev)}>
-                                        Person
-                                    </Button> :
-                                    <div className="chosen-person-filter-btn" onClick={(ev) => onTogglePersonModal(ev)}>
-                                        <div className="person-img-txt-container">
-                                            {(!filterBy.person.imgUrl || filterBy.person.imgUrl === 'https://www.google.com') ? (
-                                                <Avatar
-                                                    className='avatar-img'
-                                                    size={Avatar.sizes.SMALL}
-                                                    type={Avatar.types.TEXT}
-                                                    text={utilService.getNameInitials(filterBy.person.fullname)}
-                                                    backgroundColor={Avatar.colors.BLACKISH}
-                                                    ariaLabel={filterBy.person.fullname}
-                                                />
-                                            ) : (
-                                                <Avatar
-                                                    className='avatar-img'
-                                                    ariaLabel={filterBy.person.fullname}
-                                                    size={Avatar.sizes.SMALL}
-                                                    src={filterBy.person.imgUrl}
-                                                    type="img"
-                                                />
-                                            )}
-                                            <span>Person</span>
-                                        </div>
-                                        <div className="btn-remove-person" onClick={(ev) => onRemovePersonFilter(ev)}>
-                                            <svg viewBox="0 0 20 20" fill="currentColor" width="16px" height="16px" id="combobox-search" aria-hidden="true" aria-label="Clear Search" class="icon_component input-component__icon icon_component--no-focus-style"><path d="M6.53033 5.46967C6.23744 5.17678 5.76256 5.17678 5.46967 5.46967C5.17678 5.76256 5.17678 6.23744 5.46967 6.53033L8.62562 9.68628L5.47045 12.8415C5.17756 13.1343 5.17756 13.6092 5.47045 13.9021C5.76334 14.195 6.23822 14.195 6.53111 13.9021L9.68628 10.7469L12.8415 13.9021C13.1343 14.195 13.6092 14.195 13.9021 13.9021C14.195 13.6092 14.195 13.1343 13.9021 12.8415L10.7469 9.68628L13.9029 6.53033C14.1958 6.23744 14.1958 5.76256 13.9029 5.46967C13.61 5.17678 13.1351 5.17678 12.8422 5.46967L9.68628 8.62562L6.53033 5.46967Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-                                        </div>
-
-
-                                    </div>
-                                }
-                            </div>
-
-                        </Tooltip>
-
-                        {personPickerOpen && <div className="person-picker-modal" ref={setPopperElement} style={styles.popper} {...attributes.popper}>
-                            <div className="click-outside-container" ref={refPersonModal}>
-                                <PersonPickerModal Members={currBoard.members} setFilterBy={setFilterBy} filterBy={filterBy} />
-                            </div>
-                            <div ref={setArrowElement} style={styles.arrow} />
-                        </div>}
+                        <PersonBtn
+                            setPersonPickerOpen={setPersonPickerOpen}
+                            onTogglePersonModal={onTogglePersonModal}
+                            onRemovePersonFilter={onRemovePersonFilter}
+                            personPickerOpen={personPickerOpen}
+                            setFilterBy={setFilterBy}
+                            filterBy={filterBy}
+                            currBoard={currBoard}
+                        />
 
                         <SplitButton kind="tertiary" leftIcon={Filter} size="small" secondaryDialogContent={
                             <SplitButtonMenu _id="split-menu">
@@ -246,11 +219,13 @@ export function BoardDetails() {
 
                         <Button onClick={() => setSortBy(!sortBy)} leftIcon={Sort} kind="tertiary" size="small">Sort</Button>
 
-                        <Tooltip
-                            content='Hidden columns'
-                            animationType="expand">
-                            <Button leftIcon={Hide} kind="tertiary" size="small">Hide</Button>
-                        </Tooltip>
+
+                        <HideBtn
+                            hidePickerOpen={hidePickerOpen}
+                            onToggleHideColumnsModal={onToggleHideColumnsModal}
+                            // setHiddenColumns={setHiddenColumns}
+                            hiddenColumns={hiddenColumns}
+                        />
 
                         <IconButton icon={Menu} size="small" />
                     </div>
@@ -264,6 +239,7 @@ export function BoardDetails() {
                             labels={currBoard.labels}
                             cmpsOrder={currBoard.cmpsOrder}
                             priorities={currBoard.priorities}
+                            hiddenColumns={hiddenColumns}
                         />
                     </DragDropContext>
 

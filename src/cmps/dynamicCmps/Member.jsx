@@ -74,7 +74,7 @@ export function Member({ boardMembers, task, boardId, groupId }) {
 
 
 
-    
+
 
     function setDynamicMaxMembers(chosenMembersLength) {
         if (chosenMembersLength <= 2) return 2
@@ -85,29 +85,31 @@ export function Member({ boardMembers, task, boardId, groupId }) {
         <div className="task-members" onClick={(ev) => onTogglePicker(ev)} ref={setReferenceElement}>
             {/* {members.length > 0 && <AvatarGroup size={AvatarGroup.sizes.SMALL} maxCount={3} members={members} />} */}
 
-            {chosenMembers.length > 0 ? <AvatarGroup
-                max={setDynamicMaxMembers(chosenMembers.length)}
-                size="small"
-            >
-                {chosenMembers.map(memberId => {
-                    const member = boardMembers.find(member => member._id === memberId)
-                    return <Avatar
-                        key={member._id}
-                        size={Avatar.sizes.SMALL}
-                        type={Avatar.types.TEXT}
-                        text={utilService.getNameInitials(member.fullname)}
-                        backgroundColor={Avatar.colors.BLACKISH}
-                        ariaLabel={member.fullname}
-                    />
-                }
-                )}
-            </AvatarGroup>
+            {chosenMembers.length > 0 ?
+                <AvatarGroup
+                    max={setDynamicMaxMembers(chosenMembers.length)}
+                    size="small"
+                >
+                    {chosenMembers.map(memberId => {
+                        const member = boardMembers.find(member => member._id === memberId)
+                        return <Avatar
+                            key={member._id}
+                            size={Avatar.sizes.SMALL}
+                            type={Avatar.types.TEXT}
+                            text={utilService.getNameInitials(member.fullname)}
+                            backgroundColor={Avatar.colors.BLACKISH}
+                            ariaLabel={member.fullname}
+                        />
+                    }
+                    )}
+                </AvatarGroup>
                 :
                 <img className="person-circle" src={PersonCircle} alt="" />}
             <div className="btn-add-member" >
                 <div className="line-one"></div>
                 <div className="line-two"></div>
             </div>
+
             {isPickerOpen && <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="member-picker-modal">
                 {isAddMemberMenuOpen &&
                     <div className="chosen-members-container">
@@ -126,8 +128,6 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                     </div>}
 
                 <div className="members-search">
-                    {/* <input type="text" />
-                    <Icon iconType={Icon.type.SVG} icon={Search} /> */}
                     <SearchInput
                         id="filter-search-input"
                         className="search-input"

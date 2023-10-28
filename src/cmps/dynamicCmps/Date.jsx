@@ -99,7 +99,7 @@ export function Date({ dueDate, taskId, boardId, groupId }) {
             {/* //If there is no date show this on hover */}
             {!dueDate && <div className="no-date-container" >
 
-                <div className="btn-add-member">
+                <div className="btn-add-date">
                     <div className="line-one"></div>
                     <div className="line-two"></div>
                 </div>

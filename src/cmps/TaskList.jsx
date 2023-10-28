@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useCallback, useRef, useState, useEffect } from "react"
-import { MenuButton, Menu, MenuItem, Tooltip } from "monday-ui-react-core"
+import { MenuButton, Menu, MenuItem, Tooltip, Icon } from "monday-ui-react-core"
 
 import { Checkbox, EditableHeading, Modal, ModalContent, ModalFooterButtons, ModalHeader } from "monday-ui-react-core"
 import { Date } from "./dynamicCmps/Date"
 import { Member } from "./dynamicCmps/Member"
 import { Side } from "./dynamicCmps/Side"
 import { TaskStatus } from "./dynamicCmps/TaskStatus"
-import { Delete, Edit, Duplicate } from "monday-ui-react-core/icons"
+import { Delete, Edit, Duplicate, Add } from "monday-ui-react-core/icons"
 
 import { addTask, removeTask, updateTask, duplicatedTask, updateBoard } from "../store/actions/board.action"
 import { boardService } from "../services/board.service.local"
@@ -251,12 +251,32 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
     }
 
     function getProgressOrder() {
-        let progress = currBoard.cmpsOrder.map((cmp) => {
+        let progress = cmpsOrder.map((cmp) => {
             if (cmp === 'status' || cmp === 'priority' || cmp === 'dueDate' || cmp === 'timeline' || cmp === 'members' || cmp === 'files') return cmp
         })
         return progress.filter(item => item !== undefined)
     }
 
+    function getDynGridTemplateCols() {
+        let columsLength = getProgressOrder().length
+
+        if (columsLength > 0) {
+            return `40px 480px repeat(${columsLength}, 140px) 1fr`
+        } else {
+            return '40px 480px 1fr'
+        }
+    }
+
+    function getDynTaskColsLength() {
+        let columsLength = getProgressOrder().length
+
+        if (columsLength > 0) {
+            return ['40px', '480px', ...Array(columsLength).fill('140px'), '1fr']
+        } else {
+            return ['40px', '480px', '1fr']
+        }
+
+    }
 
     return <div className={"task-list-container " + dynCollapseGroupClass}>
 
@@ -264,6 +284,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
             {(provided) => (
                 <section
                     className={"header-title-container group-grid " + dynCollapseGroupClass}
+                    style={{ gridTemplateColumns: getDynGridTemplateCols() }}
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                 >
@@ -309,6 +330,10 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                         )
                     })}
                     {provided.placeholder}
+                    <div
+                    className={"header-title last-col " + dynCollapseGroupClass}>
+                        <Icon icon={Add}  className="plus-icon"/>
+                    </div>
                 </section>
             )}
         </Droppable>
@@ -327,16 +352,18 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                                     <section className="task-list group-grid" key={task.id}
                                         ref={provided.innerRef}
                                         {...provided.draggableProps}
-                                        {...provided.dragHandleProps}>
+                                        {...provided.dragHandleProps}
+                                    >
                                         {renderMenuButton(task.id)}
                                         {cmpsOrder.map((cmp, idx) =>
-                                            <section className="task-item" key={idx}>
+                                            <section className="task-item" key={idx} style={{ width: getDynTaskColsLength()[idx] }}>
                                                 {renderDynamicCmp(cmp, task, labels, priorities)}
                                             </section>
                                         )}
-                                    </section >
+                                    </section>
                                 )}
                             </Draggable>
+
                         )
                     })}
                     {provided.placeholder}
@@ -344,7 +371,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
             )}
         </Droppable >
 
-        {showGroup && <section className={"task-list-add group-grid " + (isTypingNewTask ? 'typing' : '')}>
+        {showGroup && <section className={"task-list-add group-grid " + (isTypingNewTask ? 'typing' : '')} style={{ gridTemplateColumns: getDynGridTemplateCols() }}>
 
             <div className="task-list-add-side">
                 <div className="color-indicator"
@@ -374,7 +401,8 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
         </section>}
 
 
-        <section className={"task-list-summary-wrapper group-grid " + dynCollapseGroupClass}>
+        <section className={"task-list-summary-wrapper group-grid " + dynCollapseGroupClass}
+            style={{ gridTemplateColumns: getDynGridTemplateCols() }}>
 
             <div className={"task-list-summary-emptycell-left " + dynCollapseGroupClass}>
                 {!showGroup && <div className="color-indicator"

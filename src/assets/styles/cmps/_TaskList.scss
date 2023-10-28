@@ -10,7 +10,9 @@
 
   .group-grid {
     display: grid;
-    grid-template-columns: 40px 480px 140px 140px 140px 140px 140px 140px 1fr;
+    // grid-template-columns: 40px 480px 140px 140px 140px 140px 140px 140px 1fr;
+    // grid-template-columns: 40px 480px repeat(auto-fill, minmax(140px, 1fr));
+
     justify-content: start;
     align-content: center;
     // border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
@@ -43,6 +45,23 @@
       padding: var(--spacing-small);
       padding-top: 10px;
       padding-bottom: 10px;
+
+      &.last-col {
+        border-right: none;
+        padding-block: 8px;
+
+        &.collapse-group {
+          .plus-icon {
+            display: none;
+          }
+        }
+
+        .plus-icon {
+          width: 18px;
+          height: 18px;
+          cursor: default;
+        }
+      }
     }
 
 

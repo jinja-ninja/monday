@@ -13,15 +13,28 @@ export const ADD_SELECTED_TASK = 'ADD_SELECTED_TASK'
 export const REMOVE_SELECTED_TASK = 'REMOVE_SELECTED_TASK'
 export const REMOVE_SELECTED_TASKS = 'REMOVE_SELECTED_TASKS'
 
+export const SET_COLUMNS_STATE = 'SET_COLUMNS_STATE'
+export const UPDATE_COLUMNS_STATE = 'UPDATE_COLUMNS_STATE'
+
 const initialState = {
     boards: [],
     board: null,
-    selectedTasks: []
+    selectedTasks: [],
+    columnsState: [
+        { name: "Members", isChecked: true },
+        { name: "Status", isChecked: true },
+        { name: "Priority", isChecked: true },
+        { name: "DueDate", isChecked: true },
+        { name: "Timeline", isChecked: true },
+        { name: "Files", isChecked: true }
+    ]
+
 }
 
 export function boardReducer(state = initialState, action) {
     let newBoards
     let newSelectedTasks
+    let newColumnsState
     switch (action.type) {
         case SET_BOARD:
             return { ...state, board: action.board }
@@ -98,6 +111,15 @@ export function boardReducer(state = initialState, action) {
         case REMOVE_SELECTED_TASKS: {
             newSelectedTasks = state.selectedTasks.filter(taskId => !action.selectedTasks.includes(taskId))
             return { ...state, selectedTasks: newSelectedTasks }
+        }
+
+        case SET_COLUMNS_STATE: {
+            return { ...state, columnsState: action.columnsState }
+        }
+
+        case UPDATE_COLUMNS_STATE: {
+            newColumnsState = state.columnsState.map(col => (col.name === action.updatedColumn.name ? action.updatedColumn : col))
+            return { ...state, columnsState: newColumnsState }
         }
 
         default:
