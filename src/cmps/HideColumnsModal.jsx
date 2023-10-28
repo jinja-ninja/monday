@@ -1,14 +1,10 @@
 import { Checkbox, Icon, Search as SearchInput } from "monday-ui-react-core";
 import { Search, Calendar, PersonRound, Status, Timeline, File } from "monday-ui-react-core/icons"
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { UPDATE_COLUMNS_STATE } from "../store/reducers/board.reducer";
 
-export function HideColumnsModal({ setHiddenColumns, hiddenColumns }) {
-    // export function HideColumnsModal({ setHiddenColumns, hiddenColumns ,columnsStates}) {
-
-    // const [columnsCheckedState, setColumnsCheckedState] = useState(columnsStates)
+export function HideColumnsModal({ hiddenColumns }) {
     const columnsState = useSelector(state => state.boardModule.columnsState)
     const dispatch = useDispatch()
 
@@ -21,7 +17,6 @@ export function HideColumnsModal({ setHiddenColumns, hiddenColumns }) {
         else if (columnName === "Files") return <Icon icon={File} className="column-icon" />
     }
 
-   
     function setIsColumnChecked(ev, column) {
         const newCheckedState = ev.target.checked;
         dispatch({ type: UPDATE_COLUMNS_STATE, updatedColumn: { name: column.name, isChecked: newCheckedState } })
