@@ -3,6 +3,7 @@
   // padding-left: 38px;
   display: grid;
   grid-template-columns: 38px 1fr;
+  // width: max-content;
 
   .side-spacing-div {
     grid-column: 1/2;
@@ -52,7 +53,7 @@
 
   .collapsible-header-wrapper.collapse-group {
     background-color: transparent;
-    max-width: max-content;
+    width: 100%;
     top: 0;
   }
 

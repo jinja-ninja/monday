@@ -26,7 +26,6 @@
   .header-title-container {
     position: sticky;
     top: 243px;
-    left: 38px;
     z-index: 5;
     background-color: var(--primary-background-color);
 
@@ -36,7 +35,13 @@
     border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
     border-image: linear-gradient(to right, transparent 8px, var(--ui-border-color) 0) 1;
 
-    .header-title.collapse-group {
+    .header-title-side-wrapper {
+      position: sticky;
+      left: 38px;
+      z-index: 1;
+    }
+
+    .header-title &.collapse-group {
       padding-block: 5px;
     }
 
@@ -247,13 +252,17 @@
 
       width: 100%;
       height: 100%;
-      opacity: 0.6;
+
+      position: sticky;
+      left: 38px;
+      z-index: 1;
 
       .color-indicator {
         width: 7px;
         height: 37px;
         // height: calc(100% + 1px);
         border-radius: 0 0 0 var(--border-radius-small);
+
       }
 
 
