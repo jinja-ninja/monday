@@ -8,7 +8,7 @@
   .side-spacing-div {
     grid-column: 1/2;
     grid-row: 1/-1;
-    position: sticky;
+    position: fixed;
     left: 0;
   }
 

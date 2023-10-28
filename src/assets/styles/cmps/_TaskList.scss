@@ -41,8 +41,11 @@
       z-index: 1;
     }
 
-    .header-title &.collapse-group {
-      padding-block: 5px;
+    .header-title {
+
+      &.collapse-group {
+        padding-block: 5px;
+      }
     }
 
     .header-title {
