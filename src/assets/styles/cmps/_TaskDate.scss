@@ -19,12 +19,75 @@
         position: relative;
         cursor: text;
 
+        .date-indication {
+            position: absolute;
+            left: 3px;
+            top: 50%;
+            transform: translateY(-50%);
+
+            .icon {
+                border-radius: 50%;
+                width: 16px;
+                height: 16px;
+                color: white;
+                cursor: text;
+            }
+
+            .done-icon {
+                background-color: var(--positive-color);
+
+            }
+
+            .not-done-icon {
+                background-color: rgb(93, 99, 135);
+
+                &::before {
+                    content: "";
+                    border-left: 6px solid transparent;
+                    border-right: 6px solid transparent;
+                    border-bottom: 11px solid white;
+                    position: absolute;
+                    bottom: 50%;
+                    left: 50%;
+                    transform: rotate(100deg);
+                }
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    border: 1px solid rgb(93, 99, 135);
+                    /* Adjust the border size as needed */
+                    width: 14px;
+                    /* Adjust the inner border width as needed */
+                    height: 14px;
+                    /* Adjust the inner border height as needed */
+                    border-radius: 50%;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 1;
+                    /* Ensure the inner border is displayed above the before triangle */
+                }
+            }
+
+
+        }
+
         .date-text {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 13px;
+
+            &.done {
+                text-decoration: line-through;
+                text-decoration-color: black;
+                /* Set the color */
+                text-decoration-thickness: 1px;
+                /* Set the thickness in pixels */
+            }
+
         }
 
         &:hover {

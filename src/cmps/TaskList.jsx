@@ -3,7 +3,7 @@ import { useCallback, useRef, useState, useEffect } from "react"
 import { MenuButton, Menu, MenuItem, Tooltip, Icon } from "monday-ui-react-core"
 
 import { Checkbox, EditableHeading, Modal, ModalContent, ModalFooterButtons, ModalHeader } from "monday-ui-react-core"
-import { Date } from "./dynamicCmps/Date"
+import { DueDate } from "./dynamicCmps/DueDate"
 import { Member } from "./dynamicCmps/Member"
 import { Side } from "./dynamicCmps/Side"
 import { TaskStatus } from "./dynamicCmps/TaskStatus"
@@ -225,11 +225,12 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     groupId={groupId}
                 />
             case "dueDate":
-                return <Date
+                return <DueDate
                     dueDate={task[cmp]}
                     boardId={boardId}
                     groupId={groupId}
                     taskId={task.id}
+                    status={task.status}
                 />
             case "timeline":
                 return <Timeline

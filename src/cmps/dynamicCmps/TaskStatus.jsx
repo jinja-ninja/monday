@@ -86,6 +86,7 @@ export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
         callback: onClickOutsideLabels
     })
 
+
     return (
         <div className="task-status" onClick={() => setIsMenuOpen(prevState => !prevState)}>
             <Dialog modifiers={[{

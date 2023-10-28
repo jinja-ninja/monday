@@ -1,3 +1,14 @@
+.hover-side-bar-container {
+
+    &.hovered {
+        position: fixed;
+        z-index: 20;
+        top: 48px;
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, .2);
+
+    }
+}
+
 .side-bar-container {
     display: flex;
     flex-direction: column;
@@ -26,6 +37,7 @@
         padding: 12px 4px 12px 12px;
         background-color: var(--allgrey-background-color);
         cursor: pointer;
+
 
         &:hover {
             background-color: var(--primary-background-hover-color);

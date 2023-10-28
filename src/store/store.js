@@ -5,7 +5,7 @@ import { boardReducer } from "./reducers/board.reducer"
 
 const rootReducer = combineReducers({
     boardModule: boardReducer,
-    // userModule: userReducer,
+    userModule: userReducer,
 })
 
 

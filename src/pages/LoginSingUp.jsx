@@ -5,10 +5,37 @@ import LoginSignUpImg from '../assets/img/LoginSignUpImg.avif'
 
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
+import { submit } from "../store/actions/user.actions"
+import { utilService } from "../services/util.service"
+import { userService } from "../services/user.service"
 
 export function LoginSignUp() {
     const [isSignUp, setIsSignUp] = useState(false)
+    const [credentials, setCredentials] = useState(userService.getEmptyCredentials())
     const navigate = useNavigate()
+
+    function handleCredentialsChange(ev) {
+        const field = ev.target.name
+        const value = ev.target.value
+        setCredentials(credentials => ({ ...credentials, [field]: value }))
+    }
+
+    async function onSubmit(ev) {
+        ev.preventDefault()
+        try {
+            const user = await submit(isSignUp, credentials)
+            console.log('submit succeed:')
+            console.log('user:', user)
+            showSuccessMsg(`Welcome ${user.fullname}`);
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Oops, try again');
+        }
+    }
+
+    const { username, password, fullname } = credentials
+
 
     const dynLoginSingupText = isSignUp ? 'Welcome to monday.com' : 'Log in to your account'
     console.log('isSignUp:', isSignUp)
@@ -22,16 +49,16 @@ export function LoginSignUp() {
 
             <h1>{dynLoginSingupText}</h1>
             {/* <form onSubmit={onSubmit} className="input-container"> */}
-            <form className="form-container">
+            <form className="form-container" onSubmit={onSubmit}>
                 {isSignUp && (
                     <div className="flex column">
-                        <label htmlFor="fullname">Enter your full name</label>
+                        <label htmlFor="username">Enter your full name</label>
                         <input
                             type="text"
-                            name="fullname"
-                            id="fullname"
-                            // value={fullname}
-                            // onChange={handleChange}
+                            name="username"
+                            id="username"
+                            // value={username}
+                            onChange={handleCredentialsChange}
                             placeholder="e.g. Jane Doe"
                         />
                     </div>
@@ -43,7 +70,7 @@ export function LoginSignUp() {
                         id="email"
                         name="email"
                         // value={email}
-                        // onChange={handleChange}
+                        onChange={handleCredentialsChange}
                         placeholder="Example@company.com"
                     />
                 </div>
@@ -54,7 +81,7 @@ export function LoginSignUp() {
                         id="password"
                         name="password"
                         // value={password}
-                        // onChange={handleChange}
+                        onChange={handleCredentialsChange}
                         placeholder="Enter at least 8 characters"
                     />
                 </div>
@@ -148,7 +175,7 @@ export function LoginSignUp() {
 // 		}
 // 	}
 
-// 	const { fullname, email, password } = credentials
+// 	const { username, email, password } = credentials
 
 // 	return (
 // 		<section className="login">
