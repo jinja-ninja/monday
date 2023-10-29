@@ -39,8 +39,8 @@ export function MembersSummary({ group, currBoard }) {
                 {allGroupMembers.map(member => {
                     return <Avatar
                         key={member._id}
-                        size={Avatar.sizes.SMALL}
-                        type={Avatar.types.TEXT}
+                        src={member.imgUrl}
+                        type="img"
                         text={utilService.getNameInitials(member.fullname)}
                         backgroundColor={Avatar.colors.BLACKISH}
                         ariaLabel={member.fullname}
