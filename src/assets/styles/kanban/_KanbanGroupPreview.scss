@@ -1,7 +1,13 @@
-.kanban-gorup-preview {
+.kanban-group-preview {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    &:hover {
+        .group-header.btn-add-task-container {
+            opacity: 1;
+        }
+    }
 
     .group-header {
         color: white;
@@ -15,15 +21,35 @@
         font-size: rem(18px);
         // padding: 0 var(--spacing-small);
         padding: 8px;
+        &:hover {
+            .btn-add-task-container {
+                opacity: 1;
+            }
+        }
+    
 
         .btn-add-task-container {
+            opacity: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 20px;
             height: 20px;
             border-radius: 4px;
-            // background-color: var(--primary-background-hover-color);
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--primary-background-hover-color);
+
+                .btn-add-task {
+                    border-color: rgb(50, 51, 56);
+
+                    .line-one,
+                    .line-two {
+                        background-color: rgb(50, 51, 56);
+                    }
+                }
+            }
 
             .btn-add-task {
                 width: 16px;
@@ -33,12 +59,26 @@
                 justify-content: center;
                 border-radius: 50%;
                 border: 1px solid white;
-                // border: 1px solid black;
+                position: relative;
 
-                .plus-icon {
-                    // color: black;
-                    width: 18px;
-                    height: 18px;
+                .line-one {
+                    width: 2px;
+                    height: 9px;
+                    background-color: white;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                }
+
+                .line-two {
+                    width: 9px;
+                    height: 2px;
+                    background-color: white;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
                 }
             }
         }

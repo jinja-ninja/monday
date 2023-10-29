@@ -31,18 +31,7 @@ export function KanbanTask({ task, statusName, getLabelColor }) {
         if (taskFromService.comments.length > 0) setCommentsLength(task.comments.length)
     }
 
-    // async function onAddTask(task) {
-    //     try {
-    //         const newTask = boardService.getEmptyTask()
-    //         newTask.title = task
-    //         await addTask(boardId, groupId, newTask)
-    //         setNumOfTasks(group.tasks.length + 1)
-    //         showSuccessMsg(`Task added ${newTask.id}`)
-    //     } catch (err) {
-    //         showErrorMsg('Cannot add task')
-    //     }
-    // }
-
+   
     async function onRemoveTask(taskId) {
         try {
             await removeTask(currBoard._id, task.groupId, taskId)

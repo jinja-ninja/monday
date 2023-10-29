@@ -1,4 +1,4 @@
-import { Icon } from "monday-ui-react-core"
+import { Icon, Text } from "monday-ui-react-core"
 import { Add, Calendar, Delete, Favorite, Invite, NavigationChevronRight, Person, Status, TextCopy, Time, Timeline, Update } from "monday-ui-react-core/icons"
 import { utilService } from "../services/util.service"
 import { ActivityStatus } from "./dynamicActivityCmps/ActivityStatus"
@@ -50,7 +50,9 @@ export function ActivityPreview({ activity }) {
             <img src={activity.byMember.imgUrl} alt="" />
         </div>
 
-        <div className="title">{activity.task?.title || activity.group?.title || currBoard.title}</div>
+        <Text className="title" ellipsis>
+            {activity.task?.title || activity.group?.title || currBoard.title}
+        </Text>
 
         <div className="activity-type">
             {dynIcon(activity.action.type)}

@@ -1,4 +1,4 @@
-import { Icon } from "monday-ui-react-core";
+import { Icon, Text } from "monday-ui-react-core";
 import { NavigationChevronRight } from "monday-ui-react-core/icons";
 import { utilService } from "../../services/util.service";
 
@@ -31,7 +31,9 @@ export function ActivityStatus({ type, fromStatus, toStatus }) {
                 color: fromStatus.color ? 'white' : 'unset'
             }}
         >
-            {getTitle(type, fromStatus.title)}
+            <Text ellipsis style={{color: fromStatus.color ? 'white' : 'unset'}}>
+                {getTitle(type, fromStatus.title)}
+            </Text>
         </div>
         <Icon icon={NavigationChevronRight} />
         <div
@@ -41,7 +43,9 @@ export function ActivityStatus({ type, fromStatus, toStatus }) {
                 color: toStatus.color ? 'white' : 'unset'
             }}
         >
-            {getTitle(type, toStatus.title)}
+            <Text ellipsis style={{color: toStatus.color ? 'white' : 'unset'}}>
+                {getTitle(type, toStatus.title)}
+            </Text>
         </div>
     </>
 }
