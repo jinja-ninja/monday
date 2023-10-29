@@ -10,6 +10,7 @@ export const boardService = {
     save,
     remove,
     // getEmptyBoard,
+    // getBoardMembers,
     getNewBoard,
     duplicateBoard,
     addNewGroup,
@@ -89,6 +90,8 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
 async function query() {
     return await storageService.query(STORAGE_KEY)
 }
+
+
 
 async function getBoardById(boardId, filterBy = { txt: '', person: null }) {
     let board = await storageService.get(STORAGE_KEY, boardId)

@@ -336,8 +336,8 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     })}
                     {provided.placeholder}
                     <div
-                    className={"header-title last-col " + dynCollapseGroupClass}>
-                        <Icon icon={Add}  className="plus-icon"/>
+                        className={"header-title last-col " + dynCollapseGroupClass}>
+                        <Icon icon={Add} className="plus-icon" />
                     </div>
                 </section>
             )}
