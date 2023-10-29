@@ -14,7 +14,8 @@
         border-top-left-radius: var(--border-radius-medium);
         border-top-right-radius: var(--border-radius-medium);
         font-size: rem(18px);
-        padding: 0 var(--spacing-small);
+        // padding: 0 var(--spacing-small);
+        padding: 8px;
 
         .btn-add-task-container {
             display: flex;
@@ -52,10 +53,10 @@
         justify-content: start;
         gap: var(--spacing-small);
         min-height: 570px;
-        overflow-x: hidden;
+        // overflow-x: hidden;
         overflow-y: auto;
         position: relative;
-        padding: var(--spacing-xs) var(--spacing-small) var(--spacing-medium) 12px;
+        padding: var(--spacing-xs) var(--spacing-small) var(--spacing-medium) var(--spacing-xs);
         background: var(--allgrey-background-color);
         border-bottom-right-radius: var(--border-radius-medium);
         border-bottom-left-radius: var(--border-radius-medium);

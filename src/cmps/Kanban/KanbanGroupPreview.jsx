@@ -25,7 +25,7 @@ export function KanbanGroupPreview({ group, labels }) {
 
             <div className="kanban-tasks-container">
                 {group.tasks.map(task => {
-                    return <KanbanTask task={task} groupId={group.id} key={task.id} />
+                    return <KanbanTask task={task} groupId={group.id} key={task.id} statusName={group.name} getLabelColor={getLabelColor}/>
                 })}
             </div>
 

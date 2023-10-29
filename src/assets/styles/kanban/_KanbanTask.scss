@@ -48,5 +48,56 @@
         }
     }
 
-    .task-body {}
+    .task-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+        padding: 8px;
+
+        .priorities-row-container,
+        .date-row-container,
+        .person-row-container,
+        .timeline-row-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 220px;
+            height: 34px;
+
+            .priority-title,
+            .date-title,
+            .person-title,
+            .timeline-title {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: .3rem;
+            }
+
+            .task-status,
+            .task-date,
+            .task-members,
+            .task-timeline {
+                width: 140px;
+                height: 34px;
+                background-color: var(--color-border_light_gray);
+
+                .timeline-container {
+                    width: 120px;
+                    margin: 6px 10px;
+                }
+            }
+
+            .task-members {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+            }
+
+
+        }
+    }
 }
