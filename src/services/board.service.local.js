@@ -423,7 +423,10 @@ function getActivityType(key) {
         case 'memberIds':
             return 'Person'
         case 'isStarred':
-            return 'Favorite'
+        case 'style':
+            return 'Edit'
+        case 'comments':
+            return 'Comment'
 
         default:
             throw new Error('Error updating')
@@ -612,14 +615,14 @@ async function addLabel(boardId, label, type) {
     return await storageService.put(STORAGE_KEY, board)
 }
 
-async function removeLabel(boardId, labelId,type) {
+async function removeLabel(boardId, labelId, type) {
     const board = await getBoardById(boardId)
     const labelIdx = board[type].findIndex(label => label.id === labelId)
     board[type].splice(labelIdx, 1)
     return await storageService.put(STORAGE_KEY, board)
 }
 
-async function updateLabel(boardId, label,type) {
+async function updateLabel(boardId, label, type) {
     console.log('type:', type)
     const board = await getBoardById(boardId)
     const labelId = label.id

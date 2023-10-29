@@ -1,8 +1,9 @@
-import { userService } from '../../services/user.service'
+import { userService } from "../../services/user.service.js";
+import { socketService } from "../../services/socket.service.js";
 import { store } from '../store.js'
 
-import { showErrorMsg } from '../../services/event-bus.service.js';
-import { REMOVE_USER, SET_USER, SET_USERS, SET_WATCHED_USER } from '../reducers/user.reducer.js'
+import { showErrorMsg } from '../../services/event-bus.service.js'
+import { REMOVE_USER, SET_USER, SET_USERS, SET_WATCHED_USER } from "../reducers/user.reducer.js";
 
 export async function loadUsers() {
     try {
@@ -10,7 +11,6 @@ export async function loadUsers() {
         store.dispatch({ type: SET_USERS, users })
     } catch (err) {
         console.log('UserActions: err in loadUsers', err)
-    } finally {
     }
 }
 
@@ -30,7 +30,7 @@ export async function login(credentials) {
             type: SET_USER,
             user
         })
-        // socketService.login(user)
+        socketService.login(user)
         return user
     } catch (err) {
         console.log('Cannot login', err)
@@ -45,7 +45,7 @@ export async function signup(credentials) {
             type: SET_USER,
             user
         })
-        // socketService.login(user)
+        socketService.login(user)
         return user
     } catch (err) {
         console.log('Cannot signup', err)
@@ -60,7 +60,7 @@ export async function logout() {
             type: SET_USER,
             user: null
         })
-        // socketService.logout()
+        socketService.logout()
     } catch (err) {
         console.log('Cannot logout', err)
         throw err
@@ -74,16 +74,5 @@ export async function loadUser(userId) {
     } catch (err) {
         showErrorMsg('Cannot load user')
         console.log('Cannot load user', err)
-    }
-}
-
-export async function submit(isSignupState, credentials) {
-    try {
-        const method = isSignupState ? 'signup' : 'login'
-        const user = await userService[method](credentials)
-        store.dispatch({ type: SET_USER, user })
-    } catch (err) {
-        console.error('Error:', err)
-        throw err
     }
 }

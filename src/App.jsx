@@ -5,7 +5,7 @@ import "monday-ui-react-core/tokens"
 import './assets/styles/main.scss'
 
 import { HomePage } from './pages/HomePage'
-import { LoginSignUp } from './pages/LoginSingup'
+import { LoginSignup } from './pages/LoginSignup'
 import { BoardDetails } from './pages/BoardDetails'
 import { TaskDetails } from './cmps/TaskDetails'
 import { PageNotFound } from './pages/PageNotFound'
@@ -33,8 +33,8 @@ export function App() {
           </Route>
 
           <Route path="/auth">
-            <Route path="login" element={<LoginSignUp />} />
-            <Route path="sign-up" element={<LoginSignUp />} />
+            <Route path="login" element={<LoginSignup />} />
+            <Route path="sign-up" element={<LoginSignup />} />
           </Route>
           {/* <Route path="*" element={<PageNotFound />} /> */}
         </Routes>

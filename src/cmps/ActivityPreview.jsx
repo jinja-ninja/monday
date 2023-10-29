@@ -1,5 +1,5 @@
 import { Icon } from "monday-ui-react-core"
-import { Add, Calendar, Delete, Favorite, Invite, NavigationChevronRight, Person, Status, TextCopy, Time, Timeline, Update } from "monday-ui-react-core/icons"
+import { Add, Calendar, Comment, Delete, Edit, Favorite, Invite, NavigationChevronRight, Person, Status, TextCopy, Time, Timeline, Update } from "monday-ui-react-core/icons"
 import { utilService } from "../services/util.service"
 import { ActivityStatus } from "./dynamicActivityCmps/ActivityStatus"
 import { useSelector } from "react-redux"
@@ -88,12 +88,16 @@ function dynIcon(type) {
             return <Icon icon={Timeline} />
         case 'Favorite':
             return <Icon icon={Favorite} />
+        case 'Comment':
+            return <Icon icon={Comment} />
         case 'Created':
             return <Icon icon={Add} />
         case 'Name':
             return <Icon icon={TextCopy} />
         case 'Update':
             return <Icon icon={Update} />
+        case 'Edit':
+            return <Icon icon={Edit} />
         case 'Deleted':
             return <Icon icon={Delete} />
         case 'Subscribed':
