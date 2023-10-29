@@ -1,6 +1,6 @@
 import { Avatar, AvatarGroup, Button, EditableHeading, IconButton, Tab, TabList, Tooltip } from "monday-ui-react-core"
 import { Favorite, Home, Info, Menu, Invite } from "monday-ui-react-core/icons"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import GalImg from '../assets/img/GalImg.png'
 import NatiImg from '../assets/img/NatiImg.png'
 import OmerImg from '../assets/img/OmerImg.png'
@@ -17,7 +17,7 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
     const [isCollapse, setIsCollapse] = useState(true)
     const [DynIsScrolledClass, setDynIsScrolledClass] = useState('')
     const [isShowInviteMembersModal, setIsShowInviteMembersModal] = useState(false)
-
+    const navigate = useNavigate()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -157,12 +157,13 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
                     className={"views-select-tab-list " + dynCollapseTabsClass}
                     size="sm">
                     <Tab
+                        onClick={() => navigate(`/board/${boardId}`)}
                         className="main-table-tab"
                         icon={Home}
                         iconSide="left">
                         Main Table
                     </Tab>
-                    <Tab >
+                    <Tab onClick={() => navigate(`/board/${boardId}/views/kanban`)}>
                         Kanban
                     </Tab>
                     <Tab >
