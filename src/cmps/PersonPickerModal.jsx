@@ -25,7 +25,7 @@ export function PersonPickerModal({ Members, setFilterBy, filterBy }) {
 
                     return (
                         <div className='person-img-container' key={member._id}>
-                            {(!member.imgUrl || member.imgUrl === 'https://www.google.com') ? (
+                            {(!member.imgUrl) ? (
                                 <div className={'test ' + dynSelectedPersonClass}>
                                     <Avatar
                                         className='avatar-img'

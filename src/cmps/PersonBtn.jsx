@@ -36,7 +36,7 @@ export function PersonBtn({ setPersonPickerOpen, personPickerOpen, setFilterBy, 
                         </Button> :
                         <div className="chosen-person-filter-btn" onClick={(ev) => onTogglePersonModal(ev)}>
                             <div className="person-img-txt-container">
-                                {(!filterBy.person.imgUrl || filterBy.person.imgUrl === 'https://www.google.com') ? (
+                                {(!filterBy.person.imgUrl) ? (
                                     <Avatar
                                         className='avatar-img'
                                         size={Avatar.sizes.SMALL}
