@@ -18,6 +18,10 @@ export function ActivityStatus({ type, fromStatus, toStatus }) {
             case 'Favorite':
                 if (!title || title === '-') return '-'
                 return 'Added'
+            case 'Comment':
+                if (!title || title === '-') return '-'
+                const idx = (title.length > 0) ? 0 : (title.length - 1)
+                return title[idx]?.txt ? title[idx].txt : '-'
             default:
                 return title
         }

@@ -423,7 +423,10 @@ function getActivityType(key) {
         case 'memberIds':
             return 'Person'
         case 'isStarred':
-            return 'Favorite'
+        case 'style':
+            return 'Edit'
+        case 'comments':
+            return 'Comment'
 
         default:
             throw new Error('Error updating')
