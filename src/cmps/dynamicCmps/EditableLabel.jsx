@@ -3,7 +3,7 @@ import { CloseSmall, Drag, HighlightColorBucket } from 'monday-ui-react-core/ico
 import { useCallback, useRef, useState } from 'react'
 import { getLabelById, updateLabel } from '../../store/actions/board.action'
 
-export function EditableLabel({ boardId, label, onRemoveLabel, onUpdateLabel }) {
+export function EditableLabel({ boardId, label, onRemoveLabel, onUpdateLabel,statusOrPriorities }) {
 
     const { id, title, color } = label
     const [showColorPicker, setShowColorPicker] = useState(false)
@@ -24,7 +24,7 @@ export function EditableLabel({ boardId, label, onRemoveLabel, onUpdateLabel }) 
         try {
             const currLabel = await getLabelById(boardId, label.id)
             const newLabel = { ...currLabel, color: color[0] }
-            updateLabel(boardId, newLabel)
+            updateLabel(boardId, newLabel,statusOrPriorities)
             setShowColorPicker(prevState => !prevState)
         }
         catch (err) {
@@ -75,7 +75,13 @@ export function EditableLabel({ boardId, label, onRemoveLabel, onUpdateLabel }) 
                     placeholder={title ? 'Add label' : 'Default Label'}
                     value={labelTitle}
                     onChange={(ev) => handleInputChange(ev)}
-                    onBlur={() => onUpdateLabel(boardId, { ...label, title: labelTitle })}
+                    onBlur={() => onUpdateLabel(boardId, { ...label, title: labelTitle },statusOrPriorities)}
+                    onKeyPress={(ev) => {
+                        if (ev.key === 'Enter') {
+                            onUpdateLabel(boardId, { ...label, title: labelTitle }, statusOrPriorities)
+                            ev.target.blur()
+                        }
+                    }}
                     onClick={(ev) => onInputClick(ev)} />
             </div>
 
