@@ -86,9 +86,9 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
 
         return await storageService.put(STORAGE_KEY, board)
     }
-    catch {
-        console.log('error')
-        throw new Error('Error updating')
+    catch (err) {
+        console.log(err)
+        throw err
     }
 
 }
@@ -612,14 +612,14 @@ async function addLabel(boardId, label, type) {
     return await storageService.put(STORAGE_KEY, board)
 }
 
-async function removeLabel(boardId, labelId,type) {
+async function removeLabel(boardId, labelId, type) {
     const board = await getBoardById(boardId)
     const labelIdx = board[type].findIndex(label => label.id === labelId)
     board[type].splice(labelIdx, 1)
     return await storageService.put(STORAGE_KEY, board)
 }
 
-async function updateLabel(boardId, label,type) {
+async function updateLabel(boardId, label, type) {
     console.log('type:', type)
     const board = await getBoardById(boardId)
     const labelId = label.id

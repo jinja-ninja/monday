@@ -1,5 +1,5 @@
 import { Icon, Tooltip, Menu, MenuButton, MenuItem } from "monday-ui-react-core"
-import { Update, Delete, Status, Calendar, PersonRound, Timeline as TimelineIcon} from "monday-ui-react-core/icons"
+import { Update, Delete, Status, Calendar, PersonRound, Timeline as TimelineIcon } from "monday-ui-react-core/icons"
 import { boardService } from "../../services/board.service.local"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
@@ -9,6 +9,7 @@ import { DueDate } from "../dynamicCmps/DueDate"
 import { Member } from "../dynamicCmps/Member"
 import { Timeline } from "../dynamicCmps/Timeline"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
+import { removeTask, updateTask } from "../../store/actions/board.action"
 
 export function KanbanTask({ task, statusName, getLabelColor }) {
     const [commentsLength, setCommentsLength] = useState(null)
@@ -21,7 +22,8 @@ export function KanbanTask({ task, statusName, getLabelColor }) {
     }, [currBoard])
 
     function openTaskDetails() {
-        navigate(`/board/${boardId}/group/${task.groupId}/task/${task.id}`)
+        navigate(`/board/${currBoard._id}/views/kanban/group/${task.groupId}/task/${task.id}`)
+
     }
 
     async function checkIfTaskHasComments() {
@@ -29,11 +31,35 @@ export function KanbanTask({ task, statusName, getLabelColor }) {
         if (taskFromService.comments.length > 0) setCommentsLength(task.comments.length)
     }
 
+    // async function onAddTask(task) {
+    //     try {
+    //         const newTask = boardService.getEmptyTask()
+    //         newTask.title = task
+    //         await addTask(boardId, groupId, newTask)
+    //         setNumOfTasks(group.tasks.length + 1)
+    //         showSuccessMsg(`Task added ${newTask.id}`)
+    //     } catch (err) {
+    //         showErrorMsg('Cannot add task')
+    //     }
+    // }
+
+    async function onRemoveTask(taskId) {
+        try {
+            await removeTask(currBoard._id, task.groupId, taskId)
+            showSuccessMsg(`Task removed ${taskId}`)
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg(`Cannot remove task ${taskId}`)
+        }
+    }
+
+
     async function onUpdateTask(taskId, data = {}) {
         try {
-            await updateTask(currBoard._id, task.groupId, task.id, data)
+            await updateTask(currBoard._id, task.groupId, taskId, data)
             showSuccessMsg(`Task updated ${taskId}`)
         } catch (err) {
+            console.log('err:', err)
             showErrorMsg(`Cannot update task ${taskId}`)
         }
     }
@@ -56,11 +82,11 @@ export function KanbanTask({ task, statusName, getLabelColor }) {
                     <Tooltip
                         content={dynCommentsTooltipTxt}
                         animationType="expand">
-                        <span>{dynCommentIcon}</span>
+                        <span onClick={() => openTaskDetails()}>{dynCommentIcon}</span>
                     </Tooltip>
                     <MenuButton closeDialogOnContentClick className="btn-board-menu" size={MenuButton.sizes.S}>
                         <Menu id="menu" size={Menu.sizes.MEDIUM}>
-                            <MenuItem onClick={() => console.log('clicked')} icon={Delete} iconType={MenuItem.iconType.SVG} title="Delete" />
+                            <MenuItem onClick={() => onRemoveTask(task.id)} icon={Delete} iconType={MenuItem.iconType.SVG} title="Delete" />
                         </Menu>
                     </MenuButton>
                 </div>
@@ -110,7 +136,7 @@ export function KanbanTask({ task, statusName, getLabelColor }) {
                         <span>Timeline</span>
                     </div>
                     <Timeline
-                        imeline={currBoard.timeline}
+                        Timeline={task.timeline}
                         boardId={currBoard._id}
                         groupId={task.groupId}
                         taskId={task.id}

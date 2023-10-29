@@ -1,18 +1,20 @@
 import { Avatar, EditableHeading, IconButton, Tab, TabList } from "monday-ui-react-core";
 import { Close, Home, Menu } from "monday-ui-react-core/icons"
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { updateTask } from "../store/actions/board.action";
 
 export function TaskDetailsHeader({ boardId, groupId, taskId, taskTitle, setCurrTab }) {
     const [taskTitleValue, setTaskTitleValue] = useState(taskTitle)
     const navigate = useNavigate()
+    // const params = useParams()
 
     function onRenameTask() {
         if (taskTitle !== taskTitleValue) {
             updateTask(boardId, groupId, taskId, { key: 'title', value: taskTitleValue })
         }
     }
+    // const dynNavigateRoute = 
 
     return (
         <div className="task-details-header" >

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { Outlet, useParams } from "react-router-dom"
 import { BoardMainHeader } from "../BoardMainHeader"
 import { SideBar } from "../SideBar"
 import { UserMsg } from "../UserMsg"
@@ -94,9 +94,11 @@ export function KanbanDetails() {
                     </Button>
                 </div>
 
-
-                <KanbanGroupList getKanbanGroups={getKanbanGroups} labels={currBoard.labels} currBoard={currBoard} />
-
+                <div className="kanban-main-container">
+                    <KanbanGroupList getKanbanGroups={getKanbanGroups} labels={currBoard.labels} currBoard={currBoard} />
+                </div>
+                
+                <Outlet />
             </div>
 
             {isBoardDesc && <BoardDescriptionModal boardTitle={currBoard.title} setIsBoardDesc={setIsBoardDesc} />}

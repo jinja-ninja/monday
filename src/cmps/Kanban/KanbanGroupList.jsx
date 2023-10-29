@@ -1,6 +1,6 @@
 import { KanbanGroupPreview } from "./KanbanGroupPreview"
 
-export function KanbanGroupList({ getKanbanGroups, labels,currBoard }) {
+export function KanbanGroupList({ getKanbanGroups, labels, currBoard }) {
     const groups = getKanbanGroups()
 
     return (

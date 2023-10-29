@@ -2,20 +2,26 @@
     display: grid;
     grid-auto-flow: column;
     align-items: center;
-
+    height: 56px;
+    border-bottom: 1px solid var(--ui-border-color);
     padding: .5em;
+    padding-inline-end: 0;
+    padding-inline-start: 2px;
+    margin-block-end: 0.2em;
+    
     gap: var(--spacing-medium);
-    grid-template-columns: 2fr 5fr 1fr 2fr;
+    grid-template-columns: 1.1fr 2fr 0.6fr 2.25fr;
 
     .created {
         display: flex;
         align-items: center;
-        justify-content: start;
+        justify-content: space-between;
 
-        gap: var(--spacing-medium);
+        // gap: var(--spacing-medium);
 
         .created-at {
             display: flex;
+            justify-content: center;
             align-items: center;
         }
 

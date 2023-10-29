@@ -1,7 +1,6 @@
 .kanban-gorup-preview {
     display: flex;
     flex-direction: column;
-    // align-items: center;
     justify-content: center;
 
     .group-header {
@@ -54,7 +53,7 @@
         gap: var(--spacing-small);
         min-height: 570px;
         // overflow-x: hidden;
-        overflow-y: auto;
+        // overflow-y: auto;
         position: relative;
         padding: var(--spacing-xs) var(--spacing-small) var(--spacing-medium) var(--spacing-xs);
         background: var(--allgrey-background-color);
