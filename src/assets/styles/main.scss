@@ -31,9 +31,9 @@
 @import "cmps/_TaskDate";
 @import "cmps/_TaskTimeline";
 @import "cmps/_TaskFiles";
-@import 'cmps/_SideBar';
-@import 'cmps/_TaskDetails';
-@import 'cmps/_TaskDetailsHeader';
+@import "cmps/_SideBar";
+@import "cmps/_TaskDetails";
+@import "cmps/_TaskDetailsHeader";
 @import "cmps/_UserMsg";
 @import "cmps/_SelectedModal";
 @import "cmps/_BoardDescription";
@@ -43,7 +43,7 @@
 @import "cmps/_DeletedBoardPage";
 @import "cmps/_HideColumnsModal";
 @import "cmps/_ActivityPreview";
-
+@import "cmps/_MemberInvite";
 
 // //PAGES
 @import "pages/_HomePage";

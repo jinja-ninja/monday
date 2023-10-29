@@ -10,6 +10,7 @@ export const boardService = {
     save,
     remove,
     // getEmptyBoard,
+    // getBoardMembers,
     getNewBoard,
     duplicateBoard,
     addNewGroup,

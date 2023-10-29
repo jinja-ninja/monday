@@ -15,6 +15,7 @@ export function Member({ boardMembers, task, boardId, groupId }) {
 
     const [chosenMembers, setChosenMembers] = useState([])
     const [suggestedMembers, setSuggestedMembers] = useState([])
+    const [filteredMembers, setFilteredMembers] = useState([])
     const [isMembersMenuOpen, setIsMembersMenuOpen] = useState(false)
     const [isAddMemberMenuOpen, setIsAddMemberMenuOpen] = useState(true)
     const [isPickerOpen, setIsPickerOpen] = useState(false);
@@ -71,6 +72,16 @@ export function Member({ boardMembers, task, boardId, groupId }) {
             console.log('error in onDeleteChosenMember')
         }
     }
+
+    function filterMembers(ev) {
+
+        const filterBy = ev
+        const filteredMembers = boardMembers.filter(member => member.fullname.toLowerCase().includes(filterBy.toLowerCase()))
+        setFilteredMembers(filteredMembers)
+        // console.log('filteredMembers:', filteredMembers)
+    }
+
+
 
     function setDynamicMaxMembers(chosenMembersLength) {
         if (chosenMembersLength <= 2) return 2
@@ -129,6 +140,8 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                         id="filter-search-input"
                         className="search-input"
                         // onBlur={() => toggleIsSearch()}
+                        onFocus={() => setFilteredMembers(suggestedMembers)}
+                        onChange={(ev) => filterMembers(ev)}
                         autoFocus
                         debounceRate={200}
                         iconName={Search}
@@ -140,7 +153,7 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                 <div className="members-list">
                     <p>Suggested People</p>
                     {console.log('suggestedMembers in return statement:', suggestedMembers)}
-                    {suggestedMembers.map(member => {
+                    {filteredMembers.map(member => {
                         if (chosenMembers.includes(member._id)) return
                         return <div className="member" key={member._id} onClick={() => assignMemberToTask(member._id, task)}>
                             <Avatar size={Avatar.sizes.SMALL}
