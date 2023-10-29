@@ -1,5 +1,5 @@
 import { Icon } from "monday-ui-react-core"
-import { Add, Calendar, Delete, Invite, NavigationChevronRight, Person, Status, TextCopy, Time, Update } from "monday-ui-react-core/icons"
+import { Add, Calendar, Delete, Invite, NavigationChevronRight, Person, Status, TextCopy, Time, Timeline, Update } from "monday-ui-react-core/icons"
 import { utilService } from "../services/util.service"
 import { ActivityStatus } from "./dynamicActivityCmps/ActivityStatus"
 import { useSelector } from "react-redux"
@@ -9,6 +9,7 @@ export function ActivityPreview({ activity }) {
     const currBoard = useSelector(state => state.boardModule.board)
     const labels = currBoard.labels
     const priorities = currBoard.priorities
+    const members = currBoard.members
 
     function getLabelColor(labelTitle) {
         const label = labels.find(label => label.title === labelTitle)
@@ -22,7 +23,11 @@ export function ActivityPreview({ activity }) {
         return priority.color
     }
 
-    console.log('activity:', activity)
+    function getMemberInitials(memberId) {
+        const member = members.find(member => member._id === memberId)
+        if (!member) return null
+        return utilService.getNameInitials(member.fullname)
+    }
 
     return <li className="activity-list-item">
 
@@ -44,8 +49,17 @@ export function ActivityPreview({ activity }) {
 
         <div className="action-description">
             <ActivityStatus
-                fromStatus={{ title: activity.action.from, color: getLabelColor(activity.action.from) }}
-                toStatus={{ title: activity.action.to, color: getLabelColor(activity.action.to) }}
+                type={activity.action.type}
+                fromStatus={{
+                    title: activity.action.from,
+                    color: getLabelColor(activity.action.from),
+                    // initials: getMemberInitials(activity.action.from)
+                }}
+                toStatus={{
+                    title: activity.action.to,
+                    color: getLabelColor(activity.action.to),
+                    // initials: getMemberInitials(activity.action.to)
+                }}
             />
         </div>
 
@@ -62,6 +76,8 @@ function dynIcon(cmp) {
             return <Icon icon={Status} />
         case 'Date':
             return <Icon icon={Calendar} />
+        case 'Timeline':
+            return <Icon icon={Timeline} />
         case 'Created':
             return <Icon icon={Add} />
         case 'Name':

@@ -44,7 +44,6 @@ _createBoards()
 // General Update function
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
-
         const board = await getBoardById(boardId)
         const activityType = getActivityType(key)
         let groupIdx, taskIdx, activity
@@ -128,7 +127,7 @@ async function getBoardById(boardId, filterBy = { txt: '', person: null }, sortB
         board.groups = board.groups.sort((a, b) => {
             const titleA = a.title.toLowerCase();
             const titleB = b.title.toLowerCase();
-        
+
             if (titleA < titleB) {
                 return -1
             } else if (titleA > titleB) {
@@ -137,7 +136,7 @@ async function getBoardById(boardId, filterBy = { txt: '', person: null }, sortB
                 return 0
             }
         })
-        
+
     }
 
     return board;
@@ -414,6 +413,11 @@ function getActivityType(key) {
             return 'Priority'
         case 'dueDate':
             return 'Date'
+        case 'timeline':
+            return 'Timeline'
+        case 'memberIds':
+            return 'Person'
+
         default:
             throw new Error('Error updating')
     }
