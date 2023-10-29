@@ -10,6 +10,7 @@ export const boardService = {
     save,
     remove,
     // getEmptyBoard,
+    // getBoardMembers,
     getNewBoard,
     duplicateBoard,
     addNewGroup,
@@ -605,24 +606,25 @@ async function getLabelById(boardId, labelId) {
     return label
 }
 
-async function addLabel(boardId, label) {
+async function addLabel(boardId, label, type) {
     const board = await getBoardById(boardId)
-    board.labels.push(label)
+    board[type].push(label)
     return await storageService.put(STORAGE_KEY, board)
 }
 
-async function removeLabel(boardId, labelId) {
+async function removeLabel(boardId, labelId,type) {
     const board = await getBoardById(boardId)
-    const labelIdx = board.labels.findIndex(label => label.id === labelId)
-    board.labels.splice(labelIdx, 1)
+    const labelIdx = board[type].findIndex(label => label.id === labelId)
+    board[type].splice(labelIdx, 1)
     return await storageService.put(STORAGE_KEY, board)
 }
 
-async function updateLabel(boardId, label) {
+async function updateLabel(boardId, label,type) {
+    console.log('type:', type)
     const board = await getBoardById(boardId)
     const labelId = label.id
-    const labelIdx = board.labels.findIndex(label => label.id === labelId)
-    board.labels[labelIdx] = label
+    const labelIdx = board[type].findIndex(label => label.id === labelId)
+    board[type][labelIdx] = label
     return await storageService.put(STORAGE_KEY, board)
 }
 

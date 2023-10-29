@@ -1,0 +1,17 @@
+.modal-title {
+  font-size: 24px;
+}
+.member-invite-container {
+  .member-invite-list .member-item {
+    font-family: var(--font-family);
+
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    margin-bottom: 16px;
+
+    .monday-storybook-chips_name {
+      margin-inline-start: 8px;
+    }
+  }
+}
