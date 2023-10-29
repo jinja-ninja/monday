@@ -6,19 +6,17 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 import { addLabel, removeLabel, updateLabel } from "../../store/actions/board.action"
 import { boardService } from "../../services/board.service.local"
 
-export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
+export function TaskStatus({ board, task, labels, priorites, type, onUpdateTask }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isEditLabelsOpen, setIsEditLabelsOpen] = useState(false)
     const refLabelDialog = useRef(null)
 
+    // get props priorities and lables(status) - check if(priorities){
 
- 
-// get props priorities and lables(status) - check if(priorities){
+    // }else if (labels){
 
-// }else if (labels){
-
-// }
-// and then you know what to update priorities or status
+    // }
+    // and then you know what to update priorities or status
 
     function onSetStatus(status) {
         onUpdateTask(task.id, { key: type, value: status })
