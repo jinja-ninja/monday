@@ -5,7 +5,6 @@ import { ActivityStatus } from "./dynamicActivityCmps/ActivityStatus"
 import { useSelector } from "react-redux"
 
 export function ActivityPreview({ activity }) {
-
     const currBoard = useSelector(state => state.boardModule.board)
     const labels = currBoard.labels
     const priorities = currBoard.priorities
