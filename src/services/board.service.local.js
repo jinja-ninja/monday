@@ -164,7 +164,7 @@ function getNewBoard() {
         createdBy: {
             _id: utilService.makeId(),
             fullname: "Gal Ben Natan",
-            imgUrl: "http://some-img"
+            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
         },
         style: {
             backgroundImage: ""
@@ -195,17 +195,17 @@ function getNewBoard() {
             {
                 _id: "u101",
                 fullname: "Gal Ben Natan",
-                imgUrl: "https://www.google.com"
+                imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
             },
             {
                 _id: "u102",
                 fullname: "Omer Vered",
-                imgUrl: "https://www.google.com"
+                imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619996/OmerImg_svk1xe.png"
             },
             {
                 _id: "u103",
                 fullname: "Nati Feldbaum",
-                imgUrl: "https://www.google.com"
+                imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698620005/NatiImg_qvxcqb.png"
             }
         ],
         groups: [
@@ -637,7 +637,7 @@ function createNewComment(newCommentText) {
         byMember: {
             _id: "u101",
             fullname: "Gal Ben Natan",
-            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
         }
     }
 
@@ -759,17 +759,17 @@ function _createBoards() {
                         {
                             _id: "u101",
                             fullname: "Gal Ben Natan",
-                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                         },
                         {
                             _id: "u102",
                             fullname: "Omer Vered",
-                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619996/OmerImg_svk1xe.png"
                         },
                         {
                             _id: "u103",
                             fullname: "Nati Feldbaum",
-                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698620005/NatiImg_qvxcqb.png"
                         }
                     ],
                     groups: [
@@ -828,7 +828,7 @@ function _createBoards() {
                                             byMember: {
                                                 _id: "u101",
                                                 fullname: "Gal Ben Natan",
-                                                imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                                                imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                                             }
                                         }
                                     ],
@@ -851,7 +851,7 @@ function _createBoards() {
                                         _id: "u101",
                                         username: "Gal",
                                         fullname: "Gal Ben Natan",
-                                        imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                                        imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                                     },
                                     style: {
                                         backgroundColor: "done-green"
@@ -872,7 +872,7 @@ function _createBoards() {
                                             byMember: {
                                                 _id: "u101",
                                                 fullname: "Gal Ben Natan",
-                                                imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                                                imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                                             }
                                         }
                                     ],
@@ -895,7 +895,7 @@ function _createBoards() {
                                         _id: "u101",
                                         username: "Gal",
                                         fullname: "Gal Ben Natan",
-                                        imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                                        imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                                     },
                                     style: {
                                         backgroundColor: "done-green"
@@ -905,53 +905,7 @@ function _createBoards() {
                             style: "bright-blue"
                         }
                     ],
-                    activities: [
-                        {
-                            id: 'a101',
-                            createdAt: 1698500764637,
-                            byMember: {
-                                _id: 'u101',
-                                fullname: 'Default User',
-                                imgUrl: 'https://cdn1.monday.com/dapulse_default_photo.png'
-                            },
-                            action: { type: 'Update', from: '', to: 'Replace logo' },
-                            group: {
-                                id: "g101",
-                                title: "Group 1",
-                                archivedAt: 1589983468418,
-                                tasks: [
-                                    {
-                                        id: "c101",
-                                        title: "Replace logo",
-                                        comments: [],
-                                        priority: "Medium",
-                                        status: "Done",
-                                        dueDate: undefined,
-                                        memberIds: []
-                                    },
-                                    {
-                                        id: "c102",
-                                        title: "Add Samples",
-                                        comments: [],
-                                        priority: "Low",
-                                        status: "Progress",
-                                        dueDate: undefined,
-                                        memberIds: []
-                                    }
-                                ],
-                                style: "grass_green"
-                            },
-                            task: {
-                                id: "c101",
-                                title: "Replace logo",
-                                comments: [],
-                                priority: "Medium",
-                                status: "Done",
-                                dueDate: undefined,
-                                memberIds: []
-                            },
-                        }
-                    ],
+                    activities: [],
                     priorities: [
 
                         {
@@ -1031,17 +985,17 @@ function _createBoards() {
                         {
                             _id: "u101",
                             fullname: "Gal Ben Natan",
-                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                         },
                         {
                             _id: "u102",
                             fullname: "Omer Vered",
-                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619996/OmerImg_svk1xe.png"
                         },
                         {
                             _id: "u103",
                             fullname: "Nati Feldbaum",
-                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698620005/NatiImg_qvxcqb.png"
                         }
                     ],
                     groups: [
@@ -1129,27 +1083,7 @@ function _createBoards() {
                             style: "dark_indigo"
                         }
                     ],
-                    activities: [
-                        {
-                            id: "a102",
-                            txt: "Added Task",
-                            createdAt: 1698500721637,
-                            byMember: {
-                                _id: "u102",
-                                fullname: "Joe Johnson",
-                                imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
-                            },
-                            group: {
-                                id: "g103",
-                                title: "Critical Tasks"
-                            },
-                            task: {
-                                id: "c105",
-                                title: "Design Layout",
-                                comments: []
-                            }
-                        }
-                    ],
+                    activities: [],
                     priorities: [
 
                         {
@@ -1229,17 +1163,17 @@ function _createBoards() {
                         {
                             _id: "u101",
                             fullname: "Gal Ben Natan",
-                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                         },
                         {
                             _id: "u102",
                             fullname: "Omer Vered",
-                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619996/OmerImg_svk1xe.png"
                         },
                         {
                             _id: "u103",
                             fullname: "Nati Feldbaum",
-                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698620005/NatiImg_qvxcqb.png"
                         }
                     ],
                     groups: [
@@ -1354,27 +1288,7 @@ function _createBoards() {
                             style: "bright-green"
                         }
                     ],
-                    activities: [
-                        {
-                            id: "a103",
-                            txt: "Updated Task",
-                            createdAt: 1698500524637,
-                            byMember: {
-                                _id: "u104",
-                                fullname: "Liam Nelson",
-                                imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
-                            },
-                            group: {
-                                id: "g105",
-                                title: "Important Tasks"
-                            },
-                            task: {
-                                id: "c109",
-                                title: "Analyze Data",
-                                comments: []
-                            }
-                        }
-                    ],
+                    activities: [],
                     priorities: [
 
                         {
@@ -1454,17 +1368,17 @@ function _createBoards() {
                         {
                             _id: "u101",
                             fullname: "Gal Ben Natan",
-                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                         },
                         {
                             _id: "u102",
                             fullname: "Omer Vered",
-                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619996/OmerImg_svk1xe.png"
                         },
                         {
                             _id: "u103",
                             fullname: "Nati Feldbaum",
-                            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698620005/NatiImg_qvxcqb.png"
                         }
                     ],
                     groups: [
@@ -1575,27 +1489,7 @@ function _createBoards() {
                             style: "dark-blue"
                         }
                     ],
-                    activities: [
-                        {
-                            id: "a104",
-                            txt: "Added New Design",
-                            createdAt: 1698500724637,
-                            byMember: {
-                                _id: "u106",
-                                fullname: "Lucy Williams",
-                                imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
-                            },
-                            group: {
-                                id: "g107",
-                                title: "Design Updates"
-                            },
-                            task: {
-                                id: "c115",
-                                title: "Design Landing Page",
-                                comments: []
-                            }
-                        }
-                    ],
+                    activities: [],
                     priorities: [
                         {
                             id: "p100",

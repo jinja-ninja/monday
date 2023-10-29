@@ -102,8 +102,10 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                         return <Avatar
                             key={member._id}
                             size={Avatar.sizes.SMALL}
-                            type={Avatar.types.TEXT}
-                            text={utilService.getNameInitials(member.fullname)}
+                            src={member.imgUrl}
+                            type="img"
+                            // type={Avatar.types.TEXT}
+                            // text={utilService.getNameInitials(member.fullname)}
                             backgroundColor={Avatar.colors.BLACKISH}
                             ariaLabel={member.fullname}
                         />
@@ -125,7 +127,7 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                                 const member = boardMembers.find(member => member._id === memberId)
                                 return <div className="chosen-members" key={member._id} onClick={() => assignMemberToTask(member._id, task)}>
                                     <Chips
-                                        leftAvatar={'https://cdn1.monday.com/dapulse_default_photo.png'}
+                                        leftAvatar={member.imgUrl}
                                         className="chip"
                                         label={member.fullname}
                                         onDelete={() => (onDeleteChosenMember(member._id))}
@@ -156,8 +158,10 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                         if (chosenMembers.includes(member._id)) return
                         return <div className="member" key={member._id} onClick={() => assignMemberToTask(member._id, task)}>
                             <Avatar size={Avatar.sizes.SMALL}
-                                type={Avatar.types.TEXT}
-                                text={utilService.getNameInitials(member.fullname)}
+                                src={member.imgUrl}
+                                type="img"
+                                // type={Avatar.types.TEXT}
+                                // text={utilService.getNameInitials(member.fullname)}
                                 backgroundColor={Avatar.colors.BLACKISH}
                                 ariaLabel={member.fullname}
                             />
