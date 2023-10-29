@@ -1,0 +1,69 @@
+.kanban-gorup-preview {
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    justify-content: center;
+
+    .group-header {
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 40px;
+        width: 260px;
+        border-top-left-radius: var(--border-radius-medium);
+        border-top-right-radius: var(--border-radius-medium);
+        font-size: rem(18px);
+        padding: 0 var(--spacing-small);
+
+        .btn-add-task-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            // background-color: var(--primary-background-hover-color);
+
+            .btn-add-task {
+                width: 16px;
+                height: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                border: 1px solid white;
+                // border: 1px solid black;
+
+                .plus-icon {
+                    // color: black;
+                    width: 18px;
+                    height: 18px;
+                }
+            }
+        }
+
+    }
+
+    .kanban-tasks-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        gap: var(--spacing-small);
+        min-height: 570px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        position: relative;
+        padding: var(--spacing-xs) var(--spacing-small) var(--spacing-medium) 12px;
+        background: var(--allgrey-background-color);
+        border-bottom-right-radius: var(--border-radius-medium);
+        border-bottom-left-radius: var(--border-radius-medium);
+        transition: background .2s ease-in-out, box-shadow .2s ease;
+
+        &:hover {
+            background: var(--primary-background-hover-color);
+            box-shadow: var(--box-shadow-small);
+        }
+    }
+}

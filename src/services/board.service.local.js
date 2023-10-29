@@ -83,7 +83,7 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
         return await storageService.put(STORAGE_KEY, board)
     }
     catch {
-        // console.log('error')
+        console.log('error')
         throw new Error('Error updating')
     }
 

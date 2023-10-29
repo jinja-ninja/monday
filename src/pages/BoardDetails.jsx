@@ -6,7 +6,7 @@ import { GroupList } from "../cmps/GroupList"
 import { BoardMainHeader } from "../cmps/BoardMainHeader"
 import { SideBar } from "../cmps/SideBar"
 import { Outlet, useParams } from "react-router-dom"
-import { addGroup, addTask, getBoardById, updateBoardOptimistic } from "../store/actions/board.action"
+import { addGroup, addTask, getBoardById, loadBoard, updateBoardOptimistic } from "../store/actions/board.action"
 import { useSelector } from "react-redux"
 import { UserMsg } from "../cmps/UserMsg"
 import MondayLoader from '../assets/Loader/MondayLoader.gif'
@@ -22,6 +22,7 @@ import { HideBtn } from "../cmps/HideBtn";
 import { PersonBtn } from "../cmps/PersonBtn";
 import { useDispatch } from "react-redux"
 import { SET_COLUMNS_STATE } from "../store/reducers/board.reducer"
+import { BoardActionsBtns } from "../cmps/BoardActionsBtns"
 
 export function BoardDetails() {
     const params = useParams()
@@ -45,7 +46,7 @@ export function BoardDetails() {
 
 
     useEffect(() => {
-        loadBoard()
+        loadBoard(params.boardId, filterBy, sortBy)
     }, [params.boardId, filterBy, sortBy])
 
     useEffect(() => {
@@ -63,9 +64,9 @@ export function BoardDetails() {
 
     }, [params.boardId])
 
-    async function loadBoard() {
-        await getBoardById(params.boardId, filterBy, sortBy)
-    }
+    // async function loadBoard() {
+    //     await getBoardById(params.boardId, filterBy, sortBy)
+    // }
 
     function toggleIsSearch() {
         if (filterBy.txt) return
@@ -187,7 +188,24 @@ export function BoardDetails() {
                 <>
                     <BoardDetailsHeader isStarred={currBoard.isStarred} title={currBoard.title} boardId={currBoard._id} setIsBoardDesc={setIsBoardDesc} />
 
-                    <div className="board-details-actions">
+                    <BoardActionsBtns
+                        currBoard={currBoard}
+                        addTaskToFirstGroup={addTaskToFirstGroup}
+                        addGroup={addGroup}
+                        setPersonPickerOpen={setPersonPickerOpen}
+                        onTogglePersonModal={onTogglePersonModal}
+                        onRemovePersonFilter={onRemovePersonFilter}
+                        personPickerOpen={personPickerOpen}
+                        dynSearchBtnInput={dynSearchBtnInput}
+                        setFilterBy={setFilterBy}
+                        filterBy={filterBy}
+                        sortBy={sortBy}
+                        setSortBy={setSortBy}
+                        hidePickerOpen={hidePickerOpen}
+                        onToggleHideColumnsModal={onToggleHideColumnsModal}
+                        hiddenColumns={hiddenColumns} 
+                        />
+                    {/* <div className="board-details-actions">
 
                         <SplitButton shouldCloseOnClickInsideDialog onClick={() => addTaskToFirstGroup()} size="small" secondaryDialogContent={<SplitButtonMenu _id="split-menu">
                             <MenuItem onClick={() => addGroup(currBoard._id)} icon={Group} title="New group of items" />
@@ -216,7 +234,7 @@ export function BoardDetails() {
                         </SplitButton>
 
                         <Button
-                        className={"btn-sortby " + (sortBy ? 'sorted' : '')}
+                            className={"btn-sortby " + (sortBy ? 'sorted' : '')}
                             onClick={() => setSortBy(!sortBy)}
                             leftIcon={Sort}
                             kind="tertiary"
@@ -233,7 +251,7 @@ export function BoardDetails() {
                         />
 
                         <IconButton icon={Menu} size="small" />
-                    </div>
+                    </div> */}
 
 
                     <div className="spacing-div"></div>

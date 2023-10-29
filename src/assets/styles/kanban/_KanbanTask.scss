@@ -1,0 +1,52 @@
+.kanban-task-container {
+
+    &:first-of-type {
+        margin-top: var(--spacing-small);
+    }
+
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    width: 235px;
+    border-radius: var(--border-radius-small);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, .2);
+    background-color: var(--primary-background-color);
+    color: var(--primary-text-color);
+    cursor: pointer;
+
+    .task-header {
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px;
+        flex-wrap: nowrap;
+
+        .header-btns-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+            .has-comments-container {
+                color: var(--color-basic_blue);
+                position: relative;
+
+                .comments-counter {
+                    color: var(--text-color-on-primary);
+                    background-color: var(--color-basic_blue);
+                    position: absolute;
+                    left: 12px;
+                    top: 10px;
+                    line-height: 9px;
+                    font-size: 10px;
+                    border-radius: 10px;
+                    text-align: center;
+                    padding: 2px 4px;
+                }
+            }
+        }
+    }
+
+    .task-body {}
+}

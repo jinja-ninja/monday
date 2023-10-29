@@ -14,6 +14,11 @@ export async function loadBoards() {
     }
 }
 
+//Load currentBoard
+export async function loadBoard(boardId, filterBy, sortBy) {
+    await getBoardById(boardId, filterBy, sortBy)
+}
+
 export async function getBoardById(boardId, filterBy, sortBy) {
     try {
         const board = await boardService.getBoardById(boardId, filterBy, sortBy)
@@ -48,7 +53,7 @@ export async function toggleBoardFavorite(boardId, isCurrentBoard) {
         }
         store.dispatch({ type: UPDATE_BOARDS, board: board })
         return await boardService.update('board', boardId, null, null, { key: 'isStarred', value: starredState })
-    } catch (error) {
+    } catch (err) {
         console.log('Board Actions: err in Adding Board', err)
         throw err
     }

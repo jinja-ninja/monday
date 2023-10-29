@@ -45,6 +45,12 @@
 @import "cmps/_ActivityPreview";
 @import "cmps/_MemberInvite";
 
+//Kanban
+@import "kanban/_KanbanDetails";
+@import "kanban/_KanbanGroupList";
+@import "kanban/_KanbanGroupPreview";
+@import "kanban/_KanbanTask";
+
 // //PAGES
 @import "pages/_HomePage";
 @import "pages/_LoginSingUp";
