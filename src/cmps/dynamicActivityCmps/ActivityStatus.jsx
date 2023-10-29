@@ -2,10 +2,19 @@ import { Icon } from "monday-ui-react-core";
 import { NavigationChevronRight } from "monday-ui-react-core/icons";
 import { utilService } from "../../services/util.service";
 
-export function ActivityStatus({ fromStatus, toStatus }) {
+export function ActivityStatus({ type, fromStatus, toStatus }) {
 
-    console.log('fromStatus:', fromStatus)
-    console.log('toStatus:', toStatus)
+    function getTitle(type) {
+        switch (type) {
+            case 'Date':
+                return utilService.timeStampToDate(fromStatus.title)
+            case 'People':
+
+                return utilService.getNameInitials()
+            default:
+                return fromStatus.title
+        }
+    }
 
     return <>
         <div
@@ -28,10 +37,7 @@ export function ActivityStatus({ fromStatus, toStatus }) {
                 color: toStatus.color ? 'white' : 'unset'
             }}
         >
-            {typeof toStatus.title === 'number'
-                ? utilService.timeStampToDate(toStatus.title)
-                : toStatus.title
-            }
+            {getTitle(type)}
         </div>
     </>
 }

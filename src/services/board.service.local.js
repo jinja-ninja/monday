@@ -10,6 +10,7 @@ export const boardService = {
     save,
     remove,
     // getEmptyBoard,
+    // getBoardMembers,
     getNewBoard,
     duplicateBoard,
     addNewGroup,
@@ -44,7 +45,6 @@ _createBoards()
 // General Update function
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
-
         const board = await getBoardById(boardId)
         const activityType = getActivityType(key)
         let groupIdx, taskIdx, activity
@@ -414,6 +414,11 @@ function getActivityType(key) {
             return 'Priority'
         case 'dueDate':
             return 'Date'
+        case 'timeline':
+            return 'Timeline'
+        case 'memberIds':
+            return 'Person'
+
         default:
             throw new Error('Error updating')
     }
