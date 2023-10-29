@@ -1,5 +1,5 @@
 import { Icon } from "monday-ui-react-core"
-import { Add, Calendar, Delete, Invite, NavigationChevronRight, Person, Status, TextCopy, Time, Timeline, Update } from "monday-ui-react-core/icons"
+import { Add, Calendar, Delete, Favorite, Invite, NavigationChevronRight, Person, Status, TextCopy, Time, Timeline, Update } from "monday-ui-react-core/icons"
 import { utilService } from "../services/util.service"
 import { ActivityStatus } from "./dynamicActivityCmps/ActivityStatus"
 import { useSelector } from "react-redux"
@@ -17,7 +17,7 @@ export function ActivityPreview({ activity }) {
     }
 
     function getPriorityColor(priorityTitle) {
-        const priorities = priorities.find(priority => priority.title === priorityTitle)
+        const priority = priorities.find(priority => priority.title === priorityTitle)
         if (!priority) return null
         return priority.color
     }
@@ -26,6 +26,17 @@ export function ActivityPreview({ activity }) {
         const member = members.find(member => member._id === memberId)
         if (!member) return null
         return utilService.getNameInitials(member.fullname)
+    }
+
+    function getTitle(prevTitle) {
+        if (activity.action.type === 'Person') return prevTitle.map(memberId => getMemberInitials(memberId))
+        else return prevTitle
+    }
+
+    function getColor(type, title) {
+        if (type === 'Status') return getLabelColor(title)
+        else if (type === 'Priority') return getPriorityColor(title)
+        else return null
     }
 
     return <li className="activity-list-item">
@@ -39,7 +50,7 @@ export function ActivityPreview({ activity }) {
             <img src={activity.byMember.imgUrl} alt="" />
         </div>
 
-        <div className="title">{activity.task?.title || activity.group.title}</div>
+        <div className="title">{activity.task?.title || activity.group?.title || currBoard.title}</div>
 
         <div className="activity-type">
             {dynIcon(activity.action.type)}
@@ -50,14 +61,12 @@ export function ActivityPreview({ activity }) {
             <ActivityStatus
                 type={activity.action.type}
                 fromStatus={{
-                    title: activity.action.from,
-                    color: getLabelColor(activity.action.from),
-                    // initials: getMemberInitials(activity.action.from)
+                    title: getTitle(activity.action.from) || '-',
+                    color: getColor(activity.action.type, activity.action.from),
                 }}
                 toStatus={{
-                    title: activity.action.to,
-                    color: getLabelColor(activity.action.to),
-                    // initials: getMemberInitials(activity.action.to)
+                    title: getTitle(activity.action.to) || '-',
+                    color: getColor(activity.action.type, activity.action.to),
                 }}
             />
         </div>
@@ -65,8 +74,8 @@ export function ActivityPreview({ activity }) {
     </li>
 }
 
-function dynIcon(cmp) {
-    switch (cmp) {
+function dynIcon(type) {
+    switch (type) {
         case 'Person':
             return <Icon icon={Person} />
         case 'Status':
@@ -77,6 +86,8 @@ function dynIcon(cmp) {
             return <Icon icon={Calendar} />
         case 'Timeline':
             return <Icon icon={Timeline} />
+        case 'Favorite':
+            return <Icon icon={Favorite} />
         case 'Created':
             return <Icon icon={Add} />
         case 'Name':
