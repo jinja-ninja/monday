@@ -1,5 +1,5 @@
 import { Button, IconButton, Menu, MenuItem, SplitButton, SplitButtonMenu } from "monday-ui-react-core";
-import { Announcement, Check, Filter, Group, Sort } from "monday-ui-react-core/icons";
+import { Announcement, Check, Filter, Group, Sort ,Menu as MenuIcon} from "monday-ui-react-core/icons";
 import { PersonBtn } from "./PersonBtn";
 import { HideBtn } from "./HideBtn";
 
@@ -53,7 +53,7 @@ export function BoardActionsBtns({ currBoard, addTaskToFirstGroup, addGroup, set
                 hiddenColumns={hiddenColumns}
             />
 
-            <IconButton icon={Menu} size="small" />
+            <IconButton icon={MenuIcon} size="small" />
         </div>
     )
 }
