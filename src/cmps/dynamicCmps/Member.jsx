@@ -139,7 +139,6 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                 </div>
                 <div className="members-list">
                     <p>Suggested People</p>
-                    {console.log('suggestedMembers in return statement:', suggestedMembers)}
                     {suggestedMembers.map(member => {
                         if (chosenMembers.includes(member._id)) return
                         return <div className="member" key={member._id} onClick={() => assignMemberToTask(member._id, task)}>

@@ -51,16 +51,20 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
         switch (type) {
             case 'board':
                 if (!boardId) throw new Error('Error updating')
+                const oldBoard = board[key]
                 board[key] = value
+
+                activity = await createActivity({ type: activityType, from: oldBoard, to: value }, board._id)
+                board.activities.unshift(activity)
                 break
 
             case 'group':
                 if (!groupId) throw new Error('Error updating')
                 groupIdx = board.groups.findIndex(group => group.id === groupId)
-                const oldGroup = board.groups[groupIdx]
+                const oldGroup = board.groups[groupIdx][key]
                 board.groups[groupIdx][key] = value
 
-                activity = createActivity({ type: activityType, from: oldGroup, to: value }, board._id, groupId)
+                activity = await createActivity({ type: activityType, from: oldGroup[key], to: value }, board._id, groupId)
                 board.activities.unshift(activity)
                 break
 
@@ -417,6 +421,8 @@ function getActivityType(key) {
             return 'Timeline'
         case 'memberIds':
             return 'Person'
+        case 'isStarred':
+            return 'Favorite'
 
         default:
             throw new Error('Error updating')
@@ -453,8 +459,8 @@ async function removeGroup(board, groupId) {
     const group = updatedBoard.groups[groupIdx]
     updatedBoard.groups.splice(groupIdx, 1)
 
-    const activity = createActivity(`Removed group ${group.title}`, board._id, groupId)
-    updatedBoard.activities.unshift(activity)
+    const activity = await createActivity({ type: 'Deleted', from: group.title, to: null }, board._id, groupId)
+    board.activities.unshift(activity)
 
     return await storageService.put(STORAGE_KEY, updatedBoard)
 }
@@ -497,7 +503,8 @@ async function addTask(boardId, groupId, task, fromBtn) {
 
     board.groups[groupIdx].tasks[pushOrUnshift](task)
 
-    const activity = createActivity(`Added task ${task.title}`, boardId, groupId, task.id)
+    const activity = await createActivity({ type: 'Created', from: null, to: task.title }, boardId, groupId, task.id)
+    activity.task = task
     board.activities.unshift(activity)
 
     return await storageService.put(STORAGE_KEY, board)
@@ -505,13 +512,16 @@ async function addTask(boardId, groupId, task, fromBtn) {
 
 async function removeTask(boardId, groupId, taskId) {
     const board = await getBoardById(boardId)
-    console.log('board:', board)
+
     const groupIdx = board.groups.findIndex(group => group.id === groupId)
     const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+    const group = board.groups[groupIdx]
     const task = board.groups[groupIdx].tasks[taskIdx]
     board.groups[groupIdx].tasks.splice(taskIdx, 1)
-    console.log('removing task:', board)
-    const activity = createActivity(`Removed task ${task.title}`, boardId, groupId, taskId)
+
+    const activity = await createActivity({ type: 'Deleted', from: task.title, to: null }, boardId, groupId, task.id)
+    activity.group = group
+    activity.task = task
     board.activities.unshift(activity)
 
     return await storageService.put(STORAGE_KEY, board)

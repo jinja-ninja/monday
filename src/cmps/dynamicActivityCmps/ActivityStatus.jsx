@@ -4,15 +4,22 @@ import { utilService } from "../../services/util.service";
 
 export function ActivityStatus({ type, fromStatus, toStatus }) {
 
-    function getTitle(type) {
+    function getTitle(type, title) {
         switch (type) {
             case 'Date':
-                return utilService.timeStampToDate(fromStatus.title)
-            case 'People':
-
-                return utilService.getNameInitials()
+                if (!title || title === '-') return '-'
+                return utilService.timeStampToDate(title)
+            case 'Person':
+                if (title.length === 0) return '-'
+                return title.join(', ')
+            case 'Timeline':
+                if (!title || title === '-') return '-'
+                return utilService.getTimelineRange(title)
+            case 'Favorite':
+                if (!title || title === '-') return '-'
+                return 'Added'
             default:
-                return fromStatus.title
+                return title
         }
     }
 
@@ -20,24 +27,21 @@ export function ActivityStatus({ type, fromStatus, toStatus }) {
         <div
             className="old-status"
             style={{
-                backgroundColor: `var(--color-${fromStatus.color})`,
+                backgroundColor: fromStatus.color && `var(--color-${fromStatus.color})`,
                 color: fromStatus.color ? 'white' : 'unset'
             }}
         >
-            {typeof fromStatus.title === 'number'
-                ? utilService.timeStampToDate(fromStatus.title)
-                : fromStatus.title
-            }
+            {getTitle(type, fromStatus.title)}
         </div>
         <Icon icon={NavigationChevronRight} />
         <div
             className="new-status"
             style={{
-                backgroundColor: `var(--color-${toStatus.color})`,
+                backgroundColor: toStatus.color && `var(--color-${toStatus.color})`,
                 color: toStatus.color ? 'white' : 'unset'
             }}
         >
-            {getTitle(type)}
+            {getTitle(type, toStatus.title)}
         </div>
     </>
 }
