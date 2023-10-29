@@ -64,10 +64,6 @@ export function BoardDetails() {
 
     }, [params.boardId])
 
-    // async function loadBoard() {
-    //     await getBoardById(params.boardId, filterBy, sortBy)
-    // }
-
     function toggleIsSearch() {
         if (filterBy.txt) return
         setIsSearch((prevIsSearch) => !prevIsSearch)
@@ -186,7 +182,12 @@ export function BoardDetails() {
             {typeof currBoard === 'string' && <BoardDeletedPage boardTitle={currBoard} />}
             {typeof currBoard !== 'string' &&
                 <>
-                    <BoardDetailsHeader isStarred={currBoard.isStarred} title={currBoard.title} boardId={currBoard._id} setIsBoardDesc={setIsBoardDesc} />
+                    <BoardDetailsHeader
+                        isStarred={currBoard.isStarred}
+                        title={currBoard.title}
+                        boardId={currBoard._id}
+                        setIsBoardDesc={setIsBoardDesc}
+                    />
 
                     <BoardActionsBtns
                         currBoard={currBoard}
@@ -203,56 +204,8 @@ export function BoardDetails() {
                         setSortBy={setSortBy}
                         hidePickerOpen={hidePickerOpen}
                         onToggleHideColumnsModal={onToggleHideColumnsModal}
-                        hiddenColumns={hiddenColumns} 
-                        />
-                    {/* <div className="board-details-actions">
-
-                        <SplitButton shouldCloseOnClickInsideDialog onClick={() => addTaskToFirstGroup()} size="small" secondaryDialogContent={<SplitButtonMenu _id="split-menu">
-                            <MenuItem onClick={() => addGroup(currBoard._id)} icon={Group} title="New group of items" />
-                        </SplitButtonMenu>}>
-                            New Task
-                        </SplitButton>
-
-                        {dynSearchBtnInput}
-
-                        <PersonBtn
-                            setPersonPickerOpen={setPersonPickerOpen}
-                            onTogglePersonModal={onTogglePersonModal}
-                            onRemovePersonFilter={onRemovePersonFilter}
-                            personPickerOpen={personPickerOpen}
-                            setFilterBy={setFilterBy}
-                            filterBy={filterBy}
-                            currBoard={currBoard}
-                        />
-
-                        <SplitButton kind="tertiary" leftIcon={Filter} size="small" secondaryDialogContent={
-                            <SplitButtonMenu _id="split-menu">
-                                <MenuItem icon={Check} title="Hey" />
-                                <MenuItem icon={Announcement} title="There" />
-                            </SplitButtonMenu>}>
-                            Filter
-                        </SplitButton>
-
-                        <Button
-                            className={"btn-sortby " + (sortBy ? 'sorted' : '')}
-                            onClick={() => setSortBy(!sortBy)}
-                            leftIcon={Sort}
-                            kind="tertiary"
-                            size="small">
-                            Sort
-                        </Button>
-
-
-                        <HideBtn
-                            hidePickerOpen={hidePickerOpen}
-                            onToggleHideColumnsModal={onToggleHideColumnsModal}
-                            // setHiddenColumns={setHiddenColumns}
-                            hiddenColumns={hiddenColumns}
-                        />
-
-                        <IconButton icon={Menu} size="small" />
-                    </div> */}
-
+                        hiddenColumns={hiddenColumns}
+                    />
 
                     <div className="spacing-div"></div>
                     <DragDropContext onDragEnd={onDragEnd} >
