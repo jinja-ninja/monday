@@ -4,11 +4,6 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { Image } from 'cloudinary-react'
 import { useEffect, useState } from 'react';
 import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service';
-import { boardService } from '../../services/board.service.local';
-import { set } from 'date-fns';
-import { ControlBar } from 'video-react';
-import { el } from 'date-fns/locale';
-
 
 export function Files({ boardId, groupId, taskId, onUpdateTask, taskFiles, currBoard }) {
     const [files, setFiles] = useState([])
