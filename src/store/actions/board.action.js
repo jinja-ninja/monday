@@ -172,7 +172,6 @@ export async function removeTask(boardId, groupId, taskId) {
 }
 
 export async function updateTask(boardId, groupId, taskId, data) {
-    console.log('data:', data)
     try {
         const board = await boardService.update('task', boardId, groupId, taskId, data)
         store.dispatch({ type: SET_BOARD, board })

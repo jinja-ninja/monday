@@ -5,6 +5,7 @@ import { utilService } from "../../services/util.service";
 export function ActivityStatus({ type, fromStatus, toStatus }) {
 
     function getTitle(type, title) {
+        let idx
         switch (type) {
             case 'Date':
                 if (!title || title === '-') return '-'
@@ -20,8 +21,15 @@ export function ActivityStatus({ type, fromStatus, toStatus }) {
                 return 'Added'
             case 'Comment':
                 if (!title || title === '-') return '-'
-                const idx = (title.length > 0) ? 0 : (title.length - 1)
+                idx = (title.length > 0) ? 0 : (title.length - 1)
                 return title[idx]?.txt ? title[idx].txt : '-'
+            case 'File':
+                if (!title || title === '-') return '-'
+                idx = (title.length > 0) ? 0 : (title.length - 1)
+                console.log('title:', title)
+                console.log('idx:', idx)
+                console.log('title[idx]:', title[idx])
+                return title[idx]?.url ? <img src={title[idx].url} alt="" /> : '-'
             default:
                 return title
         }
@@ -35,7 +43,7 @@ export function ActivityStatus({ type, fromStatus, toStatus }) {
                 color: fromStatus.color ? 'white' : 'unset'
             }}
         >
-            <Text ellipsis style={{color: fromStatus.color ? 'white' : 'unset'}}>
+            <Text ellipsis style={{ color: fromStatus.color ? 'white' : 'unset' }}>
                 {getTitle(type, fromStatus.title)}
             </Text>
         </div>
@@ -47,7 +55,7 @@ export function ActivityStatus({ type, fromStatus, toStatus }) {
                 color: toStatus.color ? 'white' : 'unset'
             }}
         >
-            <Text ellipsis style={{color: toStatus.color ? 'white' : 'unset'}}>
+            <Text ellipsis style={{ color: toStatus.color ? 'white' : 'unset' }}>
                 {getTitle(type, toStatus.title)}
             </Text>
         </div>
