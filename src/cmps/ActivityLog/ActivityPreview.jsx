@@ -1,16 +1,14 @@
 import { Icon, Text } from "monday-ui-react-core"
 import { Add, Calendar, Comment, Delete, Edit, Favorite, File, Invite, NavigationChevronRight, Person, Status, TextCopy, Time, Timeline, Update } from "monday-ui-react-core/icons"
-import { utilService } from "../services/util.service"
-import { ActivityStatus } from "./dynamicActivityCmps/ActivityStatus"
+import { ActivityStatus } from "../dynamicActivityCmps/ActivityStatus" 
 import { useSelector } from "react-redux"
+import { utilService } from "../../services/util.service"
 
 export function ActivityPreview({ activity }) {
     const currBoard = useSelector(state => state.boardModule.board)
     const labels = currBoard.labels
     const priorities = currBoard.priorities
     const members = currBoard.members
-
-    console.log('activity:', activity)
 
     function getLabelColor(labelTitle) {
         const label = labels.find(label => label.title === labelTitle)
