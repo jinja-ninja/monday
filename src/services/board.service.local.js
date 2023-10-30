@@ -46,9 +46,11 @@ _createBoards()
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
         const board = await getBoardById(boardId)
-        if (key !== 'files') {
-            const activityType = getActivityType(key)
-        }
+        // if (key !== 'files') {
+        // put files in activity!!
+        console.log('key:', key)
+        const activityType = getActivityType(key)
+        // }
         let groupIdx, taskIdx, activity
 
         switch (type) {
@@ -78,10 +80,10 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 const oldTask = board.groups[groupIdx].tasks[taskIdx][key]
                 board.groups[groupIdx].tasks[taskIdx][key] = value
 
-                if (key !== 'files') {
-                    activity = await createActivity({ type: activityType, from: oldTask, to: value }, boardId, groupId, taskId)
-                    board.activities.unshift(activity)
-                }
+                // if (key !== 'files') {
+                activity = await createActivity({ type: activityType, from: oldTask, to: value }, boardId, groupId, taskId)
+                board.activities.unshift(activity)
+                // }
                 break
 
 
