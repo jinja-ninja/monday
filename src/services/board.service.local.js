@@ -46,7 +46,9 @@ _createBoards()
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
         const board = await getBoardById(boardId)
-        const activityType = getActivityType(key)
+        if (key !== 'files') {
+            const activityType = getActivityType(key)
+        }
         let groupIdx, taskIdx, activity
 
         switch (type) {
@@ -72,9 +74,12 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 const oldTask = board.groups[groupIdx].tasks[taskIdx][key]
                 board.groups[groupIdx].tasks[taskIdx][key] = value
 
-                activity = await createActivity({ type: activityType, from: oldTask, to: value }, boardId, groupId, taskId)
-                board.activities.unshift(activity)
+                if (key !== 'files') {
+                    activity = await createActivity({ type: activityType, from: oldTask, to: value }, boardId, groupId, taskId)
+                    board.activities.unshift(activity)
+                }
                 break
+
 
             default:
                 break
@@ -602,14 +607,14 @@ async function addLabel(boardId, label, type) {
     return await storageService.put(STORAGE_KEY, board)
 }
 
-async function removeLabel(boardId, labelId,type) {
+async function removeLabel(boardId, labelId, type) {
     const board = await getBoardById(boardId)
     const labelIdx = board[type].findIndex(label => label.id === labelId)
     board[type].splice(labelIdx, 1)
     return await storageService.put(STORAGE_KEY, board)
 }
 
-async function updateLabel(boardId, label,type) {
+async function updateLabel(boardId, label, type) {
     console.log('type:', type)
     const board = await getBoardById(boardId)
     const labelId = label.id
