@@ -22,7 +22,7 @@ export function KanbanTask({ task, statusName, getLabelColor }) {
     }, [currBoard])
 
     function openTaskDetails() {
-        navigate(`/board/${currBoard._id}/views/kanban/group/${task.groupId}/task/${task.id}`)
+        navigate(`/board/${currBoard._id}/group/${task.groupId}/task/${task.id}`)
 
     }
 

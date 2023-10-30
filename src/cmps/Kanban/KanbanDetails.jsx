@@ -101,15 +101,8 @@ export function KanbanDetails() {
 
     if (currBoard === null) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
     return (
-        <main className="board-details-layout">
-            <BoardMainHeader />
-            <SideBar />
-
             <div className="kanban-details-container">
-                <UserMsg />
-
-                <BoardDetailsHeader isStarred={currBoard.isStarred} title={currBoard.title} boardId={currBoard._id} setIsBoardDesc={setIsBoardDesc} />
-
+                
                 <div className="board-details-actions">
 
                     <SplitButton shouldCloseOnClickInsideDialog onClick={() => onAddKanbanTask('')} size="small" secondaryDialogContent={<SplitButtonMenu _id="split-menu">
@@ -119,9 +112,7 @@ export function KanbanDetails() {
                     </SplitButton>
 
                     {dynSearchBtnInput}
-                    {/* 
-            {dynSearchBtnInput} */}
-
+             
                     {/* <PersonBtn
                 setPersonPickerOpen={setPersonPickerOpen}
                 onTogglePersonModal={onTogglePersonModal}
@@ -147,11 +138,8 @@ export function KanbanDetails() {
                     <KanbanGroupList getKanbanGroups={getKanbanGroups} labels={currBoard.labels} currBoard={currBoard} onAddKanbanTask={onAddKanbanTask} />
                 </div>
 
-                <Outlet />
             </div>
 
-            {isBoardDesc && <BoardDescriptionModal boardTitle={currBoard.title} setIsBoardDesc={setIsBoardDesc} />}
 
-        </main>
     )
 }

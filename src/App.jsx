@@ -28,10 +28,6 @@ export function App() {
             {/* <Route element={<ActivityLog />} path='activityLog' /> */}
           </Route>
 
-          <Route path="board/:boardId/views/kanban" element={<KanbanDetails />}>
-            <Route element={<TaskDetails />} path='group/:groupId/task/:taskId' />
-          </Route>
-
           <Route path="/auth">
             <Route path="login" element={<LoginSignup />} />
             <Route path="sign-up" element={<LoginSignup />} />

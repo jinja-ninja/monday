@@ -5,7 +5,7 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 import { addTask } from "../../store/actions/board.action"
 import { boardService } from "../../services/board.service.local"
 
-export function KanbanGroupPreview({ group, labels,onAddKanbanTask }) {
+export function KanbanGroupPreview({ group, labels, onAddKanbanTask }) {
 
     function getLabelColor(labelTitle) {
         const label = labels.find(label => label.title === labelTitle || labelTitle === 'Blank')
@@ -13,7 +13,7 @@ export function KanbanGroupPreview({ group, labels,onAddKanbanTask }) {
         return label.color
     }
 
-   
+
     return (
         <div className="kanban-group-preview">
             <div className="group-header" style={{

@@ -7,28 +7,20 @@ import { updateTask } from "../store/actions/board.action";
 export function TaskDetailsHeader({ boardId, groupId, taskId, taskTitle, setCurrTab }) {
     const [taskTitleValue, setTaskTitleValue] = useState(taskTitle)
     const navigate = useNavigate()
-    const isInsideKanban = window.location.hash.includes('/kanban');
 
     function onRenameTask() {
         if (taskTitle !== taskTitleValue) {
             updateTask(boardId, groupId, taskId, { key: 'title', value: taskTitleValue })
         }
     }
-
-    let dynNavigate
-    if (isInsideKanban) {
-        dynNavigate = `/board/${boardId}/views/kanban`
-    } else {
-        dynNavigate = `/board/${boardId}`
-    }
-
+    
     return (
         <div className="task-details-header" >
 
             <IconButton
                 ariaLabel=""
                 icon={Close}
-                onClick={() => navigate(dynNavigate)}
+                onClick={() => navigate(`/board/${boardId}`)}
                 size="xs"
             />
             <div className="editible-container">

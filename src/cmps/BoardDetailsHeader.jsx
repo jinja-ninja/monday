@@ -12,7 +12,7 @@ import { InviteMembersModal } from "./InviteMembersModal"
 import { useSelector } from "react-redux"
 
 
-export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }) {
+export function BoardDetailsHeader({ setContent, title, boardId, setIsBoardDesc, isStarred }) {
     const [boardTitle, setBoardTitle] = useState(title)
     const [isCollapse, setIsCollapse] = useState(true)
     const [DynIsScrolledClass, setDynIsScrolledClass] = useState('')
@@ -157,16 +157,16 @@ export function BoardDetailsHeader({ title, boardId, setIsBoardDesc, isStarred }
                     className={"views-select-tab-list " + dynCollapseTabsClass}
                     size="sm">
                     <Tab
-                        onClick={() => navigate(`/board/${boardId}`)}
+                        onClick={() => setContent('board')}
                         className="main-table-tab"
                         icon={Home}
                         iconSide="left">
                         Main Table
                     </Tab>
-                    <Tab onClick={() => navigate(`/board/${boardId}/views/kanban`)}>
+                    <Tab onClick={() => setContent('kanban')}>
                         Kanban
                     </Tab>
-                    <Tab >
+                    <Tab onClick={() => setContent('dashboard')} >
                         Dashboard
                     </Tab>
                 </TabList>
