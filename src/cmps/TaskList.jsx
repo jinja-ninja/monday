@@ -118,6 +118,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
             showSuccessMsg(`Task updated ${taskId}`)
         } catch (err) {
             showErrorMsg(`Cannot update task ${taskId}`)
+            console.log('err:', err)
         }
     }
 
@@ -246,6 +247,9 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     boardId={boardId}
                     groupId={groupId}
                     taskId={task.id}
+                    onUpdateTask={onUpdateTask}
+                    taskFiles={task.files}
+                    currBoard={currBoard}
                 />
             default:
                 break
