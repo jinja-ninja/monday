@@ -1,7 +1,7 @@
 import { Icon, Text } from "monday-ui-react-core"
-import { Add, Calendar, Comment, Delete, Edit, Favorite, Invite, NavigationChevronRight, Person, Status, TextCopy, Time, Timeline, Update } from "monday-ui-react-core/icons"
-import { utilService } from "../../services/util.service"
-import { ActivityStatus } from "../dynamicActivityCmps/ActivityStatus"
+import { Add, Calendar, Comment, Delete, Edit, Favorite, File, Invite, NavigationChevronRight, Person, Status, TextCopy, Time, Timeline, Update } from "monday-ui-react-core/icons"
+import { utilService } from "../services/util.service"
+import { ActivityStatus } from "./dynamicActivityCmps/ActivityStatus"
 import { useSelector } from "react-redux"
 
 export function ActivityPreview({ activity }) {
@@ -9,6 +9,8 @@ export function ActivityPreview({ activity }) {
     const labels = currBoard.labels
     const priorities = currBoard.priorities
     const members = currBoard.members
+
+    console.log('activity:', activity)
 
     function getLabelColor(labelTitle) {
         const label = labels.find(label => label.title === labelTitle)
@@ -94,6 +96,8 @@ function dynIcon(type) {
             return <Icon icon={Comment} />
         case 'Created':
             return <Icon icon={Add} />
+        case 'File':
+            return <Icon icon={File} />
         case 'Name':
             return <Icon icon={TextCopy} />
         case 'Update':

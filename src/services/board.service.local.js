@@ -46,11 +46,7 @@ _createBoards()
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
         const board = await getBoardById(boardId)
-        // if (key !== 'files') {
-            // put files in activity!!
-            console.log('key:', key)
-            const activityType = getActivityType(key)
-        // }
+        const activityType = getActivityType(key)
         let groupIdx, taskIdx, activity
 
         switch (type) {
@@ -59,6 +55,7 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 const oldBoard = board[key]
                 board[key] = value
 
+                if (key === 'groups') return
                 activity = await createActivity({ type: activityType, from: oldBoard, to: value }, board._id)
                 board.activities.unshift(activity)
                 break
@@ -80,12 +77,9 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 const oldTask = board.groups[groupIdx].tasks[taskIdx][key]
                 board.groups[groupIdx].tasks[taskIdx][key] = value
 
-                // if (key !== 'files') {
-                    activity = await createActivity({ type: activityType, from: oldTask, to: value }, boardId, groupId, taskId)
-                    board.activities.unshift(activity)
-                // }
+                activity = await createActivity({ type: activityType, from: oldTask, to: value }, boardId, groupId, taskId)
+                board.activities.unshift(activity)
                 break
-
 
             default:
                 break
@@ -429,11 +423,16 @@ function getActivityType(key) {
             return 'Timeline'
         case 'memberIds':
             return 'Person'
+        case 'files':
+            return 'File'
         case 'isStarred':
+            return 'Favorite'
         case 'style':
             return 'Edit'
         case 'comments':
             return 'Comment'
+        case 'groups':
+            return 'Update'
 
         default:
             throw new Error('Error updating')
