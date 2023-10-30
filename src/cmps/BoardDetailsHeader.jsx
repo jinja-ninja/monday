@@ -12,7 +12,7 @@ import { InviteMembersModal } from "./InviteMembersModal"
 import { useSelector } from "react-redux"
 
 
-export function BoardDetailsHeader({ setContent, title, boardId, setIsBoardDesc, isStarred }) {
+export function BoardDetailsHeader({ setContent, title, boardId, setIsBoardDesc, setIsActivityLog, isStarred }) {
     const [boardTitle, setBoardTitle] = useState(title)
     const [isCollapse, setIsCollapse] = useState(true)
     const [DynIsScrolledClass, setDynIsScrolledClass] = useState('')
@@ -93,7 +93,7 @@ export function BoardDetailsHeader({ setContent, title, boardId, setIsBoardDesc,
                         <Button
                             className="btn-avatars"
                             kind="tertiary"
-                            // onClick={function noRefCheck() { }}
+                            onClick={() => setIsActivityLog(true)}
                             size="small"
                         >
                             Activity

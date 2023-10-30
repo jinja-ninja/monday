@@ -25,6 +25,7 @@ import { SET_COLUMNS_STATE } from "../store/reducers/board.reducer"
 import { BoardActionsBtns } from "../cmps/BoardActionsBtns"
 import { KanbanDetails } from "../cmps/Kanban/KanbanDetails"
 import { DashboardDetails } from "../cmps/Dashboard/DashboardDetails"
+import { ActivityLog } from "../cmps/ActivityLog/ActivityLog"
 
 export function BoardDetails() {
     const params = useParams()
@@ -38,6 +39,7 @@ export function BoardDetails() {
     const [filterBy, setFilterBy] = useState({ txt: '', person: null })
     const [sortBy, setSortBy] = useState(false)
     const [isBoardDesc, setIsBoardDesc] = useState(false)
+    const [isActivityLog, setIsActivityLog] = useState(false)
     const [personPickerOpen, setPersonPickerOpen] = useState(false)
     const [hidePickerOpen, setHidePickerOpen] = useState(false)
 
@@ -53,7 +55,6 @@ export function BoardDetails() {
     }, [params.boardId, filterBy, sortBy])
 
     useEffect(() => {
-        // if moving to another board reset the hidden columns to none
         dispatch({
             type: SET_COLUMNS_STATE, columnsState: [
                 { name: "Members", isChecked: true },
@@ -66,10 +67,6 @@ export function BoardDetails() {
         })
 
     }, [params.boardId])
-
-    // async function loadBoard() {
-    //     await getBoardById(params.boardId, filterBy, sortBy)
-    // }
 
     function toggleIsSearch() {
         if (filterBy.txt) return
@@ -177,7 +174,7 @@ export function BoardDetails() {
         await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: newGroups }, newBoard)
     }
 
-
+console.log('isActivityLog:', isActivityLog)
     if (currBoard === null) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
     return <main className="board-details-layout">
         <BoardMainHeader />
@@ -195,6 +192,7 @@ export function BoardDetails() {
                         title={currBoard.title}
                         boardId={currBoard._id}
                         setIsBoardDesc={setIsBoardDesc}
+                        setIsActivityLog={setIsActivityLog}
                     />
 
                     {content === 'board' &&
@@ -240,7 +238,8 @@ export function BoardDetails() {
                 </>
             }
 
-            {selectedTasks.length > 0 && < SelectedModal selectedTasks={selectedTasks} currBoard={currBoard} />}
+            {selectedTasks.length > 0 && <SelectedModal selectedTasks={selectedTasks} currBoard={currBoard} />}
+            {isActivityLog && <ActivityLog currBoard={currBoard} setIsActivityLog={setIsActivityLog}/>}
             {isBoardDesc && <BoardDescriptionModal boardTitle={currBoard.title} setIsBoardDesc={setIsBoardDesc} />}
 
         </section>

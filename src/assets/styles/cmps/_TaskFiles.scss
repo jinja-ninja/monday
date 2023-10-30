@@ -1,23 +1,28 @@
 .task-file-container {
-  &:hover {
-    .add-file-img-container {
-      .add-file-img {
-        opacity: 1;
-      }
+  position: relative;
 
-      .btn-add-file {
-        transform: scale(1);
-      }
+  &:hover {
+
+    .add-file-img {
+      opacity: 1;
     }
+
+    .btn-add-file {
+      transform: scale(1);
+    }
+
+    .btn-delete-files {
+      display: flex;
+    }
+
   }
 
   .task-file {
     padding: 2px;
-    transition: transform 0.2s ease-in-out; /* Add transition for smooth scaling */
-    z-index: 100;
+    transition: transform 0.2s ease-in-out;
 
     &:hover {
-      transform: scale(1.3); /* Increase the size on hover */
+      transform: scale(1.3);
       z-index: 100;
     }
 
@@ -26,46 +31,66 @@
     }
   }
 
-  .add-file-img-container {
-    position: relative;
 
-    .add-file-img {
-      width: 19px;
-      height: 24px;
-      opacity: 0;
-    }
-
-    .btn-add-file {
-      color: var(--text-color-on-primary);
-      background-color: var(--primary-color);
-      border-radius: 50%;
-      width: 14px;
-      height: 14px;
-      position: absolute;
-      left: -7px;
-      top: 6px;
-      transform: scale(0);
-      transition: transform 0.1s ease-in, opacity 0.1s ease-in;
-
-      .line-one {
-        width: 10px;
-        height: 2px;
-        background-color: white;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      .line-two {
-        width: 2px;
-        height: 10px;
-        background-color: white;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
-    }
+  .add-file-img {
+    width: 19px;
+    height: 24px;
+    opacity: 0;
   }
+
+  .btn-add-file {
+    color: var(--text-color-on-primary);
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    left: 54px;
+    top: 10px;
+    transform: scale(0);
+    transition: transform 0.1s ease-in, opacity 0.1s ease-in;
+
+    &.more {
+      left: 7px;
+      top: 10px;
+    }
+
+    .line-one {
+      width: 10px;
+      height: 2px;
+      background-color: white;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .line-two {
+      width: 2px;
+      height: 10px;
+      background-color: white;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+  }
+}
+
+
+.btn-delete-files {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 7px;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: black;
+  background-color: var(--primary-background-hover-on-secondary-color);
 }
