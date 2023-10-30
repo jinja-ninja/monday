@@ -10,7 +10,7 @@ export function TaskActvity({ taskId }) {
     return (
         <div className="task-activity-log-container">
             <div className="task-activity-log-header">
-                <div>
+                <div className="task-activity-actions-bar">
                     <SplitButton
                         size="small"
 

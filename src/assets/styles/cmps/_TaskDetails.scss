@@ -17,7 +17,8 @@
 
 }
 
-.task-details-container::-webkit-scrollbar,.activity-log-container::-webkit-scrollbar {
+.task-details-container::-webkit-scrollbar,
+.activity-log-container::-webkit-scrollbar {
     width: 0px;
     /* Adjust the width as needed */
     height: 0px;
@@ -247,35 +248,39 @@
         justify-content: space-between;
         margin-bottom: 1.25rem;
 
-        .actions-bar {
+        .actions-bar,
+        .task-activity-actions-bar {
             display: flex;
             align-items: center;
+        }
+
+        .actions-bar {
             gap: rem(20px);
+        }
 
-            button {
-                text-transform: none;
+        button {
+            text-transform: none;
+        }
+
+        input {
+            padding: 0 16px;
+            width: 150px;
+            border: 1px solid #c4c4c4;
+            height: 32px;
+            border-radius: 4px;
+            outline: none;
+            transition: width .1s ease, height .1s ease;
+
+            &::placeholder {
+                font-size: rem(15px);
+                font-weight: 500;
+                color: var(--ui-border-color);
             }
+        }
 
-            input {
-                padding: 0 16px;
-                width: 150px;
-                border: 1px solid #c4c4c4;
-                height: 32px;
-                border-radius: 4px;
-                outline: none;
-                transition: width .1s ease, height .1s ease;
-
-                &::placeholder {
-                    font-size: rem(15px);
-                    font-weight: 500;
-                    color: var(--ui-border-color);
-                }
-            }
-
-            .person-btn {
-                margin-inline-start: .5rem;
-                width: 85px;
-            }
+        .person-btn {
+            margin-inline-start: .5rem;
+            width: 85px;
         }
     }
 }
