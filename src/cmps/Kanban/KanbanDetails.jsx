@@ -13,6 +13,7 @@ import { Button, MenuItem, SplitButton, SplitButtonMenu, Search as SearchInput }
 import { KanbanGroupList } from "./KanbanGroupList"
 import { boardService } from "../../services/board.service.local"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
+import { StatusSummary } from "../dynamicSummaryCmps/StatusSummary"
 
 
 export function KanbanDetails() {
@@ -24,7 +25,7 @@ export function KanbanDetails() {
 
     useEffect(() => {
         loadBoard(params.boardId)
-    }, [params.boardId],filterBy)
+    }, [params.boardId], filterBy)
     // }, [params.boardId, filterBy, sortBy])
 
     function getAllBoardTasks() {
@@ -57,6 +58,7 @@ export function KanbanDetails() {
         }, {})
 
         let kanbanGroups = Object.values(groups)
+        // console.log('kanbanGroups:', kanbanGroups)
         return kanbanGroups
     }
 
@@ -101,19 +103,19 @@ export function KanbanDetails() {
 
     if (currBoard === null) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
     return (
-            <div className="kanban-details-container">
-                
-                <div className="board-details-actions" id="kanban-actions-container">
+        <div className="kanban-details-container">
 
-                    <SplitButton shouldCloseOnClickInsideDialog onClick={() => onAddKanbanTask('')} size="small" secondaryDialogContent={<SplitButtonMenu _id="split-menu">
-                        <MenuItem onClick={() => console.log('clicked:')} icon={Group} title="New group of items" />
-                    </SplitButtonMenu>}>
-                        New Task
-                    </SplitButton>
+            <div className="board-details-actions" id="kanban-actions-container">
 
-                    {dynSearchBtnInput}
-             
-                    {/* <PersonBtn
+                <SplitButton shouldCloseOnClickInsideDialog onClick={() => onAddKanbanTask('')} size="small" secondaryDialogContent={<SplitButtonMenu _id="split-menu">
+                    <MenuItem onClick={() => console.log('clicked:')} icon={Group} title="New group of items" />
+                </SplitButtonMenu>}>
+                    New Task
+                </SplitButton>
+
+                {dynSearchBtnInput}
+
+                {/* <PersonBtn
                 setPersonPickerOpen={setPersonPickerOpen}
                 onTogglePersonModal={onTogglePersonModal}
                 onRemovePersonFilter={onRemovePersonFilter}
@@ -124,21 +126,25 @@ export function KanbanDetails() {
             /> */}
 
 
-                    <Button
-                        // className={"btn-sortby " + (sortBy ? 'sorted' : '')}
-                        // onClick={() => setSortBy(!sortBy)}
-                        leftIcon={Sort}
-                        kind="tertiary"
-                        size="small">
-                        Sort
-                    </Button>
-                </div>
-
-                <div className="kanban-main-container">
-                    <KanbanGroupList getKanbanGroups={getKanbanGroups} labels={currBoard.labels} currBoard={currBoard} onAddKanbanTask={onAddKanbanTask} />
-                </div>
+                <Button
+                    // className={"btn-sortby " + (sortBy ? 'sorted' : '')}
+                    // onClick={() => setSortBy(!sortBy)}
+                    leftIcon={Sort}
+                    kind="tertiary"
+                    size="small">
+                    Sort
+                </Button>
+                {/* 
+                <div className="kanban-summary-container">
+                    <KanbanSummary data={getKanbanGroups} labels={currBoard.labels} />
+                </div> */}
 
             </div>
+            <div className="kanban-main-container">
+                <KanbanGroupList getKanbanGroups={getKanbanGroups} labels={currBoard.labels} currBoard={currBoard} onAddKanbanTask={onAddKanbanTask} />
+            </div>
+
+        </div>
 
 
     )
