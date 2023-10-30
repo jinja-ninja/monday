@@ -1,9 +1,10 @@
-.kanban-main-container {
-    padding-left: 38px;
+.kanban-details-container {
     height: 100vh;
 
-    .board-details-actions {
+    #kanban-actions-container.board-details-actions {
         border-bottom: 1px solid var(--ui-border-color);
-        border: 1px solid black;
+        margin-block-end: var(--spacing-xl);
+        padding-block-end: 20px;
     }
+
 }

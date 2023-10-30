@@ -103,7 +103,7 @@ export function KanbanDetails() {
     return (
             <div className="kanban-details-container">
                 
-                <div className="board-details-actions">
+                <div className="board-details-actions" id="kanban-actions-container">
 
                     <SplitButton shouldCloseOnClickInsideDialog onClick={() => onAddKanbanTask('')} size="small" secondaryDialogContent={<SplitButtonMenu _id="split-menu">
                         <MenuItem onClick={() => console.log('clicked:')} icon={Group} title="New group of items" />
