@@ -123,6 +123,7 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                                     title="Change group color" />
                             </Menu>
                         </MenuButton>
+
                         <div>
 
                             <Tooltip

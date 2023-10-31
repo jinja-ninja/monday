@@ -317,7 +317,8 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                         if (title === 'title' && !showGroup) title = ''
                         return (
                             (title === 'title' || title === 'side') ?
-                                <div className={"header-title " + dynCollapseGroupClass} key={idx}>
+                                <div className={"header-title " + dynCollapseGroupClass + (title === 'title' ? 'sticky-header-title' : '')}
+                                 key={idx}>
                                     <DisplayTitle title={title} />
                                 </div>
                                 :
@@ -367,7 +368,8 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                                     >
                                         {renderMenuButton(task.id)}
                                         {cmpsOrder.map((cmp, idx) =>
-                                            <section className="task-item" key={idx} style={{ width: getDynTaskColsLength()[idx] }}>
+                                            <section className={"task-item " + (idx === 0 ? 'sticky-checkbox' : '') + (idx === 1 ? 'sticky-title' : '')}
+                                             key={idx} style={{ width: getDynTaskColsLength()[idx] }}>
                                                 {renderDynamicCmp(cmp, task, labels, priorities)}
                                             </section>
                                         )}
