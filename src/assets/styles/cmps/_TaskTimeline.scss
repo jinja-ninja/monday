@@ -1,8 +1,9 @@
-.timeline-container {
+.timeline-container,
+.activity-timeline-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    // background-color: #c4c4c4;
+    background-color: #c4c4c4;
     height: 22px;
     width: 100%;
     margin: 6px 16px;

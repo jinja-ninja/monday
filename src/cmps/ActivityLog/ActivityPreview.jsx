@@ -1,7 +1,7 @@
 import { Icon, Text } from "monday-ui-react-core"
 import { Add, Calendar, Comment, Delete, Edit, Favorite, File, Invite, NavigationChevronRight, Person, Status, TextCopy, Time, Timeline, Update } from "monday-ui-react-core/icons"
-import { utilService } from "../../services/util.service" 
-import { ActivityStatus } from "../dynamicActivityCmps/ActivityStatus" 
+import { utilService } from "../../services/util.service"
+import { ActivityStatus } from "../dynamicActivityCmps/ActivityStatus"
 import { useSelector } from "react-redux"
 
 export function ActivityPreview({ activity }) {
@@ -22,20 +22,21 @@ export function ActivityPreview({ activity }) {
         return priority.color
     }
 
-    function getMemberInitials(memberId) {
+    function getMemberName(memberId) {
         const member = members.find(member => member._id === memberId)
         if (!member) return null
-        return utilService.getNameInitials(member.fullname)
+        return member
     }
 
     function getTitle(prevTitle) {
-        if (activity.action.type === 'Person') return prevTitle.map(memberId => getMemberInitials(memberId))
+        if (activity.action.type === 'Person') return prevTitle.map(memberId => getMemberName(memberId))
         else return prevTitle
     }
 
     function getColor(type, title) {
         if (type === 'Status') return getLabelColor(title)
         else if (type === 'Priority') return getPriorityColor(title)
+        else if (type === 'Edit') return title
         else return null
     }
 

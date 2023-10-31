@@ -7,14 +7,9 @@ import { utilService } from "../services/util.service"
 
 
 
-export function InviteMembersModal({ boardId, setIsShowInviteMembersModal, isShowInviteMembersModal }) {
+export function InviteMembersModal({ setIsShowInviteMembersModal, isShowInviteMembersModal }) {
 
     const currBoard = useSelector(state => state.boardModule.board)
-    console.log('currBoard:', currBoard.members)
-
-    useEffect(() => {
-
-    }, [])
 
     const closeModal = () => {
         setIsShowInviteMembersModal(false)
@@ -23,6 +18,7 @@ export function InviteMembersModal({ boardId, setIsShowInviteMembersModal, isSho
     return (
         <>
             <Modal
+            className='invite-memebers-modal'
                 id="story-book-modal"
                 title={<span className="modal-title">Board Members</span>}
                 show={isShowInviteMembersModal}
@@ -38,7 +34,11 @@ export function InviteMembersModal({ boardId, setIsShowInviteMembersModal, isSho
                             {currBoard.members.map(member => {
                                 return (
                                     <div className="monday-storybook-chips_inline-container member-item" key={member._id}>
-                                        <Avatar size={Avatar.sizes.MEDIUM} type={Avatar.types.TEXT} text={utilService.getNameInitials(member.fullname)} />
+                                        <Avatar size={Avatar.sizes.MEDIUM}
+                                            className="member-img"
+                                            src={member.imgUrl}
+                                            type="img"
+                                        />
                                         <span className="monday-storybook-chips_name">
                                             {member.fullname} <span>{member.title}</span>
                                         </span>

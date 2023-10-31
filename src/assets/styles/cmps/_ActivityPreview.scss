@@ -49,11 +49,26 @@
         align-items: center;
         justify-content: center;
         gap: .2rem;
-
         height: 100%;
 
-        img {
+        .activity-members-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .activity-file-img {
             height: 20px;
+        }
+
+        .activity-timeline-container {
+            width: rem(85px);
+            margin: 0;
+
+            &:hover {
+                background-color: #c4c4c4;
+            }
         }
 
         .old-status {
@@ -67,6 +82,15 @@
             border-radius: var(--border-radius-small);
             text-overflow: ellipsis;
             white-space: nowrap;
+
+            .activity-timeline-container {
+                width: rem(85px);
+                margin: 0;
+    
+                &:hover {
+                    background-color: #c4c4c4;
+                }
+            }
         }
 
         .new-status {
