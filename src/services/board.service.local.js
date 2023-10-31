@@ -1408,8 +1408,8 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
-                                    date: '',
-                                    memberIds: []
+                                    dueDate: 1697576400000,
+                                    memberIds: ['u101','u102']
                                 },
                                 {
                                     id: "c116",
@@ -1417,6 +1417,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Stuck",
+                                    timeline : {from: 1696798800000, to: 1700949600000},
                                     memberIds: []
                                 },
                                 {
@@ -1425,7 +1426,9 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Progress",
-                                    memberIds: []
+                                    dueDate : 1697403600000,
+                                    timeline : {from: 1696798800000, to: 1698616800000},
+                                    memberIds: ['u103']
                                 },
                                 {
                                     id: "c118",
@@ -1433,7 +1436,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Medium",
                                     status: "Done",
-                                    memberIds: []
+                                    memberIds: ['u101']
                                 }
                             ],
                             style: "stuck-red"
@@ -1448,7 +1451,8 @@ function _createBoards() {
                                     comments: [],
                                     priority: "High",
                                     status: "Stuck",
-                                    archivedAt: 1590500000000,
+                                    dueDate : 1697490000000,
+                                    timeline: {from: 1697058000000, to: 1697749200000},
                                     memberIds: []
                                 },
                                 {
@@ -1502,7 +1506,50 @@ function _createBoards() {
                                 }
                             ],
                             style: "dark-blue"
-                        }
+                        }, {
+                            id: "g109",
+                            title: "UI/UX",
+                            tasks: [
+                                {
+                                    id: "c222",
+                                    title: "Design home page",
+                                    comments: [],
+                                    priority: "Medium",
+                                    status: "Done",
+                                    dueDate: 1696366800000,
+                                    timeline : {from: 1696280400000, to: 1697490000000},
+                                    memberIds: ['u101', 'u102']
+                                },
+                                {
+                                    id: "c223",
+                                    title: "Pixel perfect buttons",
+                                    comments: [],
+                                    priority: "Low",
+                                    status: "Stuck",
+                                    memberIds: []
+                                },
+                                {
+                                    id: "c224",
+                                    title: "Color pallet",
+                                    comments: [],
+                                    priority: "Critical",
+                                    status: "Done",
+                                    dueDate: 1996366800000,
+                                    timeline: { from: 1698094800000, to: 1699221600000 },
+                                    memberIds: ['u103']
+                                },
+                                {
+                                    id: "c2652",
+                                    title: "Use rems and ems",
+                                    comments: [],
+                                    priority: "Medium",
+                                    status: "Progress",
+                                    timeline: { from: 1699221600000, to: 1700604000000 },
+                                    memberIds: []
+                                }
+                            ],
+                            style: 'lipstick'
+                        },
                     ],
                     activities: [],
                     priorities: [
