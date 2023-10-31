@@ -38,10 +38,14 @@ export function KanbanDetails() {
         return allTasks
     }
 
+    function getLabelsInUse() {
+        const AllTasksLabels = getAllBoardTasks().map(task => task.status)
+        const uniqueLabels = [...new Set(allLabels)]
+        return uniqueLabels
+    }
 
     function getKanbanGroups() {
         let allTasks = getAllBoardTasks();
-
 
         const filterPattern = new RegExp(filterBy.txt, 'i')
         let filteredTasks = allTasks.filter(task => filterPattern.test(task.title))
