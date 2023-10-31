@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-import { Button, IconButton, MenuItem, SplitButton, SplitButtonMenu, Search as SearchInput, Tooltip, Avatar, useClickOutside, } from "monday-ui-react-core"
-import { Announcement, Check, Filter, Group, Menu, Search, Sort } from "monday-ui-react-core/icons"
+import { Button, Search as SearchInput } from "monday-ui-react-core"
+import { Search } from "monday-ui-react-core/icons"
 import { BoardDetailsHeader } from "../cmps/BoardDetailsHeader"
 import { GroupList } from "../cmps/GroupList"
 import { BoardMainHeader } from "../cmps/BoardMainHeader"
 import { SideBar } from "../cmps/SideBar"
 import { Outlet, useParams } from "react-router-dom"
-import { addGroup, addTask, getBoardById, loadBoard, updateBoardOptimistic } from "../store/actions/board.action"
+import { addGroup, addTask, loadBoard, updateBoardOptimistic } from "../store/actions/board.action"
 import { useSelector } from "react-redux"
 import { UserMsg } from "../cmps/UserMsg"
 import MondayLoader from '../assets/Loader/MondayLoader.gif'
@@ -15,11 +15,8 @@ import { boardService } from "../services/board.service.local"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { BoardDescriptionModal } from "../cmps/BoardDescriptionModal"
 import { DragDropContext } from "react-beautiful-dnd"
-import { NoGroupsFound } from "../cmps/NoGroupsFound";
-import { utilService } from "../services/util.service";
-import { BoardDeletedPage } from "../cmps/BoardDeletedPage";
-import { HideBtn } from "../cmps/HideBtn";
-import { PersonBtn } from "../cmps/PersonBtn";
+import { NoGroupsFound } from "../cmps/NoGroupsFound"
+import { BoardDeletedPage } from "../cmps/BoardDeletedPage"
 import { useDispatch } from "react-redux"
 import { SET_COLUMNS_STATE } from "../store/reducers/board.reducer"
 import { BoardActionsBtns } from "../cmps/BoardActionsBtns"
@@ -48,7 +45,6 @@ export function BoardDetails() {
     function getAllUnCheckedColumns() {
         return columnsState.filter(column => !column.isChecked).map(uncheckedColumn => uncheckedColumn.name)
     }
-
 
     useEffect(() => {
         loadBoard(params.boardId, filterBy, sortBy)
@@ -99,6 +95,22 @@ export function BoardDetails() {
         }))
     }
 
+    function getAllBoardTasks() {
+        let allTasks = currBoard.groups.reduce((accumulator, group) => {
+            return accumulator.concat(group.tasks.map(task => ({
+                ...task,
+                groupId: group.id
+            })))
+        }, [])
+        return allTasks
+    }
+
+    function getLabelsInUse() {
+        const AllTasksLabels = getAllBoardTasks().map(task => task.status)
+        const uniqueLabels = [...new Set(AllTasksLabels)]
+        return uniqueLabels
+    }
+
     const dynSearchBtnInput = isSearch || filterBy.txt ?
         <SearchInput
             id="filter-search-input"
@@ -131,6 +143,40 @@ export function BoardDetails() {
             newGroups.splice(destination.index, 0, removed)
             const newBoard = { ...currBoard, groups: newGroups }
             await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: newGroups }, newBoard)
+            return
+        }
+
+        if (type === 'kanban-tasks') {
+            const sourceLabel = source.droppableId.split('-')[2]
+            const destinationLabel = destination.droppableId.split('-')[2]
+            const taskId = draggableId.split('-')[2]
+
+            const newGroups = [...currBoard.groups].map(group => {
+                const tasks = [...group.tasks]
+                tasks.map(task => {
+                    if (task.id === taskId) task.status = destinationLabel
+                    else return task
+                })
+                return { ...group, tasks }
+            })
+            const newBoard = { ...currBoard, groups: newGroups }
+            await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: newGroups }, newBoard)
+            return
+        }
+
+        if (type === 'kanban-groups') {
+            if (currBoard.kanbanCmpsOrder) {
+                const newCmpsOrder = [...currBoard.kanbanCmpsOrder]
+                const [removed] = newCmpsOrder.splice(source.index, 1)
+                newCmpsOrder.splice(destination.index, 0, removed)
+                const newBoard = { ...currBoard, kanbanCmpsOrder: newCmpsOrder }
+                await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'kanbanCmpsOrder', value: newCmpsOrder }, newBoard)
+            }
+            else {
+                const kanbanCmpsOrder = getLabelsInUse()
+                const newBoard = { ...currBoard, kanbanCmpsOrder }
+                await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'kanbanCmpsOrder', value: kanbanCmpsOrder }, newBoard)
+            }
             return
         }
 
@@ -193,29 +239,28 @@ export function BoardDetails() {
                         setIsBoardDesc={setIsBoardDesc}
                         setIsActivityLog={setIsActivityLog}
                     />
+                    <DragDropContext onDragEnd={onDragEnd}>
+                        {content === 'board' &&
+                            <>
+                                <BoardActionsBtns
+                                    currBoard={currBoard}
+                                    addTaskToFirstGroup={addTaskToFirstGroup}
+                                    addGroup={addGroup}
+                                    setPersonPickerOpen={setPersonPickerOpen}
+                                    onTogglePersonModal={onTogglePersonModal}
+                                    onRemovePersonFilter={onRemovePersonFilter}
+                                    personPickerOpen={personPickerOpen}
+                                    dynSearchBtnInput={dynSearchBtnInput}
+                                    setFilterBy={setFilterBy}
+                                    filterBy={filterBy}
+                                    sortBy={sortBy}
+                                    setSortBy={setSortBy}
+                                    hidePickerOpen={hidePickerOpen}
+                                    onToggleHideColumnsModal={onToggleHideColumnsModal}
+                                    hiddenColumns={hiddenColumns}
+                                />
 
-                    {content === 'board' &&
-                        <>
-                            <BoardActionsBtns
-                                currBoard={currBoard}
-                                addTaskToFirstGroup={addTaskToFirstGroup}
-                                addGroup={addGroup}
-                                setPersonPickerOpen={setPersonPickerOpen}
-                                onTogglePersonModal={onTogglePersonModal}
-                                onRemovePersonFilter={onRemovePersonFilter}
-                                personPickerOpen={personPickerOpen}
-                                dynSearchBtnInput={dynSearchBtnInput}
-                                setFilterBy={setFilterBy}
-                                filterBy={filterBy}
-                                sortBy={sortBy}
-                                setSortBy={setSortBy}
-                                hidePickerOpen={hidePickerOpen}
-                                onToggleHideColumnsModal={onToggleHideColumnsModal}
-                                hiddenColumns={hiddenColumns}
-                            />
-
-                            <div className="spacing-div"></div>
-                            <DragDropContext onDragEnd={onDragEnd} >
+                                <div className="spacing-div"></div>
                                 <GroupList
                                     boardId={params.boardId}
                                     groups={currBoard.groups}
@@ -224,12 +269,12 @@ export function BoardDetails() {
                                     priorities={currBoard.priorities}
                                     hiddenColumns={hiddenColumns}
                                 />
-                            </DragDropContext>
-                        </>
-                    }
+                            </>
+                        }
 
-                    {content === 'kanban' && <KanbanDetails />}
-                    {content === 'dashboard' && <DashboardDetails/>}
+                        {content === 'kanban' && <KanbanDetails />}
+                        {content === 'dashboard' && <DashboardDetails />}
+                    </DragDropContext>
 
                     {currBoard.groups.length === 0 && <NoGroupsFound cmpsOrder={currBoard.cmpsOrder} />}
 
@@ -238,7 +283,7 @@ export function BoardDetails() {
             }
 
             {selectedTasks.length > 0 && <SelectedModal selectedTasks={selectedTasks} currBoard={currBoard} />}
-            {isActivityLog && <ActivityLog currBoard={currBoard} setIsActivityLog={setIsActivityLog}/>}
+            {isActivityLog && <ActivityLog currBoard={currBoard} setIsActivityLog={setIsActivityLog} />}
             {isBoardDesc && <BoardDescriptionModal boardTitle={currBoard.title} setIsBoardDesc={setIsBoardDesc} />}
 
         </section>

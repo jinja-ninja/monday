@@ -55,7 +55,7 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 const oldBoard = board[key]
                 board[key] = value
 
-                if (key === 'groups') return
+                if (key === 'groups' || key === 'kanbanCmpsOrder') break
                 activity = await createActivity({ type: activityType, from: oldBoard, to: value }, board._id)
                 board.activities.unshift(activity)
                 break
@@ -349,17 +349,6 @@ function getNewBoard() {
     }
 }
 
-//MAKE AN EMPTY BOARD FUNCTION - TEST DEMO DATA LATER
-// function getEmptyBoard() {
-//     return {
-//         title: '',
-//         createdAt: Date.now(),
-//         createdBy: {
-//             _id: 'u101'
-//         }
-//     }
-// }
-
 async function duplicateBoard(board) {
     const duplicatedBoard = JSON.parse(JSON.stringify(board))
     duplicatedBoard._id = utilService.makeId()
@@ -428,10 +417,12 @@ function getActivityType(key) {
         case 'isStarred':
             return 'Favorite'
         case 'style':
-            return 'Edit'
+            return 'Group Color'
         case 'comments':
             return 'Comment'
         case 'groups':
+            return 'Update'
+        case 'kanbanCmpsOrder':
             return 'Update'
 
         default:

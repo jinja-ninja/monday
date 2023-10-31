@@ -9,6 +9,7 @@ export function ActivityPreview({ activity }) {
     const labels = currBoard.labels
     const priorities = currBoard.priorities
     const members = currBoard.members
+    const activityTitle = activity.task?.title || activity.group?.title || currBoard.title
 
     function getLabelColor(labelTitle) {
         const label = labels.find(label => label.title === labelTitle)
@@ -57,7 +58,9 @@ export function ActivityPreview({ activity }) {
 
         <div className="activity-type">
             {dynIcon(activity.action.type)}
-            {activity.action.type}
+            <Text className="title" ellipsis>
+                {activity.action.type}
+            </Text>
         </div>
 
         <div className="action-description">
@@ -71,6 +74,7 @@ export function ActivityPreview({ activity }) {
                     title: getTitle(activity.action.to) || '-',
                     color: getColor(activity.action.type, activity.action.to),
                 }}
+                activityTitle={activityTitle}
             />
         </div>
 
@@ -101,7 +105,7 @@ function dynIcon(type) {
             return <Icon icon={TextCopy} />
         case 'Update':
             return <Icon icon={Update} />
-        case 'Edit':
+        case 'Group Color':
             return <Icon icon={Edit} />
         case 'Deleted':
             return <Icon icon={Delete} />
