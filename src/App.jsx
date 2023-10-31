@@ -5,13 +5,14 @@ import "monday-ui-react-core/tokens"
 import './assets/styles/main.scss'
 
 import { HomePage } from './pages/HomePage'
-import { LoginSignUp } from './pages/LoginSingup'
+import { LoginSignup } from './pages/LoginSignup'
 import { BoardDetails } from './pages/BoardDetails'
 import { TaskDetails } from './cmps/TaskDetails'
 import { PageNotFound } from './pages/PageNotFound'
 import { BoardIndex } from './pages/BoardIndex'
 import { store } from './store/store'
 import { TestCmp } from './pages/TestCmp'
+import { KanbanDetails } from './cmps/Kanban/KanbanDetails'
 
 export function App() {
 
@@ -21,16 +22,15 @@ export function App() {
         <Routes>
           <Route element={<HomePage />} path="/" />
           <Route element={<TestCmp />} path="/test" />
-          <Route element={<BoardIndex />} path="/board" /> {/* TODO: add board index page */}
+          <Route element={<BoardIndex />} path="/board" />
           <Route element={<BoardDetails />} path="board/:boardId">
             <Route element={<TaskDetails />} path='group/:groupId/task/:taskId' />
             {/* <Route element={<ActivityLog />} path='activityLog' /> */}
           </Route>
-          <Route element={<BoardIndex />} path="/board" />
 
           <Route path="/auth">
-            <Route path="login" element={<LoginSignUp />} />
-            <Route path="sign-up" element={<LoginSignUp />} />
+            <Route path="login" element={<LoginSignup />} />
+            <Route path="sign-up" element={<LoginSignup />} />
           </Route>
           {/* <Route path="*" element={<PageNotFound />} /> */}
         </Routes>

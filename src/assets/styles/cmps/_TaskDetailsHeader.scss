@@ -1,8 +1,13 @@
-.task-details-header {
+.task-details-header,
+.activity-log-header {
     height: 130px;
     border-bottom: 1px solid;
     border-color: var(--layout-border-color);
     padding: 20px 20px 6px 24px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1001;
 
     .btn-close {
         width: 24px;
@@ -19,6 +24,23 @@
         align-items: center;
         justify-content: center;
         height: 54px;
+
+        .board-title-container {
+            margin-right: auto;
+            font-size: rem(20px);
+
+            .board-title {
+                font-weight: 700;
+                margin-left: 5px;
+            }
+
+            .log-word {
+                font-weight: 500;
+                margin-left: .5rem;
+            }
+        }
+
+
 
         .avatar-and-icon-container {
             display: flex;

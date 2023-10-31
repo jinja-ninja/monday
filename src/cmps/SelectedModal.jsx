@@ -16,7 +16,7 @@ export function SelectedModal({ selectedTasks, currBoard }) {
     }, [selectedTasks])
 
     function getAllTaskColors() {
-        const colors = selectedTasks.map(groupTaskIds => boardService.getGroupById(currBoard, groupTaskIds.groupId).style)
+        const colors = selectedTasks.map(groupTaskIds => currBoard.groups.find(group => group.id === groupTaskIds.groupId).style)
         setGroupColors(colors)
     }
     function onCloseModal() {
@@ -34,8 +34,6 @@ export function SelectedModal({ selectedTasks, currBoard }) {
     }
 
     async function onDuplicateTasks() {
-        console.log('currBoard._id:', currBoard._id)
-        console.log('selectedTasks:', selectedTasks)
         try {
             await duplicatedBatchTasks(currBoard._id, selectedTasks)
             showSuccessMsg('Duplicated multiple tasks')

@@ -15,6 +15,7 @@ export function Member({ boardMembers, task, boardId, groupId }) {
 
     const [chosenMembers, setChosenMembers] = useState([])
     const [suggestedMembers, setSuggestedMembers] = useState([])
+    const [filteredMembers, setFilteredMembers] = useState([])
     const [isMembersMenuOpen, setIsMembersMenuOpen] = useState(false)
     const [isAddMemberMenuOpen, setIsAddMemberMenuOpen] = useState(true)
     const [isPickerOpen, setIsPickerOpen] = useState(false);
@@ -72,6 +73,16 @@ export function Member({ boardMembers, task, boardId, groupId }) {
         }
     }
 
+    function filterMembers(ev) {
+
+        const filterBy = ev
+        const filteredMembers = boardMembers.filter(member => member.fullname.toLowerCase().includes(filterBy.toLowerCase()))
+        setFilteredMembers(filteredMembers)
+        // console.log('filteredMembers:', filteredMembers)
+    }
+
+
+
     function setDynamicMaxMembers(chosenMembersLength) {
         if (chosenMembersLength <= 2) return 2
         return 1
@@ -91,8 +102,10 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                         return <Avatar
                             key={member._id}
                             size={Avatar.sizes.SMALL}
-                            type={Avatar.types.TEXT}
-                            text={utilService.getNameInitials(member.fullname)}
+                            src={member.imgUrl}
+                            type="img"
+                            // type={Avatar.types.TEXT}
+                            // text={utilService.getNameInitials(member.fullname)}
                             backgroundColor={Avatar.colors.BLACKISH}
                             ariaLabel={member.fullname}
                         />
@@ -114,9 +127,10 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                                 const member = boardMembers.find(member => member._id === memberId)
                                 return <div className="chosen-members" key={member._id} onClick={() => assignMemberToTask(member._id, task)}>
                                     <Chips
+                                        leftAvatar={member.imgUrl}
+                                        className="chip"
                                         label={member.fullname}
                                         onDelete={() => (onDeleteChosenMember(member._id))}
-
                                     />
                                 </div>
                             }
@@ -128,6 +142,8 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                         id="filter-search-input"
                         className="search-input"
                         // onBlur={() => toggleIsSearch()}
+                        onFocus={() => setFilteredMembers(suggestedMembers)}
+                        onChange={(ev) => filterMembers(ev)}
                         autoFocus
                         debounceRate={200}
                         iconName={Search}
@@ -138,13 +154,14 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                 </div>
                 <div className="members-list">
                     <p>Suggested People</p>
-                    {console.log('suggestedMembers in return statement:', suggestedMembers)}
-                    {suggestedMembers.map(member => {
+                    {filteredMembers.map(member => {
                         if (chosenMembers.includes(member._id)) return
                         return <div className="member" key={member._id} onClick={() => assignMemberToTask(member._id, task)}>
                             <Avatar size={Avatar.sizes.SMALL}
-                                type={Avatar.types.TEXT}
-                                text={utilService.getNameInitials(member.fullname)}
+                                src={member.imgUrl}
+                                type="img"
+                                // type={Avatar.types.TEXT}
+                                // text={utilService.getNameInitials(member.fullname)}
                                 backgroundColor={Avatar.colors.BLACKISH}
                                 ariaLabel={member.fullname}
                             />

@@ -1,0 +1,109 @@
+.kanban-task-container {
+
+    &:first-of-type {
+        margin-top: var(--spacing-small);
+    }
+
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    width: 235px;
+    border-radius: var(--border-radius-small);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, .2);
+    background-color: var(--primary-background-color);
+    color: var(--primary-text-color);
+    cursor: pointer;
+
+    .task-header {
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px;
+        flex-wrap: nowrap;
+
+        .header-btns-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            button {
+                color: var(--color-asphalt);
+
+            }
+
+            .has-comments-container {
+                color: var(--color-basic_blue);
+                position: relative;
+
+                .comments-counter {
+                    color: var(--text-color-on-primary);
+                    background-color: var(--color-basic_blue);
+                    position: absolute;
+                    left: 12px;
+                    top: 10px;
+                    line-height: 9px;
+                    font-size: 10px;
+                    border-radius: 10px;
+                    text-align: center;
+                    padding: 2px 4px;
+                }
+            }
+        }
+    }
+
+    .task-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+        padding: 8px;
+
+        .priorities-row-container,
+        .date-row-container,
+        .person-row-container,
+        .timeline-row-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 220px;
+            height: 34px;
+
+            .priority-title,
+            .date-title,
+            .person-title,
+            .timeline-title {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: .3rem;
+                color: var(--color-asphalt);
+
+            }
+
+            .task-status,
+            .task-date,
+            .task-members,
+            .task-timeline {
+                width: 140px;
+                height: 34px;
+                background-color: var(--color-border_light_gray);
+
+                .timeline-container {
+                    width: 120px;
+                    margin: 6px 10px;
+                }
+            }
+
+            .task-members {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+            }
+
+
+        }
+    }
+}

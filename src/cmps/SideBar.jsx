@@ -79,8 +79,7 @@ export function SideBar() {
     return (
         // <div className={"hover-side-bar-container " + dynHoverClass}
             // onMouseEnter={() => debouncedHover(true)}
-            // onMouseLeave={() => debouncedHover(false)}
-        // >
+            // onMouseLeave={() => debouncedHover(false)}>
             <div className={"side-bar-container " + dynOpenCloseClass}>
 
                 <div className="side-bar-upper-container">

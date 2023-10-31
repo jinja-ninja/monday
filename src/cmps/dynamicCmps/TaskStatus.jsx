@@ -6,10 +6,17 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 import { addLabel, removeLabel, updateLabel } from "../../store/actions/board.action"
 import { boardService } from "../../services/board.service.local"
 
-export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
+export function TaskStatus({ board, task, labels, priorites, type, onUpdateTask }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isEditLabelsOpen, setIsEditLabelsOpen] = useState(false)
     const refLabelDialog = useRef(null)
+
+    let statusOrPriorities
+    if (type === 'priority') {
+        statusOrPriorities = 'priorities'
+    } else if (type = 'status') {
+        statusOrPriorities = 'labels'
+    }
 
     function onSetStatus(status) {
         onUpdateTask(task.id, { key: type, value: status })
@@ -19,13 +26,13 @@ export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
         if (!board) return
 
         let isInUse = false
-        const label = board.labels.find(label => label.id === labelId)
+        const label = board[statusOrPriorities].find(label => label.id === labelId)
         const groups = board.groups
 
         groups.forEach(group => {
             const tasks = group.tasks
             tasks.forEach(task => {
-                if (task.status === label.title) isInUse = true
+                if (task[type] === label.title) isInUse = true
             })
         })
         return isInUse
@@ -46,7 +53,7 @@ export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
         ev.stopPropagation()
         try {
             const label = await boardService.getEmptyLabel()
-            await addLabel(board._id, label)
+            await addLabel(board._id, label, statusOrPriorities)
             showSuccessMsg(`New label added`)
         } catch (err) {
             showErrorMsg(`Cannot add label`)
@@ -60,16 +67,25 @@ export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
             return
         }
         try {
-            await removeLabel(board._id, labelId)
+            await removeLabel(board._id, labelId, statusOrPriorities)
             showSuccessMsg(`Label removed ${labelId}`)
         } catch (err) {
             showErrorMsg(`Cannot remove label ${labelId}`)
         }
     }
 
-    async function onUpdateLabel(boardId, label) {
+    async function onUpdateLabel(boardId, label, statusOrPriorities) {
+        if (isLabelInUse(label.id)) {
+            showErrorMsg(`Cannot edit a label while in use`)
+            return
+        }
+        else if (labels.some(l => l.title === label.title)) {
+            showErrorMsg(`Label title is already in use`)
+            return
+        }
+
         try {
-            updateLabel(boardId, label)
+            updateLabel(boardId, label, statusOrPriorities)
             showSuccessMsg(`Label ${label.id} updated successfully`)
         } catch (err) {
             showErrorMsg(`Cannot update label ${label.id}`)
@@ -85,7 +101,6 @@ export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
         ref: refLabelDialog,
         callback: onClickOutsideLabels
     })
-
 
     return (
         <div className="task-status" onClick={() => setIsMenuOpen(prevState => !prevState)}>
@@ -119,6 +134,7 @@ export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
                                                 boardId={board._id}
                                                 key={`label-${label.id}`}
                                                 label={label}
+                                                statusOrPriorities={statusOrPriorities}
                                                 onRemoveLabel={onRemoveLabel}
                                                 onUpdateLabel={onUpdateLabel} />
                                         )}

@@ -118,6 +118,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
             showSuccessMsg(`Task updated ${taskId}`)
         } catch (err) {
             showErrorMsg(`Cannot update task ${taskId}`)
+            console.log('err:', err)
         }
     }
 
@@ -213,6 +214,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     onUpdateTask={onUpdateTask} />
             case "priority":
                 return <TaskStatus
+                    board={currBoard}
                     type={'priority'}
                     task={task}
                     labels={priorities}
@@ -245,6 +247,9 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     boardId={boardId}
                     groupId={groupId}
                     taskId={task.id}
+                    onUpdateTask={onUpdateTask}
+                    taskFiles={task.files}
+                    currBoard={currBoard}
                 />
             default:
                 break
@@ -337,8 +342,8 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     })}
                     {provided.placeholder}
                     <div
-                    className={"header-title last-col " + dynCollapseGroupClass}>
-                        <Icon icon={Add}  className="plus-icon"/>
+                        className={"header-title last-col " + dynCollapseGroupClass}>
+                        <Icon icon={Add} className="plus-icon" />
                     </div>
                 </section>
             )}

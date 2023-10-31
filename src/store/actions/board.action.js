@@ -14,12 +14,14 @@ export async function loadBoards() {
     }
 }
 
-//Specific Board Actions
-// !!!!! TO DO !!!!!!
-// change name to updateCurrentBoard
-export async function getBoardById(boardId, filterBy) {
+//Load currentBoard
+export async function loadBoard(boardId, filterBy, sortBy) {
+    await getBoardById(boardId, filterBy, sortBy)
+}
+
+export async function getBoardById(boardId, filterBy, sortBy) {
     try {
-        const board = await boardService.getBoardById(boardId, filterBy)
+        const board = await boardService.getBoardById(boardId, filterBy, sortBy)
         store.dispatch({ type: SET_BOARD, board })
     } catch (err) {
         console.log('Board Actions: err in Getting Board', err)
@@ -51,7 +53,7 @@ export async function toggleBoardFavorite(boardId, isCurrentBoard) {
         }
         store.dispatch({ type: UPDATE_BOARDS, board: board })
         return await boardService.update('board', boardId, null, null, { key: 'isStarred', value: starredState })
-    } catch (error) {
+    } catch (err) {
         console.log('Board Actions: err in Adding Board', err)
         throw err
     }
@@ -160,7 +162,6 @@ export async function addTask(boardId, groupId, task, fromBtn) {
 
 export async function removeTask(boardId, groupId, taskId) {
     try {
-        console.log('taskId from remove task:', taskId)
         const board = await boardService.removeTask(boardId, groupId, taskId)
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
@@ -173,7 +174,6 @@ export async function removeTask(boardId, groupId, taskId) {
 export async function updateTask(boardId, groupId, taskId, data) {
     try {
         const board = await boardService.update('task', boardId, groupId, taskId, data)
-        console.log('board:', board)
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {
@@ -230,9 +230,9 @@ export async function getLabelById(boardId, labelId) {
     }
 }
 
-export async function addLabel(boardId, label) {
+export async function addLabel(boardId, label, type) {
     try {
-        const board = await boardService.addLabel(boardId, label)
+        const board = await boardService.addLabel(boardId, label, type)
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {
@@ -241,9 +241,9 @@ export async function addLabel(boardId, label) {
     }
 }
 
-export async function removeLabel(boardId, labelId) {
+export async function removeLabel(boardId, labelId, type) {
     try {
-        const board = await boardService.removeLabel(boardId, labelId)
+        const board = await boardService.removeLabel(boardId, labelId, type)
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {
@@ -252,9 +252,9 @@ export async function removeLabel(boardId, labelId) {
     }
 }
 
-export async function updateLabel(boardId, label) {
+export async function updateLabel(boardId, label, type) {
     try {
-        const board = await boardService.updateLabel(boardId, label)
+        const board = await boardService.updateLabel(boardId, label, type)
         store.dispatch({ type: SET_BOARD, board })
         store.dispatch({ type: UPDATE_BOARDS, board })
     } catch (err) {

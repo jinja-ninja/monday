@@ -1,7 +1,6 @@
-.task-details-container {
-    //DESIGN PURPOSES
-    // height: 100vh;
-    //CHANGE TO %
+.task-details-container,
+.activity-log-container {
+    box-shadow: 0px -1px 10px -1px rgba(0, 0, 0, 0.30);
     height: 100%;
     width: 700px;
     background-color: var(--primary-background-color);
@@ -18,7 +17,8 @@
 
 }
 
-.task-details-container::-webkit-scrollbar {
+.task-details-container::-webkit-scrollbar,
+.activity-log-container::-webkit-scrollbar {
     width: 0px;
     /* Adjust the width as needed */
     height: 0px;
@@ -44,13 +44,11 @@
         padding: 10px 20px;
         color: var(--primary-text-color);
         cursor: text;
-        // width: 100%;
         resize: none;
 
         width: 660px;
         justify-content: start;
         text-align: left;
-        // margin-bottom: 115px;
         margin-bottom: 65px;
 
         &:focus-visible {
@@ -83,6 +81,7 @@
     img {
         width: 290px;
         margin-bottom: rem(39px);
+        margin-top: rem(50px);
     }
 
     h2 {
@@ -247,19 +246,41 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-bottom: 1.25rem;
 
-        div {
+        .actions-bar,
+        .task-activity-actions-bar {
             display: flex;
             align-items: center;
+        }
 
-            button {
-                text-transform: none;
-            }
+        .actions-bar {
+            gap: rem(20px);
+        }
 
-            .person-btn {
-                margin-inline-start: .5rem;
-                width: 85px;
+        button {
+            text-transform: none;
+        }
+
+        input {
+            padding: 0 16px;
+            width: 150px;
+            border: 1px solid #c4c4c4;
+            height: 32px;
+            border-radius: 4px;
+            outline: none;
+            transition: width .1s ease, height .1s ease;
+
+            &::placeholder {
+                font-size: rem(15px);
+                font-weight: 500;
+                color: var(--ui-border-color);
             }
+        }
+
+        .person-btn {
+            margin-inline-start: .5rem;
+            width: 85px;
         }
     }
 }

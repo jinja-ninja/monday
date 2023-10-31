@@ -30,7 +30,7 @@ export function TaskDetails() {
             <main>
                 {currTab === 'updates' && <TaskUpdates boardId={boardId} groupId={groupId} taskId={taskId} currTask={currTask} />}
                 {currTab === 'files' && <TaskFiles />}
-                {currTab === 'activityLog' && <TaskActvity />}
+                {currTab === 'activityLog' && <TaskActvity taskId={taskId}/>}
             </main >
         </div >
     )

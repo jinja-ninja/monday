@@ -1,7 +1,7 @@
 import { Avatar, EditableHeading, IconButton, Tab, TabList } from "monday-ui-react-core";
 import { Close, Home, Menu } from "monday-ui-react-core/icons"
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { updateTask } from "../store/actions/board.action";
 
 export function TaskDetailsHeader({ boardId, groupId, taskId, taskTitle, setCurrTab }) {
@@ -13,7 +13,7 @@ export function TaskDetailsHeader({ boardId, groupId, taskId, taskTitle, setCurr
             updateTask(boardId, groupId, taskId, { key: 'title', value: taskTitleValue })
         }
     }
-
+    
     return (
         <div className="task-details-header" >
 
@@ -34,17 +34,15 @@ export function TaskDetailsHeader({ boardId, groupId, taskId, taskTitle, setCurr
 
                 <div className="avatar-and-icon-container">
                     <Avatar
-                        ariaLabel="Hadas Fahri"
+                        ariaLabel="Gal Ben Natan"
                         size="small"
                         src="https://cdn1.monday.com/dapulse_default_photo.png"
                         type="img"
                     />
                     <div></div>
                     <IconButton
-                        ariaLabel="Add"
                         icon={Menu}
                         size="50"
-                    // onClick={function noRefCheck() { }}
                     />
                 </div>
             </div>

@@ -37,7 +37,7 @@ export function GroupList({ groups, labels, cmpsOrder, boardId, priorities, hidd
             )}
         </Droppable>
 
-        {!groups.length === 0 && <Button
+        {groups.length !== 0 && <Button
             onClick={() => { addGroup(boardId) }}
             kind="secondary"
             size="small"
@@ -45,6 +45,7 @@ export function GroupList({ groups, labels, cmpsOrder, boardId, priorities, hidd
             leftIcon={Add}>
             Add new group
         </Button>}
+
 
     </div >
 }

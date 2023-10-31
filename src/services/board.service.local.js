@@ -10,6 +10,7 @@ export const boardService = {
     save,
     remove,
     // getEmptyBoard,
+    // getBoardMembers,
     getNewBoard,
     duplicateBoard,
     addNewGroup,
@@ -44,22 +45,28 @@ _createBoards()
 // General Update function
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
     try {
-
         const board = await getBoardById(boardId)
+        const activityType = getActivityType(key)
         let groupIdx, taskIdx, activity
 
         switch (type) {
             case 'board':
                 if (!boardId) throw new Error('Error updating')
+                const oldBoard = board[key]
                 board[key] = value
+
+                if (key === 'groups') return
+                activity = await createActivity({ type: activityType, from: oldBoard, to: value }, board._id)
+                board.activities.unshift(activity)
                 break
 
             case 'group':
                 if (!groupId) throw new Error('Error updating')
                 groupIdx = board.groups.findIndex(group => group.id === groupId)
+                const oldGroup = board.groups[groupIdx][key]
                 board.groups[groupIdx][key] = value
 
-                activity = createActivity(`Updated group ${board.groups[groupIdx].title}`, board._id, groupId)
+                activity = await createActivity({ type: activityType, from: oldGroup[key], to: value }, board._id, groupId)
                 board.activities.unshift(activity)
                 break
 
@@ -67,9 +74,10 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 if (!taskId) throw new Error('Error updating')
                 groupIdx = board.groups.findIndex(group => group.id === groupId)
                 taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+                const oldTask = board.groups[groupIdx].tasks[taskIdx][key]
                 board.groups[groupIdx].tasks[taskIdx][key] = value
 
-                activity = createActivity(`Updated task ${board.groups[groupIdx].tasks[taskIdx].title}`, boardId, groupId, taskId)
+                activity = await createActivity({ type: activityType, from: oldTask, to: value }, boardId, groupId, taskId)
                 board.activities.unshift(activity)
                 break
 
@@ -79,9 +87,9 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
 
         return await storageService.put(STORAGE_KEY, board)
     }
-    catch {
-        // console.log('error')
-        throw new Error('Error updating')
+    catch (err) {
+        console.log(err)
+        throw err
     }
 
 }
@@ -90,7 +98,7 @@ async function query() {
     return await storageService.query(STORAGE_KEY)
 }
 
-async function getBoardById(boardId, filterBy = { txt: '', person: null }) {
+async function getBoardById(boardId, filterBy = { txt: '', person: null }, sortBy) {
     let board = await storageService.get(STORAGE_KEY, boardId)
     if (filterBy.txt) {
         const regex = new RegExp(filterBy.txt, 'i')
@@ -111,20 +119,33 @@ async function getBoardById(boardId, filterBy = { txt: '', person: null }) {
 
     if (filterBy.person) {
         board.groups = board.groups.map((group) => {
-            const filteredTasks = group.tasks.filter((task) => task.memberIds.includes(filterBy.person._id));
+            const filteredTasks = group.tasks.filter((task) => task.memberIds.includes(filterBy.person._id))
 
-            // Include the group if there are matching tasks
             if (filteredTasks.length > 0) {
-                group.tasks = filteredTasks;
+                group.tasks = filteredTasks
                 return group;
             }
-            // Exclude the group if no matching tasks
+
             return null;
-        }).filter((group) => group !== null); // Remove groups without matching tasks
+        }).filter((group) => group !== null)
+    }
+    if (sortBy) {
+        board.groups = board.groups.sort((a, b) => {
+            const titleA = a.title.toLowerCase();
+            const titleB = b.title.toLowerCase();
+
+            if (titleA < titleB) {
+                return -1
+            } else if (titleA > titleB) {
+                return 1
+            } else {
+                return 0
+            }
+        })
+
     }
 
     return board;
-
 }
 
 async function save(board) {
@@ -144,7 +165,7 @@ function getNewBoard() {
         createdBy: {
             _id: utilService.makeId(),
             fullname: "Gal Ben Natan",
-            imgUrl: "http://some-img"
+            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
         },
         style: {
             backgroundImage: ""
@@ -175,17 +196,17 @@ function getNewBoard() {
             {
                 _id: "u101",
                 fullname: "Gal Ben Natan",
-                imgUrl: "https://www.google.com"
+                imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
             },
             {
                 _id: "u102",
                 fullname: "Omer Vered",
-                imgUrl: "https://www.google.com"
+                imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619996/OmerImg_svk1xe.png"
             },
             {
                 _id: "u103",
                 fullname: "Nati Feldbaum",
-                imgUrl: "https://www.google.com"
+                imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698620005/NatiImg_qvxcqb.png"
             }
         ],
         groups: [
@@ -369,16 +390,52 @@ function getEmptyTask(title = '') {
         }
     }
 }
-
-function createActivity(txt, boardId, groupId = null, taskId = null) {
+//Activity functions
+async function createActivity(action = {}, boardId, groupId = null, taskId = null) {
     return {
         id: 'a-' + utilService.makeId(),
         createdAt: Date.now(),
-        byMember: '',
+        byMember: {
+            _id: 'u101',
+            fullname: 'Default user',
+            imgUrl: 'https://cdn1.monday.com/dapulse_default_photo.png'
+        },
         boardId,
         groupId,
         taskId,
-        action: txt,
+        action,
+        group: groupId ? await getGroupById(boardId, groupId) : null,
+        task: taskId ? await getTaskById(boardId, groupId, taskId) : null
+    }
+}
+
+function getActivityType(key) {
+    switch (key) {
+        case 'title':
+            return 'Name'
+        case 'status':
+            return 'Status'
+        case 'priority':
+            return 'Priority'
+        case 'dueDate':
+            return 'Date'
+        case 'timeline':
+            return 'Timeline'
+        case 'memberIds':
+            return 'Person'
+        case 'files':
+            return 'File'
+        case 'isStarred':
+            return 'Favorite'
+        case 'style':
+            return 'Edit'
+        case 'comments':
+            return 'Comment'
+        case 'groups':
+            return 'Update'
+
+        default:
+            throw new Error('Error updating')
     }
 }
 
@@ -399,7 +456,8 @@ async function addNewGroup(board) {
     const updatedBoard = { ...board }
     updatedBoard.groups.push(newGroup)
 
-    const activity = createActivity(`Created group ${newGroup.title}`, board._id, newGroup.id)
+    const activity = await createActivity({ type: 'Created', from: null, to: newGroup.title }, board._id, newGroup.id)
+    activity.group = newGroup
     updatedBoard.activities.unshift(activity)
 
     return await storageService.put(STORAGE_KEY, updatedBoard)
@@ -411,8 +469,8 @@ async function removeGroup(board, groupId) {
     const group = updatedBoard.groups[groupIdx]
     updatedBoard.groups.splice(groupIdx, 1)
 
-    const activity = createActivity(`Removed group ${group.title}`, board._id, groupId)
-    updatedBoard.activities.unshift(activity)
+    const activity = await createActivity({ type: 'Deleted', from: group.title, to: null }, board._id, groupId)
+    board.activities.unshift(activity)
 
     return await storageService.put(STORAGE_KEY, updatedBoard)
 }
@@ -432,8 +490,9 @@ async function duplicatedGroup(board, groupId) {
     return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
-function getGroupById(board, groupId) {
+async function getGroupById(boardId, groupId) {
     // const newBoard = structuredClone(board)
+    const board = await getBoardById(boardId)
     return board.groups.find(group => group.id === groupId)
 }
 
@@ -454,7 +513,8 @@ async function addTask(boardId, groupId, task, fromBtn) {
 
     board.groups[groupIdx].tasks[pushOrUnshift](task)
 
-    const activity = createActivity(`Added task ${task.title}`, boardId, groupId, task.id)
+    const activity = await createActivity({ type: 'Created', from: null, to: task.title }, boardId, groupId, task.id)
+    activity.task = task
     board.activities.unshift(activity)
 
     return await storageService.put(STORAGE_KEY, board)
@@ -462,13 +522,16 @@ async function addTask(boardId, groupId, task, fromBtn) {
 
 async function removeTask(boardId, groupId, taskId) {
     const board = await getBoardById(boardId)
-    console.log('board:', board)
+
     const groupIdx = board.groups.findIndex(group => group.id === groupId)
     const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+    const group = board.groups[groupIdx]
     const task = board.groups[groupIdx].tasks[taskIdx]
     board.groups[groupIdx].tasks.splice(taskIdx, 1)
-    console.log('removing task:', board)
-    const activity = createActivity(`Removed task ${task.title}`, boardId, groupId, taskId)
+
+    const activity = await createActivity({ type: 'Deleted', from: task.title, to: null }, boardId, groupId, task.id)
+    activity.group = group
+    activity.task = task
     board.activities.unshift(activity)
 
     return await storageService.put(STORAGE_KEY, board)
@@ -552,24 +615,25 @@ async function getLabelById(boardId, labelId) {
     return label
 }
 
-async function addLabel(boardId, label) {
+async function addLabel(boardId, label, type) {
     const board = await getBoardById(boardId)
-    board.labels.push(label)
+    board[type].push(label)
     return await storageService.put(STORAGE_KEY, board)
 }
 
-async function removeLabel(boardId, labelId) {
+async function removeLabel(boardId, labelId, type) {
     const board = await getBoardById(boardId)
-    const labelIdx = board.labels.findIndex(label => label.id === labelId)
-    board.labels.splice(labelIdx, 1)
+    const labelIdx = board[type].findIndex(label => label.id === labelId)
+    board[type].splice(labelIdx, 1)
     return await storageService.put(STORAGE_KEY, board)
 }
 
-async function updateLabel(boardId, label) {
+async function updateLabel(boardId, label, type) {
+    console.log('type:', type)
     const board = await getBoardById(boardId)
     const labelId = label.id
-    const labelIdx = board.labels.findIndex(label => label.id === labelId)
-    board.labels[labelIdx] = label
+    const labelIdx = board[type].findIndex(label => label.id === labelId)
+    board[type][labelIdx] = label
     return await storageService.put(STORAGE_KEY, board)
 }
 
@@ -582,7 +646,7 @@ function createNewComment(newCommentText) {
         byMember: {
             _id: "u101",
             fullname: "Gal Ben Natan",
-            imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
+            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
         }
     }
 
@@ -673,7 +737,7 @@ function _createBoards() {
                     createdBy: {
                         _id: "u101",
                         fullname: "Abi Abambi",
-                        imgUrl: "http://some-img"
+                        imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                     },
                     style: {
                         backgroundImage: ""
@@ -704,17 +768,17 @@ function _createBoards() {
                         {
                             _id: "u101",
                             fullname: "Gal Ben Natan",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                         },
                         {
                             _id: "u102",
                             fullname: "Omer Vered",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619996/OmerImg_svk1xe.png"
                         },
                         {
                             _id: "u103",
                             fullname: "Nati Feldbaum",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698620005/NatiImg_qvxcqb.png"
                         }
                     ],
                     groups: [
@@ -773,7 +837,7 @@ function _createBoards() {
                                             byMember: {
                                                 _id: "u101",
                                                 fullname: "Gal Ben Natan",
-                                                imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                                                imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                                             }
                                         }
                                     ],
@@ -796,7 +860,7 @@ function _createBoards() {
                                         _id: "u101",
                                         username: "Gal",
                                         fullname: "Gal Ben Natan",
-                                        imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                                        imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                                     },
                                     style: {
                                         backgroundColor: "done-green"
@@ -817,7 +881,7 @@ function _createBoards() {
                                             byMember: {
                                                 _id: "u101",
                                                 fullname: "Gal Ben Natan",
-                                                imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                                                imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                                             }
                                         }
                                     ],
@@ -840,7 +904,7 @@ function _createBoards() {
                                         _id: "u101",
                                         username: "Gal",
                                         fullname: "Gal Ben Natan",
-                                        imgUrl: "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                                        imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                                     },
                                     style: {
                                         backgroundColor: "done-green"
@@ -850,28 +914,7 @@ function _createBoards() {
                             style: "bright-blue"
                         }
                     ],
-                    activities: [
-                        {
-                            id: "a101",
-                            txt: "Changed Color",
-                            createdAt: 154514,
-                            byMember: {
-                                _id: "u101",
-                                fullname: "Abi Abambi",
-                                imgUrl: "http://some-img"
-                            },
-                            group: {
-                                id: "g101",
-                                title: "Urgent Stuff"
-                            },
-                            task: {
-                                id: "c101",
-                                title: "Replace Logo",
-                                comments: [],
-                                memberIds: []
-                            }
-                        }
-                    ],
+                    activities: [],
                     priorities: [
 
                         {
@@ -920,7 +963,7 @@ function _createBoards() {
                     createdBy: {
                         _id: "u102",
                         fullname: "Joe Johnson",
-                        imgUrl: "http://another-img"
+                        imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                     },
                     style: {
                         backgroundImage: ""
@@ -951,17 +994,17 @@ function _createBoards() {
                         {
                             _id: "u101",
                             fullname: "Gal Ben Natan",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                         },
                         {
                             _id: "u102",
                             fullname: "Omer Vered",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619996/OmerImg_svk1xe.png"
                         },
                         {
                             _id: "u103",
                             fullname: "Nati Feldbaum",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698620005/NatiImg_qvxcqb.png"
                         }
                     ],
                     groups: [
@@ -1016,7 +1059,7 @@ function _createBoards() {
                                             byMember: {
                                                 _id: "u103",
                                                 fullname: "Jane Doe",
-                                                imgUrl: "http://another-cloudinary-image.jpg"
+                                                imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                                             }
                                         }
                                     ],
@@ -1049,27 +1092,7 @@ function _createBoards() {
                             style: "dark_indigo"
                         }
                     ],
-                    activities: [
-                        {
-                            id: "a102",
-                            txt: "Added Task",
-                            createdAt: 154515,
-                            byMember: {
-                                _id: "u102",
-                                fullname: "Joe Johnson",
-                                imgUrl: "http://another-img"
-                            },
-                            group: {
-                                id: "g103",
-                                title: "Critical Tasks"
-                            },
-                            task: {
-                                id: "c105",
-                                title: "Design Layout",
-                                comments: []
-                            }
-                        }
-                    ],
+                    activities: [],
                     priorities: [
 
                         {
@@ -1118,7 +1141,7 @@ function _createBoards() {
                     createdBy: {
                         _id: "u104",
                         fullname: "Liam Nelson",
-                        imgUrl: "http://yet-another-img"
+                        imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                     },
                     style: {
                         backgroundImage: ""
@@ -1149,17 +1172,17 @@ function _createBoards() {
                         {
                             _id: "u101",
                             fullname: "Gal Ben Natan",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                         },
                         {
                             _id: "u102",
                             fullname: "Omer Vered",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619996/OmerImg_svk1xe.png"
                         },
                         {
                             _id: "u103",
                             fullname: "Nati Feldbaum",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698620005/NatiImg_qvxcqb.png"
                         }
                     ],
                     groups: [
@@ -1237,7 +1260,7 @@ function _createBoards() {
                                             byMember: {
                                                 _id: "u105",
                                                 fullname: "Emma Stone",
-                                                imgUrl: "http://yet-another-cloudinary-image.jpg"
+                                                imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                                             }
                                         }
                                     ],
@@ -1264,7 +1287,7 @@ function _createBoards() {
                                         _id: "u105",
                                         username: "Emma",
                                         fullname: "Emma Stone",
-                                        imgUrl: "http://yet-another-cloudinary-image.jpg"
+                                        imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                                     },
                                     style: {
                                         backgroundColor: "bright-green"
@@ -1274,27 +1297,7 @@ function _createBoards() {
                             style: "bright-green"
                         }
                     ],
-                    activities: [
-                        {
-                            id: "a103",
-                            txt: "Updated Task",
-                            createdAt: 154550,
-                            byMember: {
-                                _id: "u104",
-                                fullname: "Liam Nelson",
-                                imgUrl: "http://yet-another-img"
-                            },
-                            group: {
-                                id: "g105",
-                                title: "Important Tasks"
-                            },
-                            task: {
-                                id: "c109",
-                                title: "Analyze Data",
-                                comments: []
-                            }
-                        }
-                    ],
+                    activities: [],
                     priorities: [
 
                         {
@@ -1343,7 +1346,7 @@ function _createBoards() {
                     createdBy: {
                         _id: "u106",
                         fullname: "Lucy Williams",
-                        imgUrl: "http://different-img-url"
+                        imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                     },
                     style: {
                         backgroundImage: ""
@@ -1374,17 +1377,17 @@ function _createBoards() {
                         {
                             _id: "u101",
                             fullname: "Gal Ben Natan",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
                         },
                         {
                             _id: "u102",
                             fullname: "Omer Vered",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619996/OmerImg_svk1xe.png"
                         },
                         {
                             _id: "u103",
                             fullname: "Nati Feldbaum",
-                            imgUrl: "https://www.google.com"
+                            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698620005/NatiImg_qvxcqb.png"
                         }
                     ],
                     groups: [
@@ -1458,7 +1461,7 @@ function _createBoards() {
                                             byMember: {
                                                 _id: "u107",
                                                 fullname: "Mike Brown",
-                                                imgUrl: "http://different-cloudinary-url.jpg"
+                                                imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                                             }
                                         }
                                     ],
@@ -1485,7 +1488,7 @@ function _createBoards() {
                                         _id: "u107",
                                         username: "Mike",
                                         fullname: "Mike Brown",
-                                        imgUrl: "http://different-cloudinary-url.jpg"
+                                        imgUrl: "https://cdn1.monday.com/dapulse_default_photo.png"
                                     },
                                     style: {
                                         backgroundColor: "done-green"
@@ -1495,27 +1498,7 @@ function _createBoards() {
                             style: "dark-blue"
                         }
                     ],
-                    activities: [
-                        {
-                            id: "a104",
-                            txt: "Added New Design",
-                            createdAt: 154580,
-                            byMember: {
-                                _id: "u106",
-                                fullname: "Lucy Williams",
-                                imgUrl: "http://different-img-url"
-                            },
-                            group: {
-                                id: "g107",
-                                title: "Design Updates"
-                            },
-                            task: {
-                                id: "c115",
-                                title: "Design Landing Page",
-                                comments: []
-                            }
-                        }
-                    ],
+                    activities: [],
                     priorities: [
                         {
                             id: "p100",

@@ -21,6 +21,10 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
     }, [])
 
     useEffect(() => {
+        setNumOfTasks(group.tasks.length)
+    }, [group.tasks.length])
+
+    useEffect(() => {
         if (collapseAll) setShowGroup(false)
         else setShowGroup(true)
     }, [collapseAll])

@@ -1,22 +1,19 @@
 import { Button, IconButton, SplitButton } from "monday-ui-react-core";
 import { Person, TurnInto } from "monday-ui-react-core/icons";
-import { ActivityList } from "./ActivityList";
+import { ActivityList } from "./ActivityLog/ActivityList";
 import { useSelector } from "react-redux";
 
-export function TaskActvity() {
+export function TaskActvity({ taskId }) {
     const currBoard = useSelector(state => state.boardModule.board)
-    const activities = currBoard.activities
+    const activities = currBoard.activities.filter(activity => activity.taskId === taskId)
 
     return (
         <div className="task-activity-log-container">
             <div className="task-activity-log-header">
-                <div>
+                <div className="task-activity-actions-bar">
                     <SplitButton
                         size="small"
-                    // onClick={function noRefCheck() { }}
-                    // onSecondaryDialogDidHide={function noRefCheck() { }}
-                    // onSecondaryDialogDidShow={function noRefCheck() { }}
-                    // secondaryDialogContent={function noRefCheck() { }}
+
                     >
                         Filter log
                     </SplitButton>
@@ -25,7 +22,6 @@ export function TaskActvity() {
                         kind="tertiary"
                         size="small"
                         leftIcon={Person}
-                    //   onClick={function noRefCheck(){}}
                     >
                         Person
                     </Button>
@@ -34,10 +30,12 @@ export function TaskActvity() {
                 <IconButton
                     ariaLabel="Refresh"
                     icon={TurnInto}
-                // onClick={function noRefCheck() { }}
                 />
             </div>
-            <ActivityList activities={activities} />
+
+            <ActivityList
+                activities={activities}
+            />
         </div>
     )
 }

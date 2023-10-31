@@ -11,7 +11,6 @@ import { Icon } from "monday-ui-react-core";
 import { CloseSmall, Time } from "monday-ui-react-core/icons";
 
 export function Timeline({ Timeline, boardId, groupId, taskId, groupColor }) {
-
     const [range, setRange] = useState(null)
     const [isPickerOpen, setIsPickerOpen] = useState(false)
 

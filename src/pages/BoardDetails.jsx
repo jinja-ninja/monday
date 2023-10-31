@@ -6,7 +6,7 @@ import { GroupList } from "../cmps/GroupList"
 import { BoardMainHeader } from "../cmps/BoardMainHeader"
 import { SideBar } from "../cmps/SideBar"
 import { Outlet, useParams } from "react-router-dom"
-import { addGroup, addTask, getBoardById, updateBoardOptimistic } from "../store/actions/board.action"
+import { addGroup, addTask, getBoardById, loadBoard, updateBoardOptimistic } from "../store/actions/board.action"
 import { useSelector } from "react-redux"
 import { UserMsg } from "../cmps/UserMsg"
 import MondayLoader from '../assets/Loader/MondayLoader.gif'
@@ -22,6 +22,10 @@ import { HideBtn } from "../cmps/HideBtn";
 import { PersonBtn } from "../cmps/PersonBtn";
 import { useDispatch } from "react-redux"
 import { SET_COLUMNS_STATE } from "../store/reducers/board.reducer"
+import { BoardActionsBtns } from "../cmps/BoardActionsBtns"
+import { KanbanDetails } from "../cmps/Kanban/KanbanDetails"
+import { DashboardDetails } from "../cmps/Dashboard/DashboardDetails"
+import { ActivityLog } from "../cmps/ActivityLog/ActivityLog"
 
 export function BoardDetails() {
     const params = useParams()
@@ -29,11 +33,13 @@ export function BoardDetails() {
     const currBoard = useSelector(state => state.boardModule.board)
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
     const columnsState = useSelector(state => state.boardModule.columnsState)
+    const [content, setContent] = useState('board')
 
     const [isSearch, setIsSearch] = useState(false)
     const [filterBy, setFilterBy] = useState({ txt: '', person: null })
     const [sortBy, setSortBy] = useState(false)
     const [isBoardDesc, setIsBoardDesc] = useState(false)
+    const [isActivityLog, setIsActivityLog] = useState(false)
     const [personPickerOpen, setPersonPickerOpen] = useState(false)
     const [hidePickerOpen, setHidePickerOpen] = useState(false)
 
@@ -45,11 +51,10 @@ export function BoardDetails() {
 
 
     useEffect(() => {
-        loadBoard()
-    }, [params.boardId, filterBy])
+        loadBoard(params.boardId, filterBy, sortBy)
+    }, [params.boardId, filterBy, sortBy])
 
     useEffect(() => {
-        // if moving to another board reset the hidden columns to none
         dispatch({
             type: SET_COLUMNS_STATE, columnsState: [
                 { name: "Members", isChecked: true },
@@ -62,12 +67,6 @@ export function BoardDetails() {
         })
 
     }, [params.boardId])
-
-    async function loadBoard() {
-        if (!params.deletedId) {
-            await getBoardById(params.boardId, filterBy)
-        }
-    }
 
     function toggleIsSearch() {
         if (filterBy.txt) return
@@ -175,7 +174,6 @@ export function BoardDetails() {
         await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: newGroups }, newBoard)
     }
 
-
     if (currBoard === null) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
     return <main className="board-details-layout">
         <BoardMainHeader />
@@ -187,61 +185,51 @@ export function BoardDetails() {
             {typeof currBoard === 'string' && <BoardDeletedPage boardTitle={currBoard} />}
             {typeof currBoard !== 'string' &&
                 <>
-                    <BoardDetailsHeader isStarred={currBoard.isStarred} title={currBoard.title} boardId={currBoard._id} setIsBoardDesc={setIsBoardDesc} />
+                    <BoardDetailsHeader
+                        setContent={setContent}
+                        isStarred={currBoard.isStarred}
+                        title={currBoard.title}
+                        boardId={currBoard._id}
+                        setIsBoardDesc={setIsBoardDesc}
+                        setIsActivityLog={setIsActivityLog}
+                    />
 
-                    <div className="board-details-actions">
+                    {content === 'board' &&
+                        <>
+                            <BoardActionsBtns
+                                currBoard={currBoard}
+                                addTaskToFirstGroup={addTaskToFirstGroup}
+                                addGroup={addGroup}
+                                setPersonPickerOpen={setPersonPickerOpen}
+                                onTogglePersonModal={onTogglePersonModal}
+                                onRemovePersonFilter={onRemovePersonFilter}
+                                personPickerOpen={personPickerOpen}
+                                dynSearchBtnInput={dynSearchBtnInput}
+                                setFilterBy={setFilterBy}
+                                filterBy={filterBy}
+                                sortBy={sortBy}
+                                setSortBy={setSortBy}
+                                hidePickerOpen={hidePickerOpen}
+                                onToggleHideColumnsModal={onToggleHideColumnsModal}
+                                hiddenColumns={hiddenColumns}
+                            />
 
-                        <SplitButton shouldCloseOnClickInsideDialog onClick={() => addTaskToFirstGroup()} size="small" secondaryDialogContent={<SplitButtonMenu _id="split-menu">
-                            <MenuItem onClick={() => addGroup(currBoard._id)} icon={Group} title="New group of items" />
-                        </SplitButtonMenu>}>
-                            New Task
-                        </SplitButton>
+                            <div className="spacing-div"></div>
+                            <DragDropContext onDragEnd={onDragEnd} >
+                                <GroupList
+                                    boardId={params.boardId}
+                                    groups={currBoard.groups}
+                                    labels={currBoard.labels}
+                                    cmpsOrder={currBoard.cmpsOrder}
+                                    priorities={currBoard.priorities}
+                                    hiddenColumns={hiddenColumns}
+                                />
+                            </DragDropContext>
+                        </>
+                    }
 
-                        {dynSearchBtnInput}
-
-                        <PersonBtn
-                            setPersonPickerOpen={setPersonPickerOpen}
-                            onTogglePersonModal={onTogglePersonModal}
-                            onRemovePersonFilter={onRemovePersonFilter}
-                            personPickerOpen={personPickerOpen}
-                            setFilterBy={setFilterBy}
-                            filterBy={filterBy}
-                            currBoard={currBoard}
-                        />
-
-                        <SplitButton kind="tertiary" leftIcon={Filter} size="small" secondaryDialogContent={
-                            <SplitButtonMenu _id="split-menu">
-                                <MenuItem icon={Check} title="Hey" />
-                                <MenuItem icon={Announcement} title="There" />
-                            </SplitButtonMenu>}>
-                            Filter
-                        </SplitButton>
-
-                        <Button onClick={() => setSortBy(!sortBy)} leftIcon={Sort} kind="tertiary" size="small">Sort</Button>
-
-
-                        <HideBtn
-                            hidePickerOpen={hidePickerOpen}
-                            onToggleHideColumnsModal={onToggleHideColumnsModal}
-                            // setHiddenColumns={setHiddenColumns}
-                            hiddenColumns={hiddenColumns}
-                        />
-
-                        <IconButton icon={Menu} size="small" />
-                    </div>
-
-
-                    <div className="spacing-div"></div>
-                    <DragDropContext onDragEnd={onDragEnd} >
-                        <GroupList
-                            boardId={params.boardId}
-                            groups={currBoard.groups}
-                            labels={currBoard.labels}
-                            cmpsOrder={currBoard.cmpsOrder}
-                            priorities={currBoard.priorities}
-                            hiddenColumns={hiddenColumns}
-                        />
-                    </DragDropContext>
+                    {content === 'kanban' && <KanbanDetails />}
+                    {content === 'dashboard' && <DashboardDetails/>}
 
                     {currBoard.groups.length === 0 && <NoGroupsFound cmpsOrder={currBoard.cmpsOrder} />}
 
@@ -249,7 +237,8 @@ export function BoardDetails() {
                 </>
             }
 
-            {selectedTasks.length > 0 && < SelectedModal selectedTasks={selectedTasks} currBoard={currBoard} />}
+            {selectedTasks.length > 0 && <SelectedModal selectedTasks={selectedTasks} currBoard={currBoard} />}
+            {isActivityLog && <ActivityLog currBoard={currBoard} setIsActivityLog={setIsActivityLog}/>}
             {isBoardDesc && <BoardDescriptionModal boardTitle={currBoard.title} setIsBoardDesc={setIsBoardDesc} />}
 
         </section>
