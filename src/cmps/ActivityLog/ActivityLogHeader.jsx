@@ -1,4 +1,4 @@
-import { Avatar, EditableHeading, IconButton } from "monday-ui-react-core";
+import { Avatar, EditableHeading, IconButton, Tab, TabList } from "monday-ui-react-core";
 import { Close, Menu } from "monday-ui-react-core/icons";
 
 export function ActivityLogHeader({ boardTitle, setIsActivityLog }) {
@@ -14,12 +14,12 @@ export function ActivityLogHeader({ boardTitle, setIsActivityLog }) {
             />
             <div className="editible-container">
                 <div className="board-title-container">
-                <span className="board-title">
-                    {boardTitle}
-                </span>
-                <span className="log-word">
-                    Log
-                </span>
+                    <span className="board-title">
+                        {boardTitle}
+                    </span>
+                    <span className="log-word">
+                        Log
+                    </span>
                 </div>
 
                 <div className="avatar-and-icon-container">
@@ -35,6 +35,15 @@ export function ActivityLogHeader({ boardTitle, setIsActivityLog }) {
                         size="50"
                     />
                 </div>
+            </div>
+
+            <div className="task-details-header-navbar">
+                <TabList
+                    size="sm">
+                    <Tab>
+                        Activity
+                    </Tab>
+                </TabList>
             </div>
         </div>
     )
