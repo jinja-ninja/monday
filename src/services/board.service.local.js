@@ -599,7 +599,7 @@ async function duplicateBatchTasks(boardId, selectedTasks, actions = []) {
 async function getEmptyLabel() {
     return {
         id: utilService.makeId(),
-        title: '',
+        title: 'New label',
         color: getContentColors()[utilService.getRandomIntInclusive(0, getContentColors().length - 1)]
     }
 }
@@ -609,10 +609,16 @@ async function getLabels(boardId) {
     return board.labels
 }
 
-async function getLabelById(boardId, labelId) {
+async function getLabelById(boardId, labelId, statusOrPriorities) {
     const board = await getBoardById(boardId)
-    const label = board.labels.find(label => label.id === labelId)
-    return label
+    if (statusOrPriorities === 'priorities') {
+        let priority = board.priorities.find(label => label.id === labelId)
+        return priority
+    } else if (statusOrPriorities = 'labels') {
+        let status = board.labels.find(label => label.id === labelId)
+        return status
+    }
+
 }
 
 async function addLabel(boardId, label, type) {

@@ -22,9 +22,9 @@ export function EditableLabel({ boardId, label, onRemoveLabel, onUpdateLabel,sta
 
     async function onSelectColor(color) {
         try {
-            const currLabel = await getLabelById(boardId, label.id)
+            const currLabel = await getLabelById(boardId, label.id,statusOrPriorities)
             const newLabel = { ...currLabel, color: color[0] }
-            updateLabel(boardId, newLabel,statusOrPriorities)
+            updateLabel(boardId, newLabel, statusOrPriorities)
             setShowColorPicker(prevState => !prevState)
         }
         catch (err) {
@@ -32,7 +32,6 @@ export function EditableLabel({ boardId, label, onRemoveLabel, onUpdateLabel,sta
             console.log('Cannot update label color')
         }
     }
-
     function handleInputChange(ev) {
         const value = ev.target.value
         setLabelTitle(value)
