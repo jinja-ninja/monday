@@ -113,6 +113,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        background: white;
 
         &>* {
           display: flex;
@@ -190,14 +191,14 @@
       &.sticky-checkbox {
         position: sticky;
         left: 38px;
-        z-index: 15;
+        z-index: 1;
         background-color: #fff;
       }
 
       &.sticky-title {
         position: sticky;
         left: 78px;
-        z-index: 15;
+        z-index: 1;
         background-color: #fff;
       }
 
@@ -304,6 +305,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        // background: white;
 
         &>* {
           display: flex;
