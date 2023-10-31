@@ -219,9 +219,9 @@ export async function removeBatchTasks(boardId, selectedTasks, actions = []) {
 }
 
 // Label Actions
-export async function getLabelById(boardId, labelId) {
+export async function getLabelById(boardId, labelId,statusOrPriorities) {
     try {
-        const label = await boardService.getLabelById(boardId, labelId)
+        const label = await boardService.getLabelById(boardId, labelId,statusOrPriorities)
         return label
     } catch (err) {
         console.log('BoardActions: err in getLabelById', err)

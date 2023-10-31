@@ -22,6 +22,10 @@ import FiveStarsImg from '../assets/img/FiveStarsImg.png'
 import AwardOneImg from '../assets/img/AwardOneImg.png'
 import AwardTwoImg from '../assets/img/AwardTwoImg.png'
 import AwardThreeImg from '../assets/img/AwardThreeImg.png'
+import SupportImg from '../assets/img/SupportImg.avif'
+import SupportClockImg from '../assets/img/SupportClockImg.png'
+import SupportHeartImg from '../assets/img/SupportHeartImg.png'
+import SupportPhoneImg from '../assets/img/SupportPhoneImg.png'
 import { useNavigate } from 'react-router-dom'
 
 export function HomePage() {
@@ -107,6 +111,65 @@ export function HomePage() {
                 </div>
             </section>
 
+            <section className='support-section'>
+                <img className='support-main-img' src={SupportImg} alt="" />
+                <div className='support-left-container'>
+
+                    <h2 className='main-title'>
+                        <p>Supporting your growth</p>
+                        <p>every step of the way</p>
+                    </h2>
+
+                    <div className='main-txt'>
+                        <p>Our support superheroes are a click away to help you get the most</p>
+                        <p>out of monday.com, so you can focus on working without limits.</p>
+                    </div>
+
+                    <div className='icons-container'>
+                        <div className='phone-container'>
+                            <img src={SupportPhoneImg} alt="" />
+                            <div className='phone-txt-container'>
+                                <p className='title'>24/7</p>
+                                <span>support</span>
+                                <span>anytime,</span>
+                                <span>anywhere</span>
+                            </div>
+                        </div>
+                        <div className='heart-container'>
+                            <img src={SupportHeartImg} alt="" />
+                            <div className='heart-txt-container'>
+                                <p className='title'>Voted #1</p>
+                                <span>Most Loved by</span>
+                                <span>customers on</span>
+                                <span>G2</span>
+                            </div>
+
+                        </div>
+                        <div className='clock-container'>
+                            <img src={SupportClockImg} alt="" />
+                            <div className='clock-txt-container'>
+                                <p className='title'>2 hour</p>
+                                <span>average</span>
+                                <span>response time</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='section-buttons'>
+                        <button className='get-in-touch-btn'><span className='get-started-txt'>Get in touch</span>
+                            <svg className='arrow-icon' width="13" height="13" viewBox="0 0 9 7" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" clipRule="evenodd" d="M4.628.616a.5.5 0 1 0-.64.768L6.203 3.23H.5a.5.5 0 0 0 0 1h5.612L3.988 6a.5.5 0 1 0 .64.769l3.23-2.693a.5.5 0 0 0 0-.768L4.628.616z" fill="#FFFFFF"></path>
+                            </svg>
+                        </button>
+
+                        <span className='visit-text'>Visit our support center <svg className='arrow-icon' width="12" height="12" viewBox="0 0 9 7" xmlns="http://www.w3.org/2000/svg">
+                            <path fillRule="evenodd" clipRule="evenodd" d="M4.628.616a.5.5 0 1 0-.64.768L6.203 3.23H.5a.5.5 0 0 0 0 1h5.612L3.988 6a.5.5 0 1 0 .64.769l3.23-2.693a.5.5 0 0 0 0-.768L4.628.616z" fill="#6161ff"></path>
+                        </svg></span>
+                    </div>
+
+                </div>
+            </section>
+
             <section className='awards-section'>
                 <img className='five-stars-img' src={FiveStarsImg} alt="" />
                 <h2>An award-winning platform. Loved by customers.</h2>
@@ -140,7 +203,7 @@ export function HomePage() {
                 </button>
 
             </section>
-            
+
         </div>
     )
 }
