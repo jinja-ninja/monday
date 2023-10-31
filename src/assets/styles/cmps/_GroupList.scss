@@ -1,20 +1,37 @@
+.groups-section {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+}
+
+.side-spacing-div {
+  grid-column: 1/2;
+  grid-row: 1/-1;
+  position: fixed;
+  left: 40px;
+  width: 38px;
+  height: 100%;
+  background-color: white;
+  z-index: 15;
+}
+
 .group-list-container {
   // padding-left: var(--spacing-xl);
   // padding-left: 38px;
-  display: grid;
-  grid-template-columns: 38px 1fr;
+  // display: grid;
+  // grid-template-columns: 38px 1fr;
   // width: max-content;
-
-  .side-spacing-div {
-    grid-column: 1/2;
-    grid-row: 1/-1;
-    position: sticky;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    z-index: 15;
-  }
+  grid-column: 2/3;
+  grid-row: 1/-1;
+  // .side-spacing-div {
+  //   grid-column: 1/2;
+  //   grid-row: 1/-1;
+  //   position: sticky;
+  //   left: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   background-color: white;
+  //   z-index: 15;
+  // }
 
   .group-list {
     grid-column: 2/3;
