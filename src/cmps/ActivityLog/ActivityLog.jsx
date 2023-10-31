@@ -5,9 +5,15 @@ import { ActivityLogHeader } from "./ActivityLogHeader";
 import { useState } from "react";
 
 export function ActivityLog({ currBoard, setIsActivityLog }) {
-    // const [textFilter, setTextFilter] = useState(null)
-    // let filteredActivities = currBoard.activities.filter(activity=> activity.task.title === textFilter)
-    
+    const [textFilter, setTextFilter] = useState('')
+    const lowercaseTextFilter = textFilter.toLowerCase()
+
+    const filteredActivities = currBoard.activities.filter(
+        (activity) =>
+            activity.task?.title && (
+                activity.task.title.toLowerCase().includes(lowercaseTextFilter))
+    )
+
     return (
 
         <div className="activity-log-container">
@@ -25,6 +31,7 @@ export function ActivityLog({ currBoard, setIsActivityLog }) {
                         </SplitButton>
                         <input type="text"
                             placeholder="Filter by name"
+                            onChange={(ev) => setTextFilter(ev.target.value)}
                         />
                     </div>
 
@@ -35,7 +42,7 @@ export function ActivityLog({ currBoard, setIsActivityLog }) {
                 </div>
 
                 <ActivityList
-                    activities={currBoard.activities}
+                    activities={filteredActivities}
                 />
             </div>
         </div >

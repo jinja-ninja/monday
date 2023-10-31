@@ -17,7 +17,6 @@ export function TaskUpdates({ boardId, groupId, taskId, currTask }) {
 
     function handleTextAreaChange(event) {
         setTextAreaValue(event.target.value)
-        console.log(TextAreaValue);
     }
 
     function onSaveTaskComment() {

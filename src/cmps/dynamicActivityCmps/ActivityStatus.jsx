@@ -14,6 +14,7 @@ export function ActivityStatus({ type, fromStatus, toStatus, activityTitle = nul
                 return <div className="activity-members-container">{
                     title.map(member =>
                         <Avatar size={Avatar.sizes.SMALL}
+                            key={member._id}
                             src={member.imgUrl}
                             type="img"
                             ariaLabel={member.fullname}

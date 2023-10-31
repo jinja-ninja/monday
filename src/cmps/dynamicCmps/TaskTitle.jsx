@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { boardService } from "../../services/board.service.local"
 import { useSelector } from "react-redux"
 
-export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask }) {
+export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask, group }) {
 
     const [updatedTaskInput, setUpdatedTask] = useState(info)
     const [commentsLength, setCommentsLength] = useState(null)
@@ -22,8 +22,8 @@ export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask }) {
     }
 
     async function checkIfTaskHasComments() {
-        const task = await boardService.getTaskById(boardId, groupId, taskId)
-        if (task.comments.length > 0) setCommentsLength(task.comments.length)
+        let taskFromCurrBoard = currBoard.groups.find(group => group.id === groupId).tasks.find(task => task.id === taskId)
+        if (taskFromCurrBoard.comments.length > 0) setCommentsLength(taskFromCurrBoard.comments.length)
     }
 
     const dynCommentIcon = commentsLength ?
