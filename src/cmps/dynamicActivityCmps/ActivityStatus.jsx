@@ -1,9 +1,11 @@
-import { Icon, Text } from "monday-ui-react-core";
+import { Avatar, Icon, Text } from "monday-ui-react-core";
 import { NavigationChevronRight } from "monday-ui-react-core/icons";
 import { utilService } from "../../services/util.service";
 
 export function ActivityStatus({ type, fromStatus, toStatus }) {
-
+    console.log('type:', type)
+    console.log('fromStatus:', fromStatus)
+    console.log('toStatus:', toStatus)
     function getTitle(type, title) {
         let idx
         switch (type) {
@@ -12,10 +14,27 @@ export function ActivityStatus({ type, fromStatus, toStatus }) {
                 return utilService.timeStampToDate(title)
             case 'Person':
                 if (title.length === 0) return '-'
-                return title.join(', ')
+                return <div className="activity-members-container">{
+                    title.map(member =>
+                        <Avatar size={Avatar.sizes.SMALL}
+                            src={member.imgUrl}
+                            type="img"
+                            ariaLabel={member.fullname}
+                        />)
+                }
+                </div>
             case 'Timeline':
-                if (!title || title === '-') return '-'
-                return utilService.getTimelineRange(title)
+                if (!title || title === '-') return <div className="activity-timeline-container">
+                    <Text style={{ color: 'white' }} ellipsis>
+                        -
+                    </Text>
+                </div>
+                // if (!title || title === '-') return '-'
+                return <div className="activity-timeline-container" style={{ backgroundColor: 'rgb(2, 134, 195)' }}>
+                    <Text style={{ color: 'white' }} ellipsis>
+                        {utilService.getTimelineRange(title)}
+                    </Text>
+                </div>
             case 'Favorite':
                 if (!title || title === '-') return '-'
                 return 'Added'
@@ -29,7 +48,7 @@ export function ActivityStatus({ type, fromStatus, toStatus }) {
                 console.log('title:', title)
                 console.log('idx:', idx)
                 console.log('title[idx]:', title[idx])
-                return title[idx]?.url ? <img src={title[idx].url} alt="" /> : '-'
+                return title[idx]?.url ? <img className="activity-file-img" src={title[idx].url} alt="" /> : '-'
             default:
                 return title
         }

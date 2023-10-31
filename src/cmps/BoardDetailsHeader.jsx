@@ -179,7 +179,7 @@ export function BoardDetailsHeader({ setContent, title, boardId, setIsBoardDesc,
             </div>
         </div>
 
-        {isShowInviteMembersModal && <InviteMembersModal boardId={boardId} setIsShowInviteMembersModal={setIsShowInviteMembersModal} isShowInviteMembersModal={isShowInviteMembersModal} />}
+        {isShowInviteMembersModal && <InviteMembersModal setIsShowInviteMembersModal={setIsShowInviteMembersModal} isShowInviteMembersModal={isShowInviteMembersModal} />}
 
     </div>
 }

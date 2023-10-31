@@ -1,7 +1,13 @@
 .modal-title {
   font-size: 24px;
 }
+
+.invite-memebers-modal {
+  padding-block-start: 10px;
+}
+
 .member-invite-container {
+  
   .member-invite-list .member-item {
     font-family: var(--font-family);
 
@@ -9,6 +15,7 @@
     align-items: center;
     font-size: 15px;
     margin-bottom: 16px;
+    font-weight: 500;
 
     .monday-storybook-chips_name {
       margin-inline-start: 8px;
