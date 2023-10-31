@@ -3,7 +3,7 @@ import { CloseSmall, Drag, HighlightColorBucket } from 'monday-ui-react-core/ico
 import { useCallback, useRef, useState } from 'react'
 import { getLabelById, updateLabel } from '../../store/actions/board.action'
 
-export function EditableLabel({ boardId, label, onRemoveLabel, onUpdateLabel,statusOrPriorities }) {
+export function EditableLabel({ boardId, label, onRemoveLabel, onUpdateLabel, statusOrPriorities }) {
 
     const { id, title, color } = label
     const [showColorPicker, setShowColorPicker] = useState(false)
@@ -22,9 +22,9 @@ export function EditableLabel({ boardId, label, onRemoveLabel, onUpdateLabel,sta
 
     async function onSelectColor(color) {
         try {
-            const currLabel = await getLabelById(boardId, label.id)
+            const currLabel = await getLabelById(boardId, label.id,statusOrPriorities)
             const newLabel = { ...currLabel, color: color[0] }
-            updateLabel(boardId, newLabel,statusOrPriorities)
+            updateLabel(boardId, newLabel, statusOrPriorities)
             setShowColorPicker(prevState => !prevState)
         }
         catch (err) {
@@ -50,7 +50,7 @@ export function EditableLabel({ boardId, label, onRemoveLabel, onUpdateLabel,sta
 
     return (
         <div className='editable-label'>
-            <Icon iconType={Icon.type.SVG} icon={Drag} className='drag-icon'/>
+            <Icon iconType={Icon.type.SVG} icon={Drag} className='drag-icon' />
             <div
                 className='label-wrapper'
                 style={isLabelSelected ?
@@ -75,7 +75,7 @@ export function EditableLabel({ boardId, label, onRemoveLabel, onUpdateLabel,sta
                     placeholder={title ? 'Add label' : 'Default Label'}
                     value={labelTitle}
                     onChange={(ev) => handleInputChange(ev)}
-                    onBlur={() => onUpdateLabel(boardId, { ...label, title: labelTitle },statusOrPriorities)}
+                    onBlur={() => onUpdateLabel(boardId, { ...label, title: labelTitle }, statusOrPriorities)}
                     onKeyPress={(ev) => {
                         if (ev.key === 'Enter') {
                             onUpdateLabel(boardId, { ...label, title: labelTitle }, statusOrPriorities)
