@@ -1,12 +1,16 @@
 import imgLogo from "../assets/img/Funday-logo.png"
 import { DoubleCheck, Notifications, Inbox, Invite, Search, Help, LogIn, Hide } from "monday-ui-react-core/icons"
-import { Icon } from "monday-ui-react-core"
+import { Avatar, Icon } from "monday-ui-react-core"
 import { Tooltip, } from "monday-ui-react-core"
 import { IconButton, } from "monday-ui-react-core"
 import { useNavigate } from "react-router-dom"
+import { userService } from "../services/user.service"
+import { logout } from "../store/actions/user.actions"
 
 export function BoardMainHeader({ board, onRemoveBoard, onEditBoard }) {
     const navigate = useNavigate()
+    let loggedInUser = userService.getLoggedinUser()
+    console.log('loggedInUser:', loggedInUser)
     return (
 
         <div className="board-main-header flex monday-storybook-tooltip_box">
@@ -41,12 +45,25 @@ export function BoardMainHeader({ board, onRemoveBoard, onEditBoard }) {
                     icon={Help}
                 // onClick={function noRefCheck() { }}
                 />
-                <IconButton
-                    onClick={() => navigate('/auth/login')}
+                {loggedInUser &&
+                    <Avatar
+                        className='avatar-img'
+                        ariaLabel="Logout"
+                        size={Avatar.sizes.SMALL}
+                        src="https://cdn1.monday.com/dapulse_default_photo.png"
+                        type="img"
+                        onClick={() => {
+                            logout()
+                            navigate('/')
+                        }}
+                    />
+                }
+
+                {!loggedInUser && <IconButton
                     ariaLabel="Login"
                     icon={LogIn}
-                // onClick={function noRefCheck() { }}
-                />
+                    onClick={() => navigate('/auth/login')}
+                />}
             </div>
         </div>
 

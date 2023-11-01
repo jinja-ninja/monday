@@ -1,4 +1,4 @@
-import { Button, IconButton, Menu, MenuItem, SplitButton, SplitButtonMenu } from "monday-ui-react-core";
+import { Button, Flex, IconButton, Menu, MenuItem, SplitButton, SplitButtonMenu, Tooltip } from "monday-ui-react-core";
 import { Announcement, Check, Filter, Group, Sort, Menu as MenuIcon } from "monday-ui-react-core/icons";
 import { PersonBtn } from "./PersonBtn";
 import { HideBtn } from "./HideBtn";
@@ -10,7 +10,6 @@ export function BoardActionsBtns({ currBoard, addTaskToFirstGroup, addGroup, set
 
     return (
         <div className="board-details-actions">
-
             <SplitButton shouldCloseOnClickInsideDialog onClick={() => addTaskToFirstGroup()} size="small" secondaryDialogContent={<SplitButtonMenu _id="split-menu">
                 <MenuItem onClick={() => addGroup(currBoard._id)} icon={Group} title="New group of items" />
             </SplitButtonMenu>}>
@@ -37,15 +36,18 @@ export function BoardActionsBtns({ currBoard, addTaskToFirstGroup, addGroup, set
                 Filter
             </SplitButton>
 
-            <Button
-                className={"btn-sortby " + (sortBy ? 'sorted' : '')}
-                onClick={() => setSortBy(!sortBy)}
-                leftIcon={Sort}
-                kind="tertiary"
-                size="small">
-                Sort
-            </Button>
-
+            <Tooltip
+                content='Sort groups'
+                animationType="expand">
+                <Button
+                    className={"btn-sortby " + (sortBy ? 'sorted' : '')}
+                    onClick={() => setSortBy(!sortBy)}
+                    leftIcon={Sort}
+                    kind="tertiary"
+                    size="small">
+                    Sort
+                </Button>
+            </Tooltip>
 
             <HideBtn
                 hidePickerOpen={hidePickerOpen}
@@ -53,10 +55,12 @@ export function BoardActionsBtns({ currBoard, addTaskToFirstGroup, addGroup, set
                 // setHiddenColumns={setHiddenColumns}
                 hiddenColumns={hiddenColumns}
             />
-
-            <IconButton icon={MenuIcon} size="small" />
-
-            <RecordButton addTaskToFirstGroup={addTaskToFirstGroup} />
+            {/* <IconButton icon={MenuIcon} size="small" /> */}
+            <Tooltip
+                content='Record to add a new task'
+                animationType="expand">
+                <RecordButton addTaskToFirstGroup={addTaskToFirstGroup} />
+            </Tooltip>
         </div>
     )
 }

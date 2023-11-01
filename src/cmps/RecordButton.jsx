@@ -38,8 +38,8 @@ export function RecordButton({ addTaskToFirstGroup }) {
     return (
         <>
             {
-                !isRecordingOn ? <Button onClick={onRecordStart} leftIcon={Radio} kind="tertiary" size="xs">Record</Button> :
-                    <Button onClick={onRecordStop} leftIcon={Radio} color="negative" kind="tertiary" size="xs">Stop recording</Button>
+                !isRecordingOn ? <Button className="record-btn" onClick={onRecordStart} leftIcon={Radio} kind="tertiary" size="xs">Record</Button> :
+                    <Button className="stop-record-btn" onClick={onRecordStop} leftIcon={Radio} color="negative" kind="tertiary" size="xs">Stop recording</Button>
             }
         </>
     )

@@ -10,6 +10,7 @@ import { loadBoards } from "../store/actions/board.action"
 import { useSelector } from "react-redux"
 import { UserMsg } from '../cmps/UserMsg'
 import BoardIndexHeaderConfeti from '../assets/img/BoardIndexHeaderConfeti.svg'
+import { userService } from "../services/user.service"
 
 export function BoardIndex() {
 
@@ -21,6 +22,7 @@ export function BoardIndex() {
         loadBoards()
     }, [])
 
+    let loggedInUser = userService.getLoggedinUser()
 
     // console.log('boards from index', boards)
     return <main className="board-index">
@@ -29,7 +31,7 @@ export function BoardIndex() {
         <SideBar />
 
 
-        <section className="board-index-body" style={{paddingRight : 0}}>
+        <section className="board-index-body" style={{ paddingRight: 0 }}>
             <Box
                 rounded={Box.roundeds.MEDIUM}
                 shadow={Box.shadows.MEDIUM}
@@ -39,14 +41,13 @@ export function BoardIndex() {
             >
                 <div className="welcome-header">
                     <div className="titles-container">
-                        {/* user name here */}
-                        <div className="first-title">Good afternoon, Guest!</div>
+                        <div className="first-title">Good afternoon, {loggedInUser ? loggedInUser.fullname : 'Guest'}!</div>
                         <div className="second-title">Quickly access your recent boards, Inbox and workspaces</div>
                     </div>
                     <img src={BoardIndexHeaderConfeti} alt="" />
                 </div>
                 <div className="content-container">
-                  
+
                     <div className="boards-container">
 
                         <div className="collapsible-header-wrapper">

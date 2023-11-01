@@ -14,7 +14,8 @@
     grid-column: 1/-1;
   }
 
-  .board-details-container,.kanban-details-container {
+  .board-details-container,
+  .kanban-details-container {
     grid-row: 2;
     grid-column: 2;
 
@@ -255,10 +256,16 @@
 
       display: flex;
       column-gap: var(--spacing-medium);
+      align-items: center;
       // padding-left: var(--spacing-xl);
       padding-left: 38px;
       padding-right: var(--spacing-xl);
       padding-block-end: var(--spacing-xl);
+
+      .record-btn,
+      .stop-record-btn {
+        height: rem(32px);
+      }
 
       // padding-block-end: var(--spacing-medium);
       .btn-sortby {
