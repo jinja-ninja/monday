@@ -1,11 +1,37 @@
 .dashboard-container {
-    display: flex;
-    align-content: center;
-    justify-content: center;
+  display: flex;
+  padding-left: 38px;
+  //   align-content: left;
+  justify-content: center;
+  flex-wrap: wrap;
+  .in-progress-img {
+    margin-top: 100px;
+    width: 400px;
+    height: 400px;
+  }
+}
 
-    .in-progress-img {
-        margin-top: 100px;
-        width: 400px;
-        height: 400px;
-    }
+.show-border {
+  border: 1px solid lightgray;
+}
+
+.react-resizable-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 5px;
+}
+
+.box1 {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 1220px;
+  margin-top: 5px;
 }
