@@ -1,22 +1,12 @@
 import WorkInProgress from '../../assets/img/WorkInProgress.png'
 import React, { useEffect, useRef, useState } from 'react'
-import { render } from 'react-dom'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import HighchartsMore from 'highcharts/highcharts-more';
 import HighchartsExporting from 'highcharts/modules/exporting';
 
-import { Resizable } from 'react-resizable';
-import { ResizableBox } from 'react-resizable';
-import 'react-resizable/css/styles.css';
-import { set } from 'date-fns'
-import { green } from '@cloudinary/url-gen/actions/adjust'
-
 export function DashboardDetails() {
-
-
-
-    const [size, setSize] = useState({ width: 400, height: 400 })
+    const [size, setSize] = useState({ width: 350, height: 350 })
     const chartRef = useRef(null);
 
     HighchartsMore(Highcharts);
@@ -144,11 +134,7 @@ export function DashboardDetails() {
         credits: {
             enabled: false
         }
-    };
-
-
-
-
+    }
 
     return (
         // <div className="dashboard-container">
@@ -177,9 +163,6 @@ export function DashboardDetails() {
                     ref={chartRef}
                 />
             </div>
-
-
-
 
             <div className='box1 show-border'>
                 <HighchartsReact highcharts={Highcharts} options={pieOptions} />

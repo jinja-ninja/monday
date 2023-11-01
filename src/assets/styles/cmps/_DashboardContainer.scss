@@ -1,9 +1,9 @@
 .dashboard-container {
   display: flex;
-  padding-left: 38px;
-  //   align-content: left;
+  align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+
   .in-progress-img {
     margin-top: 100px;
     width: 400px;
@@ -32,6 +32,6 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  width: 1220px;
+  width: 1070px;
   margin-top: 5px;
 }
