@@ -3,10 +3,10 @@ import { AddSmall, Edit, Alert } from "monday-ui-react-core/icons"
 import { useCallback, useRef, useState } from "react"
 import { EditableLabel } from "./EditableLabel"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
-import { addLabel, removeLabel, updateLabel } from "../../store/actions/board.action"
+import { addLabel, removeLabel, updateBoard, updateBoardOptimistic, updateLabel } from "../../store/actions/board.action"
 import { boardService } from "../../services/board.service.local"
 
-export function TaskStatus({ board, task, labels, priorites, type, onUpdateTask }) {
+export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isEditLabelsOpen, setIsEditLabelsOpen] = useState(false)
     const refLabelDialog = useRef(null)
@@ -18,8 +18,21 @@ export function TaskStatus({ board, task, labels, priorites, type, onUpdateTask 
         statusOrPriorities = 'labels'
     }
 
-    function onSetStatus(status) {
-        onUpdateTask(task.id, { key: type, value: status })
+    async function onSetStatus(status) {
+        await onUpdateTask(task.id, { key: type, value: status })
+
+        if (board.kanbanCmpsOrder && !board.kanbanCmpsOrder.includes(status)) {
+            board.kanbanCmpsOrder.unshift(status)
+            await updateBoard('board', board._id, null, null, { key: 'kanbanCmpsOrder', value: board.kanbanCmpsOrder })
+        }
+
+        // If isLabelInUse(status) is false, remove the label from the kanbanCmpsOrder array
+
+        // if (board.kanbanCmpsOrder && !isLabelInUse(status)) {
+        //     const labelIdx = board.kanbanCmpsOrder.findIndex(label => label === status)
+        //     board.kanbanCmpsOrder.splice(labelIdx, 1)
+        //     await updateBoard('board', board._id, null, null, { key: 'kanbanCmpsOrder', value: board.kanbanCmpsOrder })
+        // }
     }
 
     function isLabelInUse(labelId) {

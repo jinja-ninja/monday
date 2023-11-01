@@ -175,6 +175,7 @@ export function BoardDetails() {
             }
             else {
                 const kanbanCmpsOrder = getLabelsInUse()
+                console.log('kanbanCmpsOrder:', kanbanCmpsOrder)
                 const newBoard = { ...currBoard, kanbanCmpsOrder }
                 await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'kanbanCmpsOrder', value: kanbanCmpsOrder }, newBoard)
             }
