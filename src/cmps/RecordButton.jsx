@@ -34,12 +34,15 @@ export function RecordButton({ addTaskToFirstGroup }) {
         speechToTxtService.stop()
         setIsRecordingOn(false)
     }
-
+    const dynRecordBtn = !isRecordingOn ?
+        <Button className="record-btn" style={{ "--element-width": "89px" }}
+        onClick={onRecordStart} leftIcon={Radio} kind="tertiary" size="xs">Record</Button> :
+        <Button className="stop-record-btn" onClick={onRecordStop} leftIcon={Radio} color="negative" kind="tertiary" size="xs">Stop recording</Button>
     return (
         <>
-            {
-                !isRecordingOn ? <Button className="record-btn" onClick={onRecordStart} leftIcon={Radio} kind="tertiary" size="xs">Record</Button> :
-                    <Button className="stop-record-btn" onClick={onRecordStop} leftIcon={Radio} color="negative" kind="tertiary" size="xs">Stop recording</Button>
+            {<div className="record-btn-container">
+                {dynRecordBtn}
+            </div>
             }
         </>
     )
