@@ -7,10 +7,9 @@ import { useNavigate } from "react-router-dom"
 import { userService } from "../services/user.service"
 import { logout } from "../store/actions/user.actions"
 
-export function BoardMainHeader({ board, onRemoveBoard, onEditBoard }) {
+export function BoardMainHeader() {
     const navigate = useNavigate()
     let loggedInUser = userService.getLoggedinUser()
-    console.log('loggedInUser:', loggedInUser)
     return (
 
         <div className="board-main-header flex monday-storybook-tooltip_box">
@@ -18,7 +17,7 @@ export function BoardMainHeader({ board, onRemoveBoard, onEditBoard }) {
                 <img src={imgLogo} alt="monday-logo" onClick={() => navigate('/board')} />
             </div>
             <div className="header-bar">
-                <IconButton
+                {/* <IconButton
                     ariaLabel="Notifications"
                     icon={Notifications}
                 // onClick={function noRefCheck() { }}
@@ -32,14 +31,14 @@ export function BoardMainHeader({ board, onRemoveBoard, onEditBoard }) {
                     ariaLabel="Invite"
                     icon={Invite}
                 // onClick={function noRefCheck() { }}
-                />
+                /> */}
 
-                <div className="seperate-line"> | </div>
+                {/* <div className="seperate-line"> | </div>
                 <IconButton
                     ariaLabel="Search"
                     icon={Search}
                 // onClick={function noRefCheck() { }}
-                />
+                /> */}
                 <IconButton
                     ariaLabel="Help"
                     icon={Help}
