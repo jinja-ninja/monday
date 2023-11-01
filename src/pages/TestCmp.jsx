@@ -1,14 +1,9 @@
-import { useState } from "react";
-import { HideColumnsModal } from "../cmps/HideColumnsModal";
-import { LoginSignup } from "./LoginSignup";
-
+import { useEffect, useState } from "react"
 
 export function TestCmp() {
 
   return (
-    <div>
-      <LoginSignup />
-    </div>
+    <div></div>
   )
 }
 

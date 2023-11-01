@@ -1,7 +1,8 @@
 import { Button, IconButton, Menu, MenuItem, SplitButton, SplitButtonMenu } from "monday-ui-react-core";
-import { Announcement, Check, Filter, Group, Sort ,Menu as MenuIcon} from "monday-ui-react-core/icons";
+import { Announcement, Check, Filter, Group, Sort, Menu as MenuIcon } from "monday-ui-react-core/icons";
 import { PersonBtn } from "./PersonBtn";
 import { HideBtn } from "./HideBtn";
+import { RecordButton } from "./RecordButton";
 
 export function BoardActionsBtns({ currBoard, addTaskToFirstGroup, addGroup, setPersonPickerOpen,
     onTogglePersonModal, onRemovePersonFilter, personPickerOpen, setFilterBy, filterBy, sortBy, setSortBy,
@@ -54,6 +55,8 @@ export function BoardActionsBtns({ currBoard, addTaskToFirstGroup, addGroup, set
             />
 
             <IconButton icon={MenuIcon} size="small" />
+
+            <RecordButton addTaskToFirstGroup={addTaskToFirstGroup} />
         </div>
     )
 }
