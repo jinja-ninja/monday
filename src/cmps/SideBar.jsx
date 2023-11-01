@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu, EditableHeading, Search as SearchInput } from "monday-ui-react-core"
-import { Add, Board, Delete, Home, Edit, Favorite, Work, Search } from "monday-ui-react-core/icons"
+import { Add, Board, Delete, Home, Edit, Favorite, Work, Search, Workspace } from "monday-ui-react-core/icons"
 import { useDispatch, useSelector } from "react-redux"
 import { BoardNavLink } from "./BoardNavLink"
 import { addBoard, duplicateBoard, loadBoards, removeBoard, toggleBoardFavorite, updateBoard } from "../store/actions/board.action"
@@ -101,6 +101,15 @@ export function SideBar() {
                         onClick={(() => navigate('/'))}
                     >
                         Home
+                    </Button>
+
+                    <Button
+                        className="home-btn workspace-btn"
+                        kind="tertiary"
+                        leftIcon={Workspace}
+                        onClick={(() => navigate('/board'))}
+                    >
+                        Workspace
                     </Button>
                 </div>
 

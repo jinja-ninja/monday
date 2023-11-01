@@ -2,6 +2,7 @@ import { eventBus } from "./event-bus.service.js"
 
 var setUp = {
  recognition: new webkitSpeechRecognition(),
+ 
  addListeners() {
   this.recognition.onstart = () => {
    eventBus.emit('record', true)
@@ -21,6 +22,7 @@ var setUp = {
  },
  start() {
   this.addListeners()
+  this.recognition.lang = 'en-US'
   this.recognition.start()
  },
  stop() {

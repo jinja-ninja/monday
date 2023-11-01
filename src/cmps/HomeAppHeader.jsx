@@ -7,7 +7,7 @@ export function HomeAppHeader() {
     const navigate = useNavigate()
 
     return (
-        <div className="home-header-container">
+        <div className="home-header-container full">
             <img src={mondayLogo} className='home-header-logo' alt="" />
             <div>
                 <ListItem component="div" className='btn-header-login' onClick={() => navigate('/auth/login')}>

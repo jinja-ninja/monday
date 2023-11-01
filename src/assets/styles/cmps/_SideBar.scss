@@ -72,10 +72,13 @@
             display: none;
             width: 203px;
             height: 32px;
-            margin-bottom: 33px;
+            font-size: rem(14px);
             text-transform: none;
             justify-content: left;
             padding-left: 0.5em;
+            &.workspace-btn{
+            margin-top: 5px;
+            }
         }
     }
 
