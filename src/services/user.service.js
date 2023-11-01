@@ -21,10 +21,10 @@ function getById(userId) {
 }
 
 async function login({ email, password }) {
-    const user = storageService.query(STORAGE_KEY, { email, password })
-    console.log('user:', user)
-    _setLoggedinUser(user)
-    return user
+    const users = await storageService.query(STORAGE_KEY, { email, password })
+    const user = users.find(user => user.email === email)
+    if (user && user.password === password) return _setLoggedinUser(user)
+    else return Promise.reject('Invalid login')
     // return httpService.post(BASE_URL + 'login', { email, password })
     //     .then(user => {
     //         if (user) return _setLoggedinUser(user)
@@ -34,6 +34,7 @@ async function login({ email, password }) {
 function signup({ email, password, fullname }) {
     const user = { email, password, fullname }
     return storageService.post(STORAGE_KEY, user)
+        .then(_setLoggedinUser(user))
     // return httpService.post(BASE_URL + 'signup', user)
     //     .then(user => {
     //         if (user) return _setLoggedinUser(user)

@@ -32,7 +32,6 @@ export function EditableLabel({ boardId, label, onRemoveLabel, onUpdateLabel, st
             console.log('Cannot update label color')
         }
     }
-
     function handleInputChange(ev) {
         const value = ev.target.value
         setLabelTitle(value)

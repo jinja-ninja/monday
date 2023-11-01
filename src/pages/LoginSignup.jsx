@@ -1,13 +1,11 @@
 import mondayLogo from "../assets/img/Funday-logo-small-com.svg"
 
 import { useState, useEffect } from 'react'
-import { userService } from '../services/user.service'
-// import { ImgUploader } from './ImgUploader'
 
 import { useNavigate, Link } from 'react-router-dom'
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
-import { utilService } from "../services/util.service"
 import { login, signup } from "../store/actions/user.actions"
+import { UserMsg } from "../cmps/UserMsg"
 
 function getEmptyCredentials() {
     return { email: '', password: '', fullname: '' }
@@ -19,11 +17,6 @@ export function LoginSignup() {
 
     const navigate = useNavigate()
     const dynLoginSingupText = isSignup ? 'Welcome to monday.com' : 'Log in to your account'
-
-    function clearState() {
-        setCredentials(getEmptyCredentials())
-        setIsSignup(false)
-    }
 
     function handleChange(ev) {
         const field = ev.target.name
@@ -40,9 +33,8 @@ export function LoginSignup() {
                 navigate('/board')
             })
             .catch(err => {
-                showErrorMsg('Cannot login', err)
+                showErrorMsg('Cannot login, wrong credentials', err)
             })
-        clearState()
     }
 
     function onSignup(ev = null) {
@@ -56,12 +48,11 @@ export function LoginSignup() {
             .catch(err => {
                 showErrorMsg('Cannot signup', err)
             })
-        clearState()
     }
 
     return (
         <section className="login-singup-main-container">
-
+            <UserMsg />
             <div className="login-singup-header">
                 <img src={mondayLogo} alt="monday-logo" onClick={() => navigate('/')} />
             </div>

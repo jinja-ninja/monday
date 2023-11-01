@@ -221,6 +221,107 @@
     }
 }
 
+.support-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333333;
+    padding-bottom: 144px;
+    padding-top: 40px;
+    padding-inline: 96px;
+
+    .support-main-img {
+        width: rem(460px);
+        height: rem(410px);
+    }
+
+    .support-left-container {
+        padding-left: rem(60px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        // align-items: center;
+        
+
+        .main-title {
+            font-size: 2.75rem;
+            line-height: 60px;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .main-txt {
+            font-size: 1.125rem;
+            font-weight: 300;
+            line-height: 32px;
+        }
+
+        .icons-container {
+            display: flex;
+            justify-content: center;
+            margin-top: rem(40px);
+            margin-bottom: rem(64px);
+            gap: 2.7rem;
+
+            .phone-container,
+            .heart-container,
+            .clock-container {
+                display: flex;
+                gap: 8px;
+
+                img {
+                    width: 48px;
+                    height: 32px;
+                }
+
+                .heart-txt-container,
+                .clock-txt-container,
+                .phone-txt-container {
+                    display: flex;
+                    flex-direction: column;
+
+                    .title {
+                        font-size: 1.463rem;
+                        line-height: 26px;
+                        font-weight: 500;
+                    }
+
+                    span {
+                        font-size: 1rem;
+                        font-weight: 300;
+                        line-height: 20px;
+                    }
+                }
+
+            }
+        }
+
+        .section-buttons {
+            display: flex;
+            align-items: center;
+            gap: rem(24px);
+
+            .get-in-touch-btn {
+                align-self: start;
+                @include getStartedBtn($padding : 10px 24px 10px 24px, $font-size :rem(13px), $arrow-before : 1.2rem, $arrow-after: 0.7rem);
+            }
+
+            .visit-text {
+                font-size: rem(15px);
+                font-weight: 300;
+                text-decoration: underline;
+                color: #6161ff;
+                --underline-color: #6161FF;
+                margin-block-start: 1rem;
+
+                svg {
+                    margin-left: 6px;
+                }
+            }
+        }
+    }
+
+}
 
 .footer-section {
     height: 312px;

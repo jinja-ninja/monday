@@ -200,6 +200,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
             case "title":
                 return <TaskTitle info={task[cmp]}
                     boardId={boardId}
+                    group={group}
                     groupId={groupId}
                     taskId={task.id}
                     onUpdateTask={onUpdateTask}

@@ -1,32 +1,26 @@
-import { Outlet, useParams } from "react-router-dom"
-import { BoardMainHeader } from "../BoardMainHeader"
-import { SideBar } from "../SideBar"
-import { UserMsg } from "../UserMsg"
 import { useSelector } from "react-redux"
 import { addTask, loadBoard } from "../../store/actions/board.action"
 import { useEffect, useState } from "react"
-import { BoardDetailsHeader } from "../BoardDetailsHeader"
 import MondayLoader from '../../assets/Loader/MondayLoader.gif'
-import { BoardDescriptionModal } from "../BoardDescriptionModal"
 import { Group, Search, Sort } from "monday-ui-react-core/icons"
 import { Button, MenuItem, SplitButton, SplitButtonMenu, Search as SearchInput } from "monday-ui-react-core"
 import { KanbanGroupList } from "./KanbanGroupList"
 import { boardService } from "../../services/board.service.local"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
-import { StatusSummary } from "../dynamicSummaryCmps/StatusSummary"
+import { useParams } from "react-router-dom"
 
 
 export function KanbanDetails() {
-    const [isBoardDesc, setIsBoardDesc] = useState(false)
+    const currBoard = useSelector(state => state.boardModule.board)
     const [isSearch, setIsSearch] = useState(false)
     const [filterBy, setFilterBy] = useState({ txt: '', person: null })
     const params = useParams()
-    const currBoard = useSelector(state => state.boardModule.board)
+
+    const groups = getOrderedGroups(getKanbanGroups())
 
     useEffect(() => {
         loadBoard(params.boardId)
-    }, [params.boardId], filterBy)
-    // }, [params.boardId, filterBy, sortBy])
+    }, [params.boardId], filterBy, currBoard)
 
     function getAllBoardTasks() {
         let allTasks = currBoard.groups.reduce((accumulator, group) => {
@@ -38,28 +32,40 @@ export function KanbanDetails() {
         return allTasks
     }
 
-
     function getKanbanGroups() {
-        let allTasks = getAllBoardTasks();
-
+        let allTasks = getAllBoardTasks()
 
         const filterPattern = new RegExp(filterBy.txt, 'i')
         let filteredTasks = allTasks.filter(task => filterPattern.test(task.title))
 
         let groups = filteredTasks.reduce((acc, task) => {
             const status = task.status || 'Blank'
-
-            if (!acc[status]) {
-                acc[status] = { name: status, tasks: [] }
-            }
-
+            if (!acc[status]) acc[status] = { name: status, tasks: [] }
             acc[status].tasks.push(task)
             return acc
         }, {})
 
         let kanbanGroups = Object.values(groups)
-        // console.log('kanbanGroups:', kanbanGroups)
         return kanbanGroups
+    }
+
+    function getLabelsInUse() {
+        const AllTasksLabels = getAllBoardTasks().map(task => task.status)
+        const uniqueLabels = [...new Set(AllTasksLabels)]
+        return uniqueLabels
+    }
+
+    function getOrderedGroups(groups) {
+        const labelsInUse = getLabelsInUse().map(label => label || 'Blank')
+        const orderFromBoard = currBoard.kanbanCmpsOrder || []
+        const getIndexInOrder = (label) => orderFromBoard.findIndex(orderLabel => orderLabel === label)
+        const sortedLabels = [...labelsInUse].sort((a, b) => {
+            const indexA = getIndexInOrder(a)
+            const indexB = getIndexInOrder(b)
+            return indexA - indexB
+        })
+        const orderedGroups = sortedLabels.map(label => groups.find(group => group.name === label))
+        return orderedGroups
     }
 
     async function onAddKanbanTask(statusName) {
@@ -101,51 +107,47 @@ export function KanbanDetails() {
         </Button>
 
 
-    if (currBoard === null) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
+    if (currBoard === null) return (
+        <div className="monday-loader-container">
+            <img src={MondayLoader} alt="" />
+        </div>
+    )
+
     return (
         <div className="kanban-details-container">
-
             <div className="board-details-actions" id="kanban-actions-container">
-
-                <SplitButton shouldCloseOnClickInsideDialog onClick={() => onAddKanbanTask('')} size="small" secondaryDialogContent={<SplitButtonMenu _id="split-menu">
-                    <MenuItem onClick={() => console.log('clicked:')} icon={Group} title="New group of items" />
-                </SplitButtonMenu>}>
+                <SplitButton
+                    shouldCloseOnClickInsideDialog
+                    onClick={() => onAddKanbanTask('')}
+                    size="small"
+                    secondaryDialogContent={
+                        <SplitButtonMenu _id="split-menu">
+                            <MenuItem
+                                onClick={() => console.log('clicked')}
+                                icon={Group}
+                                title="New group of items" />
+                        </SplitButtonMenu>}>
                     New Task
                 </SplitButton>
 
                 {dynSearchBtnInput}
 
-                {/* <PersonBtn
-                setPersonPickerOpen={setPersonPickerOpen}
-                onTogglePersonModal={onTogglePersonModal}
-                onRemovePersonFilter={onRemovePersonFilter}
-                personPickerOpen={personPickerOpen}
-                setFilterBy={setFilterBy}
-                filterBy={filterBy}
-                currBoard={currBoard}
-            /> */}
-
-
                 <Button
-                    // className={"btn-sortby " + (sortBy ? 'sorted' : '')}
-                    // onClick={() => setSortBy(!sortBy)}
                     leftIcon={Sort}
                     kind="tertiary"
                     size="small">
                     Sort
                 </Button>
-                {/* 
-                <div className="kanban-summary-container">
-                    <KanbanSummary data={getKanbanGroups} labels={currBoard.labels} />
-                </div> */}
 
             </div>
             <div className="kanban-main-container">
-                <KanbanGroupList getKanbanGroups={getKanbanGroups} labels={currBoard.labels} currBoard={currBoard} onAddKanbanTask={onAddKanbanTask} />
+                <KanbanGroupList
+                    groups={groups}
+                    labels={currBoard.labels}
+                    currBoard={currBoard}
+                    onAddKanbanTask={onAddKanbanTask}
+                />
             </div>
-
         </div>
-
-
     )
 }

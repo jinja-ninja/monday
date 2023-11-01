@@ -2,10 +2,7 @@ import { Avatar, Icon, Text } from "monday-ui-react-core";
 import { NavigationChevronRight } from "monday-ui-react-core/icons";
 import { utilService } from "../../services/util.service";
 
-export function ActivityStatus({ type, fromStatus, toStatus }) {
-    console.log('type:', type)
-    console.log('fromStatus:', fromStatus)
-    console.log('toStatus:', toStatus)
+export function ActivityStatus({ type, fromStatus, toStatus, activityTitle = null }) {
     function getTitle(type, title) {
         let idx
         switch (type) {
@@ -17,6 +14,7 @@ export function ActivityStatus({ type, fromStatus, toStatus }) {
                 return <div className="activity-members-container">{
                     title.map(member =>
                         <Avatar size={Avatar.sizes.SMALL}
+                            key={member._id}
                             src={member.imgUrl}
                             type="img"
                             ariaLabel={member.fullname}
@@ -29,7 +27,6 @@ export function ActivityStatus({ type, fromStatus, toStatus }) {
                         -
                     </Text>
                 </div>
-                // if (!title || title === '-') return '-'
                 return <div className="activity-timeline-container" style={{ backgroundColor: 'rgb(2, 134, 195)' }}>
                     <Text style={{ color: 'white' }} ellipsis>
                         {utilService.getTimelineRange(title)}
@@ -45,10 +42,15 @@ export function ActivityStatus({ type, fromStatus, toStatus }) {
             case 'File':
                 if (!title || title === '-') return '-'
                 idx = (title.length > 0) ? 0 : (title.length - 1)
-                console.log('title:', title)
-                console.log('idx:', idx)
-                console.log('title[idx]:', title[idx])
                 return title[idx]?.url ? <img className="activity-file-img" src={title[idx].url} alt="" /> : '-'
+            case 'Group Color':
+                if (!title || title === '-') return '-'
+                console.log('activityTitle:', activityTitle)
+                return <div className="activity-group-color-container" >
+                    <Text ellipsis style={{ color: `var(--color-${title})` }}>
+                        {activityTitle}
+                    </Text>
+                </div>
             default:
                 return title
         }
