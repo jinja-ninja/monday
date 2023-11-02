@@ -1,10 +1,13 @@
-
 .group-preview-container {
     position: relative;
     margin-block-end: var(--spacing-large);
 
     &.collapse-group {
         margin-block-end: 0;
+
+        .group-title {
+            background-color: transparent;
+        }
     }
 
     .collapse-arrow-btn.collapse-group {
@@ -12,7 +15,11 @@
     }
 
     .collapsible-header-wrapper {
+
         // padding-left: 12.5px;
+        &.collapse-group-header {
+            top: 138px;
+        }
 
         .side-menu-btn-container {
             width: 38px;
@@ -21,16 +28,21 @@
             left: 0;
             background-color: white;
             z-index: 15;
+
             &::after {
                 content: '';
-                width: 100%; /* Adjust to your needs */
-                height: 2px; /* This sets the height of the white line */
+                width: 100%;
+                /* Adjust to your needs */
+                height: 2px;
+                /* This sets the height of the white line */
                 background-color: rgb(255, 255, 255);
-                position: absolute; /* Position it absolutely */
-                bottom: -1px; /* Place it at the top of the container */
+                position: absolute;
+                /* Position it absolutely */
+                bottom: -1px;
+                /* Place it at the top of the container */
                 left: 0;
             }
-          }
+        }
 
 
         &>* {
@@ -43,15 +55,7 @@
 
     .color-picker {
         position: absolute;
-        z-index: 7;
-    }
-
-    .num-of-tasks.collapse-group {
-        opacity: 1;
-        position: absolute;
-        bottom: -20px;
-        right: 0;
-        left: 35px;
+        z-index: 16;
     }
 
     .num-of-tasks {
@@ -61,7 +65,16 @@
         position: relative;
         bottom: -1px;
         right: -3px;
+        // right: -215px;
         color: var(--primary-text-on-secondary-color);
+
+        &.collapse-group {
+            opacity: 1;
+            position: absolute;
+            bottom: -20px;
+            right: 0;
+            left: 38px;
+        }
 
         &:hover {
             opacity: 1;

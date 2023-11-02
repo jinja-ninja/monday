@@ -17,8 +17,8 @@
   }
 
   .btn-add-group {
-    grid-column: 2;
-    justify-self: start;
+   position: sticky;
+   left: 38px;
   }
 
   padding-block-end: var(--spacing-xl);

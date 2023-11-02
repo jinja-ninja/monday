@@ -4,7 +4,7 @@ import { Add } from "monday-ui-react-core/icons"
 import { addGroup } from "../store/actions/board.action"
 import { Droppable } from "react-beautiful-dnd"
 
-export function GroupList({ groups, labels, cmpsOrder, boardId, priorities, hiddenColumns }) {
+export function GroupList({ groups, labels, cmpsOrder, boardId, priorities, hiddenColumns,isCollapse }) {
 
     let filteredCmpOrder = cmpsOrder.filter(cmp => !hiddenColumns.map(str => str.toLowerCase()).includes(cmp.toLowerCase()))
 
@@ -31,6 +31,7 @@ export function GroupList({ groups, labels, cmpsOrder, boardId, priorities, hidd
                                         priorities={priorities}
                                         collapseAll={snapshot.isDraggingOver}
                                         hiddenColumns={hiddenColumns}
+                                        isCollapse={isCollapse}
                                         key={`group-preview-${group.id}`} />
                                 </li>
                             })}

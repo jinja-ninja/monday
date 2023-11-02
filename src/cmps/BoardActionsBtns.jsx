@@ -6,10 +6,10 @@ import { RecordButton } from "./RecordButton";
 
 export function BoardActionsBtns({ currBoard, addTaskToFirstGroup, addGroup, setPersonPickerOpen,
     onTogglePersonModal, onRemovePersonFilter, personPickerOpen, setFilterBy, filterBy, sortBy, setSortBy,
-    hidePickerOpen, onToggleHideColumnsModal, hiddenColumns, dynSearchBtnInput }) {
+    hidePickerOpen, onToggleHideColumnsModal, hiddenColumns, dynSearchBtnInput,isCollapse }) {
 
-    return (
-        <div className="board-details-actions">
+        return (
+        <div className={"board-details-actions " + (!isCollapse ? 'collpase-actions-header' : '')}>
             <SplitButton shouldCloseOnClickInsideDialog onClick={() => addTaskToFirstGroup()} size="small" secondaryDialogContent={<SplitButtonMenu _id="split-menu">
                 <MenuItem onClick={() => addGroup(currBoard._id)} icon={Group} title="New group of items" />
             </SplitButtonMenu>}>

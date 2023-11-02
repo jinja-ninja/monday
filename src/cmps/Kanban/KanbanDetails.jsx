@@ -10,7 +10,7 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 import { useParams } from "react-router-dom"
 
 
-export function KanbanDetails() {
+export function KanbanDetails({isCollapse}) {
     const currBoard = useSelector(state => state.boardModule.board)
     const [isSearch, setIsSearch] = useState(false)
     const [filterBy, setFilterBy] = useState({ txt: '', person: null })
@@ -115,7 +115,7 @@ export function KanbanDetails() {
 
     return (
         <div className="kanban-details-container">
-            <div className="board-details-actions" id="kanban-actions-container">
+            <div className={"board-details-actions " + (!isCollapse ? 'collpase-actions-header' : '')} id="kanban-actions-container" >
                 <SplitButton
                     shouldCloseOnClickInsideDialog
                     onClick={() => onAddKanbanTask('')}

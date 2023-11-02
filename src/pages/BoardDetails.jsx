@@ -23,6 +23,7 @@ import { BoardActionsBtns } from "../cmps/BoardActionsBtns"
 import { KanbanDetails } from "../cmps/Kanban/KanbanDetails"
 import { DashboardDetails } from "../cmps/Dashboard/DashboardDetails"
 import { ActivityLog } from "../cmps/ActivityLog/ActivityLog"
+import { useRef } from "react"
 
 export function BoardDetails() {
     const params = useParams()
@@ -39,6 +40,8 @@ export function BoardDetails() {
     const [isActivityLog, setIsActivityLog] = useState(false)
     const [personPickerOpen, setPersonPickerOpen] = useState(false)
     const [hidePickerOpen, setHidePickerOpen] = useState(false)
+
+    const [isCollapse, setIsCollapse] = useState(true)
 
     let hiddenColumns = getAllUnCheckedColumns()
 
@@ -227,7 +230,7 @@ export function BoardDetails() {
         <BoardMainHeader />
         <SideBar />
 
-        <section className="board-details-container">
+        <section className="board-details-container" >
             <UserMsg />
 
             {typeof currBoard === 'string' && <BoardDeletedPage boardTitle={currBoard} />}
@@ -240,6 +243,8 @@ export function BoardDetails() {
                         boardId={currBoard._id}
                         setIsBoardDesc={setIsBoardDesc}
                         setIsActivityLog={setIsActivityLog}
+                        isCollapse={isCollapse}
+                        setIsCollapse={setIsCollapse}
                     />
                     <DragDropContext onDragEnd={onDragEnd}>
                         {content === 'board' &&
@@ -260,6 +265,7 @@ export function BoardDetails() {
                                     hidePickerOpen={hidePickerOpen}
                                     onToggleHideColumnsModal={onToggleHideColumnsModal}
                                     hiddenColumns={hiddenColumns}
+                                    isCollapse={isCollapse}
                                 />
 
                                 <div className="spacing-div"></div>
@@ -270,11 +276,12 @@ export function BoardDetails() {
                                     cmpsOrder={currBoard.cmpsOrder}
                                     priorities={currBoard.priorities}
                                     hiddenColumns={hiddenColumns}
+                                    isCollapse={isCollapse}
                                 />
                             </>
                         }
 
-                        {content === 'kanban' && <KanbanDetails />}
+                        {content === 'kanban' && <KanbanDetails isCollapse={isCollapse}/>}
                         {content === 'dashboard' && <DashboardDetails />}
                     </DragDropContext>
 

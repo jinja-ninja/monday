@@ -13,6 +13,8 @@ import { utilService } from "../services/util.service"
 export function SideBar() {
     const [isOpen, setIsOpen] = useState(false)
     const [isHover, setIsHover] = useState(false)
+    const [isSideBarHover, setIsSideBarHover] = useState(false)
+
     const [filterByTxt, setFilterByTxt] = useState('')
     const [isFavorites, setIsFavorites] = useState('main')
     const dispatch = useDispatch()
@@ -26,13 +28,18 @@ export function SideBar() {
     }, [boards.length])
 
     function getBoardsToShow() {
-        // if (isFavorites === 'main') return boards.filter(board => board.title.toLowerCase().includes(filterByTxt.toLowerCase()))
-        if (isFavorites === 'main') {
-            return boards.filter(board => board.title.toLowerCase().includes(filterByTxt.toLowerCase()))
-            if (boardsToDisplay.length === 0) erturn
-
-        }
+        if (isFavorites === 'main') return boards.filter(board => board.title.toLowerCase().includes(filterByTxt.toLowerCase()))
         else if (isFavorites === 'favorites') return boards.filter(board => board.isStarred)
+    }
+
+    function handleContainerMouseEnter(ev) {
+        if (ev.target === ev.currentTarget) {
+            setIsSideBarHover(true)
+        }
+    }
+
+    function handleContainerMouseLeave() {
+        setIsSideBarHover(false)
     }
 
     function onSelectBoard(boardId) {
@@ -80,14 +87,15 @@ export function SideBar() {
         utilService.debounce(setIsHover(state), 300)
     }
 
-    const dynOpenCloseClass = isOpen || isHover ? 'open' : ''
-    const dynHoverClass = isHover && !isOpen ? 'hovered' : ''
-
+    const dynOpenCloseClass = isOpen ? 'open' : ''
+    // const dynHoverClass = isHover && !isOpen ? 'hovered' : ''
+console.log('isSideBarHover:', isSideBarHover)
     return (
-        // <div className={"hover-side-bar-container " + dynHoverClass}
-        // onMouseEnter={() => debouncedHover(true)}
-        // onMouseLeave={() => debouncedHover(false)}>
-        <div className={"side-bar-container " + dynOpenCloseClass}>
+        <div
+            className={"side-bar-container " + dynOpenCloseClass + (isSideBarHover && !isOpen ? 'hovered' : '')}
+            onMouseEnter={(ev) => handleContainerMouseEnter(ev)}
+            onMouseLeave={handleContainerMouseLeave}
+        >
 
             <div className="side-bar-upper-container">
 

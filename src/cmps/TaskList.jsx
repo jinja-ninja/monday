@@ -27,7 +27,7 @@ import { MembersSummary } from "./dynamicSummaryCmps/MembersSummary"
 import { DisplayTitle } from "./DisplayTitle"
 import { FilesSummary } from "./dynamicSummaryCmps/FilesSummary"
 
-export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGroup }) {
+export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGroup, isCollapse }) {
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
     const currBoard = useSelector(state => state.boardModule.board)
 
@@ -300,7 +300,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
         <Droppable droppableId={'columns'} type="columns" direction="column">
             {(provided) => (
                 <section
-                    className={"header-title-container group-grid " + dynCollapseGroupClass}
+                    className={"header-title-container group-grid " + dynCollapseGroupClass + (!isCollapse ? ' collapse-header-title' : '')}
                     style={{ gridTemplateColumns: getDynGridTemplateCols() }}
                     {...provided.droppableProps}
                     ref={provided.innerRef}
@@ -341,7 +341,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                                 >
                                     {(provided) => (
                                         <div
-                                            className={"header-title " + dynCollapseGroupClass}
+                                            className={"header-title " + dynCollapseGroupClass + (idx === 1 ? ' sticky-header-title-collapse' : '')}
                                             key={idx}
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
@@ -441,8 +441,11 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                         backgroundColor: `var(--color-${group.style})`,
                     }}>
                 </div>}
+                <div className="summary-scroll-hide-div"></div>
             </div>
-            <div className="summary-scroll-hide-div">1</div>
+
+
+            {/* + (isCollapse ? ' collapse-header' : '') */}
             {getProgressOrder().map((cmp, idx) => (
                 <div className={`task-list-summary ${idx === 0 ? "first-cell " : ""} ${dynCollapseGroupClass}`} key={idx}>
                     {cmp === "status" &&
