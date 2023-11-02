@@ -1,3 +1,4 @@
+
 .group-preview-container {
     position: relative;
     margin-block-end: var(--spacing-large);
@@ -11,7 +12,26 @@
     }
 
     .collapsible-header-wrapper {
-        padding-left: 12.5px;
+        // padding-left: 12.5px;
+
+        .side-menu-btn-container {
+            width: 38px;
+            height: 28px;
+            position: sticky;
+            left: 0;
+            background-color: white;
+            z-index: 15;
+            &::after {
+                content: '';
+                width: 100%; /* Adjust to your needs */
+                height: 2px; /* This sets the height of the white line */
+                background-color: rgb(255, 255, 255);
+                position: absolute; /* Position it absolutely */
+                bottom: -1px; /* Place it at the top of the container */
+                left: 0;
+            }
+          }
+
 
         &>* {
             display: flex;

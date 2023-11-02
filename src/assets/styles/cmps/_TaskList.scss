@@ -18,6 +18,16 @@
     // border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
   }
 
+  .side-menu-btn-container {
+    width: 38px;
+    height: calc(100% + 2px);
+    position: sticky;
+    left: 0;
+    background-color: white;
+    z-index: 15;
+  }
+
+
   .header-title-container.collapse-group {
     border-bottom: none;
     top: 0;
@@ -33,7 +43,9 @@
     grid-auto-flow: column;
     border-top: var(--border-width) var(--border-style) var(--ui-border-color);
     border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
-    border-image: linear-gradient(to right, transparent 8px, var(--ui-border-color) 0) 1;
+    // border-image: linear-gradient(to right, transparent 8px, var(--ui-border-color) 0) 1;
+    border-image: linear-gradient(to right, transparent 46px, var(--ui-border-color) 0) 2;
+
 
     .header-title-side-wrapper {
       position: sticky;
@@ -155,7 +167,7 @@
 
     .task-menu-btn {
       position: absolute;
-      left: -30px;
+      left: 7px;
       opacity: 0;
       transition: opacity 0.2s;
 
@@ -191,7 +203,7 @@
       &.sticky-checkbox {
         position: sticky;
         left: 38px;
-        z-index: 1;
+        z-index: 3;
         background-color: #fff;
       }
 
@@ -236,6 +248,8 @@
     border-radius: 0 0 0 var(--border-radius-small);
     box-shadow: var(--box-shadow-xs);
     border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
+    border-image: linear-gradient(to right, transparent 46px, var(--ui-border-color) 0) 2;
+
     // rgba(195, 198, 212, 0.6)
     height: 36px;
     background-color: #fff;
@@ -247,6 +261,11 @@
 
     &.typing {
       background-color: var(--primary-selected-color);
+    }
+
+    .side-menu-btn-container {
+      border-right: none;
+      height: calc(100% + 3px);
     }
 
     // .task-add-btn.collapse-group {
@@ -262,7 +281,7 @@
       opacity: 0.75;
       position: sticky;
       left: 78px;
-      z-index: 15;
+      z-index: 3;
 
       &.typing {
         opacity: 1;
@@ -324,18 +343,35 @@
   .task-list-summary-wrapper {
     border-bottom: unset;
 
-    .task-list-summary-emptycell-left.collapse-group {
-      border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+    .summary-scroll-hide-div{
+      position: absolute;
+      background-color: red;
+      width: 30px;
+      height: 30px;
+      left: 555px;
 
+    }
+    // .task-list-summary-emptycell-left.collapse-group {
+    //   border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+
+    // }
+
+    .side-menu-btn-container {
+      grid-column: 1/2;
     }
 
     .task-list-summary-emptycell-left {
-      grid-column: 1/3;
+      grid-column: 2/3;
       background-color: white;
       position: sticky;
       left: 38px;
-      z-index: 15;
+      z-index: 3;
       height: calc(100% + 3px);
+
+      &.collapse-group {
+        border-right: var(--border-width) var(--border-style) var(--ui-border-color);
+
+      }
 
       .color-indicator {
         width: 7px;

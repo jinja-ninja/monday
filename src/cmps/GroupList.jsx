@@ -11,7 +11,7 @@ export function GroupList({ groups, labels, cmpsOrder, boardId, priorities, hidd
 
     return (
         <section className="groups-section">
-            <div className="side-spacing-div"></div>
+            {/* <div className="side-spacing-div"></div> */}
             <div className="group-list-container">
 
                 <Droppable droppableId="groups" type="groups">

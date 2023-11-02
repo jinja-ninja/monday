@@ -268,9 +268,19 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
         let columsLength = getProgressOrder().length
 
         if (columsLength > 0) {
-            return `40px 480px repeat(${columsLength}, 140px) 1fr`
+            return `38px 40px 480px repeat(${columsLength}, 140px) 1fr`
         } else {
-            return '40px 480px 1fr'
+            return '38px 40px 480px 1fr'
+        }
+    }
+
+    function getDynGridTemplateColsSummary() {
+        let columsLength = getProgressOrder().length
+
+        if (columsLength > 0) {
+            return `38px 520px repeat(${columsLength}, 140px) 1fr`
+        } else {
+            return '38px 520px 1fr'
         }
     }
 
@@ -295,6 +305,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                 >
+                    <div className="side-menu-btn-container"></div>
                     {cmpsOrder.map((title, idx) => {
                         if (idx === 0) return (
                             <div className="header-title-side-wrapper" key={idx}>
@@ -319,7 +330,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                         return (
                             (title === 'title' || title === 'side') ?
                                 <div className={"header-title " + dynCollapseGroupClass + (title === 'title' ? 'sticky-header-title' : '')}
-                                 key={idx}>
+                                    key={idx}>
                                     <DisplayTitle title={title} />
                                 </div>
                                 :
@@ -367,10 +378,12 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}
                                     >
-                                        {renderMenuButton(task.id)}
+                                        <div className="side-menu-btn-container">
+                                            {renderMenuButton(task.id)}
+                                        </div>
                                         {cmpsOrder.map((cmp, idx) =>
                                             <section className={"task-item " + (idx === 0 ? 'sticky-checkbox' : '') + (idx === 1 ? 'sticky-title' : '')}
-                                             key={idx} style={{ width: getDynTaskColsLength()[idx] }}>
+                                                key={idx} style={{ width: getDynTaskColsLength()[idx] }}>
                                                 {renderDynamicCmp(cmp, task, labels, priorities)}
                                             </section>
                                         )}
@@ -386,6 +399,8 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
         </Droppable >
 
         {showGroup && <section className={"task-list-add group-grid " + (isTypingNewTask ? 'typing' : '')} style={{ gridTemplateColumns: getDynGridTemplateCols() }}>
+
+            <div className="side-menu-btn-container"></div>
 
             <div className="task-list-add-side">
                 <div className="color-indicator"
@@ -416,7 +431,9 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
 
 
         <section className={"task-list-summary-wrapper group-grid " + dynCollapseGroupClass}
-            style={{ gridTemplateColumns: getDynGridTemplateCols() }}>
+            style={{ gridTemplateColumns: getDynGridTemplateColsSummary() }}>
+
+            <div className="side-menu-btn-container"></div>
 
             <div className={"task-list-summary-emptycell-left " + dynCollapseGroupClass}>
                 {!showGroup && <div className="color-indicator"
@@ -425,7 +442,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     }}>
                 </div>}
             </div>
-
+            <div className="summary-scroll-hide-div">1</div>
             {getProgressOrder().map((cmp, idx) => (
                 <div className={`task-list-summary ${idx === 0 ? "first-cell " : ""} ${dynCollapseGroupClass}`} key={idx}>
                     {cmp === "status" &&
@@ -452,7 +469,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
             <div className={"task-list-summary last-col " + dynCollapseGroupClass}> </div>
 
         </section >
-        
+
         <>
             <Modal
                 id="story-book-modal"

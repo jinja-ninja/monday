@@ -96,6 +96,9 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                     className={"group-preview-container " + dynCollapseGroupClass}>
 
                     <div className={"collapsible-header-wrapper " + dynCollapseGroupClass} >
+
+                        <div className="side-menu-btn-container">
+
                         <MenuButton
                             size={MenuButton.sizes.XS}
                             className="group-menu-btn"
@@ -123,81 +126,83 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                                     title="Change group color" />
                             </Menu>
                         </MenuButton>
-
-                        <div>
-
-                            <Tooltip
-                                content={showGroup ? "Collapse Group" : "Expand Group"}
-                                animationType="expand">
-                                <Icon iconType={Icon.type.SVG} iconSize={20}
-                                    className={"collapse-arrow-btn " + dynCollapseGroupClass}
-                                    icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
-                                    style={{ color: `var(--color-${group.style})` }}
-                                    onClick={() => setShowGroup((prevShowGroup => !prevShowGroup))} />
-                            </Tooltip>
-
-                            <Tooltip content="Click to Edit"
-                                animationType="expand">
-                                <EditableHeading
-                                    className="editable-heading-target"
-                                    type="h4"
-                                    value={editableText}
-                                    onFinishEditing={() => {
-                                        onRenameGroup(group.id, editableText)
-                                    }}
-                                    style={{ color: `var(--color-${group.style})` }}
-                                    onChange={(newText) => setEditableText(newText)}
-                                />
-                            </Tooltip>
-                        </div>
-
-                        <span className={"num-of-tasks " + dynCollapseGroupClass}>
-                            {numOfTasks === 0 ?
-                                'No tasks' : `${numOfTasks} 
-                                ${numOfTasks === 1 ? 'Task' : 'Tasks'}`}
-                        </span>
                     </div>
 
-                    {
-                        showColorPicker && <ColorPicker
-                            onSave={(color) => onSelectColor(color)}
-                            colorSize="small"
-                            className="color-picker"
-                            ref={refColorDialog}
-                        />
-                    }
-                    <TaskList
-                        group={group}
-                        cmpsOrder={cmpsOrder}
-                        labels={labels}
-                        priorities={priorities}
-                        setNumOfTasks={setNumOfTasks}
-                        showGroup={showGroup} />
-                    <>
-                        <Modal
-                            id="story-book-modal"
-                            title="Modal title"
-                            triggerElement={openModalButtonRef.current}
-                            show={show}
-                            onClose={closeModal}
-                            width={Modal.width.DEFAULT} contentSpacing>
+                    <div className="group-title">
 
-                            <ModalHeader title={"Delete"} iconSize={32} />
-                            <ModalContent>Delete this Group? </ModalContent>
-                            <ModalFooterButtons
-                                primaryButtonText="Delete"
-                                secondaryButtonText="Cancel"
-                                onPrimaryButtonClick={() => {
-                                    onRemoveGroup(boardId, group.id)
-                                    closeModal()
+                        <Tooltip
+                            content={showGroup ? "Collapse Group" : "Expand Group"}
+                            animationType="expand">
+                            <Icon iconType={Icon.type.SVG} iconSize={20}
+                                className={"collapse-arrow-btn " + dynCollapseGroupClass}
+                                icon={showGroup ? DropdownChevronDown : DropdownChevronRight}
+                                style={{ color: `var(--color-${group.style})` }}
+                                onClick={() => setShowGroup((prevShowGroup => !prevShowGroup))} />
+                        </Tooltip>
+
+                        <Tooltip content="Click to Edit"
+                            animationType="expand">
+                            <EditableHeading
+                                className="editable-heading-target"
+                                type="h4"
+                                value={editableText}
+                                onFinishEditing={() => {
+                                    onRenameGroup(group.id, editableText)
                                 }}
-                                onSecondaryButtonClick={closeModal} />
+                                style={{ color: `var(--color-${group.style})` }}
+                                onChange={(newText) => setEditableText(newText)}
+                            />
+                        </Tooltip>
+                    </div>
 
-                        </Modal>
-                    </>
+                    <span className={"num-of-tasks " + dynCollapseGroupClass}>
+                        {numOfTasks === 0 ?
+                            'No tasks' : `${numOfTasks} 
+                                ${numOfTasks === 1 ? 'Task' : 'Tasks'}`}
+                    </span>
                 </div>
-            )}
-        </Draggable>
+
+                    {
+                showColorPicker && <ColorPicker
+                    onSave={(color) => onSelectColor(color)}
+                    colorSize="small"
+                    className="color-picker"
+                    ref={refColorDialog}
+                />
+            }
+            <TaskList
+                group={group}
+                cmpsOrder={cmpsOrder}
+                labels={labels}
+                priorities={priorities}
+                setNumOfTasks={setNumOfTasks}
+                showGroup={showGroup} />
+            <>
+                <Modal
+                    id="story-book-modal"
+                    title="Modal title"
+                    triggerElement={openModalButtonRef.current}
+                    show={show}
+                    onClose={closeModal}
+                    width={Modal.width.DEFAULT} contentSpacing>
+
+                    <ModalHeader title={"Delete"} iconSize={32} />
+                    <ModalContent>Delete this Group? </ModalContent>
+                    <ModalFooterButtons
+                        primaryButtonText="Delete"
+                        secondaryButtonText="Cancel"
+                        onPrimaryButtonClick={() => {
+                            onRemoveGroup(boardId, group.id)
+                            closeModal()
+                        }}
+                        onSecondaryButtonClick={closeModal} />
+
+                </Modal>
+            </>
+        </div>
+    )
+}
+        </Draggable >
     )
 }
 
