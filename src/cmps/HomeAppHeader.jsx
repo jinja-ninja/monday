@@ -3,11 +3,10 @@ import { ListItem } from 'monday-ui-react-core'
 import mondayLogo from '../assets/img/funday-logo-small-com.svg'
 import { useNavigate } from 'react-router-dom'
 
-export function HomeAppHeader() {
+export function HomeAppHeader({scrolled}) {
     const navigate = useNavigate()
-
     return (
-        <div className="home-header-container">
+        <div className={"home-header-container full " + (scrolled ? 'scrolled' : '')}>
             <img src={mondayLogo} className='home-header-logo' alt="" />
             <div>
                 <ListItem component="div" className='btn-header-login' onClick={() => navigate('/auth/login')}>

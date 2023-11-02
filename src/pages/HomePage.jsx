@@ -27,12 +27,20 @@ import SupportClockImg from '../assets/img/SupportClockImg.png'
 import SupportHeartImg from '../assets/img/SupportHeartImg.png'
 import SupportPhoneImg from '../assets/img/SupportPhoneImg.png'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 export function HomePage() {
+    const [scrolled, setScrolled] = useState(false)
     const navigate = useNavigate()
+
+    window.onscroll = function handleScroll() {
+		const isScrolled = window.scrollY > 0
+		setScrolled(isScrolled)
+	}
+
     return (
         <div className="home-page-container main-layout">
-            <HomeAppHeader />
+            <HomeAppHeader scrolled={scrolled}/>
 
             <main className="home-page-content main-layout">
 

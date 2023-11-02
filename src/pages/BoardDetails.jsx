@@ -76,10 +76,11 @@ export function BoardDetails() {
         setHidePickerOpen(prev => !prev)
     }
 
-    async function addTaskToFirstGroup() {
+    async function addTaskToFirstGroup(task) {
         if (!currBoard.groups) return
         try {
             const newTask = boardService.getEmptyTask("New task")
+            if (task) newTask.title = task
             await addTask(currBoard._id, currBoard.groups[0].id, newTask, true)
             showSuccessMsg('Added new task')
         } catch (err) {
@@ -174,6 +175,7 @@ export function BoardDetails() {
             }
             else {
                 const kanbanCmpsOrder = getLabelsInUse()
+                console.log('kanbanCmpsOrder:', kanbanCmpsOrder)
                 const newBoard = { ...currBoard, kanbanCmpsOrder }
                 await updateBoardOptimistic('board', currBoard._id, null, null, { key: 'kanbanCmpsOrder', value: kanbanCmpsOrder }, newBoard)
             }

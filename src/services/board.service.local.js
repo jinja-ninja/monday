@@ -1400,7 +1400,8 @@ function _createBoards() {
                                     priority: "Medium",
                                     status: "Done",
                                     dueDate: 1697576400000,
-                                    memberIds: ['u101','u102']
+                                    memberIds: ['u101', 'u102'],
+                                    files: [{ url: "http://res.cloudinary.com/dhq4tdw9m/image/upload/v1698836838/mm61elni6avlhzygxkvk.jpg", id: 1698836839367 }]
                                 },
                                 {
                                     id: "c116",
@@ -1408,7 +1409,7 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Stuck",
-                                    timeline : {from: 1696798800000, to: 1700949600000},
+                                    timeline: { from: 1696798800000, to: 1700949600000 },
                                     memberIds: []
                                 },
                                 {
@@ -1417,8 +1418,8 @@ function _createBoards() {
                                     comments: [],
                                     priority: "Low",
                                     status: "Progress",
-                                    dueDate : 1697403600000,
-                                    timeline : {from: 1696798800000, to: 1698616800000},
+                                    dueDate: 1697403600000,
+                                    timeline: { from: 1696798800000, to: 1698616800000 },
                                     memberIds: ['u103']
                                 },
                                 {
@@ -1442,8 +1443,8 @@ function _createBoards() {
                                     comments: [],
                                     priority: "High",
                                     status: "Stuck",
-                                    dueDate : 1697490000000,
-                                    timeline: {from: 1697058000000, to: 1697749200000},
+                                    dueDate: 1697490000000,
+                                    timeline: { from: 1697058000000, to: 1697749200000 },
                                     memberIds: []
                                 },
                                 {
@@ -1453,6 +1454,8 @@ function _createBoards() {
                                     priority: "Critical",
                                     dueDate: undefined,
                                     memberIds: ["u101"],
+                                    files: [{ url: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619879/cld-sample-4.jpg", id: 177736839367 },
+                                    { url: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619876/samples/dessert-on-a-plate.jpg", id: 12365123623 }],
                                     description: "Endpoints for CRUD operations",
                                     comments: [
                                         {
@@ -1508,7 +1511,8 @@ function _createBoards() {
                                     priority: "Medium",
                                     status: "Done",
                                     dueDate: 1696366800000,
-                                    timeline : {from: 1696280400000, to: 1697490000000},
+                                    timeline: { from: 1696280400000, to: 1697490000000 },
+                                    files: [{ url: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619871/samples/balloons.jpg", id: 177736839367 }],
                                     memberIds: ['u101', 'u102']
                                 },
                                 {

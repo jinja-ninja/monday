@@ -56,14 +56,14 @@ export function KanbanDetails() {
     }
 
     function getOrderedGroups(groups) {
-        const labelsInUse = getLabelsInUse().map(label => label || 'Blank')
+        const labelsInUse = getLabelsInUse()
         const orderFromBoard = currBoard.kanbanCmpsOrder || []
         const getIndexInOrder = (label) => orderFromBoard.findIndex(orderLabel => orderLabel === label)
         const sortedLabels = [...labelsInUse].sort((a, b) => {
             const indexA = getIndexInOrder(a)
             const indexB = getIndexInOrder(b)
             return indexA - indexB
-        })
+        }).map(label => label || 'Blank')
         const orderedGroups = sortedLabels.map(label => groups.find(group => group.name === label))
         return orderedGroups
     }
