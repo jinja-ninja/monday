@@ -42,7 +42,7 @@ export const boardService = {
     _createBoards,
 }
 
-// _createBoards()
+_createBoards()
 
 // General Update function
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
@@ -727,7 +727,6 @@ function _createBoards() {
         boards =
             [
                 {
-                    _id: "b101",
                     title: "Robot dev proj",
                     isStarred: false,
                     archivedAt: 1589983468418,
@@ -953,7 +952,6 @@ function _createBoards() {
                     ]
                 },
                 {
-                    _id: "b102",
                     title: "AI dev proj",
                     isStarred: true,
                     archivedAt: 1589983468520,
@@ -1131,7 +1129,6 @@ function _createBoards() {
                     ]
                 },
                 {
-                    _id: "b103",
                     title: "Data Science proj",
                     isStarred: true,
                     archivedAt: 1590010000000,
@@ -1336,7 +1333,6 @@ function _createBoards() {
                     ]
                 },
                 {
-                    _id: "b104",
                     title: "Web Design proj",
                     isStarred: false,
                     archivedAt: 1590500000000,
@@ -1588,6 +1584,7 @@ function _createBoards() {
                 }
             ]
 
-        utilService.saveToStorage(STORAGE_KEY, boards)
+        boards.forEach(board => httpService.post(BASE_URL, board))
+        // utilService.saveToStorage(STORAGE_KEY, boards)
     }
 }
