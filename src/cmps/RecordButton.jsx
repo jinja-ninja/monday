@@ -11,10 +11,10 @@ import { SET_IS_LOADING } from "../store/reducers/board.reducer"
 import { AiLoader } from "./AiLoader"
 import { useSelector } from "react-redux"
 
-export function RecordButton({ currBoard, setIsAiOpen }) {
+export function RecordButton({ currBoard, setIsAiOpen, setIsFireworks }) {
+    const [isRecordingOn, setIsRecordingOn] = useState(false)
     const isLoading = useSelector(state => state.boardModule.isLoading)
     const dispatch = useDispatch()
-    const [isRecordingOn, setIsRecordingOn] = useState(false)
 
     useEffect(() => {
         const handleRecord = (isRecording) => {
@@ -34,6 +34,10 @@ export function RecordButton({ currBoard, setIsAiOpen }) {
             updateBoard('board', currBoard._id, null, null, { key: 'groups', value: [...newBoard.groups] })
             dispatch({ type: SET_IS_LOADING, isLoading: false })
             setIsAiOpen(false)
+            setIsFireworks(true)
+            setTimeout(() => {
+                setIsFireworks(false)
+            }, 4000);
         }
 
         eventBus.on('record', handleRecord)

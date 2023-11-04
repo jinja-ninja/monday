@@ -55,12 +55,7 @@ export function BoardDetails() {
 
     useEffect(() => {
         loadBoard(params.boardId, filterBy, sortBy)
-        setIsFireworks(true)
-        setTimeout(() => {
-            setIsFireworks(false)
-        }, 4500);
 
-        console.log('isFireworks:', isFireworks)
     }, [params.boardId, filterBy, sortBy])
 
     useEffect(() => {
@@ -195,6 +190,7 @@ export function BoardDetails() {
             return
         }
 
+
         if (type === 'columns') {
             const newCmpsOrder = [...currBoard.cmpsOrder]
             const [removed] = newCmpsOrder.splice(source.index, 1)
@@ -237,9 +233,9 @@ export function BoardDetails() {
 
     if (currBoard === null) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
     return <>
-        {/* {isFireworks && <div className="board-desc-backdrop" style={{ background: 'transparent' }}>
+        {isFireworks && <div className="board-desc-backdrop" style={{ background: 'transparent' }}>
             <Fireworks />
-        </div>} */}
+        </div>}
         <main className="board-details-layout">
             <BoardMainHeader />
             <SideBar />
@@ -313,8 +309,9 @@ export function BoardDetails() {
                 {isBoardDesc && <BoardDescriptionModal boardTitle={currBoard.title} setIsBoardDesc={setIsBoardDesc} />}
                 {isAiOpen && <AiModal
                     setIsAiOpen={setIsAiOpen}
+                    setIsFireworks={setIsFireworks}
                     currBoard={currBoard}
-                    updateBoardOptimistic={updateBoardOptimistic} />}
+                />}
             </section>
         </main >
     </>

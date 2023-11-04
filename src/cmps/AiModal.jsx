@@ -4,7 +4,7 @@ import { Close } from 'monday-ui-react-core/icons'
 import { RecordButton } from './RecordButton'
 // import { Fireworks } from "../cmps/Fireworks"
 
-export function AiModal({ setIsAiOpen, currBoard }) {
+export function AiModal({ setIsAiOpen, currBoard,setIsFireworks }) {
 
     function closeModalByBtn(ev) {
         ev.stopPropagation()
@@ -26,7 +26,7 @@ export function AiModal({ setIsAiOpen, currBoard }) {
                     <p>and our AI will break down your main task</p>
                     <p>into smaller manageable sub-tasks.</p>
 
-                    <RecordButton currBoard={currBoard} setIsAiOpen={setIsAiOpen} />
+                    <RecordButton currBoard={currBoard} setIsAiOpen={setIsAiOpen} setIsFireworks={setIsFireworks}/>
                 </div>
             </div>
         </div>
