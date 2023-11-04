@@ -50,14 +50,15 @@ export function KanbanDetails({ isCollapse }) {
     }
 
     function getLabelsInUse() {
-        const AllTasksLabels = getAllBoardTasks().map(task => task.status)
-        const uniqueLabels = [...new Set(AllTasksLabels)]
+        let allTasksLabels = getAllBoardTasks().map(task => task.status)
+        // allTasksLabels = allTasksLabels.map(label => label === 'Blank' ? '' : label)
+        const uniqueLabels = [...new Set(allTasksLabels)]
         return uniqueLabels
     }
 
     function getOrderedGroups(groups) {
         const labelsInUse = getLabelsInUse()
-        console.log('labelsInUse:', labelsInUse)
+        // console.log('labelsInUse:', labelsInUse)
         // if (labelsInUse.length !== currBoard.kanbanCmpsOrder) currBoard.kanbanCmpsOrder = labelsInUse
         const orderFromBoard = currBoard.kanbanCmpsOrder || []
         // console.log('orderFromBoard:', orderFromBoard)
@@ -67,9 +68,9 @@ export function KanbanDetails({ isCollapse }) {
             const indexB = getIndexInOrder(b)
             return indexA - indexB
         }).map(label => label || 'Blank')
-        console.log('sortedLabels:', sortedLabels)
+        // console.log('sortedLabels:', sortedLabels)
         const orderedGroups = sortedLabels.map(label => groups.find(group => group.name === label))
-        console.log('orderedGroups:', orderedGroups)
+        // console.log('orderedGroups:', orderedGroups)
         return orderedGroups
     }
 
