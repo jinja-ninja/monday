@@ -161,7 +161,7 @@ async function save(board) {
 }
 
 async function remove(boardId) {
-    return httpService.delete(BASE_URL, boardId)
+    return httpService.delete(`${BASE_URL}/${boardId}`, boardId)
     // return await storageService.remove(STORAGE_KEY, boardId)
 }
 
