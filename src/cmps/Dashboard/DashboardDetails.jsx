@@ -6,13 +6,10 @@ import HighchartsMore from 'highcharts/highcharts-more';
 import HighchartsExporting from 'highcharts/modules/exporting';
 
 export function DashboardDetails() {
-    const [size, setSize] = useState({ width: 350, height: 350 })
     const chartRef = useRef(null);
-
 
     HighchartsMore(Highcharts);
     HighchartsExporting(Highcharts);
-
 
     const totalTasks = [35, 45, 67, 70, 65, 74, 89, 88, 79, 68, 72, 61]
     const doneTasks = [23, 40, 67, 51, 64, 70, 36, 69, 72, 43, 60, 45]
@@ -28,7 +25,7 @@ export function DashboardDetails() {
             type: 'spline'
         },
         title: {
-            text: 'R&D tasks completed ontime'
+            text: 'R&D tasks completed on time'
         },
         xAxis: {
             categories: [, 'Nov 22', 'Dec 22', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -53,56 +50,56 @@ export function DashboardDetails() {
         }]
     }
 
-    const totalTasksPercentageOptions = {
-        chart: {
-            type: 'pie'
-        },
-        title: {
-            text: '% Of Tasks Completed On Time'
-        },
-        tooltip: {
-            valueSuffix: '%'
-        },
-        plotOptions: {
-            series: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: [{
-                    enabled: true,
-                    distance: 20
-                }, {
-                    enabled: true,
-                    distance: -40,
-                    format: '{point.percentage:.1f}%',
-                    style: {
-                        fontSize: '1.4em',
-                        textOutline: 'none',
-                        opacity: 0.7
-                    },
-                    filter: {
-                        operator: '>',
-                        property: 'percentage',
-                        value: 10
-                    }
-                }]
-            }
-        },
-        series: [
-            {
-                name: 'Percentage',
-                data: [
-                    {
-                        name: 'Done On Time',
-                        y: parseFloat(percentage)
-                    },
-                    {
-                        name: 'Not Completed On Time',
-                        y: parseFloat((100 - percentage).toFixed(1))
-                    }
-                ]
-            }
-        ]
-    }
+    // const totalTasksPercentageOptions = {
+    //     chart: {
+    //         type: 'pie'
+    //     },
+    //     title: {
+    //         text: '% Of Tasks Completed On Time'
+    //     },
+    //     tooltip: {
+    //         valueSuffix: '%'
+    //     },
+    //     plotOptions: {
+    //         series: {
+    //             allowPointSelect: true,
+    //             cursor: 'pointer',
+    //             dataLabels: [{
+    //                 enabled: true,
+    //                 distance: 20
+    //             }, {
+    //                 enabled: true,
+    //                 distance: -40,
+    //                 format: '{point.percentage:.1f}%',
+    //                 style: {
+    //                     fontSize: '1.4em',
+    //                     textOutline: 'none',
+    //                     opacity: 0.7
+    //                 },
+    //                 filter: {
+    //                     operator: '>',
+    //                     property: 'percentage',
+    //                     value: 10
+    //                 }
+    //             }]
+    //         }
+    //     },
+    //     series: [
+    //         {
+    //             name: 'Percentage',
+    //             data: [
+    //                 {
+    //                     name: 'Done On Time',
+    //                     y: parseFloat(percentage)
+    //                 },
+    //                 {
+    //                     name: 'Not Completed On Time',
+    //                     y: parseFloat((100 - percentage).toFixed(1))
+    //                 }
+    //             ]
+    //         }
+    //     ]
+    // }
 
     const optionsOmer = {
         chart: {
@@ -122,6 +119,7 @@ export function DashboardDetails() {
             ]
         }]
     }
+
     const optionsNati = {
         chart: {
             type: 'column'
@@ -168,14 +166,14 @@ export function DashboardDetails() {
             <div className='chart-data-container'>
                 <div className='chart-info show-border'>
                     <div className='completed-tasks'>
-                        <h1>Completed tasks ontime</h1>
+                        <h1>Completed tasks on time</h1>
                         <p>78.72 %</p>
                     </div>
                 </div>
                 <div className='chart-info show-border'>
                     <div className='completed-tasks'>
-                        <h1>Performance months to review</h1>
-                        <p style={{ color: 'var(--color-stuck-red)' }}> Jan, Apr, Jul</p>
+                        <h1>Performance years to review</h1>
+                        <p style={{ color: 'var(--color-stuck-red)' }}> 2022 - 2023</p>
                     </div>
                 </div>
             </div>

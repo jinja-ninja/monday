@@ -1,12 +1,17 @@
 .dashboard-container {
   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   flex-direction: column;
   text-align: center;
-  padding-left: 40px;
   margin-bottom: 20px;
+  width: 1065px;
+
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-inline: auto;
+  background-color: var(--allgrey-background-color);
 
   .in-progress-img {
     margin-top: 100px;
@@ -16,6 +21,7 @@
 
   .members-chart {
     display: flex;
+    gap: rem(20px);
 
     .box {
       width: 333.3px;
@@ -25,7 +31,7 @@
   }
 
   .line-chart {
-    width: 1000px;
+    width: 1020px;
     border: 1px solid lightgray;
     box-shadow: 1px 2px 5px rgb(220, 220, 220);
     margin-block-end: 20px;
@@ -33,15 +39,18 @@
 
   .chart-data-container {
     display: flex;
+    gap: rem(20px);
 
     .chart-info {
+      display: flex;
       width: 500px;
-      height: 193px;
+      height: 150px;
       box-shadow: 1px 2px 5px rgb(220, 220, 220);
       padding: 5px;
-      display: flex;
+      border-radius: 1rem;
       justify-content: center;
       margin-block-end: 20px;
+      background-color: white;
 
       .completed-tasks {
         display: flex;
@@ -55,19 +64,19 @@
           align-self: center;
           font-size: 1.3rem;
           font-weight: 600;
-          //   padding-top: 0px;
         }
+
         p {
           margin: auto;
-          font-size: 3.5rem;
+          font-size: 2.5rem;
           text-align: center;
           color: var(--color-done-green);
         }
       }
-      // box-shadow: ;
     }
   }
 }
+
 .show-border {
   border: 1px solid lightgray;
 }
