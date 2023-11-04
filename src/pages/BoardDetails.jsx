@@ -260,6 +260,7 @@ export function BoardDetails() {
                                     hidePickerOpen={hidePickerOpen}
                                     onToggleHideColumnsModal={onToggleHideColumnsModal}
                                     hiddenColumns={hiddenColumns}
+                                    updateBoardOptimistic={updateBoardOptimistic}
                                 />
 
                                 <div className="spacing-div"></div>

@@ -6,7 +6,7 @@ import { RecordButton } from "./RecordButton";
 
 export function BoardActionsBtns({ currBoard, addTaskToFirstGroup, addGroup, setPersonPickerOpen,
     onTogglePersonModal, onRemovePersonFilter, personPickerOpen, setFilterBy, filterBy, sortBy, setSortBy,
-    hidePickerOpen, onToggleHideColumnsModal, hiddenColumns, dynSearchBtnInput }) {
+    hidePickerOpen, onToggleHideColumnsModal, hiddenColumns, dynSearchBtnInput, updateBoardOptimistic }) {
 
     return (
         <div className="board-details-actions">
@@ -59,7 +59,7 @@ export function BoardActionsBtns({ currBoard, addTaskToFirstGroup, addGroup, set
             <Tooltip
                 content='Record to add a new task'
                 animationType="expand">
-                <RecordButton addTaskToFirstGroup={addTaskToFirstGroup} />
+                <RecordButton currBoard={currBoard} updateBoardOptimistic={updateBoardOptimistic} />
             </Tooltip>
         </div>
     )

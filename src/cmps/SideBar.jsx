@@ -183,9 +183,15 @@ export function SideBar() {
                     {boards && getBoardsToShow().length > 0 ? getBoardsToShow().map((board, idx) => {
                         return (
                             <BoardNavLink
-                                text={board.title} boardId={board._id} onSelectBoard={onSelectBoard} isStarred={board.isStarred}
-                                onDeleteBoard={onDeleteBoard} onRenameBoard={onRenameBoard} onToggleFavoriteBoard={onToggleFavoriteBoard}
-                                onDuplicateBoard={onDuplicateBoard} currBoard={currBoard}
+                                text={board.title}
+                                boardId={board._id}
+                                onSelectBoard={onSelectBoard}
+                                isStarred={board.isStarred}
+                                onDeleteBoard={onDeleteBoard}
+                                onRenameBoard={onRenameBoard}
+                                onToggleFavoriteBoard={onToggleFavoriteBoard}
+                                onDuplicateBoard={onDuplicateBoard}
+                                currBoard={currBoard}
                                 key={idx} />
                         )
                     })

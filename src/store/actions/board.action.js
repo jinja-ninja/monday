@@ -7,6 +7,7 @@ import { boardService } from '../../services/board.service.local'
 export async function loadBoards() {
     try {
         const boards = await boardService.query()
+        console.log('Boards from DB:', boards)
         store.dispatch({ type: SET_BOARDS, boards })
     } catch (err) {
         console.log('Board Actions: err in Loading Boards', err)
@@ -219,9 +220,9 @@ export async function removeBatchTasks(boardId, selectedTasks, actions = []) {
 }
 
 // Label Actions
-export async function getLabelById(boardId, labelId,statusOrPriorities) {
+export async function getLabelById(boardId, labelId, statusOrPriorities) {
     try {
-        const label = await boardService.getLabelById(boardId, labelId,statusOrPriorities)
+        const label = await boardService.getLabelById(boardId, labelId, statusOrPriorities)
         return label
     } catch (err) {
         console.log('BoardActions: err in getLabelById', err)
