@@ -162,6 +162,16 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
         return propertyPercentages
     }
 
+    const handleRenameTask = (taskId) => {
+        const taskElement = document.querySelector(`.task-title-container[data-task-id="${taskId}"]`)
+        if (taskElement) {
+            const editableElement = taskElement.querySelector('.editible-task-title div')
+            if (editableElement) {
+                editableElement.click()
+            }
+        }
+    }
+
     function renderMenuButton(taskId) {
         return (
             <MenuButton size={MenuButton.sizes.XS} className='task-menu-btn'>
@@ -178,7 +188,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     <MenuItem
                         icon={Edit}
                         iconType="SVG"
-                        onClick={() => handleEditClick(group.id)}
+                        onClick={() => handleRenameTask(taskId)}
                         title="Rename task" />
                     <MenuItem
                         icon={Duplicate}
