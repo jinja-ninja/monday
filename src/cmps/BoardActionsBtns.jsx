@@ -7,7 +7,7 @@ import AiLogo from '../assets/img/AiLogo.png'
 
 export function BoardActionsBtns({ currBoard, addTaskToFirstGroup, addGroup, setPersonPickerOpen,
     onTogglePersonModal, onRemovePersonFilter, personPickerOpen, setFilterBy, filterBy, sortBy, setSortBy,
-    hidePickerOpen, onToggleHideColumnsModal, hiddenColumns, dynSearchBtnInput, isCollapse,setIsAiOpen }) {
+    hidePickerOpen, onToggleHideColumnsModal, hiddenColumns, dynSearchBtnInput, updateBoardOptimistic, isCollapse, setIsAiOpen }) {
 
     return (
         <div className={"board-details-actions " + (!isCollapse ? 'collpase-actions-header' : '')}>
@@ -48,11 +48,11 @@ export function BoardActionsBtns({ currBoard, addTaskToFirstGroup, addGroup, set
                 hiddenColumns={hiddenColumns}
             />
 
-            <Tooltip
+            {/* <Tooltip
                 content='Record to add a new task'
                 animationType="expand">
-                <RecordButton addTaskToFirstGroup={addTaskToFirstGroup} />
-            </Tooltip>
+                <RecordButton currBoard={currBoard} updateBoardOptimistic={updateBoardOptimistic} />
+            </Tooltip> */}
 
             <Tooltip
                 content='Use AI to create tasks'

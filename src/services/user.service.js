@@ -16,38 +16,53 @@ export const userService = {
 
 window.us = userService
 
-function getById(userId) {
-    return storageService.get(STORAGE_KEY, userId)
+async function getById(userId) {
+    return await httpService.get(BASE_URL, userId)
+    // return storageService.get(STORAGE_KEY, userId)
 }
 
 async function login({ email, password }) {
-    const users = await storageService.query(STORAGE_KEY, { email, password })
-    const user = users.find(user => user.email === email)
-    if (user && user.password === password) return _setLoggedinUser(user)
-    else return Promise.reject('Invalid login')
-    // return httpService.post(BASE_URL + 'login', { email, password })
-    //     .then(user => {
-    //         if (user) return _setLoggedinUser(user)
-    //     })
+    try {
+        const user = await httpService.post(BASE_URL + 'login', { email, password })
+        if (user) return _setLoggedinUser(user)
+    } catch (err) {
+        console.log('err:', err)
+        throw err
+    }
+    // const users = await storageService.query(STORAGE_KEY, { email, password })
+    // const user = users.find(user => user.email === email)
+    // if (user && user.password === password) return _setLoggedinUser(user)
+    // else return Promise.reject('Invalid login')
 }
 
-function signup({ email, password, fullname }) {
-    const user = { email, password, fullname }
-    return storageService.post(STORAGE_KEY, user)
-        .then(_setLoggedinUser(user))
-    // return httpService.post(BASE_URL + 'signup', user)
-    //     .then(user => {
-    //         if (user) return _setLoggedinUser(user)
-    //     })
+async function signup({ email, password, fullname }) {
+    const user = {
+        email,
+        password,
+        fullname,
+        imgUrl: 'https://cdn1.monday.com/dapulse_default_photo.png'
+    }
+    try {
+        const userResponse = await httpService.post(BASE_URL + 'signup', user)
+        if (userResponse) return _setLoggedinUser(userResponse)
+    } catch (err) {
+        console.log('err:', err)
+        throw err
+    }
+    // return storageService.post(STORAGE_KEY, user)
+    //     .then(_setLoggedinUser(user))
 }
 
-function logout() {
-    sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN)
-    return Promise.resolve()
-    // return httpService.post(BASE_URL + 'logout')
-    //     .then(() => {
-    //         sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN)
-    //     })
+async function logout() {
+    try {
+        await httpService.post(BASE_URL + 'logout')
+        sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN)
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+    // sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN)
+    // return Promise.resolve()
 }
 
 function getLoggedinUser() {

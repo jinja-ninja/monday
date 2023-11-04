@@ -1,7 +1,9 @@
 import { storageService } from './async-storage.service.js'
+import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
 
 const STORAGE_KEY = 'boardDB'
+const BASE_URL = 'board'
 
 export const boardService = {
     query,
@@ -40,7 +42,7 @@ export const boardService = {
     _createBoards,
 }
 
-_createBoards()
+// _createBoards()
 
 // General Update function
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
@@ -85,7 +87,8 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 break
         }
 
-        return await storageService.put(STORAGE_KEY, board)
+        return await httpService.put(`${BASE_URL}/${boardId}`, board)
+        // return await storageService.put(STORAGE_KEY, board)
     }
     catch (err) {
         console.log(err)
@@ -95,11 +98,14 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
 }
 // Board functions
 async function query() {
-    return await storageService.query(STORAGE_KEY)
+    return httpService.get(BASE_URL, null)
+    // return await storageService.query(STORAGE_KEY)
 }
 
 async function getBoardById(boardId, filterBy = { txt: '', person: null }, sortBy) {
-    let board = await storageService.get(STORAGE_KEY, boardId)
+    let boards = await query()
+    let board = boards.find(board => board._id === boardId)
+    // let board = await storageService.get(STORAGE_KEY, boardId)
     if (filterBy.txt) {
         const regex = new RegExp(filterBy.txt, 'i')
         board.groups = board.groups.map((group) => {
@@ -129,6 +135,7 @@ async function getBoardById(boardId, filterBy = { txt: '', person: null }, sortB
             return null;
         }).filter((group) => group !== null)
     }
+
     if (sortBy) {
         board.groups = board.groups.sort((a, b) => {
             const titleA = a.title.toLowerCase();
@@ -145,15 +152,17 @@ async function getBoardById(boardId, filterBy = { txt: '', person: null }, sortB
 
     }
 
-    return board;
+    return board
 }
 
 async function save(board) {
-    return await storageService.post(STORAGE_KEY, board)
+    return await httpService.post(BASE_URL, board)
+    // return await storageService.post(STORAGE_KEY, board)
 }
 
 async function remove(boardId) {
-    return await storageService.remove(STORAGE_KEY, boardId)
+    return httpService.delete(BASE_URL, boardId)
+    // return await storageService.remove(STORAGE_KEY, boardId)
 }
 
 function getNewBoard() {
@@ -286,27 +295,7 @@ function getNewBoard() {
                 style: "peach"
             }
         ],
-        activities: [
-            {
-                id: "a101",
-                txt: "Changed Color",
-                createdAt: 154514,
-                byMember: {
-                    _id: "u101",
-                    fullname: "Abi Abambi",
-                    imgUrl: "http://some-img"
-                },
-                group: {
-                    id: "g101",
-                    title: "Urgent Stuff"
-                },
-                task: {
-                    id: "c101",
-                    title: "Replace Logo",
-                    comments: []
-                }
-            }
-        ],
+        activities: [],
         priorities: [
 
             {
@@ -451,7 +440,8 @@ async function addNewGroup(board) {
     activity.group = newGroup
     updatedBoard.activities.unshift(activity)
 
-    return await storageService.put(STORAGE_KEY, updatedBoard)
+    return await httpService.put(`${BASE_URL}/${board._id}`, updatedBoard)
+    // return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
 async function removeGroup(board, groupId) {
@@ -463,7 +453,8 @@ async function removeGroup(board, groupId) {
     const activity = await createActivity({ type: 'Deleted', from: group.title, to: null }, board._id, groupId)
     board.activities.unshift(activity)
 
-    return await storageService.put(STORAGE_KEY, updatedBoard)
+    return await httpService.put(`${BASE_URL}/${board._id}`, updatedBoard)
+    // return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
 async function duplicatedGroup(board, groupId) {
@@ -478,7 +469,8 @@ async function duplicatedGroup(board, groupId) {
     const activity = createActivity(`Duplicated group ${groupToDuplicate.title}`, board._id, groupId)
     updatedBoard.activities.unshift(activity)
 
-    return await storageService.put(STORAGE_KEY, updatedBoard)
+    return await httpService.put(`${BASE_URL}/${board._id}`, updatedBoard)
+    // return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
 async function getGroupById(boardId, groupId) {
@@ -508,7 +500,8 @@ async function addTask(boardId, groupId, task, fromBtn) {
     activity.task = task
     board.activities.unshift(activity)
 
-    return await storageService.put(STORAGE_KEY, board)
+    return await httpService.put(`${BASE_URL}/${boardId}`, board)
+    // return await storageService.put(STORAGE_KEY, board)
 }
 
 async function removeTask(boardId, groupId, taskId) {
@@ -525,7 +518,8 @@ async function removeTask(boardId, groupId, taskId) {
     activity.task = task
     board.activities.unshift(activity)
 
-    return await storageService.put(STORAGE_KEY, board)
+    return await httpService.put(`${BASE_URL}/${boardId}`, board)
+    // return await storageService.put(STORAGE_KEY, board)
 }
 
 async function removeBatchTasks(boardId, selectedTasks, actions = []) {
@@ -542,7 +536,8 @@ async function removeBatchTasks(boardId, selectedTasks, actions = []) {
                 return keepTask
             }),
         }))
-        return await storageService.put(STORAGE_KEY, board)
+        return await httpService.put(`${BASE_URL}/${boardId}`, board)
+        // return await storageService.put(STORAGE_KEY, board)
     } catch (err) {
         throw err
     }
@@ -557,7 +552,8 @@ async function duplicatedTask(board, groupId, taskId) {
     duplicatedTask.id = utilService.makeId()
     duplicatedTask.title = duplicatedTask.title + ' copy'
     updatedBoard.groups[groupIdx].tasks.splice(taskIdx + 1, 0, duplicatedTask)
-    return await storageService.put(STORAGE_KEY, updatedBoard)
+    return await httpService.put(`${BASE_URL}/${board._id}`, updatedBoard)
+    // return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
 async function duplicateBatchTasks(boardId, selectedTasks, actions = []) {
@@ -579,8 +575,8 @@ async function duplicateBatchTasks(boardId, selectedTasks, actions = []) {
                 updatedBoard.groups[groupIdx].tasks.splice(taskIdx + 1, 0, duplicatedTask)
             }
         })
-
-        return await storageService.put(STORAGE_KEY, updatedBoard)
+        return await httpService.put(`${BASE_URL}/${boardId}`, updatedBoard)
+        // return await storageService.put(STORAGE_KEY, updatedBoard)
     } catch (err) {
         throw err
     }
@@ -615,14 +611,16 @@ async function getLabelById(boardId, labelId, statusOrPriorities) {
 async function addLabel(boardId, label, type) {
     const board = await getBoardById(boardId)
     board[type].push(label)
-    return await storageService.put(STORAGE_KEY, board)
+    return await httpService.put(`${BASE_URL}/${boardId}`, board)
+    // return await storageService.put(STORAGE_KEY, board)
 }
 
 async function removeLabel(boardId, labelId, type) {
     const board = await getBoardById(boardId)
     const labelIdx = board[type].findIndex(label => label.id === labelId)
     board[type].splice(labelIdx, 1)
-    return await storageService.put(STORAGE_KEY, board)
+    return await httpService.put(`${BASE_URL}/${boardId}`, board)
+    // return await storageService.put(STORAGE_KEY, board)
 }
 
 async function updateLabel(boardId, label, type) {
@@ -631,7 +629,8 @@ async function updateLabel(boardId, label, type) {
     const labelId = label.id
     const labelIdx = board[type].findIndex(label => label.id === labelId)
     board[type][labelIdx] = label
-    return await storageService.put(STORAGE_KEY, board)
+    return await httpService.put(`${BASE_URL}/${boardId}`, board)
+    // return await storageService.put(STORAGE_KEY, board)
 }
 
 //Comment functions
@@ -722,7 +721,8 @@ function getContentColors() {
 }
 
 function _createBoards() {
-    let boards = utilService.loadFromStorage(STORAGE_KEY)
+    // let boards = utilService.loadFromStorage(STORAGE_KEY)
+    let boards = httpService.get(BASE_URL, null)
     if (!boards || !boards.length) {
         boards =
             [

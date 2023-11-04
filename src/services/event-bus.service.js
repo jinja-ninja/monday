@@ -12,6 +12,9 @@ function createEventEmitter() {
         emit(evName, data) {
             if (!listenersMap[evName]) return
             listenersMap[evName].forEach(listener => listener(data))
+        },
+        removeEventListener(evName, listenerToRemove) {
+            listenersMap[evName] = listenersMap[evName].filter(listener => listener !== listenerToRemove)
         }
     }
 }
