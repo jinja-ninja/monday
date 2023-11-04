@@ -37,7 +37,7 @@ export function RecordButton({ currBoard, setIsAiOpen, setIsFireworks }) {
             setIsFireworks(true)
             setTimeout(() => {
                 setIsFireworks(false)
-            }, 4000);
+            }, 4000)
         }
 
         eventBus.on('record', handleRecord)
@@ -65,7 +65,7 @@ export function RecordButton({ currBoard, setIsAiOpen, setIsFireworks }) {
     }
 
     const dynRecordBtn = !isRecordingOn ?
-        (<Button className="record-btn"
+        <Button className="record-btn"
             style={{ "--element-width": "89px" }}
             onClick={onRecordStart}
             leftIcon={Radio}
@@ -73,20 +73,24 @@ export function RecordButton({ currBoard, setIsAiOpen, setIsFireworks }) {
             size="xs">
             Record
         </Button>
-        ) : (
-            <Button className="stop-record-btn"
-                onClick={onRecordStop}
-                leftIcon={Radio}
-                color="negative"
-                kind="tertiary"
-                size="xs">
-                Stop recording
-            </Button>)
+        :
+        <Button className="stop-record-btn"
+            onClick={onRecordStop}
+            leftIcon={Radio}
+            color="negative"
+            kind="tertiary"
+            size="xs">
+            Stop recording
+        </Button>
+
     return (
         <>
-            {!isLoading ?
-                <div className="record-btn-container">{dynRecordBtn}</div>
-                : <AiLoader />}
+            {
+                !isLoading ?
+                    <div className="record-btn-container">{dynRecordBtn}</div>
+                    :
+                    <AiLoader />
+            }
         </>
     )
 }
