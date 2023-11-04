@@ -21,7 +21,7 @@ export function AiModal({ setIsAiOpen }) {
                     size="xs"
                     onClick={(e) => closeModalByBtn(e)}
                 />
-                <img className='ai-robot-img' src={AiRobot} alt="" />
+                <img className='ai-robot-img' src={AiRobot} loading="lazy" alt="" />
                 <div className='explaining-txt'>
                     <p>Use your voice to create a new task group,</p>
                     <p>and our AI will break down your main task</p>

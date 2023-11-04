@@ -265,7 +265,7 @@
       padding-left: 38px;
       padding-right: var(--spacing-xl);
       // padding-block-end: var(--spacing-xl);
-      padding-block-end: 28px;
+      padding-block-end: 30px;
 
       &.collpase-actions-header {
         top: 74px;
@@ -283,7 +283,7 @@
         // border: 1px solid #03DAF6;
         padding: 3px;
         border-radius: 4px;
-        background-color: #202020;
+        background-color: #1a1a1a;
         box-shadow: 0 0 18px rgba(3, 218, 246, 0.5);
         cursor: pointer;
         // z-index: 2;
@@ -326,8 +326,8 @@
         }
 
         .ai-img {
-          width: 30px;
-          height: 30px;
+          width: 28px;
+          height: 28px;
         }
 
         .ai-text {
