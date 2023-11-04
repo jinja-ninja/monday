@@ -34,9 +34,9 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
     const handleEditClick = (groupId) => {
         const groupElement = document.querySelector(`.group-list-item[data-group-id="${groupId}"]`)
         if (groupElement) {
-            const editableElement = groupElement.querySelector('.editable-heading-target')
+            const editableElement = groupElement.querySelector('.editable-heading-target div')
             if (editableElement) {
-                editableElement.click() // Simulate a click on the EditableHeading
+                editableElement.click()
             }
         }
     }
