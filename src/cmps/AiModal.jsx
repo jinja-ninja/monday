@@ -2,6 +2,7 @@ import { IconButton } from 'monday-ui-react-core'
 import AiRobot from '../assets/img/AiRobot.png'
 import { Close } from 'monday-ui-react-core/icons'
 import { RecordButton } from './RecordButton'
+// import { Fireworks } from "../cmps/Fireworks"
 
 export function AiModal({ setIsAiOpen }) {
 
@@ -11,6 +12,7 @@ export function AiModal({ setIsAiOpen }) {
     }
     return (
         <div className="board-desc-backdrop" onClick={() => setIsAiOpen((prevIsAiOpen) => !prevIsAiOpen)} >
+            {/* <Fireworks /> */}
             <div className="ai-modal-container" onClick={(e) => e.stopPropagation()}>
                 <IconButton
                     className="close-btn"

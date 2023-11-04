@@ -1,4 +1,10 @@
 @media (max-width: 880px) {
+
+    .board-details-actions {
+        flex-wrap: wrap;
+        gap: .5rem;
+    }
+
     .task-list-container {
 
         .header-title-container {
@@ -44,10 +50,6 @@
         column-gap: 3px;
 
         .board-details-container {
-            .board-details-actions {
-                flex-wrap: wrap;
-                gap: .5rem;
-            }
 
             .header-wrapper {
                 .board-header {

@@ -25,6 +25,7 @@ import { DashboardDetails } from "../cmps/Dashboard/DashboardDetails"
 import { ActivityLog } from "../cmps/ActivityLog/ActivityLog"
 import { useRef } from "react"
 import { AiModal } from "../cmps/AiModal"
+import { Fireworks } from "../cmps/Fireworks"
 
 export function BoardDetails() {
     const params = useParams()
@@ -42,6 +43,7 @@ export function BoardDetails() {
     const [personPickerOpen, setPersonPickerOpen] = useState(false)
     const [hidePickerOpen, setHidePickerOpen] = useState(false)
     const [isAiOpen, setIsAiOpen] = useState(false)
+    const [isFireworks, setIsFireworks] = useState(false)
 
     const [isCollapse, setIsCollapse] = useState(true)
 
@@ -53,6 +55,12 @@ export function BoardDetails() {
 
     useEffect(() => {
         loadBoard(params.boardId, filterBy, sortBy)
+        setIsFireworks(true)
+        setTimeout(() => {
+            setIsFireworks(false)
+        }, 4500);
+
+        console.log('isFireworks:', isFireworks)
     }, [params.boardId, filterBy, sortBy])
 
     useEffect(() => {
@@ -228,77 +236,83 @@ export function BoardDetails() {
     }
 
     if (currBoard === null) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
-    return <main className="board-details-layout">
-        <BoardMainHeader />
-        <SideBar />
+    return <>
+        {isFireworks && <div className="board-desc-backdrop" style={{ background: 'transparent' }}>
+            <Fireworks />
+        </div>}
+        <main className="board-details-layout">
+            <BoardMainHeader />
+            <SideBar />
 
-        <section className="board-details-container" >
-            <UserMsg />
+            <section className="board-details-container" >
+                <UserMsg />
 
-            {typeof currBoard === 'string' && <BoardDeletedPage boardTitle={currBoard} />}
-            {typeof currBoard !== 'string' &&
-                <>
-                    <BoardDetailsHeader
-                        setContent={setContent}
-                        isStarred={currBoard.isStarred}
-                        title={currBoard.title}
-                        boardId={currBoard._id}
-                        setIsBoardDesc={setIsBoardDesc}
-                        setIsActivityLog={setIsActivityLog}
-                        isCollapse={isCollapse}
-                        setIsCollapse={setIsCollapse}
-                    />
-                    <DragDropContext onDragEnd={onDragEnd}>
-                        {content === 'board' &&
-                            <>
-                                <BoardActionsBtns
-                                    currBoard={currBoard}
-                                    addTaskToFirstGroup={addTaskToFirstGroup}
-                                    addGroup={addGroup}
-                                    setPersonPickerOpen={setPersonPickerOpen}
-                                    onTogglePersonModal={onTogglePersonModal}
-                                    onRemovePersonFilter={onRemovePersonFilter}
-                                    personPickerOpen={personPickerOpen}
-                                    dynSearchBtnInput={dynSearchBtnInput}
-                                    setFilterBy={setFilterBy}
-                                    filterBy={filterBy}
-                                    sortBy={sortBy}
-                                    setSortBy={setSortBy}
-                                    hidePickerOpen={hidePickerOpen}
-                                    onToggleHideColumnsModal={onToggleHideColumnsModal}
-                                    hiddenColumns={hiddenColumns}
-                                    isCollapse={isCollapse}
-                                    setIsAiOpen={setIsAiOpen}
-                                />
+                {typeof currBoard === 'string' && <BoardDeletedPage boardTitle={currBoard} />}
+                {typeof currBoard !== 'string' &&
+                    <>
+                        <BoardDetailsHeader
+                            setContent={setContent}
+                            isStarred={currBoard.isStarred}
+                            title={currBoard.title}
+                            boardId={currBoard._id}
+                            setIsBoardDesc={setIsBoardDesc}
+                            setIsActivityLog={setIsActivityLog}
+                            isCollapse={isCollapse}
+                            setIsCollapse={setIsCollapse}
+                        />
+                        <DragDropContext onDragEnd={onDragEnd}>
+                            {content === 'board' &&
+                                <>
+                                    <BoardActionsBtns
+                                        currBoard={currBoard}
+                                        addTaskToFirstGroup={addTaskToFirstGroup}
+                                        addGroup={addGroup}
+                                        setPersonPickerOpen={setPersonPickerOpen}
+                                        onTogglePersonModal={onTogglePersonModal}
+                                        onRemovePersonFilter={onRemovePersonFilter}
+                                        personPickerOpen={personPickerOpen}
+                                        dynSearchBtnInput={dynSearchBtnInput}
+                                        setFilterBy={setFilterBy}
+                                        filterBy={filterBy}
+                                        sortBy={sortBy}
+                                        setSortBy={setSortBy}
+                                        hidePickerOpen={hidePickerOpen}
+                                        onToggleHideColumnsModal={onToggleHideColumnsModal}
+                                        hiddenColumns={hiddenColumns}
+                                        isCollapse={isCollapse}
+                                        setIsAiOpen={setIsAiOpen}
+                                    />
 
-                                <div className="spacing-div"></div>
-                                <GroupList
-                                    boardId={params.boardId}
-                                    groups={currBoard.groups}
-                                    labels={currBoard.labels}
-                                    cmpsOrder={currBoard.cmpsOrder}
-                                    priorities={currBoard.priorities}
-                                    hiddenColumns={hiddenColumns}
-                                    isCollapse={isCollapse}
-                                />
-                            </>
-                        }
+                                    <div className="spacing-div"></div>
+                                    <GroupList
+                                        boardId={params.boardId}
+                                        groups={currBoard.groups}
+                                        labels={currBoard.labels}
+                                        cmpsOrder={currBoard.cmpsOrder}
+                                        priorities={currBoard.priorities}
+                                        hiddenColumns={hiddenColumns}
+                                        isCollapse={isCollapse}
+                                    />
+                                </>
+                            }
 
-                        {content === 'kanban' && <KanbanDetails isCollapse={isCollapse} />}
-                        {content === 'dashboard' && <DashboardDetails />}
-                    </DragDropContext>
+                            {content === 'kanban' && <KanbanDetails isCollapse={isCollapse} />}
+                            {content === 'dashboard' && <DashboardDetails />}
+                        </DragDropContext>
 
-                    {currBoard.groups.length === 0 && <NoGroupsFound cmpsOrder={currBoard.cmpsOrder} />}
+                        {currBoard.groups.length === 0 && <NoGroupsFound cmpsOrder={currBoard.cmpsOrder} />}
 
-                    <Outlet />
-                </>
-            }
+                        <Outlet />
+                    </>
+                }
 
-            {selectedTasks.length > 0 && <SelectedModal selectedTasks={selectedTasks} currBoard={currBoard} />}
-            {isActivityLog && <ActivityLog currBoard={currBoard} setIsActivityLog={setIsActivityLog} />}
-            {isBoardDesc && <BoardDescriptionModal boardTitle={currBoard.title} setIsBoardDesc={setIsBoardDesc} />}
-            {isAiOpen && <AiModal setIsAiOpen={setIsAiOpen}/>}
+                {selectedTasks.length > 0 && <SelectedModal selectedTasks={selectedTasks} currBoard={currBoard} />}
+                {isActivityLog && <ActivityLog currBoard={currBoard} setIsActivityLog={setIsActivityLog} />}
+                {isBoardDesc && <BoardDescriptionModal boardTitle={currBoard.title} setIsBoardDesc={setIsBoardDesc} />}
+                {isAiOpen && <AiModal setIsAiOpen={setIsAiOpen} />}
 
-        </section>
-    </main >
+            </section>
+        </main >
+    </>
+
 }

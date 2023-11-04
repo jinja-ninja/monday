@@ -4,7 +4,7 @@ import { Fireworks } from "../cmps/Fireworks"
 export function TestCmp() {
 
   return (
-    <div>
+    <div style={{ backgroundColor: "white" }}>
       <Fireworks />
     </div>
   )
