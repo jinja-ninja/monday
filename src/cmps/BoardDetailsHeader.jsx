@@ -74,6 +74,7 @@ export function BoardDetailsHeader({ setContent, title, boardId, setIsBoardDesc,
                                 content='Click to edit'
                                 animationType="expand">
                                 <EditableHeading
+                                ellipsis
                                     type={EditableHeading.types.h1}
                                     value={title}
                                     onChange={(newText) => setBoardTitle(newText)}
@@ -130,11 +131,11 @@ export function BoardDetailsHeader({ setContent, title, boardId, setIsBoardDesc,
                             Invite / 3
                         </Button>
 
-                        <IconButton
+                        {/* <IconButton
                             icon={Menu}
                             // onClick={function noRefCheck() { }}
                             size="small"
-                        />
+                        /> */}
                     </div>}
                 </div>
 

@@ -10,7 +10,7 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 import { useParams } from "react-router-dom"
 
 
-export function KanbanDetails({isCollapse}) {
+export function KanbanDetails({ isCollapse }) {
     const currBoard = useSelector(state => state.boardModule.board)
     const [isSearch, setIsSearch] = useState(false)
     const [filterBy, setFilterBy] = useState({ txt: '', person: null })
@@ -57,14 +57,18 @@ export function KanbanDetails({isCollapse}) {
 
     function getOrderedGroups(groups) {
         const labelsInUse = getLabelsInUse()
+        // if (labelsInUse.length !== currBoard.kanbanCmpsOrder) currBoard.kanbanCmpsOrder = labelsInUse
         const orderFromBoard = currBoard.kanbanCmpsOrder || []
+        // console.log('orderFromBoard:', orderFromBoard)
         const getIndexInOrder = (label) => orderFromBoard.findIndex(orderLabel => orderLabel === label)
         const sortedLabels = [...labelsInUse].sort((a, b) => {
             const indexA = getIndexInOrder(a)
             const indexB = getIndexInOrder(b)
             return indexA - indexB
         }).map(label => label || 'Blank')
+        console.log('sortedLabels:', sortedLabels)
         const orderedGroups = sortedLabels.map(label => groups.find(group => group.name === label))
+        console.log('orderedGroups:', orderedGroups)
         return orderedGroups
     }
 

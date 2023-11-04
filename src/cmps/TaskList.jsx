@@ -27,7 +27,7 @@ import { MembersSummary } from "./dynamicSummaryCmps/MembersSummary"
 import { DisplayTitle } from "./DisplayTitle"
 import { FilesSummary } from "./dynamicSummaryCmps/FilesSummary"
 
-export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGroup, isCollapse }) {
+export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGroup, isCollapse, collapseAll }) {
     const selectedTasks = useSelector(state => state.boardModule.selectedTasks)
     const currBoard = useSelector(state => state.boardModule.board)
 
@@ -305,7 +305,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                 >
-                    <div className="side-menu-btn-container"></div>
+                    <div className={"side-menu-btn-container " + (collapseAll ? 'dragging' : '')}></div>
                     {cmpsOrder.map((title, idx) => {
                         if (idx === 0) return (
                             <div className="header-title-side-wrapper" key={idx}>
@@ -378,7 +378,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}
                                     >
-                                        <div className="side-menu-btn-container">
+                                        <div className={"side-menu-btn-container " + (collapseAll ? 'dragging' : '')}>
                                             {renderMenuButton(task.id)}
                                         </div>
                                         {cmpsOrder.map((cmp, idx) =>
@@ -400,7 +400,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
 
         {showGroup && <section className={"task-list-add group-grid " + (isTypingNewTask ? 'typing' : '')} style={{ gridTemplateColumns: getDynGridTemplateCols() }}>
 
-            <div className="side-menu-btn-container"></div>
+            <div className={"side-menu-btn-container " + (collapseAll ? 'dragging' : '')}></div>
 
             <div className="task-list-add-side">
                 <div className="color-indicator"
@@ -433,7 +433,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
         <section className={"task-list-summary-wrapper group-grid " + dynCollapseGroupClass}
             style={{ gridTemplateColumns: getDynGridTemplateColsSummary() }}>
 
-            <div className="side-menu-btn-container"></div>
+            <div className={"side-menu-btn-container " + (collapseAll ? 'dragging' : '')}></div>
 
             <div className={"task-list-summary-emptycell-left " + dynCollapseGroupClass}>
                 {!showGroup && <div className="color-indicator"
@@ -465,7 +465,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                     {cmp === "dueDate" && <DateSummary group={group} />}
                     {cmp === "timeline" && <TimelineSummary group={group} />}
                     {cmp === "members" && <MembersSummary group={group} currBoard={currBoard} />}
-                    {cmp === "files" && <FilesSummary />}
+                    {cmp === "files" && <FilesSummary group={group}/>}
                 </div>
             ))}
 

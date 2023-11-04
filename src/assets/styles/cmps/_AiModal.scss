@@ -1,0 +1,82 @@
+.ai-modal-container {
+    background-color: rgba(0, 0, 0, 0.65);
+    border: 1px solid #03DAF6;
+    border-radius: 1rem;
+    position: absolute;
+    z-index: 10000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 750px;
+    height: 350px;
+    padding: 1.5rem;
+    box-shadow: rgb(0, 0, 0) 0px 6px 20px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .close-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        background-color: var(--primary-background-hover-color);
+    }
+
+    .ai-robot-img {
+        width: 348px;
+        height: 348px;
+    }
+
+    .explaining-txt {
+        position: relative;
+        left: -40px;
+        color: white;
+        font-size: 1.1rem;
+        margin-bottom: auto;
+        line-height: 24px;
+    }
+
+    .record-btn-container {
+        margin-block-start: 70px;
+        margin-inline-start: 50%;
+        transform: translateX(-20%);
+
+        // button:not(.stop-record-btn) {
+        //     color: lightblue;
+        // }
+
+        .record-btn,
+        .stop-record-btn {
+            height: rem(38px);
+            padding: .5rem;
+            font-weight: 500;
+            font-size: 1rem;
+            text-transform: none;
+            background-color: black;
+
+            &:hover {
+                background-color: rgb(15, 15, 15);
+            }
+        }
+
+        .record-btn {
+            border: 1px solid #03DAF6;
+            box-shadow: 0 0 15px rgba(3, 218, 246, 0.5);
+            color: lightblue;
+            &:hover {
+                box-shadow: 0 0 20px rgba(3, 218, 246, 0.7);
+
+            }
+        }
+
+        .stop-record-btn {
+            border: 1px solid #f60303;
+            box-shadow: 0 0 15px rgba(246, 3, 3, 0.5);
+
+            &:hover {
+                box-shadow: 0 0 20px rgba(246, 3, 3, 0.7);
+
+            }
+        }
+    }
+}

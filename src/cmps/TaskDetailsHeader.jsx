@@ -13,7 +13,7 @@ export function TaskDetailsHeader({ boardId, groupId, taskId, taskTitle, setCurr
             updateTask(boardId, groupId, taskId, { key: 'title', value: taskTitleValue })
         }
     }
-    
+
     return (
         <div className="task-details-header" >
 
@@ -25,6 +25,7 @@ export function TaskDetailsHeader({ boardId, groupId, taskId, taskTitle, setCurr
             />
             <div className="editible-container">
                 <EditableHeading
+                    ellipsis
                     type="h4"
                     value={taskTitle}
                     onChange={(newText) => setTaskTitleValue(newText)}

@@ -24,6 +24,7 @@ import { KanbanDetails } from "../cmps/Kanban/KanbanDetails"
 import { DashboardDetails } from "../cmps/Dashboard/DashboardDetails"
 import { ActivityLog } from "../cmps/ActivityLog/ActivityLog"
 import { useRef } from "react"
+import { AiModal } from "../cmps/AiModal"
 
 export function BoardDetails() {
     const params = useParams()
@@ -40,6 +41,7 @@ export function BoardDetails() {
     const [isActivityLog, setIsActivityLog] = useState(false)
     const [personPickerOpen, setPersonPickerOpen] = useState(false)
     const [hidePickerOpen, setHidePickerOpen] = useState(false)
+    const [isAiOpen, setIsAiOpen] = useState(false)
 
     const [isCollapse, setIsCollapse] = useState(true)
 
@@ -266,6 +268,7 @@ export function BoardDetails() {
                                     onToggleHideColumnsModal={onToggleHideColumnsModal}
                                     hiddenColumns={hiddenColumns}
                                     isCollapse={isCollapse}
+                                    setIsAiOpen={setIsAiOpen}
                                 />
 
                                 <div className="spacing-div"></div>
@@ -281,7 +284,7 @@ export function BoardDetails() {
                             </>
                         }
 
-                        {content === 'kanban' && <KanbanDetails isCollapse={isCollapse}/>}
+                        {content === 'kanban' && <KanbanDetails isCollapse={isCollapse} />}
                         {content === 'dashboard' && <DashboardDetails />}
                     </DragDropContext>
 
@@ -294,6 +297,7 @@ export function BoardDetails() {
             {selectedTasks.length > 0 && <SelectedModal selectedTasks={selectedTasks} currBoard={currBoard} />}
             {isActivityLog && <ActivityLog currBoard={currBoard} setIsActivityLog={setIsActivityLog} />}
             {isBoardDesc && <BoardDescriptionModal boardTitle={currBoard.title} setIsBoardDesc={setIsBoardDesc} />}
+            {isAiOpen && <AiModal setIsAiOpen={setIsAiOpen}/>}
 
         </section>
     </main >

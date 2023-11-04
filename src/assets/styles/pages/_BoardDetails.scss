@@ -15,6 +15,7 @@
 
   .board-details-container {
     overflow: auto;
+    scroll-behavior: smooth;
   }
 
   .board-details-container,
@@ -261,13 +262,82 @@
       display: flex;
       column-gap: var(--spacing-medium);
       align-items: center;
-      // padding-left: var(--spacing-xl);
       padding-left: 38px;
       padding-right: var(--spacing-xl);
-      padding-block-end: var(--spacing-xl);
+      // padding-block-end: var(--spacing-xl);
+      padding-block-end: 28px;
 
       &.collpase-actions-header {
         top: 74px;
+      }
+
+      .btn-ai-container {
+        position: relative;
+      }
+
+      .btn-ai {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .4rem;
+        // border: 1px solid #03DAF6;
+        padding: 3px;
+        border-radius: 4px;
+        background-color: #2c2c2c;
+        box-shadow: 0 0 18px rgba(3, 218, 246, 0.5);
+        cursor: pointer;
+        // z-index: 2;
+        position: relative;
+
+        .glow::before,
+        .glow::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: linear-gradient(45deg, #00ffff, #009fff, #0073ea, #3080c6, #0060b9, #1f76c2);
+          background-size: 400%;
+          height: calc(100% + 4px);
+          width: calc(100% + 4px);
+          z-index: -1;
+          animation: animate 10s linear infinite;
+          border-radius: 5px;
+        }
+
+        @keyframes animate {
+          0% {
+            background-position: 0 0;
+          }
+
+          50% {
+            background-position: 400% 0;
+          }
+
+          100% {
+            background-position: 0 0;
+          }
+        }
+
+        .glow::after {
+          filter: blur(30px);
+          opacity: 0.3;
+          z-index: -1;
+        }
+
+        .ai-img {
+          width: 30px;
+          height: 30px;
+        }
+
+        .ai-text {
+          color: #03DAF6;
+          font-weight: 500;
+        }
+
+        &:hover {
+          box-shadow: 0 0 25px rgba(0, 225, 255, 0.65)
+        }
       }
 
       .record-btn,
@@ -275,7 +345,6 @@
         height: rem(32px);
       }
 
-      // padding-block-end: var(--spacing-medium);
       .btn-sortby {
         border-radius: 4px;
 

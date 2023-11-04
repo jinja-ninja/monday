@@ -4,14 +4,13 @@ import { Add } from "monday-ui-react-core/icons"
 import { addGroup } from "../store/actions/board.action"
 import { Droppable } from "react-beautiful-dnd"
 
-export function GroupList({ groups, labels, cmpsOrder, boardId, priorities, hiddenColumns,isCollapse }) {
+export function GroupList({ groups, labels, cmpsOrder, boardId, priorities, hiddenColumns, isCollapse }) {
 
     let filteredCmpOrder = cmpsOrder.filter(cmp => !hiddenColumns.map(str => str.toLowerCase()).includes(cmp.toLowerCase()))
 
 
     return (
         <section className="groups-section">
-            {/* <div className="side-spacing-div"></div> */}
             <div className="group-list-container">
 
                 <Droppable droppableId="groups" type="groups">
