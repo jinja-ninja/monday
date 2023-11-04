@@ -23,6 +23,7 @@ export const utilService = {
     timeSince,
     calculateTimelineProgress,
     timeFormat,
+    getBlessingByTime,
     makePhoneNumber,
     getNameInitials
 }
@@ -218,6 +219,21 @@ function calculateTimelineProgress(timeline) {
     // Round the progress to two decimal places and return as a whole number
     const result = Math.round(progress)
     return `${result}%`
+}
+
+export function getBlessingByTime() {
+	const date = new Date()
+	const currentHour = date.getHours()
+
+	if (currentHour >= 5 && currentHour < 12) {
+		return 'Good morning'
+	} else if (currentHour >= 12 && currentHour < 18) {
+		return 'Good afternoon'
+	} else if (currentHour >= 18 && currentHour < 21) {
+		return 'Good evening'
+	} else {
+		return 'Good night'
+	}
 }
 
 function getTimestampInDays(Timeline) {

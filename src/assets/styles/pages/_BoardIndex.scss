@@ -9,7 +9,6 @@
 
   .board-index-body {
     height: calc(100vh - 48px );
-    // overflow: hidden;
 
   }
 
@@ -38,6 +37,8 @@
     margin-top: 0 !important;
     padding: 0 !important;
     // height: 100%;
+    overflow: auto;
+
 
 
     .welcome-header {

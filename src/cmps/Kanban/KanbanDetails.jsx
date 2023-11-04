@@ -57,6 +57,7 @@ export function KanbanDetails({ isCollapse }) {
 
     function getOrderedGroups(groups) {
         const labelsInUse = getLabelsInUse()
+        console.log('labelsInUse:', labelsInUse)
         // if (labelsInUse.length !== currBoard.kanbanCmpsOrder) currBoard.kanbanCmpsOrder = labelsInUse
         const orderFromBoard = currBoard.kanbanCmpsOrder || []
         // console.log('orderFromBoard:', orderFromBoard)

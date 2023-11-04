@@ -11,6 +11,7 @@ import { useSelector } from "react-redux"
 import { UserMsg } from '../cmps/UserMsg'
 import BoardIndexHeaderConfeti from '../assets/img/BoardIndexHeaderConfeti.svg'
 import { userService } from "../services/user.service"
+import { utilService } from "../services/util.service"
 
 export function BoardIndex() {
 
@@ -41,7 +42,7 @@ export function BoardIndex() {
             >
                 <div className="welcome-header">
                     <div className="titles-container">
-                        <div className="first-title">Good afternoon, {loggedInUser ? loggedInUser.fullname : 'Guest'}!</div>
+                        <div className="first-title">{utilService.getBlessingByTime()}, {loggedInUser ? loggedInUser.fullname : 'Guest'}!</div>
                         <div className="second-title">Quickly access your recent boards, Inbox and workspaces</div>
                     </div>
                     <img src={BoardIndexHeaderConfeti} alt="" />
