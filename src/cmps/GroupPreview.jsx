@@ -7,7 +7,7 @@ import { duplicatedGroup, removeGroup, updateBoard } from "../store/actions/boar
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { TaskList } from "./TaskList"
 
-export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, onRenameGroup, index, collapseAll }) {
+export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, onRenameGroup, index, collapseAll, isCollapse }) {
 
     const [showGroup, setShowGroup] = useState(true)
     const [editableText, setEditableText] = useState(group.title)
@@ -95,35 +95,40 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                     ref={provider.innerRef}
                     className={"group-preview-container " + dynCollapseGroupClass}>
 
-                    <div className={"collapsible-header-wrapper " + dynCollapseGroupClass} >
-                        <MenuButton
-                            size={MenuButton.sizes.XS}
-                            className="group-menu-btn"
-                            closeDialogOnContentClick >
-                            <Menu id="menu" size="medium">
-                                <MenuItem
-                                    icon={Delete}
-                                    iconType="SVG"
-                                    onClick={() => setShow(true)}
-                                    title="Delete" />
-                                <MenuItem
-                                    icon={Edit}
-                                    iconType="SVG"
-                                    onClick={() => handleEditClick(group.id)}
-                                    title="Rename Group" />
-                                <MenuItem
-                                    icon={Duplicate}
-                                    iconType="SVG"
-                                    onClick={() => onDuplicateGroup(boardId, group.id)}
-                                    title="Duplicate this group" />
-                                <MenuItem
-                                    icon={HighlightColorBucket}
-                                    iconType="SVG"
-                                    onClick={() => onChangeGroupColorClick()}
-                                    title="Change group color" />
-                            </Menu>
-                        </MenuButton>
-                        <div>
+                    <div className={"collapsible-header-wrapper " + dynCollapseGroupClass + (!isCollapse ? ' collapse-group-header' : '')} >
+
+                        <div className={"side-menu-btn-container " + (collapseAll ? 'dragging' : '')} >
+
+                            <MenuButton
+                                size={MenuButton.sizes.XS}
+                                className="group-menu-btn"
+                                closeDialogOnContentClick >
+                                <Menu id="menu" size="medium">
+                                    <MenuItem
+                                        icon={Delete}
+                                        iconType="SVG"
+                                        onClick={() => setShow(true)}
+                                        title="Delete" />
+                                    <MenuItem
+                                        icon={Edit}
+                                        iconType="SVG"
+                                        onClick={() => handleEditClick(group.id)}
+                                        title="Rename Group" />
+                                    <MenuItem
+                                        icon={Duplicate}
+                                        iconType="SVG"
+                                        onClick={() => onDuplicateGroup(boardId, group.id)}
+                                        title="Duplicate this group" />
+                                    <MenuItem
+                                        icon={HighlightColorBucket}
+                                        iconType="SVG"
+                                        onClick={() => onChangeGroupColorClick()}
+                                        title="Change group color" />
+                                </Menu>
+                            </MenuButton>
+                        </div>
+
+                        <div className="group-title">
 
                             <Tooltip
                                 content={showGroup ? "Collapse Group" : "Expand Group"}
@@ -148,13 +153,13 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                                     onChange={(newText) => setEditableText(newText)}
                                 />
                             </Tooltip>
-                        </div>
 
-                        <span className={"num-of-tasks " + dynCollapseGroupClass}>
-                            {numOfTasks === 0 ?
-                                'No tasks' : `${numOfTasks} 
+                            <span className={"num-of-tasks " + dynCollapseGroupClass}>
+                                {numOfTasks === 0 ?
+                                    'No tasks' : `${numOfTasks} 
                                 ${numOfTasks === 1 ? 'Task' : 'Tasks'}`}
-                        </span>
+                            </span>
+                        </div>
                     </div>
 
                     {
@@ -171,7 +176,10 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                         labels={labels}
                         priorities={priorities}
                         setNumOfTasks={setNumOfTasks}
-                        showGroup={showGroup} />
+                        showGroup={showGroup}
+                        isCollapse={isCollapse}
+                        collapseAll={collapseAll}
+                    />
                     <>
                         <Modal
                             id="story-book-modal"
@@ -195,8 +203,9 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
                         </Modal>
                     </>
                 </div>
-            )}
-        </Draggable>
+            )
+            }
+        </Draggable >
     )
 }
 

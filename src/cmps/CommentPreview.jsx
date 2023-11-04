@@ -38,6 +38,18 @@ export function CommentPreview({ comment, onDeleteComment, currTask }) {
             </div>
 
             <div className='comment-footer'>
+
+                <div className='footer-btn like-btn'>
+                    <Icon icon={ThumbsUp} />
+                    <span>Like</span>
+                </div>
+                <div className='middle-line'></div>
+
+                <div className='footer-btn reply-btn'>
+                    <Icon icon={Replay} />
+                    <span>Reply</span>
+                </div>
+                {/* 
                 <Button
                     className='like-btn'
                     kind="tertiary"
@@ -53,7 +65,7 @@ export function CommentPreview({ comment, onDeleteComment, currTask }) {
                     size="small"
                 >
                     Reply
-                </Button>
+                </Button> */}
             </div>
         </div>
     )

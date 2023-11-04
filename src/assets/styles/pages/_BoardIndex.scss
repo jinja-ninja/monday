@@ -5,7 +5,13 @@
   column-gap: 12px;
   // background-color: var(--grey-background-color);
   background-color: #ECEFF8;
+  overflow: hidden;
 
+  .board-index-body {
+    height: calc(100vh - 48px );
+    // overflow: hidden;
+
+  }
 
   &-body {
     display: flex;

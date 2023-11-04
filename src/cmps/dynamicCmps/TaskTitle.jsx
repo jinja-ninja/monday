@@ -41,8 +41,8 @@ export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask, group 
             <div className="task-title" id="task-title">
                 <EditableHeading
                     className="editible-task-title"
-                    type={EditableHeading.types.h5}
                     ellipsis
+                    type={EditableHeading.types.h5}
                     onFinishEditing={() => {
                         updatedTaskInput && updatedTaskInput !== info ? onUpdateTask(taskId, { key: 'title', value: updatedTaskInput }) : setUpdatedTask(info)
                         // setUpdatedTask(info)

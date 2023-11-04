@@ -13,26 +13,30 @@ import { utilService } from "../services/util.service"
 export function SideBar() {
     const [isOpen, setIsOpen] = useState(false)
     const [isHover, setIsHover] = useState(false)
+
     const [filterByTxt, setFilterByTxt] = useState('')
     const [isFavorites, setIsFavorites] = useState('main')
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const parmas = useParams()
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const currBoard = useSelector((storeState => storeState.boardModule.board))
+    const navigate = useNavigate()
 
     useEffect(() => {
         loadBoards()
     }, [boards.length])
 
     function getBoardsToShow() {
-        // if (isFavorites === 'main') return boards.filter(board => board.title.toLowerCase().includes(filterByTxt.toLowerCase()))
-        if (isFavorites === 'main') {
-            return boards.filter(board => board.title.toLowerCase().includes(filterByTxt.toLowerCase()))
-            if (boardsToDisplay.length === 0) erturn
-
-        }
+        if (isFavorites === 'main') return boards.filter(board => board.title.toLowerCase().includes(filterByTxt.toLowerCase()))
         else if (isFavorites === 'favorites') return boards.filter(board => board.isStarred)
+    }
+
+    function handleContainerMouseEnter(ev) {
+        if (ev.target === ev.currentTarget) {
+            setIsHover(true)
+        }
+    }
+
+    function handleContainerMouseLeave() {
+        setIsHover(false)
     }
 
     function onSelectBoard(boardId) {
@@ -76,18 +80,14 @@ export function SideBar() {
         navigate(`/board/${duplicatedBoard._id}`)
     }
 
-    function debouncedHover(state) {
-        utilService.debounce(setIsHover(state), 300)
-    }
-
-    const dynOpenCloseClass = isOpen || isHover ? 'open' : ''
-    const dynHoverClass = isHover && !isOpen ? 'hovered' : ''
+    const dynOpenCloseClass = isOpen ? 'open' : ''
 
     return (
-        // <div className={"hover-side-bar-container " + dynHoverClass}
-        // onMouseEnter={() => debouncedHover(true)}
-        // onMouseLeave={() => debouncedHover(false)}>
-        <div className={"side-bar-container " + dynOpenCloseClass}>
+        <div
+            className={"side-bar-container " + dynOpenCloseClass + (isHover && !isOpen ? 'hovered' : '')}
+            onMouseEnter={(ev) => handleContainerMouseEnter(ev)}
+            onMouseLeave={handleContainerMouseLeave}
+        >
 
             <div className="side-bar-upper-container">
 
@@ -210,7 +210,5 @@ export function SideBar() {
 
             </div>
         </div >
-        // </div >
-
     )
 }

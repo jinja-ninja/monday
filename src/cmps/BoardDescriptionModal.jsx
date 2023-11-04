@@ -23,10 +23,10 @@ export function BoardDescriptionModal({ boardTitle, setIsBoardDesc }) {
 
                 <div className="board-desc-container">
                     <EditableHeading
+                        ellipsis
                         className="editible-heading"
                         type="h2"
                         value={boardTitle}
-                    // value="Board Title"
                     />
                     <p>Providing the best tasks management platform out there.</p>
                 </div>
