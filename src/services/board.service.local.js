@@ -295,27 +295,7 @@ function getNewBoard() {
                 style: "peach"
             }
         ],
-        activities: [
-            {
-                id: "a101",
-                txt: "Changed Color",
-                createdAt: 154514,
-                byMember: {
-                    _id: "u101",
-                    fullname: "Abi Abambi",
-                    imgUrl: "http://some-img"
-                },
-                group: {
-                    id: "g101",
-                    title: "Urgent Stuff"
-                },
-                task: {
-                    id: "c101",
-                    title: "Replace Logo",
-                    comments: []
-                }
-            }
-        ],
+        activities: [],
         priorities: [
 
             {

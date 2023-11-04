@@ -237,9 +237,9 @@ export function BoardDetails() {
 
     if (currBoard === null) return <div className="monday-loader-container"><img src={MondayLoader} alt="" /></div>
     return <>
-        {isFireworks && <div className="board-desc-backdrop" style={{ background: 'transparent' }}>
+        {/* {isFireworks && <div className="board-desc-backdrop" style={{ background: 'transparent' }}>
             <Fireworks />
-        </div>}
+        </div>} */}
         <main className="board-details-layout">
             <BoardMainHeader />
             <SideBar />
@@ -311,8 +311,10 @@ export function BoardDetails() {
                 {selectedTasks.length > 0 && <SelectedModal selectedTasks={selectedTasks} currBoard={currBoard} />}
                 {isActivityLog && <ActivityLog currBoard={currBoard} setIsActivityLog={setIsActivityLog} />}
                 {isBoardDesc && <BoardDescriptionModal boardTitle={currBoard.title} setIsBoardDesc={setIsBoardDesc} />}
-                {isAiOpen && <AiModal setIsAiOpen={setIsAiOpen} />}
-
+                {isAiOpen && <AiModal
+                    setIsAiOpen={setIsAiOpen}
+                    currBoard={currBoard}
+                    updateBoardOptimistic={updateBoardOptimistic} />}
             </section>
         </main >
     </>

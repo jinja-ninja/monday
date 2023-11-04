@@ -4,9 +4,16 @@ import { chatService } from "../services/chat.service"
 import { eventBus } from "../services/event-bus.service"
 import { Radio } from "monday-ui-react-core/icons"
 import { Button } from "monday-ui-react-core"
-import { utilService } from "../services/util.service"
+import { boardService } from "../services/board.service.local"
+import { updateBoard } from "../store/actions/board.action"
+import { useDispatch } from "react-redux"
+import { SET_IS_LOADING } from "../store/reducers/board.reducer"
+import { AiLoader } from "./AiLoader"
+import { useSelector } from "react-redux"
 
-export function RecordButton({ currBoard, updateBoardOptimistic }) {
+export function RecordButton({ currBoard, setIsAiOpen }) {
+    const isLoading = useSelector(state => state.boardModule.isLoading)
+    const dispatch = useDispatch()
     const [isRecordingOn, setIsRecordingOn] = useState(false)
 
     useEffect(() => {
@@ -16,15 +23,17 @@ export function RecordButton({ currBoard, updateBoardOptimistic }) {
 
         const handleRecordResults = async (transcript) => {
             const tasks = await onGetAiTasks(transcript)
-            const newGroup = createEmptyGroup()
+            const newGroup = boardService.getEmptyGroup()
             newGroup.title = transcript
             newGroup.tasks = tasks.map(task => {
-                const newTask = createEmptyTask()
+                const newTask = boardService.getEmptyTask()
                 newTask.title = task
                 return newTask
             })
             const newBoard = { ...currBoard, groups: [newGroup, ...currBoard.groups] }
-            updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: [...newBoard.groups, newGroup] }, newBoard)
+            updateBoard('board', currBoard._id, null, null, { key: 'groups', value: [...newBoard.groups] })
+            dispatch({ type: SET_IS_LOADING, isLoading: false })
+            setIsAiOpen(false)
         }
 
         eventBus.on('record', handleRecord)
@@ -44,30 +53,11 @@ export function RecordButton({ currBoard, updateBoardOptimistic }) {
     function onRecordStop() {
         speechToTxtService.stop()
         setIsRecordingOn(false)
+        dispatch({ type: SET_IS_LOADING, isLoading: true })
     }
 
     async function onGetAiTasks(transcript) {
         return await chatService.getAiGeneratedTasks(transcript)
-    }
-
-    function createEmptyGroup() {
-        return {
-            id: utilService.makeId(),
-            title: '',
-            tasks: [],
-            style: "grass_green",
-            archivedAt: ''
-        }
-    }
-    function createEmptyTask() {
-        return {
-            id: utilService.makeId(),
-            title: '',
-            status: '',
-            priority: '',
-            comments: [],
-            memberIds: [],
-        }
     }
 
     const dynRecordBtn = !isRecordingOn ?
@@ -90,10 +80,9 @@ export function RecordButton({ currBoard, updateBoardOptimistic }) {
             </Button>)
     return (
         <>
-            {<div className="record-btn-container">
-                {dynRecordBtn}
-            </div>
-            }
+            {!isLoading ?
+                <div className="record-btn-container">{dynRecordBtn}</div>
+                : <AiLoader />}
         </>
     )
 }

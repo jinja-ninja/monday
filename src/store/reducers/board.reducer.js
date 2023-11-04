@@ -16,6 +16,8 @@ export const REMOVE_SELECTED_TASKS = 'REMOVE_SELECTED_TASKS'
 export const SET_COLUMNS_STATE = 'SET_COLUMNS_STATE'
 export const UPDATE_COLUMNS_STATE = 'UPDATE_COLUMNS_STATE'
 
+export const SET_IS_LOADING = 'SET_IS_LOADING'
+
 const initialState = {
     boards: [],
     board: null,
@@ -27,8 +29,8 @@ const initialState = {
         { name: "DueDate", isChecked: true },
         { name: "Timeline", isChecked: true },
         { name: "Files", isChecked: true }
-    ]
-
+    ],
+    isLoading: false
 }
 
 export function boardReducer(state = initialState, action) {
@@ -121,6 +123,9 @@ export function boardReducer(state = initialState, action) {
             newColumnsState = state.columnsState.map(col => (col.name === action.updatedColumn.name ? action.updatedColumn : col))
             return { ...state, columnsState: newColumnsState }
         }
+
+        case SET_IS_LOADING:
+            return { ...state, isLoading: action.isLoading }
 
         default:
             return { ...state }
