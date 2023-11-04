@@ -14,6 +14,7 @@
     z-index: 1000;
 
     overflow-y: auto;
+    scroll-behavior: smooth;
 
 }
 
@@ -46,7 +47,8 @@
         cursor: text;
         resize: none;
 
-        width: 660px;
+        // width: 660px;
+        width: 100%;
         justify-content: start;
         text-align: left;
         margin-bottom: 65px;
@@ -60,6 +62,9 @@
 
     .text-area-contianer {
         margin-bottom: 65px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
 
         textarea {
             height: 144px;
@@ -69,7 +74,8 @@
         .update-btn {
             padding-left: auto;
             text-transform: none;
-            margin-inline-start: 600px;
+            margin-left: auto;
+            // margin-inline-start: 600px;
             margin-block-start: 6px;
         }
     }
@@ -100,6 +106,8 @@
 
 
     .task-comments-container {
+        width: 100%;
+
         .comment-card {
             display: flex;
             flex-direction: column;
@@ -111,7 +119,8 @@
             border: 1px solid;
             border-radius: .5rem;
             border-color: var(--layout-border-color);
-            width: 660px;
+            // width: 660px;
+            width: 100%;
             min-height: 200px;
             margin-bottom: em(20px);
 
@@ -177,9 +186,26 @@
                 border-top-color: var(--layout-border-color);
                 padding: 4px;
 
-                button {
-                    text-transform: none;
+                .footer-btn {
                     width: 100%;
+                    padding-block: .4rem;
+                    border-radius: 4px;
+                    cursor: pointer;
+
+                    &.like-btn {
+                        margin-inline-end: 6px;
+                        margin-inline-start: 2px;
+
+                    }
+
+                    &.reply-btn {
+                        margin-inline-end: 2px;
+                        margin-inline-start: 6px;
+                    }
+
+                    &:hover {
+                        background-color: var(--primary-background-hover-color);
+                    }
                 }
 
                 .middle-line {

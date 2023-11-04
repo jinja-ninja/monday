@@ -1,0 +1,161 @@
+@media (max-width: 880px) {
+
+    .board-details-actions {
+        flex-wrap: wrap;
+        gap: .5rem;
+    }
+
+    .task-list-container {
+
+        .header-title-container {
+            grid-template-columns: 38px 40px 315px repeat(6, 140px) 1fr !important;
+        }
+
+        .task-list {
+            .task-item {
+
+                #task-title {
+                    .editible-task-title {
+                        margin-left: 0;
+                        max-width: 240px;
+                    }
+                }
+
+                &.sticky-title {
+                    width: 315px !important;
+
+                }
+
+                .btn-open-task {
+                    display: none;
+                }
+
+            }
+        }
+
+
+        .task-list-add {
+            .task-add-btn {
+                width: rem(315px);
+            }
+
+        }
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .board-details-layout {
+        column-gap: 3px;
+
+        .board-details-container {
+
+            .header-wrapper {
+                .board-header {
+                    .board-title {
+                        flex-wrap: wrap;
+                        gap: .5rem;
+                    }
+
+                }
+            }
+
+        }
+
+
+    }
+
+    .task-details-container {
+        width: 100%;
+        left: 0;
+
+    }
+
+    .activity-list-item {
+        gap: .5rem;
+
+        .activity-type {
+            flex-direction: column;
+        }
+
+        .created {
+            flex-direction: column;
+
+        }
+
+        .title {
+            max-width: 130px;
+        }
+    }
+
+
+    .task-list-container {
+        .header-title-container {
+            grid-template-columns: 38px 40px 250px repeat(6, 140px) 1fr !important;
+        }
+
+        .task-list {
+            .task-item {
+                #task-title {
+                    .editible-task-title {
+                        margin-left: 0;
+                        max-width: 180px;
+                    }
+                }
+
+                &.sticky-title {
+                    width: 250px !important;
+
+                }
+            }
+        }
+
+
+        .task-list-add {
+            .task-add-btn {
+                width: rem(250px);
+                padding-left: 0;
+            }
+
+        }
+    }
+
+}
+
+@media (max-width: 500px) {
+    .task-list-container {
+        .header-title-container {
+            grid-template-columns: 38px 40px 200px repeat(6, 140px) 1fr !important;
+        }
+
+        .task-list {
+            .task-item {
+                #task-title {
+                    .editible-task-title {
+                        max-width: 130px;
+                    }
+                }
+
+                &.sticky-title {
+                    width: rem(200px) !important;
+
+                }
+            }
+        }
+
+
+        .task-list-add {
+            .task-add-btn {
+                width: rem(200px);
+            }
+
+        }
+    }
+
+    .activity-list-item {
+        .title {
+            max-width: 90px;
+        }
+    }
+}

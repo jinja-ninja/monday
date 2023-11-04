@@ -45,6 +45,8 @@
 @import "cmps/_ActivityPreview";
 @import "cmps/_MemberInvite";
 @import "cmps/_DashboardContainer";
+@import "cmps/_AiModal";
+@import "cmps/_Fireworks";
 
 //Kanban
 @import "kanban/_KanbanDetails";
@@ -57,3 +59,7 @@
 @import "pages/_LoginSingUp";
 @import "pages/_BoardIndex";
 @import "pages/_BoardDetails";
+
+//MQ
+@import "Mqs/_HomePageMq";
+@import "Mqs/_BoardDetailsMq";

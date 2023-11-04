@@ -1,24 +1,16 @@
-import { Avatar, AvatarGroup, Dialog, Icon, IconButton, DialogContentContainer, Search as SearchInput, Chips } from "monday-ui-react-core"
-import { Add, AddSmall, Info, PersonRound, Search } from "monday-ui-react-core/icons"
-import PersonCircle from '../../assets/Icons/PersonCircle.svg'
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { usePopper } from "react-popper";
-
-import { createPortal } from "react-dom";
-import { ReactDOM } from "react";
-import { set } from "date-fns";
 import { updateTask } from "../../store/actions/board.action";
-import { utilService } from "../../services/util.service";
-
+import { Avatar, AvatarGroup, Search as SearchInput, Chips } from "monday-ui-react-core"
+import { Search } from "monday-ui-react-core/icons"
+import PersonCircle from '../../assets/Icons/PersonCircle.svg'
 
 export function Member({ boardMembers, task, boardId, groupId }) {
-
     const [chosenMembers, setChosenMembers] = useState([])
     const [suggestedMembers, setSuggestedMembers] = useState([])
     const [filteredMembers, setFilteredMembers] = useState([])
-    const [isMembersMenuOpen, setIsMembersMenuOpen] = useState(false)
-    const [isAddMemberMenuOpen, setIsAddMemberMenuOpen] = useState(true)
-    const [isPickerOpen, setIsPickerOpen] = useState(false);
+    const [isPickerOpen, setIsPickerOpen] = useState(false)
+
     const [referenceElement, setReferenceElement] = useState(null)
     const [popperElement, setPopperElement] = useState(null)
     const [arrowElement, setArrowElement] = useState(null)
@@ -26,11 +18,10 @@ export function Member({ boardMembers, task, boardId, groupId }) {
         modifiers: [{ name: 'arrow', options: { element: arrowElement } }],
     })
 
-
     useEffect(() => {
         setChosenMembers(task.memberIds)
         setSuggestedMembers(boardMembers.filter(member => !chosenMembers.includes(member._id)))
-    }, [task.memberIds]);
+    }, [task.memberIds])
 
     useEffect(() => {
 
@@ -55,33 +46,29 @@ export function Member({ boardMembers, task, boardId, groupId }) {
         try {
             if (chosenMembers.includes(memberId)) return
             updateTask(boardId, groupId, task.id, { key: 'memberIds', value: [...chosenMembers, memberId] })
-            setSuggestedMembers(suggestedMembers.filter(member => member._id !== memberId))
+            // setSuggestedMembers(suggestedMembers.filter(member => member._id !== memberId))
+            setSuggestedMembers((prevMembers) => prevMembers.filter(member => member._id !== memberId))
         }
-
         catch {
-            console.log('error in assignMemberToTask')
+            console.log('error adding member')
         }
     }
-
     async function onDeleteChosenMember(memberId) {
+        const updatedMembers = chosenMembers.filter(member => member !== memberId)
         try {
-            updateTask(boardId, groupId, task.id, { key: 'memberIds', value: chosenMembers.filter(member => member !== memberId) })
+            updateTask(boardId, groupId, task.id, { key: 'memberIds', value: updatedMembers })
             setChosenMembers(chosenMembers.filter(member => member !== memberId))
         }
         catch {
-            console.log('error in onDeleteChosenMember')
+            console.log('error removing member')
         }
     }
 
     function filterMembers(ev) {
-
         const filterBy = ev
         const filteredMembers = boardMembers.filter(member => member.fullname.toLowerCase().includes(filterBy.toLowerCase()))
         setFilteredMembers(filteredMembers)
-        // console.log('filteredMembers:', filteredMembers)
     }
-
-
 
     function setDynamicMaxMembers(chosenMembersLength) {
         if (chosenMembersLength <= 2) return 2
@@ -120,22 +107,21 @@ export function Member({ boardMembers, task, boardId, groupId }) {
             </div>
 
             {isPickerOpen && <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="member-picker-modal">
-                {isAddMemberMenuOpen &&
-                    <div className="chosen-members-container">
-                        {chosenMembers.map(
-                            memberId => {
-                                const member = boardMembers.find(member => member._id === memberId)
-                                return <div className="chosen-members" key={member._id} onClick={() => assignMemberToTask(member._id, task)}>
-                                    <Chips
-                                        leftAvatar={member.imgUrl}
-                                        className="chip"
-                                        label={member.fullname}
-                                        onDelete={() => (onDeleteChosenMember(member._id))}
-                                    />
-                                </div>
-                            }
-                        )}
-                    </div>}
+                <div className="chosen-members-container">
+                    {chosenMembers.map(
+                        memberId => {
+                            const member = boardMembers.find(member => member._id === memberId)
+                            return <div className="chosen-members" key={member._id} onClick={() => assignMemberToTask(member._id, task)}>
+                                <Chips
+                                    leftAvatar={member.imgUrl}
+                                    className="chip"
+                                    label={member.fullname}
+                                    onDelete={() => (onDeleteChosenMember(member._id))}
+                                />
+                            </div>
+                        }
+                    )}
+                </div>
 
                 <div className="members-search">
                     <SearchInput

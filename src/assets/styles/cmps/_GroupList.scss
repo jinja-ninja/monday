@@ -1,21 +1,24 @@
-.group-list-container {
-  // padding-left: var(--spacing-xl);
-  // padding-left: 38px;
+.groups-section {
   display: grid;
-  grid-template-columns: 38px 1fr;
+  grid-template-columns: 1fr;
+}
 
-  .side-spacing-div {
-    grid-column: 1/2;
-    grid-row: 1/-1;
-  }
+.group-list-container {
+
+  // display: grid;
+  // grid-template-columns: 38px 1fr;
+
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+
 
   .group-list {
     grid-column: 2/3;
   }
 
   .btn-add-group {
-    grid-column: 2;
-    justify-self: start;
+   position: sticky;
+   left: 38px;
   }
 
   padding-block-end: var(--spacing-xl);
@@ -32,10 +35,15 @@
     // &.collapse {
     //   margin-block-end: 0;
     // }
+    .group-title {
+      position: sticky;
+      left: 38px;
+      background-color: white;
+    }
 
     .group-menu-btn {
       position: absolute;
-      left: -30px;
+      left: 7px;
       top: 0px;
       // margin-inline-start: auto;
       // margin-inline-end: var(--spacing-medium);
@@ -48,19 +56,23 @@
     }
   }
 
-  .collapsible-header-wrapper.collapse-group {
-    background-color: transparent;
-    max-width: max-content;
-    top: 0;
-  }
+
 
   .collapsible-header-wrapper {
     display: flex;
     align-items: center;
     position: sticky;
-    top: 185px;
+    top: 215px;
+    left: 38px;
     z-index: 6;
     background-color: var(--primary-background-color);
+    // width: max-content;
+
+    &.collapse-group {
+      background-color: transparent;
+      width: 100%;
+      top: 0;
+    }
 
     &:hover {
       .num-of-tasks {
