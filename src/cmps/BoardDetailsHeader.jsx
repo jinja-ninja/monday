@@ -121,7 +121,7 @@ export function BoardDetailsHeader({ setContent, title, boardId, setIsBoardDesc,
 
                 {isCollapse && <div className="header-description">
                     Manage any type of project. Assign owners, set timelines and keep track of where your project stands.
-                    <Link onClick={() => setIsBoardDesc((prevIsBoardDesc) => !prevIsBoardDesc)} to="#"><span> See More</span></Link>
+                    <Link onClick={() => setIsBoardDesc((prevIsBoardDesc) => !prevIsBoardDesc)} to="#"><span> See more</span></Link>
 
                 </div>}
             </div>

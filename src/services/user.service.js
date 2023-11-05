@@ -77,7 +77,7 @@ function _setLoggedinUser(user) {
 
 // Test Data
 // userService.signup({ email: 'nati@funday.com', password: 'nati', fullname: 'Nati Feldbaum', imgUrl : "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698620005/NatiImg_qvxcqb.png"})
-userService.signup({ email: 'gal@funday.com', password: 'gal', fullname: 'Gal Ben Natan' ,imgUrl : 'https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png'})
+// userService.signup({ email: 'gal@funday.com', password: 'gal', fullname: 'Gal Ben Natan' ,imgUrl : 'https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png'})
 // userService.signup({ email: 'omer@funday.com', password: 'omer', fullname: 'Omer Vered', imgUrl : "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619996/OmerImg_svk1xe.png"})
 // userService.login({email: 'muki', password: 'muki1'})
 
