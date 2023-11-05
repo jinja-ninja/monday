@@ -3,11 +3,12 @@ import { Close, Home, Menu } from "monday-ui-react-core/icons"
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateTask } from "../store/actions/board.action";
+import { userService } from "../services/user.service";
 
 export function TaskDetailsHeader({ boardId, groupId, taskId, taskTitle, setCurrTab }) {
     const [taskTitleValue, setTaskTitleValue] = useState(taskTitle)
     const navigate = useNavigate()
-
+    let loggedUser = userService.getLoggedinUser()
     function onRenameTask() {
         if (taskTitle !== taskTitleValue) {
             updateTask(boardId, groupId, taskId, { key: 'title', value: taskTitleValue })
@@ -35,9 +36,9 @@ export function TaskDetailsHeader({ boardId, groupId, taskId, taskTitle, setCurr
 
                 <div className="avatar-and-icon-container">
                     <Avatar
-                        ariaLabel="Gal Ben Natan"
+                        ariaLabel={loggedUser ? loggedUser.fullname : 'Guest'}
                         size="small"
-                        src="https://cdn1.monday.com/dapulse_default_photo.png"
+                        src={loggedUser ? loggedUser.imgUrl : "https://cdn1.monday.com/dapulse_default_photo.png"}
                         type="img"
                     />
                     <div></div>

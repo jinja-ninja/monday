@@ -26,6 +26,7 @@ import { ActivityLog } from "../cmps/ActivityLog/ActivityLog"
 import { useRef } from "react"
 import { AiModal } from "../cmps/AiModal"
 import { Fireworks } from "../cmps/Fireworks"
+import { SOCKET_EMIT_SET_BOARD, SOCKET_EVENT_UPDATE_BOARD, socketService } from "../services/socket.service"
 
 export function BoardDetails() {
     const params = useParams()
@@ -52,6 +53,13 @@ export function BoardDetails() {
     function getAllUnCheckedColumns() {
         return columnsState.filter(column => !column.isChecked).map(uncheckedColumn => uncheckedColumn.name)
     }
+
+    useEffect(() => {
+        socketService.on(SOCKET_EMIT_SET_BOARD, loadBoard)
+        return () => {
+            socketService.off(SOCKET_EMIT_SET_BOARD, loadBoard)
+        }
+    }, [])
 
     useEffect(() => {
         loadBoard(params.boardId, filterBy, sortBy)

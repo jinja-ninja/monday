@@ -1,5 +1,7 @@
 import { storageService } from './async-storage.service.js'
 import { httpService } from './http.service.js'
+import { SOCKET_EVENT_UPDATE_BOARD, socketService } from './socket.service.js'
+import { userService } from './user.service.js'
 import { utilService } from './util.service.js'
 
 const STORAGE_KEY = 'boardDB'
@@ -88,8 +90,10 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 break
         }
 
-        return await httpService.put(`${BASE_URL}/${boardId}`, board)
+        let updatedBoard = await httpService.put(`${BASE_URL}/${boardId}`, board)
         // return await storageService.put(STORAGE_KEY, board)
+        socketService.emit(SOCKET_EVENT_UPDATE_BOARD, boardId)
+        return updatedBoard
     }
     catch (err) {
         console.log(err)
@@ -443,7 +447,9 @@ async function addNewGroup(board) {
     activity.group = newGroup
     updatedBoard.activities.unshift(activity)
 
-    return await httpService.put(`${BASE_URL}/${board._id}`, updatedBoard)
+    const newBoard = await httpService.put(`${BASE_URL}/${board._id}`, updatedBoard)
+    socketService.emit(SOCKET_EVENT_UPDATE_BOARD, updatedBoard._id)
+    return newBoard
     // return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
@@ -638,15 +644,18 @@ async function updateLabel(boardId, label, type) {
 
 //Comment functions
 function createNewComment(newCommentText) {
+    console.log('getLoggedinUser:', userService.getLoggedinUser())
     return {
         id: utilService.makeId(),
         txt: newCommentText,
         createdAt: Date.now(),
-        byMember: {
-            _id: "u101",
-            fullname: "Gal Ben Natan",
-            imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
-        }
+
+        byMember: userService.getLoggedinUser()
+        // byMember: {
+        //     _id: "u101",
+        //     fullname: "Gal Ben Natan",
+        //     imgUrl: "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png"
+        // }
     }
 
 }

@@ -8,7 +8,6 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { TaskList } from "./TaskList"
 
 export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, onRenameGroup, index, collapseAll, isCollapse }) {
-
     const [showGroup, setShowGroup] = useState(true)
     const [editableText, setEditableText] = useState(group.title)
     const [numOfTasks, setNumOfTasks] = useState(group.tasks.length)
@@ -19,6 +18,10 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
     const closeModal = useCallback(() => {
         setShow(false)
     }, [])
+    
+useEffect(()=>{
+    setEditableText(group.title)
+},[group.title])
 
     useEffect(() => {
         setNumOfTasks(group.tasks.length)

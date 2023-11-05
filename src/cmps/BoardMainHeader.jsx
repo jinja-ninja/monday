@@ -49,7 +49,7 @@ export function BoardMainHeader() {
                         className='avatar-img'
                         ariaLabel="Logout"
                         size={Avatar.sizes.SMALL}
-                        src="https://cdn1.monday.com/dapulse_default_photo.png"
+                        src={loggedInUser.imgUrl ? loggedInUser.imgUrl : "https://cdn1.monday.com/dapulse_default_photo.png"}
                         type="img"
                         onClick={() => {
                             logout()

@@ -8,8 +8,8 @@ export function CommentPreview({ comment, onDeleteComment, currTask }) {
             <div>
                 <div className='comment-header'>
                     {/* UPDATE LATER WHEN THERE ARE ACTUALLY USERS! */}
-                    {/* <img src={comment.byMember.imgUrl} alt="" /> */}
-                    <img src="https://cdn1.monday.com/dapulse_default_photo.png" alt="" />
+                    <img className="member-img" src={comment.byMember.imgUrl} alt="" />
+                    {/* <img src="https://cdn1.monday.com/dapulse_default_photo.png" alt="" /> */}
                     <span className='member-name'>{comment.byMember.fullname}</span>
                     <div className='dot'></div>
 

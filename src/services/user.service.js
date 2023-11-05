@@ -35,12 +35,12 @@ async function login({ email, password }) {
     // else return Promise.reject('Invalid login')
 }
 
-async function signup({ email, password, fullname }) {
+async function signup({ email, password, fullname, imgUrl }) {
     const user = {
         email,
         password,
         fullname,
-        imgUrl: 'https://cdn1.monday.com/dapulse_default_photo.png'
+        imgUrl: imgUrl ? imgUrl : 'https://cdn1.monday.com/dapulse_default_photo.png'
     }
     try {
         const userResponse = await httpService.post(BASE_URL + 'signup', user)
@@ -70,15 +70,15 @@ function getLoggedinUser() {
 }
 
 function _setLoggedinUser(user) {
-    const userToSave = { _id: user._id, fullname: user.fullname }
+    const userToSave = { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(userToSave))
     return userToSave
 }
 
 // Test Data
-// userService.signup({ email: 'nati@funday.com', password: 'nati', fullname: 'Nati Feldbaum' })
-// userService.signup({ email: 'gal@funday.com', password: 'gal', fullname: 'Gal Ben Natan' })
-// userService.signup({ email: 'omer@funday.com', password: 'omer', fullname: 'Omer Vered' })
+// userService.signup({ email: 'nati@funday.com', password: 'nati', fullname: 'Nati Feldbaum', imgUrl : "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698620005/NatiImg_qvxcqb.png"})
+userService.signup({ email: 'gal@funday.com', password: 'gal', fullname: 'Gal Ben Natan' ,imgUrl : 'https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619973/GalImg_z8ivzb.png'})
+// userService.signup({ email: 'omer@funday.com', password: 'omer', fullname: 'Omer Vered', imgUrl : "https://res.cloudinary.com/ddcaqfqvh/image/upload/v1698619996/OmerImg_svk1xe.png"})
 // userService.login({email: 'muki', password: 'muki1'})
 
 
