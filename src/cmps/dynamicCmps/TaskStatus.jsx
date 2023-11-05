@@ -20,25 +20,7 @@ export function TaskStatus({ board, task, labels, type, onUpdateTask }) {
 
     async function onSetStatus(status) {
         await onUpdateTask(task.id, { key: type, value: status })
-
-        // if (board.kanbanCmpsOrder) {
-        //     let statusId = board.labels.find(label => label.title === status).id
-
-        //     if (!board.kanbanCmpsOrder.includes(status)) {
-        //         console.log('ADDED STATUS TO KANBAN ORDER:')
-        //         board.kanbanCmpsOrder.unshift(status)
-        //         await updateBoard('board', board._id, null, null, { key: 'kanbanCmpsOrder', value: board.kanbanCmpsOrder })
-        //     }
-        //     if (isLabelInUse(statusId)) {
-        //         console.log('REMOVED STATUS TO KANBAN ORDER:')
-        //         console.log('status:', status)
-        //         // board.kanbanCmpsOrder.every(label=> isLabelInUse(statusId))
-        //         const labelIdx = board.kanbanCmpsOrder.findIndex(label => label === status)
-        //         board.kanbanCmpsOrder.splice(labelIdx, 1)
-        //         await updateBoard('board', board._id, null, null, { key: 'kanbanCmpsOrder', value: board.kanbanCmpsOrder })
-        //     }
-        // }
-
+        
         if (board.kanbanCmpsOrder && !board.kanbanCmpsOrder.includes(status)) {
             board.kanbanCmpsOrder.unshift(status)
             await updateBoard('board', board._id, null, null, { key: 'kanbanCmpsOrder', value: board.kanbanCmpsOrder })

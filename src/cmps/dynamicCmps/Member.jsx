@@ -77,8 +77,6 @@ export function Member({ boardMembers, task, boardId, groupId }) {
 
     return (
         <div className="task-members" onClick={(ev) => onTogglePicker(ev)} ref={setReferenceElement}>
-            {/* {members.length > 0 && <AvatarGroup size={AvatarGroup.sizes.SMALL} maxCount={3} members={members} />} */}
-
             {chosenMembers.length > 0 ?
                 <AvatarGroup
                     max={setDynamicMaxMembers(chosenMembers.length)}
@@ -127,7 +125,6 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                     <SearchInput
                         id="filter-search-input"
                         className="search-input"
-                        // onBlur={() => toggleIsSearch()}
                         onFocus={() => setFilteredMembers(suggestedMembers)}
                         onChange={(ev) => filterMembers(ev)}
                         autoFocus

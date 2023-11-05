@@ -64,14 +64,8 @@ export function Timeline({ Timeline, boardId, groupId, taskId, groupColor }) {
         const fromTimestamp = range.from.getTime()
         const toTimestamp = range.to.getTime()
         let timeline = { from: fromTimestamp, to: toTimestamp }
-        // const taskToEdit = { ...task, dueDate: timestamp }
+        
         try {
-            //     // const action = {
-            //     //     description: taskToEdit.title,
-            //     //     fromDate: task.dueDate,
-            //     //     toDate: taskToEdit.dueDate,
-            //     //     type: 'Date',
-            //     // }
             await updateTask(boardId, groupId, taskId, { key: 'timeline', value: timeline })
             showSuccessMsg(`Changed timeline in task ${taskId}`)
         } catch {

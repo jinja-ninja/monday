@@ -15,12 +15,6 @@ export function Side({ info, taskId, groupId }) {
         setIsChecked(isSelected)
     }, [selectedTasks])
 
-    // width: 7px;
-    // height: 16px;
-    // border - radius: var(--border - radius - small) 0 0 var(--border - radius - small);
-    // background - color: green;
-
-
     function selectTask(e) {
         const taskIds = { groupId, taskId }
         if (e.target.checked) {

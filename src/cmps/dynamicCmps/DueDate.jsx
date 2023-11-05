@@ -65,14 +65,7 @@ export function DueDate({ dueDate, taskId, boardId, groupId, status }) {
 
     async function onChangeDueDate() {
         const timestamp = selected.getTime()
-        // const taskToEdit = { ...task, dueDate: timestamp }
         try {
-            //     // const action = {
-            //     //     description: taskToEdit.title,
-            //     //     fromDate: task.dueDate,
-            //     //     toDate: taskToEdit.dueDate,
-            //     //     type: 'Date',
-            //     // }
             await updateTask(boardId, groupId, taskId, { key: 'dueDate', value: timestamp })
             showSuccessMsg(`Changed due date in task ${taskId}`)
         } catch {
@@ -109,7 +102,6 @@ export function DueDate({ dueDate, taskId, boardId, groupId, status }) {
     return (
         <div className="task-date" ref={setReferenceElement} onClick={(ev) => onToggleModal(ev)}>
 
-            {/* //If there is no date show this on hover */}
             {!dueDate && <div className="no-date-container" >
 
                 <div className="btn-add-date">
@@ -120,7 +112,6 @@ export function DueDate({ dueDate, taskId, boardId, groupId, status }) {
                 <Icon className="calendar-icon" icon={Calendar} iconSize={20} />
             </div>}
 
-            {/* //If there is date show the date  */}
             {dueDate && (
                 <div className="date-container">
                     <div className="date-indication">

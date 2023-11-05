@@ -18,10 +18,10 @@ export function GroupPreview({ group, labels, priorities, cmpsOrder, boardId, on
     const closeModal = useCallback(() => {
         setShow(false)
     }, [])
-    
-useEffect(()=>{
-    setEditableText(group.title)
-},[group.title])
+
+    useEffect(() => {
+        setEditableText(group.title)
+    }, [group.title])
 
     useEffect(() => {
         setNumOfTasks(group.tasks.length)

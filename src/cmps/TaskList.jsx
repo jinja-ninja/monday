@@ -454,8 +454,6 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                 <div className="summary-scroll-hide-div"></div>
             </div>
 
-
-            {/* + (isCollapse ? ' collapse-header' : '') */}
             {getProgressOrder().map((cmp, idx) => (
                 <div className={`task-list-summary ${idx === 0 ? "first-cell " : ""} ${dynCollapseGroupClass}`} key={idx}>
                     {cmp === "status" &&
@@ -489,7 +487,7 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
                 title="Modal title"
                 triggerElement={openModalButtonRef.current}
                 show={show}
-                onClose={closeModal} // Width prop effects on the modal width
+                onClose={closeModal}
                 width={Modal.width.DEFAULT} contentSpacing>
                 <ModalHeader title={"Delete"} iconSize={32} />
                 <ModalContent>Delete this item? </ModalContent>

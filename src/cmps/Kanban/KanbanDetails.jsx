@@ -58,19 +58,15 @@ export function KanbanDetails({ isCollapse }) {
 
     function getOrderedGroups(groups) {
         const labelsInUse = getLabelsInUse()
-        // console.log('labelsInUse:', labelsInUse)
         // if (labelsInUse.length !== currBoard.kanbanCmpsOrder) currBoard.kanbanCmpsOrder = labelsInUse
         const orderFromBoard = currBoard.kanbanCmpsOrder || []
-        // console.log('orderFromBoard:', orderFromBoard)
         const getIndexInOrder = (label) => orderFromBoard.findIndex(orderLabel => orderLabel === label)
         const sortedLabels = [...labelsInUse].sort((a, b) => {
             const indexA = getIndexInOrder(a)
             const indexB = getIndexInOrder(b)
             return indexA - indexB
         }).map(label => label || 'Blank')
-        // console.log('sortedLabels:', sortedLabels)
         const orderedGroups = sortedLabels.map(label => groups.find(group => group.name === label))
-        // console.log('orderedGroups:', orderedGroups)
         return orderedGroups
     }
 

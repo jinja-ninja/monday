@@ -48,12 +48,6 @@ export function BoardActionsBtns({ currBoard, addTaskToFirstGroup, addGroup, set
                 hiddenColumns={hiddenColumns}
             />
 
-            {/* <Tooltip
-                content='Record to add a new task'
-                animationType="expand">
-                <RecordButton currBoard={currBoard} updateBoardOptimistic={updateBoardOptimistic} />
-            </Tooltip> */}
-
             <Tooltip
                 content='Use AI to create tasks'
                 animationType="expand">

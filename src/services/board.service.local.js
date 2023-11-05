@@ -48,7 +48,6 @@ export const boardService = {
 
 // General Update function
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
-    console.log('key:', key)
     try {
         const board = await getBoardById(boardId)
         const activityType = getActivityType(key)

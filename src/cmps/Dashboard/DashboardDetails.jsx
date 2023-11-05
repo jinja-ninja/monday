@@ -50,56 +50,6 @@ export function DashboardDetails() {
         }]
     }
 
-    // const totalTasksPercentageOptions = {
-    //     chart: {
-    //         type: 'pie'
-    //     },
-    //     title: {
-    //         text: '% Of Tasks Completed On Time'
-    //     },
-    //     tooltip: {
-    //         valueSuffix: '%'
-    //     },
-    //     plotOptions: {
-    //         series: {
-    //             allowPointSelect: true,
-    //             cursor: 'pointer',
-    //             dataLabels: [{
-    //                 enabled: true,
-    //                 distance: 20
-    //             }, {
-    //                 enabled: true,
-    //                 distance: -40,
-    //                 format: '{point.percentage:.1f}%',
-    //                 style: {
-    //                     fontSize: '1.4em',
-    //                     textOutline: 'none',
-    //                     opacity: 0.7
-    //                 },
-    //                 filter: {
-    //                     operator: '>',
-    //                     property: 'percentage',
-    //                     value: 10
-    //                 }
-    //             }]
-    //         }
-    //     },
-    //     series: [
-    //         {
-    //             name: 'Percentage',
-    //             data: [
-    //                 {
-    //                     name: 'Done On Time',
-    //                     y: parseFloat(percentage)
-    //                 },
-    //                 {
-    //                     name: 'Not Completed On Time',
-    //                     y: parseFloat((100 - percentage).toFixed(1))
-    //                 }
-    //             ]
-    //         }
-    //     ]
-    // }
 
     const optionsOmer = {
         chart: {

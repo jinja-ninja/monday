@@ -45,7 +45,6 @@ export function TaskTitle({ info, boardId, groupId, taskId, onUpdateTask, group 
                     type={EditableHeading.types.h5}
                     onFinishEditing={() => {
                         updatedTaskInput && updatedTaskInput !== info ? onUpdateTask(taskId, { key: 'title', value: updatedTaskInput }) : setUpdatedTask(info)
-                        // setUpdatedTask(info)
                     }}
                     onChange={(value) => setUpdatedTask(value)}
                     value={info} />

@@ -1,5 +1,5 @@
 import imgLogo from "../assets/img/Funday-logo.png"
-import { DoubleCheck, Notifications, Inbox, Invite, Search, Help, LogIn, Hide } from "monday-ui-react-core/icons"
+import { DoubleCheck, Notifications, Inbox, Invite, Search, Help, LogIn, Hide, Team } from "monday-ui-react-core/icons"
 import { Avatar, Icon } from "monday-ui-react-core"
 import { Tooltip, } from "monday-ui-react-core"
 import { IconButton, } from "monday-ui-react-core"
@@ -17,32 +17,11 @@ export function BoardMainHeader() {
                 <img src={imgLogo} alt="monday-logo" onClick={() => navigate('/board')} />
             </div>
             <div className="header-bar">
-                {/* <IconButton
-                    ariaLabel="Notifications"
-                    icon={Notifications}
-                // onClick={function noRefCheck() { }}
-                />
-                <IconButton
-                    ariaLabel="Inbox"
-                    icon={Inbox}
-                // onClick={function noRefCheck() { }}
-                />
-                <IconButton
-                    ariaLabel="Invite"
-                    icon={Invite}
-                // onClick={function noRefCheck() { }}
-                /> */}
 
-                {/* <div className="seperate-line"> | </div>
                 <IconButton
-                    ariaLabel="Search"
-                    icon={Search}
-                // onClick={function noRefCheck() { }}
-                /> */}
-                <IconButton
-                    ariaLabel="Help"
-                    icon={Help}
-                // onClick={function noRefCheck() { }}
+                    ariaLabel="About us"
+                    icon={Team}
+                    onClick={() => navigate('/about')}
                 />
                 {loggedInUser &&
                     <Avatar
@@ -69,12 +48,3 @@ export function BoardMainHeader() {
     )
 
 }
-
-
-{/* <div className="monday-storybook-tooltip_box">
-    <Tooltip content="Hidden columns">
-        <div className="monday-storybook-tooltip_icon-wrapper">
-            <Icon icon={Hide} />
-        </div>
-    </Tooltip>
-</div> */}

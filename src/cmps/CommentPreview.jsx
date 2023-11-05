@@ -7,7 +7,6 @@ export function CommentPreview({ comment, onDeleteComment, currTask }) {
         <div className='comment-card' key={comment.id}>
             <div>
                 <div className='comment-header'>
-                    {/* UPDATE LATER WHEN THERE ARE ACTUALLY USERS! */}
                     <img className="member-img" src={comment.byMember.imgUrl} alt="" />
                     {/* <img src="https://cdn1.monday.com/dapulse_default_photo.png" alt="" /> */}
                     <span className='member-name'>{comment.byMember.fullname}</span>
@@ -24,15 +23,6 @@ export function CommentPreview({ comment, onDeleteComment, currTask }) {
                             </Menu>
                         </MenuButton>
                     </div>
-
-
-
-                    {/* <IconButton
-                        className="delete-btn"
-                        icon={Delete}
-                        onClick={() => onDeleteComment(comment.id, currTask)}
-                        size="small"
-                    /> */}
                 </div>
                 <pre>{comment.txt}</pre>
             </div>
@@ -49,23 +39,7 @@ export function CommentPreview({ comment, onDeleteComment, currTask }) {
                     <Icon icon={Replay} />
                     <span>Reply</span>
                 </div>
-                {/* 
-                <Button
-                    className='like-btn'
-                    kind="tertiary"
-                    leftIcon={ThumbsUp}
-                    size="small"
-                >
-                    Like
-                </Button>
-                <div className='middle-line'></div>
-                <Button
-                    kind="tertiary"
-                    leftIcon={Replay}
-                    size="small"
-                >
-                    Reply
-                </Button> */}
+                
             </div>
         </div>
     )

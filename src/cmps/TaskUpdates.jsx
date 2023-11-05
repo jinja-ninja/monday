@@ -29,9 +29,7 @@ export function TaskUpdates({ boardId, groupId, taskId, currTask }) {
 
     function onDeleteComment(commentId, currTask) {
         const updatedComments = boardService.deleteComment(commentId, currTask)
-        //tried ...updatedComments
         updateTask(boardId, groupId, taskId, { key: "comments", value: updatedComments })
-
     }
 
     if (!currTask) return <div>Loading...</div>

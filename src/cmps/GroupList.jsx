@@ -8,7 +8,6 @@ export function GroupList({ groups, labels, cmpsOrder, boardId, priorities, hidd
 
     let filteredCmpOrder = cmpsOrder.filter(cmp => !hiddenColumns.map(str => str.toLowerCase()).includes(cmp.toLowerCase()))
 
-
     return (
         <section className="groups-section">
             <div className="group-list-container">
@@ -47,7 +46,6 @@ export function GroupList({ groups, labels, cmpsOrder, boardId, priorities, hidd
                     leftIcon={Add}>
                     Add new group
                 </Button>}
-
 
             </div >
         </section>

@@ -13,9 +13,9 @@ import { utilService } from "../services/util.service"
 export function SideBar() {
     const [isOpen, setIsOpen] = useState(false)
     const [isHover, setIsHover] = useState(false)
-
     const [filterByTxt, setFilterByTxt] = useState('')
     const [isFavorites, setIsFavorites] = useState('main')
+    
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const currBoard = useSelector((storeState => storeState.boardModule.board))
     const navigate = useNavigate()

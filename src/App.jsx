@@ -12,7 +12,6 @@ import { PageNotFound } from './pages/PageNotFound'
 import { BoardIndex } from './pages/BoardIndex'
 import { store } from './store/store'
 import { TestCmp } from './pages/TestCmp'
-import { KanbanDetails } from './cmps/Kanban/KanbanDetails'
 
 export function App() {
 
@@ -20,12 +19,12 @@ export function App() {
     <Provider store={store}>
       <Router>
         <Routes>
+
           <Route element={<HomePage />} path="/" />
-          <Route element={<TestCmp />} path="/test" />
+          <Route element={<TestCmp />} path="/about" />
           <Route element={<BoardIndex />} path="/board" />
           <Route element={<BoardDetails />} path="board/:boardId">
             <Route element={<TaskDetails />} path='group/:groupId/task/:taskId' />
-            {/* <Route element={<ActivityLog />} path='activityLog' /> */}
           </Route>
 
           <Route path="/auth">

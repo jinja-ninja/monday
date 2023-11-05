@@ -2,7 +2,6 @@ import { IconButton } from 'monday-ui-react-core'
 import AiRobot from '../assets/img/AiRobot.png'
 import { Close } from 'monday-ui-react-core/icons'
 import { RecordButton } from './RecordButton'
-// import { Fireworks } from "../cmps/Fireworks"
 
 export function AiModal({ setIsAiOpen, currBoard,setIsFireworks }) {
 

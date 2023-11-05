@@ -33,12 +33,19 @@
             }
         }
 
-
         .task-list-add {
             .task-add-btn {
                 width: rem(315px);
             }
 
+        }
+
+        .task-list-summary-wrapper {
+            grid-template-columns: 38px 355px repeat(6, 140px) 1fr !important;
+
+            .summary-scroll-hide-div {
+                left: 355px;
+            }
         }
     }
 
@@ -119,6 +126,14 @@
             }
 
         }
+
+        .task-list-summary-wrapper {
+            grid-template-columns: 38px 290px repeat(6, 140px) 1fr !important;
+
+            .summary-scroll-hide-div {
+                left: 290px;
+            }
+        }
     }
 
 }
@@ -150,6 +165,14 @@
                 width: rem(200px);
             }
 
+        }
+
+        .task-list-summary-wrapper {
+            grid-template-columns: 38px 240px repeat(6, 140px) 1fr !important;
+
+            .summary-scroll-hide-div {
+                left: 240px;
+            }
         }
     }
 

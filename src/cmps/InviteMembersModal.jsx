@@ -1,11 +1,5 @@
 import { Avatar, Modal, ModalContent, ModalFooterButtons, ModalHeader, Search, Search as SearchInput } from "monday-ui-react-core"
-import { boardService } from "../services/board.service.local"
-import { useEffect } from "react"
 import { useSelector } from "react-redux"
-import { utilService } from "../services/util.service"
-
-
-
 
 export function InviteMembersModal({ setIsShowInviteMembersModal, isShowInviteMembersModal }) {
 
@@ -22,13 +16,10 @@ export function InviteMembersModal({ setIsShowInviteMembersModal, isShowInviteMe
                 id="story-book-modal"
                 title={<span className="modal-title">Board Members</span>}
                 show={isShowInviteMembersModal}
-                onClose={closeModal} // Width prop effects on the modal width
+                onClose={closeModal} 
                 width={Modal.width.DEFAULT} contentSpacing>
-
                 <ModalContent>
-
                     <div className="member-invite-container">
-                        {/* <span className="modal-title">Board Members</span> */}
                         <div className="member-invite-list">
 
                             {currBoard.members.map(member => {
@@ -50,12 +41,7 @@ export function InviteMembersModal({ setIsShowInviteMembersModal, isShowInviteMe
                             )}
                         </div>
                     </div>
-
-
-
-
                 </ModalContent>
-
             </Modal >
         </>
     )
