@@ -36,8 +36,8 @@ export function TaskList({ group, cmpsOrder, priorities, setNumOfTasks, showGrou
     const [show, setShow] = useState(false)
     const [taskId, setTaskId] = useState(null)
     const [isTypingNewTask, setIsTypingNewTask] = useState(false)
-
     const openModalButtonRef = useRef()
+    
     const dispatch = useDispatch()
     const closeModal = useCallback(() => {
         setShow(false)

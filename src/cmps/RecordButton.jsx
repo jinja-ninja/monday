@@ -5,7 +5,7 @@ import { eventBus } from "../services/event-bus.service"
 import { Radio } from "monday-ui-react-core/icons"
 import { Button } from "monday-ui-react-core"
 import { boardService } from "../services/board.service.local"
-import { updateBoard } from "../store/actions/board.action"
+import { updateBoard, updateBoardOptimistic } from "../store/actions/board.action"
 import { useDispatch } from "react-redux"
 import { SET_IS_LOADING } from "../store/reducers/board.reducer"
 import { AiLoader } from "./AiLoader"
@@ -31,7 +31,7 @@ export function RecordButton({ currBoard, setIsAiOpen, setIsFireworks }) {
                 return newTask
             })
             const newBoard = { ...currBoard, groups: [newGroup, ...currBoard.groups] }
-            updateBoard('board', currBoard._id, null, null, { key: 'groups', value: [...newBoard.groups] })
+            updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: [...newBoard.groups] },newBoard)
             dispatch({ type: SET_IS_LOADING, isLoading: false })
             setIsAiOpen(false)
             setIsFireworks(true)

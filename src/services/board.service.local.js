@@ -42,10 +42,11 @@ export const boardService = {
     _createBoards,
 }
 
-_createBoards()
+// _createBoards()
 
 // General Update function
 async function update(type, boardId, groupId = null, taskId = null, { key, value }) {
+    console.log('key:', key)
     try {
         const board = await getBoardById(boardId)
         const activityType = getActivityType(key)
@@ -57,7 +58,7 @@ async function update(type, boardId, groupId = null, taskId = null, { key, value
                 const oldBoard = board[key]
                 board[key] = value
 
-                if (key === 'groups' || key === 'kanbanCmpsOrder') break
+                if (key === 'groups' || key === 'kanbanCmpsOrder' || key === 'cmpsOrder') break
                 activity = await createActivity({ type: activityType, from: oldBoard, to: value }, board._id)
                 board.activities.unshift(activity)
                 break
@@ -410,6 +411,8 @@ function getActivityType(key) {
         case 'comments':
             return 'Comment'
         case 'groups':
+            return 'Update'
+        case 'cmpsOrder':
             return 'Update'
         case 'kanbanCmpsOrder':
             return 'Update'

@@ -106,6 +106,7 @@ export async function updateBoardOptimistic(type, boardId, groupId = null, taskI
         store.dispatch({ type: UPDATE_BOARDS, board })
         await boardService.update(type, boardId, groupId, taskId, { key, value })
     } catch (err) {
+        //redo dispatch if error
         console.log('Updating actions: err in updating', err)
         throw err
     }

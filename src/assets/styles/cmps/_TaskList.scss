@@ -40,7 +40,7 @@
     position: sticky;
     top: 243px;
     z-index: 5;
-    background-color: var(--primary-background-color);
+    // background-color: var(--primary-background-color);
 
     display: grid;
     grid-auto-flow: column;
@@ -90,6 +90,7 @@
       padding: var(--spacing-small);
       padding-top: 10px;
       padding-bottom: 10px;
+      background-color: #fff;
 
 
 
@@ -102,6 +103,7 @@
 
       &.collapse-group {
         padding-block: 5px;
+        background-color: white;
 
         &.sticky-header-title-collapse {
           background-color: white;
@@ -397,7 +399,9 @@
       border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
       border-radius: 0 0 0 var(--border-radius-small);
       border-image: linear-gradient(to right, transparent 46px, var(--ui-border-color) 0) 2;
-      height: 37px;
+      height: 38px;
+      // height: 37px;
+      
     }
 
     .summary-scroll-hide-div {
