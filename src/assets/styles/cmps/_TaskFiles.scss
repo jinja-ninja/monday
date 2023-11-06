@@ -2,7 +2,6 @@
   position: relative;
 
   &:hover {
-
     .add-file-img {
       opacity: 1;
     }
@@ -14,7 +13,6 @@
     .btn-delete-files {
       display: flex;
     }
-
   }
 
   .task-file {
@@ -30,7 +28,6 @@
       z-index: 100;
     }
   }
-
 
   .add-file-img {
     width: 19px;
@@ -74,10 +71,8 @@
       top: 50%;
       transform: translate(-50%, -50%);
     }
-
   }
 }
-
 
 .btn-delete-files {
   display: none;
