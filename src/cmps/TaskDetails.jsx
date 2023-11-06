@@ -29,8 +29,8 @@ export function TaskDetails() {
             <TaskDetailsHeader boardId={boardId} groupId={groupId} taskId={taskId} taskTitle={currTask.title} setCurrTab={setCurrTab} />
             <main>
                 {currTab === 'updates' && <TaskUpdates boardId={boardId} groupId={groupId} taskId={taskId} currTask={currTask} />}
-                {currTab === 'files' && <TaskFiles />}
-                {currTab === 'activityLog' && <TaskActvity taskId={taskId}/>}
+                {currTab === 'files' && <TaskFiles task={currTask} />}
+                {currTab === 'activityLog' && <TaskActvity taskId={taskId} />}
             </main >
         </div >
     )
