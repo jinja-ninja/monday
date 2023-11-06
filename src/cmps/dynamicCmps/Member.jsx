@@ -8,7 +8,6 @@ import PersonCircle from '../../assets/Icons/PersonCircle.svg'
 export function Member({ boardMembers, task, boardId, groupId }) {
     const [chosenMembers, setChosenMembers] = useState([])
     const [suggestedMembers, setSuggestedMembers] = useState([])
-    const [filteredMembers, setFilteredMembers] = useState([])
     const [isPickerOpen, setIsPickerOpen] = useState(false)
 
     const [referenceElement, setReferenceElement] = useState(null)
@@ -125,7 +124,6 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                     <SearchInput
                         id="filter-search-input"
                         className="search-input"
-                        onFocus={() => setFilteredMembers(suggestedMembers)}
                         onChange={(ev) => filterMembers(ev)}
                         autoFocus
                         debounceRate={200}
