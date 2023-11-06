@@ -21,7 +21,7 @@ export function BoardMainHeader() {
                 <IconButton
                     ariaLabel="About us"
                     icon={Team}
-                    onClick={() => navigate('/about')}
+                    // onClick={() => navigate('/about')}
                 />
                 {loggedInUser &&
                     <Avatar

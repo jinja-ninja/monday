@@ -461,7 +461,9 @@ async function removeGroup(board, groupId) {
     const activity = await createActivity({ type: 'Deleted', from: group.title, to: null }, board._id, groupId)
     board.activities.unshift(activity)
 
-    return await httpService.put(`${BASE_URL}/${board._id}`, updatedBoard)
+    let newBoard = await httpService.put(`${BASE_URL}/${board._id}`, updatedBoard)
+    socketService.emit(SOCKET_EVENT_UPDATE_BOARD, board._id)
+    return newBoard
     // return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 
@@ -632,7 +634,6 @@ async function removeLabel(boardId, labelId, type) {
 }
 
 async function updateLabel(boardId, label, type) {
-    console.log('type:', type)
     const board = await getBoardById(boardId)
     const labelId = label.id
     const labelIdx = board[type].findIndex(label => label.id === labelId)

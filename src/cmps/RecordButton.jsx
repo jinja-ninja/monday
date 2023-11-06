@@ -22,7 +22,11 @@ export function RecordButton({ currBoard, setIsAiOpen, setIsFireworks }) {
         }
 
         const handleRecordResults = async (transcript) => {
+            //THIS LINE IS ONLY FOR DEMO SHOWING!!!!
+            transcript = 'make a logo'
+            // -----------------------
             const tasks = await onGetAiTasks(transcript)
+            console.log(tasks, 'tasks from AI')
             const newGroup = boardService.getEmptyGroup()
             newGroup.title = transcript
             newGroup.tasks = tasks.map(task => {
@@ -31,7 +35,7 @@ export function RecordButton({ currBoard, setIsAiOpen, setIsFireworks }) {
                 return newTask
             })
             const newBoard = { ...currBoard, groups: [newGroup, ...currBoard.groups] }
-            updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: [...newBoard.groups] },newBoard)
+            updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: [...newBoard.groups] }, newBoard)
             dispatch({ type: SET_IS_LOADING, isLoading: false })
             setIsAiOpen(false)
             setIsFireworks(true)

@@ -7,9 +7,9 @@ export function CommentPreview({ comment, onDeleteComment, currTask }) {
         <div className='comment-card' key={comment.id}>
             <div>
                 <div className='comment-header'>
-                    <img className="member-img" src={comment.byMember.imgUrl} alt="" />
+                    <img className="member-img" src={comment.byMember ? comment.byMember.imgUrl : "https://cdn1.monday.com/dapulse_default_photo.png"} alt="" />
                     {/* <img src="https://cdn1.monday.com/dapulse_default_photo.png" alt="" /> */}
-                    <span className='member-name'>{comment.byMember.fullname}</span>
+                    <span className='member-name'>{comment.byMember ? comment.byMember.fullname : 'Guest'}</span>
                     <div className='dot'></div>
 
                     <div className="comment-header-left">
@@ -39,7 +39,7 @@ export function CommentPreview({ comment, onDeleteComment, currTask }) {
                     <Icon icon={Replay} />
                     <span>Reply</span>
                 </div>
-                
+
             </div>
         </div>
     )

@@ -23,8 +23,9 @@ export function Member({ boardMembers, task, boardId, groupId }) {
         setSuggestedMembers(boardMembers.filter(member => !chosenMembers.includes(member._id)))
     }, [task.memberIds])
 
-    useEffect(() => {
 
+
+    useEffect(() => {
         document.addEventListener('mousedown', onClosePicker)
         return () => {
             document.removeEventListener('mousedown', onClosePicker)
@@ -46,7 +47,6 @@ export function Member({ boardMembers, task, boardId, groupId }) {
         try {
             if (chosenMembers.includes(memberId)) return
             updateTask(boardId, groupId, task.id, { key: 'memberIds', value: [...chosenMembers, memberId] })
-            // setSuggestedMembers(suggestedMembers.filter(member => member._id !== memberId))
             setSuggestedMembers((prevMembers) => prevMembers.filter(member => member._id !== memberId))
         }
         catch {
@@ -54,20 +54,20 @@ export function Member({ boardMembers, task, boardId, groupId }) {
         }
     }
     async function onDeleteChosenMember(memberId) {
+
         const updatedMembers = chosenMembers.filter(member => member !== memberId)
         try {
             updateTask(boardId, groupId, task.id, { key: 'memberIds', value: updatedMembers })
-            setChosenMembers(chosenMembers.filter(member => member !== memberId))
+            setChosenMembers(updatedMembers)
         }
         catch {
             console.log('error removing member')
         }
     }
 
-    function filterMembers(ev) {
-        const filterBy = ev
-        const filteredMembers = boardMembers.filter(member => member.fullname.toLowerCase().includes(filterBy.toLowerCase()))
-        setFilteredMembers(filteredMembers)
+    function filterMembers(filterText) {
+        const updatedMembers = boardMembers.filter(member => member.fullname.toLowerCase().includes(filterText.toLowerCase()))
+        setSuggestedMembers(updatedMembers)
     }
 
     function setDynamicMaxMembers(chosenMembersLength) {
@@ -137,11 +137,11 @@ export function Member({ boardMembers, task, boardId, groupId }) {
                 </div>
                 <div className="members-list">
                     <p>Suggested People</p>
-                    {filteredMembers.map(member => {
+                    {suggestedMembers.map(member => {
                         if (chosenMembers.includes(member._id)) return
                         return <div className="member" key={member._id} onClick={() => assignMemberToTask(member._id, task)}>
                             <Avatar size={Avatar.sizes.SMALL}
-                                src={member.imgUrl}
+                                src={member.imgUrl ? member.imgUrl : "https://cdn1.monday.com/dapulse_default_photo.png"}
                                 type="img"
                                 // type={Avatar.types.TEXT}
                                 // text={utilService.getNameInitials(member.fullname)}
