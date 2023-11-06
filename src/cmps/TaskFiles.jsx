@@ -132,8 +132,8 @@ export function TaskFiles({ task }) {
                                         <IconButton
                                             className="time-icon"
                                             icon={Time}
+                                            size="xxs"
                                             ariaLabel={`Created At ${file.id ? new Date(file.id).toLocaleDateString() : 'N/A'} `}
-                                            size="small"
                                         />
                                     </div>
                                 </div>

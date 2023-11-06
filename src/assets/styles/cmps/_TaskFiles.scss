@@ -74,6 +74,8 @@
   }
 }
 
+
+
 .btn-delete-files {
   display: none;
   align-items: center;
@@ -88,4 +90,95 @@
   cursor: pointer;
   color: black;
   background-color: var(--primary-background-hover-on-secondary-color);
+}
+
+
+
+.files-container {
+  display: flex;
+  gap: 20px;
+  align-self: flex-start;
+
+  .task-file-item {
+    position: relative;
+
+    .file-task-details {
+      position: relative;
+      width: 220px;
+      height: 132px;
+      margin: 0;
+      background-color: #F6F7FB;
+
+      .img-task-details {
+        border-radius: 10px;
+        height: 132px;
+
+        img {
+
+          margin: auto;
+        }
+      }
+
+      .menu-button {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        top: 4px;
+        right: 4px;
+        z-index: 2;
+        background-color: white;
+
+        &:hover {
+          background-color: #DCDFEC;
+        }
+      }
+
+      .icon-button {
+        position: absolute;
+        bottom: 4px;
+        left: 4px;
+        background-color: white;
+      }
+    }
+
+    .file-name {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 220px;
+      // height: 38px;
+      background-color: white;
+      margin: 0;
+
+      span {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 22px;
+        margin: 12px 4px 12px 4px;
+      }
+
+      .time-icon {
+        cursor: default;
+
+        &:hover {
+          background-color: white;
+        }
+      }
+    }
+  }
+
+  .img-modal {
+    z-index: 1000;
+  }
+}
+
+
+.files-summary-container {
+  .task-file-img {
+    margin-inline-start: 4px;
+
+    &:first-of-type {
+      margin-inline-start: 0;
+    }
+  }
 }
