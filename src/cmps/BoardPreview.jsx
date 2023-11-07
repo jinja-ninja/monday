@@ -2,7 +2,7 @@ import { Box, Clickable, Flex, Icon, IconButton, Text, Tooltip } from "monday-ui
 import { Board, Favorite } from "/node_modules/monday-ui-react-core/src/components/Icon/Icons"
 import { useNavigate } from "react-router-dom"
 import { toggleBoardFavorite } from "../store/actions/board.action"
-
+import RecentBoard from "../src/assets/img/quick_search_recent_board.svg"
 
 export function BoardPreview({ board }) {
 
@@ -41,7 +41,7 @@ export function BoardPreview({ board }) {
             <Clickable className="board-preview-clickable-element" onClick={() => navigate(`/board/${board._id}`)} ariaLabel="clickable box">
                 <Flex direction="Column" align="Stretch"
                     justify="Stretch" >
-                    <img src="../src/assets/img/quick_search_recent_board.svg" alt="" />
+                    <img src={RecentBoard} alt="" />
                     <Flex>
                         <Tooltip content="This board is public, visible to all team members"
                             position={Tooltip.positions.BOTTOM}

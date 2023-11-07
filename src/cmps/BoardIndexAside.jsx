@@ -1,6 +1,8 @@
 import { Box, Button, Text } from "monday-ui-react-core"
-
-
+import TemplatesBanner from "../src/assets/img/templates-banner.png"
+import GetStarted from "../src/assets/img/get-started-2.svg"
+import HelpCenter from "../src/assets/img/help-center.svg"
+import Webinars from "../src/assets/img/webinars.svg"
 export function BoardIndexAside() {
 
     return <>
@@ -11,7 +13,7 @@ export function BoardIndexAside() {
             margin={Box.marginYs.LARGE}
             className="explore-templates-container"
         >
-            <img src="../src/assets/img/templates-banner.png" alt="" />
+            <img src={TemplatesBanner} alt="" />
 
             <div className="banner-content-wrapper">
                 <Text type="text1" maxLines={2} className="banner-text">
@@ -33,7 +35,7 @@ export function BoardIndexAside() {
                 margin={Box.marginYs.LARGE}
                 className="navigation-card-component">
 
-                <img src="../src/assets/img/get-started-2.svg" alt="" />
+                <img src={GetStarted} alt="" />
 
                 <div className="card-content">
                     <Text type="text1" color="primary"
@@ -54,7 +56,7 @@ export function BoardIndexAside() {
                 margin={Box.marginYs.LARGE}
                 className="navigation-card-component">
 
-                <img src="../src/assets/img/help-center.svg" alt="" />
+                <img src={HelpCenter} alt="" />
 
                 <div className="card-content">
                     <Text type="text1" color="primary"
@@ -75,7 +77,7 @@ export function BoardIndexAside() {
                 margin={Box.marginYs.LARGE}
                 className="navigation-card-component">
 
-                <img src="../src/assets/img/webinars.svg" alt="" />
+                <img src={Webinars} alt="" />
 
                 <div className="card-content">
                     <Text type="text1" color="primary"
