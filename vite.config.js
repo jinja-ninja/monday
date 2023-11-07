@@ -14,7 +14,5 @@ export default defineConfig({
       '~': path.resolve(__dirname, './node_modules'),
     }
   },
-  define: {
-    "global": {},
-  },
+  define: { _global: ({}), }
 })
