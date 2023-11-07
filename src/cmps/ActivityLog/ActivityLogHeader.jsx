@@ -1,8 +1,9 @@
 import { Avatar, EditableHeading, IconButton, Tab, TabList } from "monday-ui-react-core";
 import { Close, Menu } from "monday-ui-react-core/icons";
+import { userService } from "../../services/user.service";
 
 export function ActivityLogHeader({ boardTitle, setIsActivityLog }) {
-
+    let loggedInUser = userService.getLoggedinUser()
     return (
 
         <div className="activity-log-header">
@@ -24,9 +25,9 @@ export function ActivityLogHeader({ boardTitle, setIsActivityLog }) {
 
                 <div className="avatar-and-icon-container">
                     <Avatar
-                        ariaLabel="Gal Ben Natan"
+                        ariaLabel={loggedInUser ? loggedInUser.fullname : 'Guest'}
                         size="small"
-                        src="https://cdn1.monday.com/dapulse_default_photo.png"
+                        src={loggedInUser ? loggedInUser.imgUrl : "https://cdn1.monday.com/dapulse_default_photo.png"}
                         type="img"
                     />
                     <div></div>

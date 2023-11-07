@@ -49,7 +49,7 @@ export function ActivityPreview({ activity }) {
                 <span>{utilService.timeSince(activity.createdAt)}</span>
             </div>
 
-            <img src={activity.byMember.imgUrl} alt="" />
+            <img className="activity-member-img" src={activity.byMember.imgUrl} alt="" />
         </div>
 
         <Text className="title" ellipsis>

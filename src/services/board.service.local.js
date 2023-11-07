@@ -374,11 +374,12 @@ function getEmptyTask(title = '') {
 }
 //Activity functions
 async function createActivity(action = {}, boardId, groupId = null, taskId = null) {
+    let loggedInUser = userService.getLoggedinUser()
     return {
         id: 'a-' + utilService.makeId(),
         createdAt: Date.now(),
-        byMember: {
-            _id: 'u101',
+        byMember: loggedInUser ? loggedInUser : {
+            _id: 'u213213123',
             fullname: 'Default user',
             imgUrl: 'https://cdn1.monday.com/dapulse_default_photo.png'
         },
@@ -1345,7 +1346,7 @@ function _createBoards() {
                     ]
                 },
                 {
-                    title: "Web Design proj",
+                    title: "Web Design project",
                     isStarred: false,
                     archivedAt: 1590500000000,
                     createdBy: {
