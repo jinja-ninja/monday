@@ -1,8 +1,9 @@
 import { Box, Button, Text } from "monday-ui-react-core"
-import TemplatesBanner from "../src/assets/img/templates-banner.png"
-import GetStarted from "../src/assets/img/get-started-2.svg"
-import HelpCenter from "../src/assets/img/help-center.svg"
-import Webinars from "../src/assets/img/webinars.svg"
+import TemplatesBanner from "../assets/img/templates-banner.png"
+import GetStarted from "../assets/img/get-started-2.svg"
+import HelpCenter from "../assets/img/help-center.svg"
+import Webinars from "../assets/img/webinars.svg"
+
 export function BoardIndexAside() {
 
     return <>

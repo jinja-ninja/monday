@@ -2,7 +2,7 @@ import { Box, Clickable, Flex, Icon, IconButton, Text, Tooltip } from "monday-ui
 import { Board, Favorite } from "/node_modules/monday-ui-react-core/src/components/Icon/Icons"
 import { useNavigate } from "react-router-dom"
 import { toggleBoardFavorite } from "../store/actions/board.action"
-import RecentBoard from "../src/assets/img/quick_search_recent_board.svg"
+import RecentBoard from "../assets/img/quick_search_recent_board.svg"
 
 export function BoardPreview({ board }) {
 
