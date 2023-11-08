@@ -344,7 +344,8 @@ function getNewBoard() {
 
 async function duplicateBoard(board) {
     const duplicatedBoard = JSON.parse(JSON.stringify(board))
-    duplicatedBoard._id = utilService.makeId()
+    // duplicatedBoard._id = utilService.makeId()
+    duplicatedBoard._id = null
     duplicatedBoard.title = duplicatedBoard.title + ' copy'
     return await save(duplicatedBoard)
 }

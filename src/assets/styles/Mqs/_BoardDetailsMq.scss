@@ -149,7 +149,7 @@
             height: 400px;
             flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
 
             .close-btn {
                 border-radius: 1rem;
@@ -166,8 +166,12 @@
             }
 
             .record-btn-container {
-                margin-top: .5rem;
+                margin-top: .8rem;
                 transform: translate(-35%);
+            }
+
+            .center {
+                margin-top: 25px;
             }
         }
 
