@@ -35,7 +35,11 @@
 
 
 @media (max-width: 500px) {
-  
+  .home-header-container{
+    .btn-get-started{
+        display: none;
+    }
+  }
 
     .support-section {
 

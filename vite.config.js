@@ -14,5 +14,11 @@ export default defineConfig({
       '~': path.resolve(__dirname, './node_modules'),
     }
   },
-  define: { _global: ({}), }
+  //for build
+  // define: { _global: ({}), },
+  
+  //working local
+  define: {
+    global: {},
+  }
 })
