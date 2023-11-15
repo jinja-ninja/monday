@@ -39,7 +39,7 @@ export function KanbanDetails({ isCollapse }) {
         let filteredTasks = allTasks.filter(task => filterPattern.test(task.title))
 
         let groups = filteredTasks.reduce((acc, task) => {
-            const status = task.status || 'Blank'
+            const status = task.status || ''
             if (!acc[status]) acc[status] = { name: status, tasks: [] }
             acc[status].tasks.push(task)
             return acc
@@ -51,21 +51,19 @@ export function KanbanDetails({ isCollapse }) {
 
     function getLabelsInUse() {
         let allTasksLabels = getAllBoardTasks().map(task => task.status)
-        // allTasksLabels = allTasksLabels.map(label => label === 'Blank' ? '' : label)
         const uniqueLabels = [...new Set(allTasksLabels)]
         return uniqueLabels
     }
 
     function getOrderedGroups(groups) {
         const labelsInUse = getLabelsInUse()
-        // if (labelsInUse.length !== currBoard.kanbanCmpsOrder) currBoard.kanbanCmpsOrder = labelsInUse
         const orderFromBoard = currBoard.kanbanCmpsOrder || []
         const getIndexInOrder = (label) => orderFromBoard.findIndex(orderLabel => orderLabel === label)
         const sortedLabels = [...labelsInUse].sort((a, b) => {
             const indexA = getIndexInOrder(a)
             const indexB = getIndexInOrder(b)
             return indexA - indexB
-        }).map(label => label || 'Blank')
+        }).map(label => label || '')
         const orderedGroups = sortedLabels.map(label => groups.find(group => group.name === label))
         return orderedGroups
     }

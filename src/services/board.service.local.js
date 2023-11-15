@@ -548,7 +548,9 @@ async function removeBatchTasks(boardId, selectedTasks, actions = []) {
                 return keepTask
             }),
         }))
-        return await httpService.put(`${BASE_URL}/${boardId}`, board)
+        let updatedBoard = await httpService.put(`${BASE_URL}/${boardId}`, board)
+        socketService.emit(SOCKET_EVENT_UPDATE_BOARD, boardId)
+        return updatedBoard
         // return await storageService.put(STORAGE_KEY, board)
     } catch (err) {
         throw err
@@ -564,7 +566,11 @@ async function duplicatedTask(board, groupId, taskId) {
     duplicatedTask.id = utilService.makeId()
     duplicatedTask.title = duplicatedTask.title + ' copy'
     updatedBoard.groups[groupIdx].tasks.splice(taskIdx + 1, 0, duplicatedTask)
-    return await httpService.put(`${BASE_URL}/${board._id}`, updatedBoard)
+
+    let newBoard = await httpService.put(`${BASE_URL}/${board._id}`, updatedBoard)
+    socketService.emit(SOCKET_EVENT_UPDATE_BOARD, boardId)
+    return newBoard
+
     // return await storageService.put(STORAGE_KEY, updatedBoard)
 }
 

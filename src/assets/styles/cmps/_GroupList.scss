@@ -17,8 +17,8 @@
   }
 
   .btn-add-group {
-   position: sticky;
-   left: 38px;
+    position: sticky;
+    left: 38px;
   }
 
   padding-block-end: var(--spacing-xl);
@@ -38,7 +38,8 @@
     .group-title {
       position: sticky;
       left: 38px;
-      background-color: white;
+      background-color: var(--primary-background-color);
+
     }
 
     .group-menu-btn {

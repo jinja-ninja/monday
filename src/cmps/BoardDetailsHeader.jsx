@@ -10,6 +10,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { set } from "date-fns"
 import { InviteMembersModal } from "./InviteMembersModal"
 import { useSelector } from "react-redux"
+import { ToggleThemeBtn } from "./ToggleThemeBtn"
 
 
 export function BoardDetailsHeader({ setContent, title, boardId, setIsBoardDesc, setIsActivityLog, isStarred, setIsCollapse, isCollapse }) {
@@ -76,6 +77,9 @@ export function BoardDetailsHeader({ setContent, title, boardId, setIsBoardDesc,
                         {isCollapse && dynStarIcon}
                     </div>
                     {isCollapse && <div className="left-btns">
+
+                        <ToggleThemeBtn />
+
                         <Button
                             className="btn-avatars"
                             kind="tertiary"

@@ -45,14 +45,14 @@
   }
 
   .person-circle {
-    border: 2px solid #fff;
+    border: 2px solid var(--primary-background-color);
     border-radius: 50%;
     width: 30px;
     height: 30px;
   }
 
   .member-picker-modal {
-    background-color: white;
+    background-color: var(--primary-background-color);
     z-index: 10;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px 0px;
     border-radius: 4px;

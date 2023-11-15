@@ -50,7 +50,7 @@
       border-radius: 1rem;
       justify-content: center;
       margin-block-end: 20px;
-      background-color: white;
+      background-color: var(--primary-background-color);
 
       .completed-tasks {
         display: flex;

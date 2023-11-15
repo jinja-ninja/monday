@@ -126,7 +126,9 @@
         top: 4px;
         right: 4px;
         z-index: 2;
-        background-color: white;
+        // background-color: white;
+        background-color: var(--primary-background-color);
+
 
         &:hover {
           background-color: #DCDFEC;

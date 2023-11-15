@@ -12,6 +12,7 @@ html {
 body {
   height: 100vh;
   // overflow: hidden;
+  transition: all .3s;
 }
 
 .transform-none {
@@ -56,6 +57,7 @@ button {
   align-items: center;
   width: 100vw;
   height: 100vh;
+  background-color: var(--primary-background-color);
 }
 
 .monday-style-dialog-content-wrapper {

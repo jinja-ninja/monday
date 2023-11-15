@@ -26,7 +26,7 @@
     height: calc(100% + 2px);
     position: sticky;
     left: 0;
-    background-color: white;
+    background-color: var(--primary-background-color);
     // z-index: 15;
     z-index: 5;
 
@@ -68,7 +68,7 @@
             content: '';
             width: 100%;
             height: 2px;
-            background-color: rgb(255, 255, 255);
+            background-color: var(--primary-background-color);
             position: absolute;
             top: -1px;
             left: 0;
@@ -90,23 +90,24 @@
       padding: var(--spacing-small);
       padding-top: 10px;
       padding-bottom: 10px;
-      background-color: #fff;
-
+      background-color: var(--primary-background-color);
 
 
       &.sticky-header-title {
         position: sticky;
         left: 78px;
         z-index: 2;
-        background-color: white;
+        background-color: var(--primary-background-color);
+
       }
 
       &.collapse-group {
         padding-block: 5px;
-        background-color: white;
+        background-color: var(--primary-background-color);
+
 
         &.sticky-header-title-collapse {
-          background-color: white;
+          background-color: var(--primary-background-color);
           position: sticky;
           left: 78px;
         }
@@ -140,7 +141,8 @@
 
       &.collapse-group {
         border-right: none;
-        background-color: white;
+        background-color: var(--primary-background-color);
+
       }
 
       .color-indicator {
@@ -163,7 +165,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: white;
+        background-color: var(--primary-background-color);
+
 
         &>* {
           display: flex;
@@ -178,7 +181,8 @@
     grid-auto-flow: column;
     align-items: center;
     justify-items: start;
-    background-color: #fff;
+    background-color: var(--primary-background-color);
+
 
 
     border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
@@ -192,16 +196,19 @@
 
     &.group-grid {
       &:hover {
-     
-        background-color: rgb(245, 246, 248);
+
+        background-color: var(--primary-background-color);
+
         box-shadow: 4px 3px 6px -3px var(--ui-border-color);
 
         .task-title-container {
-          background-color: rgb(245, 246, 248);
+          background-color: var(--primary-background-color);
+
         }
 
         .task-side-wrapper {
-          background-color: rgb(245, 246, 248);
+          background-color: var(--primary-background-color);
+
         }
 
         .task-menu-btn {
@@ -250,14 +257,16 @@
         position: sticky;
         left: 38px;
         z-index: 3;
-        background-color: #fff;
+        background-color: var(--primary-background-color);
+
       }
 
       &.sticky-title {
         position: sticky;
         left: 78px;
         z-index: 2;
-        background-color: #fff;
+        background-color: var(--primary-background-color);
+
       }
 
       &>* {
@@ -280,7 +289,7 @@
           &:hover {
             .btn-open-task {
               opacity: 1;
-              background-color: rgb(245, 246, 248);
+              background-color: var(--primary-background-color);
               transition: all .2s;
             }
           }
@@ -298,7 +307,7 @@
 
     // rgba(195, 198, 212, 0.6)
     height: 36px;
-    background-color: #fff;
+    background-color: var(--primary-background-color);
 
     &>* {
       @include groupCell;
@@ -401,12 +410,12 @@
       border-image: linear-gradient(to right, transparent 46px, var(--ui-border-color) 0) 2;
       height: 38px;
       // height: 37px;
-      
+
     }
 
     .summary-scroll-hide-div {
       position: absolute;
-      background-color: rgb(255, 255, 255);
+      background-color: var(--primary-background-color);
       height: 35px;
       width: 8px;
       left: 520px;
@@ -419,7 +428,7 @@
 
     .task-list-summary-emptycell-left {
       grid-column: 2/3;
-      background-color: white;
+      background-color: var(--primary-background-color);
       position: sticky;
       left: 38px;
       z-index: 3;
@@ -430,7 +439,7 @@
         background-color: transparent;
         // height: 100%;
         height: 37px;
-        background: white;
+        background-color: var(--primary-background-color);
 
         .summary-scroll-hide-div {
           display: none;
@@ -481,7 +490,8 @@
       border-right: var(--border-width) var(--border-style) var(--ui-border-color);
       border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
       box-shadow: var(--box-shadow-xs);
-      background-color: #fff;
+      background-color: var(--primary-background-color);
+
 
       &.last-col {
         border-right: none;

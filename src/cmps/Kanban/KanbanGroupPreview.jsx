@@ -21,7 +21,7 @@ export function KanbanGroupPreview({ group, labels, onAddKanbanTask, index }) {
                     <div className="group-header" style={{
                         backgroundColor: `var(--color-${getLabelColor(group.name)})`
                     }}>
-                        <p>{group.name} / {group.tasks.length}</p>
+                        <p>{group.name || 'Blank'} / {group.tasks.length}</p>
                         <div className="btn-add-task-container" onClick={() => onAddKanbanTask(group.name)}>
                             <div className="btn-add-task">
                                 <div className="line-one"></div>

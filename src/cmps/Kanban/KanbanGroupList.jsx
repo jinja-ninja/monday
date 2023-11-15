@@ -3,10 +3,10 @@ import { NoGroupsFound } from "../NoGroupsFound"
 import { KanbanGroupPreview } from "./KanbanGroupPreview"
 
 export function KanbanGroupList({ groups, labels, onAddKanbanTask }) {
-
+    
     return (
         <>
-            <Droppable droppableId="kanban-groups" type="kanban-groups" direction="column">
+            {!groups.every(group => group === undefined) && <Droppable droppableId="kanban-groups" type="kanban-groups" direction="column">
                 {(provided) => (
                     <div
                         className="kanban-group-list"
@@ -26,9 +26,9 @@ export function KanbanGroupList({ groups, labels, onAddKanbanTask }) {
                         {provided.placeholder}
                     </div>
                 )}
-            </Droppable>
+            </Droppable>}
 
-            {groups.length === 0 && <NoGroupsFound cmpsOrder={2} />}
+            {groups.length === 0 || groups.every(group => group === undefined) && <NoGroupsFound cmpsOrder={2} />}
         </>
     )
 }

@@ -2,7 +2,6 @@ import { Avatar, Modal, ModalContent, ModalFooterButtons, ModalHeader, Search, S
 import { useSelector } from "react-redux"
 
 export function InviteMembersModal({ setIsShowInviteMembersModal, isShowInviteMembersModal }) {
-
     const currBoard = useSelector(state => state.boardModule.board)
 
     const closeModal = () => {
@@ -12,16 +11,15 @@ export function InviteMembersModal({ setIsShowInviteMembersModal, isShowInviteMe
     return (
         <>
             <Modal
-            className='invite-memebers-modal'
+                className='invite-memebers-modal'
                 id="story-book-modal"
                 title={<span className="modal-title">Board Members</span>}
                 show={isShowInviteMembersModal}
-                onClose={closeModal} 
+                onClose={closeModal}
                 width={Modal.width.DEFAULT} contentSpacing>
                 <ModalContent>
                     <div className="member-invite-container">
                         <div className="member-invite-list">
-
                             {currBoard.members.map(member => {
                                 return (
                                     <div className="monday-storybook-chips_inline-container member-item" key={member._id}>
@@ -36,8 +34,6 @@ export function InviteMembersModal({ setIsShowInviteMembersModal, isShowInviteMe
                                     </div>
                                 )
                             }
-
-
                             )}
                         </div>
                     </div>
