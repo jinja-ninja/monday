@@ -1,8 +1,6 @@
-# React + Vite
+# Funday
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Funday is a full stack web application inspired by Monday that replicates the core functionalities of Monday, developed by Gal Ben Natan, Nati Feldbaum, and Omer Vered.
+#### https://funday-k1un.onrender.com/
+## This project is built using React, Redux, NodeJS, ExpressJS, MongoDB, SASS, and Sockets.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
