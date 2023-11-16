@@ -1,7 +1,8 @@
-@media (max-width: 1250px) {
+@media only screen and (max-width: 1250px) {
     .support-section {
         flex-direction: column;
         gap: 1.3rem;
+        padding-inline: 0;
 
         .support-left-container {
             padding-left: 0;
@@ -9,7 +10,7 @@
     }
 }
 
-@media (max-width: 700px) {
+@media only screen and (max-width: 700px) {
     .main-titles-container {
 
         .home-main-title {
@@ -22,7 +23,7 @@
         .support-main-img {
             width: rem(380px);
             height: rem(330px);
-          
+
         }
 
         .support-left-container {
@@ -34,19 +35,19 @@
 }
 
 
-@media (max-width: 500px) {
-  .home-header-container{
-    .btn-get-started{
-        display: none;
+@media only screen and (max-width: 500px) {
+    .home-header-container {
+        .btn-get-started {
+            display: none;
+        }
     }
-  }
 
     .support-section {
 
         .support-main-img {
             width: rem(350px);
             height: rem(300px);
-          
+
         }
     }
 }

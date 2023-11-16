@@ -25,11 +25,11 @@ export function ToggleThemeBtn() {
             <input
                 type="checkbox"
                 className="sr-only"
-                id="dark-app-theme"
+                id="app-theme"
                 ref={inputToggleTheme}
                 onChange={toggleTheme}
             />
-            <label htmlFor="dark-app-theme" className="toggle">
+            <label htmlFor="app-theme" className="toggle">
                 <span></span>
             </label>
         </>
