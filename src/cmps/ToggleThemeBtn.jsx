@@ -28,6 +28,7 @@ export function ToggleThemeBtn() {
                 id="app-theme"
                 ref={inputToggleTheme}
                 onChange={toggleTheme}
+                defaultChecked 
             />
             <label htmlFor="app-theme" className="toggle">
                 <span></span>
