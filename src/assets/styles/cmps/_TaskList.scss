@@ -177,13 +177,9 @@
   }
 
   .task-list {
-    display: grid;
-    grid-auto-flow: column;
     align-items: center;
     justify-items: start;
     background-color: var(--primary-background-color);
-
-
 
     border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
 
@@ -195,6 +191,8 @@
     }
 
     &.group-grid {
+    grid-auto-flow: column;
+
       &:hover {
 
         background-color: var(--primary-background-color);
