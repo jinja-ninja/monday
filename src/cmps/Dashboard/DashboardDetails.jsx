@@ -18,7 +18,6 @@ export function DashboardDetails() {
     const sumOfDoneTasks = doneTasks.reduce((acc, currVal) => acc + currVal, 0)
 
     const percentage = ((sumOfDoneTasks / sumOfTotalTasks) * 100).toFixed(2)
-    console.log('percentage:', percentage)
 
     const tasksOptions = {
         chart: {
@@ -49,7 +48,6 @@ export function DashboardDetails() {
             data: doneTasks
         }]
     }
-
 
     const optionsOmer = {
         chart: {
@@ -88,6 +86,7 @@ export function DashboardDetails() {
             ]
         }]
     }
+
     const optionsGal = {
         chart: {
             type: 'column'

@@ -61,6 +61,9 @@
         column-gap: 3px;
 
         .board-details-container {
+            .header-description {
+                display: none;
+            }
 
             .header-wrapper {
                 .board-header {
@@ -142,14 +145,16 @@
 
 }
 
+// @media only screen and (max-width: 729px) {
+
+// }
+
 @media only screen and (max-width: 500px) {
     .side-bar-container {
         display: none;
     }
 
-    .board-details-layout {
-        column-gap: 0px;
-    }
+
 
     .board-desc-backdrop {
         .ai-modal-container {
@@ -185,55 +190,29 @@
 
     }
 
+
     .board-details-layout {
+        column-gap: 0px;
+
         .board-details-container {
-
-            .header-description {
-                display: none;
-            }
-
-            .header-wrapper {
-                // padding-left: 10px;
-                // padding-right: 10px;
-            }
-
             .board-details-actions {
                 padding-bottom: 5px;
-                // padding-left: 10px;
-                // padding-right: 10px;
-                // display: none;
+                top: 156px;
             }
         }
     }
 
-    .group-preview-container {
+    .group-list-container {
         .collapsible-header-wrapper {
-            .side-menu-btn-container {
-                // width: 10px;
-            }
+            top: 235px;
         }
-    }
 
+    }
 
     .task-list-container {
-        .side-menu-btn-container {
-            // width: 10px;
-        }
-
         .header-title-container {
             grid-template-columns: 38px 40px 200px repeat(6, 140px) 1fr !important;
-            // grid-template-columns: 10px 40px 200px repeat(6, 140px) 1fr !important;
-
-            .header-title-side-wrapper {
-                // left: 10px;
-                // border-top: 1px solid var(--ui-border-color);
-            }
-
-            .header-title {
-                &.sticky-header-title {
-                    // left: 50px;
-                }
-            }
+            top: 263px;
         }
 
         .task-list {
@@ -244,12 +223,7 @@
                     }
                 }
 
-                &.sticky-checkbox {
-                    // left: 10px;
-                }
-
                 &.sticky-title {
-                    // left: 50px;
                     width: rem(200px) !important;
                 }
             }
@@ -257,30 +231,14 @@
 
 
         .task-list-add {
-
-            &.group-grid {
-                // grid-template-columns: 10px 40px 480px repeat(6, 140px) 1fr !important;
-            }
-
             .task-add-btn {
                 width: rem(200px);
-                // left: 50px;
-            }
-
-            .task-list-add-side {
-                // left: 10px;
-                // border-bottom: 1px solid var(--ui-border-color);
             }
 
         }
 
         .task-list-summary-wrapper {
             grid-template-columns: 38px 240px repeat(6, 140px) 1fr !important;
-            // grid-template-columns: 10px 240px repeat(6, 140px) 1fr !important;
-
-            .task-list-summary-emptycell-left {
-                // left: 10px;
-            }
 
             .summary-scroll-hide-div {
                 left: 240px;

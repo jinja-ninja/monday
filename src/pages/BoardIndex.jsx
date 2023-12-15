@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-
 import { Box, Counter, Text, Icon } from "monday-ui-react-core"
 import { BoardIndexAside } from "../cmps/BoardIndexAside"
 import { BoardList } from "../cmps/BoardList"
@@ -8,7 +7,6 @@ import { BoardMainHeader } from "../cmps/BoardMainHeader"
 import { SideBar } from "../cmps/SideBar"
 import { loadBoards } from "../store/actions/board.action"
 import { useSelector } from "react-redux"
-import { UserMsg } from '../cmps/UserMsg'
 import BoardIndexHeaderConfeti from '../assets/img/BoardIndexHeaderConfeti.svg'
 import { userService } from "../services/user.service"
 import { utilService } from "../services/util.service"
@@ -25,12 +23,10 @@ export function BoardIndex() {
 
     let loggedInUser = userService.getLoggedinUser()
 
-    // console.log('boards from index', boards)
     return <main className="board-index">
 
         <BoardMainHeader />
         <SideBar />
-
 
         <section className="board-index-body" style={{ paddingRight: 0 }}>
             <Box
@@ -88,9 +84,6 @@ export function BoardIndex() {
 
             </Box>
 
-            {/* <section className="right-panel-container">
-                <BoardIndexAside />
-            </section> */}
         </section>
     </main >
 }

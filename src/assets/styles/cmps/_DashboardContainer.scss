@@ -6,7 +6,7 @@
   flex-direction: column;
   text-align: center;
   margin-bottom: 20px;
-  width: 1065px;
+  width: 100%;
 
   padding: 1rem;
   border-radius: 1rem;
@@ -21,17 +21,19 @@
 
   .members-chart {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: rem(20px);
+    width: 100%;
 
     .box {
-      width: 333.3px;
-      //   margin: 3px;
+      width: 30%;
       box-shadow: 1px 2px 5px rgb(220, 220, 220);
     }
   }
 
   .line-chart {
-    width: 1020px;
+    width: 100%;
     border: 1px solid lightgray;
     box-shadow: 1px 2px 5px rgb(220, 220, 220);
     margin-block-end: 20px;
@@ -40,10 +42,11 @@
   .chart-data-container {
     display: flex;
     gap: rem(20px);
+    width: 100%;
 
     .chart-info {
       display: flex;
-      width: 500px;
+      width: 50%;
       height: 150px;
       box-shadow: 1px 2px 5px rgb(220, 220, 220);
       padding: 5px;
@@ -68,7 +71,7 @@
 
         p {
           margin: auto;
-          font-size: 2.5rem;
+          font-size: 2.2rem;
           text-align: center;
           color: var(--color-done-green);
         }

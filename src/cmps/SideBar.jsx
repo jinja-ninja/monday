@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react"
-import { Button, IconButton, MenuButton, MenuItem, SearchComponent, Menu, EditableHeading, Search as SearchInput } from "monday-ui-react-core"
-import { Add, Board, Delete, Home, Edit, Favorite, Work, Search, Workspace } from "monday-ui-react-core/icons"
-import { useDispatch, useSelector } from "react-redux"
+import { Button, IconButton, MenuButton, MenuItem, Menu, Search as SearchInput } from "monday-ui-react-core"
+import { Add, Home, Favorite, Work, Search, Workspace } from "monday-ui-react-core/icons"
+import { useSelector } from "react-redux"
 import { BoardNavLink } from "./BoardNavLink"
 import { addBoard, duplicateBoard, loadBoards, removeBoard, toggleBoardFavorite, updateBoard } from "../store/actions/board.action"
-import { useNavigate, useParams } from "react-router"
+import { useNavigate } from "react-router"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import FavoriteGIF from '../assets/img/FavoriteGIF.gif'
 import NoGroupsFoundImg from '../assets/img/NoGroupsFoundImg.svg'
-import { utilService } from "../services/util.service"
 
 export function SideBar() {
     const [isOpen, setIsOpen] = useState(false)
     const [isHover, setIsHover] = useState(false)
     const [filterByTxt, setFilterByTxt] = useState('')
     const [isFavorites, setIsFavorites] = useState('main')
-    
+
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const currBoard = useSelector((storeState => storeState.boardModule.board))
     const navigate = useNavigate()

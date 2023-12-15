@@ -177,21 +177,20 @@
   }
 
   .task-list {
+    grid-auto-flow: column;
     align-items: center;
     justify-items: start;
     background-color: var(--primary-background-color);
-
     border-bottom: var(--border-width) var(--border-style) var(--ui-border-color);
 
     &.tasks-container {
-      display: flex;
-      flex-direction: column;
+      // display: flex;
+      // flex-direction: column;
       border-bottom: none;
       align-items: unset;
     }
 
     &.group-grid {
-    grid-auto-flow: column;
 
       &:hover {
 

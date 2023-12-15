@@ -1,0 +1,19 @@
+@media only screen and (max-width: 650px) {
+
+    .dashboard-container {
+        .chart-data-container {
+            .chart-info {
+                .completed-tasks {
+                    h1 {
+                        font-size: 1.1rem;
+                    }
+
+                    p {
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+        }
+
+    }
+}
