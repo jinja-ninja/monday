@@ -15,10 +15,10 @@ export default defineConfig({
     }
   },
   //for build
-  // define: { _global: ({}), },
+  define: { _global: ({}), },
   
   //working local
-  define: {
-    global: {},
-  }
+  // define: {
+  //   global: {},
+  // }
 })

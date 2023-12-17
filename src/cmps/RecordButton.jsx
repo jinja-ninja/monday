@@ -23,11 +23,11 @@ export function RecordButton({ currBoard, setIsAiOpen, setIsFireworks }) {
 
         const handleRecordResults = async (transcript) => {
             //HARD CODED ONLY FOR DEMO SHOWING!!!!
-            transcript = 'make a logo'
+            // transcript = 'make a logo'
             // -----------------------
-            // const tasks = await onGetAiTasks(transcript)
-            const tasks = ['brainstorm logo ideas', 'sketch logo concepts', 'choose a color palette', 'design logo layout', 'select appropriate fonts', 'refine logo design', 'add finishing touches', 'export logo files']
-            // console.log(tasks, 'tasks from AI')
+            const tasks = await onGetAiTasks(transcript)
+            // const tasks = ['brainstorm logo ideas', 'sketch logo concepts', 'choose a color palette', 'design logo layout', 'select appropriate fonts', 'refine logo design', 'add finishing touches', 'export logo files']
+            console.log(tasks, 'tasks from AI')
             const newGroup = boardService.getEmptyGroup()
             newGroup.title = transcript
             newGroup.tasks = tasks.map(task => {
@@ -37,24 +37,24 @@ export function RecordButton({ currBoard, setIsAiOpen, setIsFireworks }) {
             })
             const newBoard = { ...currBoard, groups: [newGroup, ...currBoard.groups] }
             //IN A TIMEOUT ONLY FOR DEMO SHOWING 
-            setTimeout(() => {
-                updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: [...newBoard.groups] }, newBoard)
-                dispatch({ type: SET_IS_LOADING, isLoading: false })
-                setIsAiOpen(false)
-                setIsFireworks(true)
-                setTimeout(() => {
-                    setIsFireworks(false)
-                }, 4000)
-            }, 5000);
+            // setTimeout(() => {
+            //     updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: [...newBoard.groups] }, newBoard)
+            //     dispatch({ type: SET_IS_LOADING, isLoading: false })
+            //     setIsAiOpen(false)
+            //     setIsFireworks(true)
+            //     setTimeout(() => {
+            //         setIsFireworks(false)
+            //     }, 4000)
+            // }, 5000);
             //REAL CODE
 
-            // updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: [...newBoard.groups] }, newBoard)
-            // dispatch({ type: SET_IS_LOADING, isLoading: false })
-            // setIsAiOpen(false)
-            // setIsFireworks(true)
-            // setTimeout(() => {
-            //     setIsFireworks(false)
-            // }, 4000)
+            updateBoardOptimistic('board', currBoard._id, null, null, { key: 'groups', value: [...newBoard.groups] }, newBoard)
+            dispatch({ type: SET_IS_LOADING, isLoading: false })
+            setIsAiOpen(false)
+            setIsFireworks(true)
+            setTimeout(() => {
+                setIsFireworks(false)
+            }, 4000)
         }
 
         eventBus.on('record', handleRecord)
