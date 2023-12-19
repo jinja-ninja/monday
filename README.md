@@ -6,8 +6,8 @@ Funday is a full stack web application inspired by Monday that replicates the co
 ## This project is built using React, Redux, NodeJS, ExpressJS, MongoDB, SASS, and Sockets.
 
 
-For those of you who are already familliar with Trello, we added some intersting and unique [features](#application-features).
-If you are not familliar with the App, read about it [here](#trello-description).
+For those of you who are already familliar with Monday, we added some intersting and unique [features](#application-features).
+If you are not familliar with the App, read about it [here](#funday-description).
 And if you are tired and just want to see some images of the website, [scroll to the bottom...](#showcase)
 
 ![Main board image](/src/assets/img/FundayBoard.png "Board-main-page")
@@ -22,21 +22,18 @@ ___
 - [Showcase](#showcase)
 
 ## Funday Description
-Funday is an app in which you can manage projects and tasks using boards. A board contains groups and tasks. Usually each project is a board, and the gro and cards are the tasks and subjects to do in the project. Users can modify the board and change list and card locations using Drag and Drop.
-Users can work together and watch live changes. 
-There are many other features in Funday, such as labels, due date for tasks, members and more. 
-We added AI helper with voice recording so you can record a task and get it broken into smaller tasks by chatGPT. 
-More about it in the [features section](#application-features).
+Funday (Monday clone) is a work operating system and project management platform designed to help teams collaborate and manage tasks. It provides a visual and customizable interface for planning, tracking, and organizing work, allowing teams to streamline their workflows, communicate effectively, and stay organized. Funday is used by businesses and teams of various sizes to enhance project management and team collaboration.
 
 ## Application Features
-- Create ***Boards*** and manage projects: Using ***D&D***, create, remove, and update lists and tasks.
-- Create, edit and archive ***Task*** to the deepest level: Labels, Due date, Members, Cover images, Checklists, Activity log, Copy, Move and Archive.
-- ***Side Menu:*** - Change the background of the board with the ***Unsplash Photo API***, ***Filtering*** by members / labels and General ***Activity*** Log!
-- Google Login, along with regular authentication which is encrypted and safe.
+- Create ***Boards*** and manage projects: Utilize ***Drag and Drop (D&D)*** functionality to seamlessly create, remove, and update groups and tasks.
+- Create, edit and archive ***Task*** to the deepest level: Labels, Due date, Timeline, Members, Files, Activity log and more.
+- ***Side Menu:*** - Filter boards by text/favorites, edit boards and switch between them.!
+- Users system, along with regular authentication which is encrypted and safe.
+- Live updates with ***Web Sockets*** .
+- Visualize your project using the Kanban mode and dashboard.
+- Introducing an ***AI helper*** with a voice assistant capable of accepting vocal commands. Record a task, and let it be broken down into smaller tasks by chatGPT.
+- And a lot more exciting things - check it out [Live demo here](https://funday-k1un.onrender.com/ "Funday link").
 
-In addition, we created Blind Color Mode, in which you can recognize the labels and cover colors by signs.
-We have added a voice assistant which can accept vocal commands and help manage products with no effort! For example, you can filter, create board and more.
-Of course that we included all the small nuances Trello has. You are not supposed to find any differences! 
 
 ## Technologies
 
@@ -83,35 +80,36 @@ The landing page in which the user can sign up / login, or press the call to act
 ![Homepage image](src/assets/img/FundayHomePage.png "Home-page")
 
 ### Workspace
-All of the user's boards. Here, in addition to create a board with the empty board box and navigate between their's boards, they are able to use the vocal-assistant we created with 3rd side library! Pressing on the button in the middle of the nav bar on top would open an modal with instructions that makes life a bit easier.
+All of the user's boards. Navigate between boards.
 
 ![Workspace image](src/assets/img/FundayBoardIndex.png "Workspace-page")
 
 ### Board
-All the functionality that you have in Monday. D&D, live-updates, editing tasks to the deepest level, side-menu, editing board members and much more - just [check it out...!](https://skello-deploy.onrender.com "Skello link")
+All the functionality that you have in Monday. D&D, live-updates, editing tasks to the deepest level, side-menu, editing board members and much more - just  [Check it out](https://funday-k1un.onrender.com/ "Funday link").
 
-![Main board image](frontend/src/assets/imgs/readme/board-main.png "Board-main-page")
+![Main board image](/src/assets/img/FundayBoard.png "Board-main-page")
 
 ### Signup
 We created an e2e authentication flow, including encrypting the users' details, middlewears.
 
-![Login image](frontend/src/assets/imgs/readme/login.png "login-page")
+![Login image](/src/assets/img/FundayLogin.png "login-page")
 
 ### Task details
-Here the user can edit their tasks and to watch it happens live, in this page and behind. Every button on the right menu opens an dynamic modal which fits the content accordingly to the pressed button.
+Here, users can review task details, engage in a chat to allow members to leave comments on task progress, monitor the activity log, and attach files relevant to the task.
+![Task details image](/src/assets/img/FundayTaskDetails.png "task-details")
 
-![Task details image](frontend/src/assets/imgs/readme/details.png "task-details")
 
+### Kanban view
+You can view your project/board in a Kanban format, where tasks are presented in lists, with each list representing the status of the tasks within it. Edit tasks and Drag & Drop (D&D) functionality are seamlessly integrated into the Kanban view.
 
-### Side menu
-The menu on the right which is opened by the pressing the "Show menu" button enables the user to filter members by labels / name, change the board background with unsplash Images, watch the archived tasks (and bring it back to the board) and watch the activity of the board (who did what and when, and to navigate to those tasks).
-
-![Sidemenu image](frontend/src/assets/imgs/readme/sidemenu.png "side-menu-image")
+![Kanban view image](/src/assets/img/FundayKanban.png "kanban-details")
 
 ### Some mobile!
 Just a taste of the mobile experience. We used different **mixins** and **conditional rendering**. 
+<img src="/src/assets/img/FundayHomeMobile.png" width="25%" style="float: left"/><img src="/src/assets/img/FundayBoardMobile.png" width="25%" style="float: left;"/><img src="/src/assets/img/FundayTaskDetailsMobile.png" width="25%" style="float: left;"/><img src="/src/assets/img/FundayDashboardMobile.png" width="25%" style="float: left;"/>
+
 
 ### Authors
- - [Gal Ben Natan](https://github.com/OriBenAmram)
- - [Nati Feldbaum](https://github.com/DanielShaked)
- - [Omer Vered](https://github.com/yuvalshai95)
+ - [Gal Ben Natan](https://github.com/galbarcessat)
+ - [Nati Feldbaum](https://github.com/omervered)
+ - [Omer Vered](https://github.com/jinja-ninja)
